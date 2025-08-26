@@ -31,6 +31,15 @@ module DocumentManagementSystem
     # Load ViewComponent configuration
     config.autoload_paths += %W[#{config.root}/app/components]
 
+    # Mount Primer View Components engine
+    config.after_initialize do
+      if defined?(Primer::ViewComponents::Engine)
+        Rails.application.routes.append do
+          mount Primer::ViewComponents::Engine => "/rails/view_components"
+        end
+      end
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -43,3 +52,6 @@ module DocumentManagementSystem
     config.generators.system_tests = nil
   end
 end
+
+require "view_component"
+require "primer/view_components"

@@ -13,12 +13,4 @@ if defined?(ViewComponent)
 end
 
 # Configure Primer View Components
-if defined?(Primer::ViewComponents)
-  Primer::ViewComponents.configure do |config|
-    # Use system arguments for consistency
-    config.raise_on_invalid_aria = true if config.respond_to?(:raise_on_invalid_aria)
-    
-    # Enable primer css variables
-    config.primer_css_version = "latest" if config.respond_to?(:primer_css_version)
-  end
-end
+require 'primer/view_components'
