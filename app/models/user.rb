@@ -1,0 +1,39 @@
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  # Associations
+  belongs_to :organization, optional: true
+  has_many :team_memberships, dependent: :destroy
+  has_many :teams, through: :team_memberships
+  has_many :led_teams, class_name: 'Team', foreign_key: 'leader_id', dependent: :nullify
+  has_many :authored_documents, class_name: 'Document', foreign_key: 'author_id', dependent: :destroy
+  has_many :activity_logs, dependent: :destroy
+
+  # Validations
+  validates :name, presence: true
+  validates :role, presence: true, inclusion: { in: %w[admin team_leader member] }
+
+  # Scopes
+  scope :admins, -> { where(role: 'admin') }
+  scope :team_leaders, -> { where(role: 'team_leader') }
+  scope :members, -> { where(role: 'member') }
+
+  def full_name
+    name
+  end
+
+  def admin?
+    role == 'admin'
+  end
+
+  def team_leader?
+    role == 'team_leader'
+  end
+
+  def member?
+    role == 'member'
+  end
+end
