@@ -1,0 +1,47 @@
+<% if q %>
+  <%= search_form_for q, url: search_path, method: :get, class: form_classes do |f| %>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <%= f.label :title_or_content_cont, "Search", class: "form-label" %>
+        <%= f.search_field :title_or_content_cont, 
+            placeholder: search_placeholder,
+            class: "form-control" %>
+      </div>
+      
+      <div class="col-md-2">
+        <%= f.label :status_id_eq, "Status", class: "form-label" %>
+        <%= f.select :status_id_eq,
+            options_from_collection_for_select(defined?(Status) ? Status.all : [], :id, :name, q&.status_id_eq),
+            { prompt: "All Statuses" },
+            { class: "form-select" } %>
+      </div>
+      
+      <div class="col-md-2">
+        <%= f.label :author_id_eq, "Author", class: "form-label" %>
+        <%= f.select :author_id_eq,
+            options_from_collection_for_select(defined?(User) ? User.all : [], :id, :name, q&.author_id_eq),
+            { prompt: "All Authors" },
+            { class: "form-select" } %>
+      </div>
+      
+      <div class="col-md-2">
+        <%= f.label :folder_id_eq, "Folder", class: "form-label" %>
+        <%= f.select :folder_id_eq,
+            options_from_collection_for_select(defined?(Folder) ? Folder.all : [], :id, :name, q&.folder_id_eq),
+            { prompt: "All Folders" },
+            { class: "form-select" } %>
+      </div>
+      
+      <div class="col-md-2 d-flex align-items-end">
+        <div class="d-flex gap-2 w-100">
+          <%= f.submit "Search", class: "btn btn-primary flex-fill" %>
+          <%= link_to "Clear", documents_path, class: "btn btn-outline-secondary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> Search functionality requires the Document model to be available.
+  </div>
+<% end %>

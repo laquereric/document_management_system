@@ -3,9 +3,7 @@
     <% breadcrumbs.each_with_index do |crumb, index| %>
       <li class="Breadcrumbs-item">
         <% if crumb[:path] && index < breadcrumbs.length - 1 %>
-          <%= render(Primer::LinkComponent.new(href: crumb[:path])) do %>
-            <%= crumb[:label] %>
-          <% end %>
+          <%= link_to crumb[:label], crumb[:path], class: "Breadcrumbs-link" %>
         <% else %>
           <span class="color-fg-muted"><%= crumb[:label] %></span>
         <% end %>

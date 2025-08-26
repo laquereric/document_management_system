@@ -11,7 +11,7 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
   attr_reader :breadcrumbs, :system_arguments
 
   def breadcrumb_classes
-    "Breadcrumbs py-2"
+    "Breadcrumbs py-2 #{system_arguments[:class]}"
   end
 
   # Build breadcrumbs from current controller and action
@@ -33,8 +33,10 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
       if action_name == "show" && params[:id]
         crumbs << { label: "Folder Details", path: nil }
       end
+    when "organizations"
+      crumbs << { label: "Organizations", path: organizations_path }
     when "teams"
-      crumbs << { label: "Teams", path: teams_path }
+      crumbs << { label: "Teams", path: organizations_path }
     when "tags"
       crumbs << { label: "Tags", path: tags_path }
     when "activity_logs"

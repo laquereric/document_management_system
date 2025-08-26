@@ -1,0 +1,33 @@
+<div class="<%= card_classes %>">
+  <div class="Box-header d-flex flex-items-center">
+    <h3 class="Box-title mb-0">
+      <i class="octicon octicon-pulse mr-2"></i> Recent Activity
+    </h3>
+    <%= link_to "View All", activity_logs_path, class: "btn btn-sm btn-outline ml-auto" %>
+  </div>
+  <div class="Box-body">
+    <% if has_activities? %>
+      <% activities.each do |activity| %>
+        <div class="d-flex flex-items-start border-bottom py-2">
+          <div class="mr-3">
+            <i class="octicon octicon-circle-fill color-fg-accent" style="font-size: 0.5rem;"></i>
+          </div>
+          <div class="flex-auto">
+            <p class="mb-1">
+              <strong><%= activity.user.name %></strong>
+              <%= activity.action_description %>
+              <% if activity.document %>
+                <strong><%= link_to activity.document.title, activity.document, class: "Link--primary" %></strong>
+              <% end %>
+            </p>
+            <span class="color-fg-muted f6">
+              <%= time_ago_in_words(activity.created_at) %> ago
+            </span>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="color-fg-muted text-center py-3">No recent activity</p>
+    <% end %>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-# Header component with branding, search, and user menu
+# Header navigation component
 
 class Navigation::HeaderComponent < ApplicationComponent
   def initialize(current_user: nil, title: nil, **system_arguments)
@@ -12,7 +12,7 @@ class Navigation::HeaderComponent < ApplicationComponent
   attr_reader :current_user, :title, :system_arguments
 
   def header_classes
-    "Header px-3 py-2 d-flex flex-items-center"
+    "Header px-3 py-2 d-flex flex-items-center #{system_arguments[:class]}"
   end
 
   def brand_classes
@@ -21,9 +21,5 @@ class Navigation::HeaderComponent < ApplicationComponent
 
   def nav_classes
     "Header-item d-flex"
-  end
-
-  def user_avatar_size
-    :medium
   end
 end

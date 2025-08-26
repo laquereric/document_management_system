@@ -1,11 +1,8 @@
 <header class="<%= header_classes %>">
   <!-- Brand/Logo Section -->
   <div class="<%= brand_classes %>">
-    <%= render(Primer::LinkComponent.new(
-      href: root_path,
-      classes: "Header-link d-flex flex-items-center"
-    )) do %>
-      <%= render(Primer::OcticonComponent.new(icon: :file_directory, size: :medium, mr: 2)) %>
+    <%= link_to root_path, class: "Header-link d-flex flex-items-center" do %>
+      <i class="octicon octicon-file-directory mr-2"></i>
       <span class="f4 text-bold">DocuFlow</span>
       <% if title %>
         <span class="color-fg-muted ml-2">/ <%= title %></span>
@@ -22,13 +19,9 @@
   <nav class="<%= nav_classes %>">
     <!-- Notifications -->
     <div class="Header-item">
-      <%= render(Primer::ButtonComponent.new(
-        scheme: :invisible,
-        size: :medium,
-        "aria-label": "Notifications"
-      )) do %>
-        <%= render(Primer::OcticonComponent.new(icon: :bell)) %>
-      <% end %>
+      <button class="btn btn-sm btn-outline" aria-label="Notifications">
+        <i class="octicon octicon-bell"></i>
+      </button>
     </div>
 
     <!-- User Menu -->
@@ -36,13 +29,7 @@
       <% if current_user %>
         <%= render(Ui::UserMenuComponent.new(user: current_user)) %>
       <% else %>
-        <%= render(Primer::ButtonComponent.new(
-          href: new_user_session_path,
-          scheme: :primary,
-          size: :small
-        )) do %>
-          Sign In
-        <% end %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-sm btn-primary" %>
       <% end %>
     </div>
   </nav>

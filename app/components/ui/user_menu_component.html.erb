@@ -1,47 +1,42 @@
-<%= render(Primer::Alpha::ActionMenu.new(
-  menu_id: "user-menu",
-  position: :relative
-)) do |menu| %>
-  <% menu.with_show_button do %>
-    <div class="d-flex flex-items-center">
-      <!-- User Avatar -->
-      <%= render(Primer::Alpha::Avatar.new(
-        src: "", # Would use user avatar if available
-        alt: user.email,
-        size: 24
-      )) do %>
+<div class="dropdown">
+  <button class="btn btn-sm btn-outline dropdown-toggle d-flex flex-items-center" 
+          type="button" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
+    <!-- User Avatar -->
+    <div class="avatar avatar-small mr-2">
+      <div class="avatar-inner">
         <%= user_initials %>
-      <% end %>
-      
-      <!-- Dropdown Arrow -->
-      <%= render(Primer::OcticonComponent.new(
-        icon: :chevron_down,
-        size: :small,
-        ml: 1
-      )) %>
+      </div>
     </div>
-  <% end %>
+    
+    <!-- Dropdown Arrow -->
+    <i class="octicon octicon-chevron-down"></i>
+  </button>
 
-  <!-- User Info Header -->
-  <div class="ActionMenu-item p-2 border-bottom">
-    <div class="f6 color-fg-muted">Signed in as</div>
-    <div class="text-bold"><%= user.email %></div>
-  </div>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <!-- User Info Header -->
+    <li class="dropdown-item-text">
+      <div class="f6 color-fg-muted">Signed in as</div>
+      <div class="text-bold"><%= user.email %></div>
+    </li>
+    
+    <li class="dropdown-divider"></li>
 
-  <!-- Menu Items -->
-  <% menu_items.each do |item| %>
-    <% if item == :divider %>
-      <%= render(Primer::Alpha::ActionMenu::Divider.new) %>
-    <% else %>
-      <% menu.with_item(
-        label: item[:label],
-        href: item[:href],
-        data: { method: item[:method] },
-        classes: item[:classes]
-      ) do %>
-        <%= render(Primer::OcticonComponent.new(icon: item[:icon], mr: 2)) %>
-        <%= item[:label] %>
+    <!-- Menu Items -->
+    <% menu_items.each do |item| %>
+      <% if item == :divider %>
+        <li class="dropdown-divider"></li>
+      <% else %>
+        <li>
+          <%= link_to item[:href], 
+              class: "dropdown-item d-flex flex-items-center",
+              data: { method: item[:method] } do %>
+            <i class="octicon octicon-<%= item[:icon] %> mr-2"></i>
+            <%= item[:label] %>
+          <% end %>
+        </li>
       <% end %>
     <% end %>
-  <% end %>
-<% end %>
+  </ul>
+</div>

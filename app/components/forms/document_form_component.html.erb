@@ -1,0 +1,59 @@
+<%= form_with model: document, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
+  <% if document.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(document.errors.count, "error") %> prohibited this document from being saved:</h4>
+      <ul>
+        <% document.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="mb-3">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-control", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: 10, required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= form.label :status_id, "Status", class: "form-label" %>
+        <%= form.select :status_id, 
+            options_from_collection_for_select(statuses, :id, :name, document.status_id),
+            { prompt: "Select status" },
+            { class: "form-select", required: true } %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :scenario_type_id, "Scenario Type", class: "form-label" %>
+        <%= form.select :scenario_type_id,
+            options_from_collection_for_select(scenario_types, :id, :name, document.scenario_type_id),
+            { prompt: "Select scenario type" },
+            { class: "form-select", required: true } %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :file, "Attach File", class: "form-label" %>
+        <%= form.file_field :file, class: "form-control" %>
+        <% if document.file.attached? %>
+          <small class="form-text text-muted">
+            Current file: <%= link_to document.file.filename, rails_blob_path(document.file, disposition: "attachment") %>
+          </small>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <%= link_to "Cancel", folder_path(folder), class: "btn btn-secondary" %>
+    <%= form.submit submit_text, class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+<div class="<%= card_classes %>">
+  <div class="card-header">
+    <h5 class="mb-0"><i class="bi bi-activity"></i> <%= title %></h5>
+  </div>
+  <div class="card-body">
+    <% if has_activity_logs? %>
+      <% activity_logs.each do |activity_log| %>
+        <%= render(ActivityLogs::ActivityLogItemComponent.new(activity_log: activity_log)) %>
+      <% end %>
+      
+      <% if show_pagination && activity_logs.respond_to?(:current_page) %>
+        <div class="d-flex justify-content-center mt-3">
+          <%= paginate activity_logs %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted text-center py-3">No activity found.</p>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<span class="<%= badge_classes %>">
+  <%= tag.name %>
+  <% if can_remove_tag? %>
+    <%= link_to remove_tag_document_path(document, tag_id: tag.id), 
+        method: :delete,
+        class: remove_button_classes,
+        data: { confirm: "Remove tag '#{tag.name}'?" },
+        title: "Remove tag" do %>
+      <span aria-hidden="true">&times;</span>
+    <% end %>
+  <% end %>
+</span>

@@ -16,6 +16,7 @@ class Navigation::SidebarComponent < ApplicationComponent
   def sidebar_classes
     base_classes = ["SideNav", "height-full", "border-right"]
     base_classes << "SideNav--narrow" if variant == :collapsed
+    base_classes << system_arguments[:class] if system_arguments[:class]
     base_classes.join(" ")
   end
 
@@ -27,37 +28,37 @@ class Navigation::SidebarComponent < ApplicationComponent
     [
       {
         label: "Dashboard",
-        icon: :home,
+        icon: "home",
         path: dashboard_index_path,
         active: current_page?(dashboard_index_path)
       },
       {
         label: "Documents",
-        icon: :file_text,
+        icon: "file-text",
         path: documents_path,
         active: controller_name == "documents"
       },
       {
         label: "Folders",
-        icon: :file_directory,
+        icon: "file-directory",
         path: folders_path,
         active: controller_name == "folders"
       },
       {
-        label: "Teams",
-        icon: :people,
-        path: teams_path,
-        active: controller_name == "teams"
+        label: "Organizations",
+        icon: "organization",
+        path: organizations_path,
+        active: controller_name == "organizations"
       },
       {
         label: "Tags",
-        icon: :tag,
+        icon: "tag",
         path: tags_path,
         active: controller_name == "tags"
       },
       {
         label: "Activity",
-        icon: :pulse,
+        icon: "pulse",
         path: activity_logs_path,
         active: controller_name == "activity_logs"
       }
@@ -69,14 +70,8 @@ class Navigation::SidebarComponent < ApplicationComponent
     
     [
       {
-        label: "Organizations",
-        icon: :organization,
-        path: organizations_path,
-        active: controller_name == "organizations"
-      },
-      {
-        label: "Admin",
-        icon: :gear,
+        label: "Admin Dashboard",
+        icon: "gear",
         path: admin_root_path,
         active: controller_name.starts_with?("admin")
       }

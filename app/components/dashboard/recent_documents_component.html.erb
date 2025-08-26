@@ -1,0 +1,34 @@
+<div class="<%= card_classes %>">
+  <div class="Box-header d-flex flex-items-center">
+    <h3 class="Box-title mb-0">
+      <i class="octicon octicon-file-text mr-2"></i> Recent Documents
+    </h3>
+    <%= link_to "View All", documents_path, class: "btn btn-sm btn-outline ml-auto" %>
+  </div>
+  <div class="Box-body">
+    <% if has_documents? %>
+      <% documents.each do |document| %>
+        <div class="d-flex flex-items-center border-bottom py-2">
+          <div class="flex-auto">
+            <h6 class="mb-1">
+              <%= link_to document.title, document, class: "Link--primary" %>
+            </h6>
+            <p class="color-fg-muted f6 mb-0">
+              <i class="octicon octicon-file-directory mr-1"></i> <%= document.folder.name %>
+              <span class="Label" style="background-color: <%= document.status.color %>">
+                <%= document.status.name %>
+              </span>
+            </p>
+          </div>
+          <div class="flex-shrink-0">
+            <span class="color-fg-muted f6">
+              <%= time_ago_in_words(document.created_at) %> ago
+            </span>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="color-fg-muted text-center py-3">No documents yet.</p>
+    <% end %>
+  </div>
+</div>

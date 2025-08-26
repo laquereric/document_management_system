@@ -11,6 +11,3 @@ if defined?(ViewComponent)
     end
   end
 end
-
-# Configure Primer View Components
-require 'primer/view_components'

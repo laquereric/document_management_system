@@ -17,14 +17,9 @@
       }
     %>
     
-    <%= render(Primer::ButtonComponent.new(
-      type: :submit,
-      scheme: :invisible,
-      size: size,
-      classes: "input-group-button"
-    )) do %>
-      <%= render(Primer::OcticonComponent.new(icon: :search)) %>
-    <% end %>
+    <button type="submit" class="btn btn-sm btn-outline input-group-button">
+      <i class="octicon octicon-search"></i>
+    </button>
   </div>
 
   <!-- Quick Results Dropdown (hidden by default) -->
@@ -38,12 +33,7 @@
         <!-- Results will be loaded here -->
       </div>
       <div class="Box-footer">
-        <%= render(Primer::LinkComponent.new(
-          href: search_index_path,
-          classes: "btn btn-sm"
-        )) do %>
-          View all results
-        <% end %>
+        <%= link_to "View all results", search_index_path, class: "btn btn-sm" %>
       </div>
     </div>
   </div>

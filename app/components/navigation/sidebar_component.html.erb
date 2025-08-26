@@ -1,20 +1,18 @@
 <nav class="<%= sidebar_classes %>">
-  <!-- Main Navigation -->
   <div class="SideNav-items">
+    <!-- Main Navigation -->
     <% navigation_items.each do |item| %>
-      <%= render(Primer::Alpha::NavList::ItemComponent.new(
-        href: item[:path],
-        current: item[:active]
-      )) do |component| %>
-        <% component.with_leading_visual_icon(icon: item[:icon]) unless collapsed? %>
-        <%= collapsed? ? "" : item[:label] %>
+      <%= link_to item[:path], 
+          class: "SideNav-item #{item[:active] ? 'selected' : ''} d-flex flex-items-center" do %>
+        <i class="octicon octicon-<%= item[:icon] %> mr-2"></i>
+        <% unless collapsed? %>
+          <span><%= item[:label] %></span>
+        <% end %>
       <% end %>
     <% end %>
-  </div>
 
-  <!-- Admin Section -->
-  <% if admin_navigation_items.any? %>
-    <div class="SideNav-items border-top mt-3 pt-3">
+    <!-- Admin Section -->
+    <% if admin_navigation_items.any? %>
       <% unless collapsed? %>
         <div class="SideNav-item">
           <span class="color-fg-muted f6 text-uppercase text-bold">Admin</span>
@@ -22,31 +20,26 @@
       <% end %>
       
       <% admin_navigation_items.each do |item| %>
-        <%= render(Primer::Alpha::NavList::ItemComponent.new(
-          href: item[:path],
-          current: item[:active]
-        )) do |component| %>
-          <% component.with_leading_visual_icon(icon: item[:icon]) unless collapsed? %>
-          <%= collapsed? ? "" : item[:label] %>
+        <%= link_to item[:path], 
+            class: "SideNav-item #{item[:active] ? 'selected' : ''} d-flex flex-items-center" do %>
+          <i class="octicon octicon-<%= item[:icon] %> mr-2"></i>
+          <% unless collapsed? %>
+            <span><%= item[:label] %></span>
+          <% end %>
         <% end %>
       <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 
   <!-- Sidebar Toggle (for responsive) -->
   <div class="SideNav-items border-top mt-auto pt-3">
-    <%= render(Primer::ButtonComponent.new(
-      scheme: :invisible,
-      size: :small,
-      classes: "width-full",
-      "data-action": "sidebar:toggle"
-    )) do %>
-      <%= render(Primer::OcticonComponent.new(
-        icon: collapsed? ? :chevron_right : :chevron_left
-      )) %>
+    <button class="btn btn-sm btn-outline width-full" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#sidebarCollapse">
+      <i class="octicon octicon-<%= collapsed? ? 'chevron-right' : 'chevron-left' %>"></i>
       <% unless collapsed? %>
         <span class="ml-2">Collapse</span>
       <% end %>
-    <% end %>
+    </button>
   </div>
 </nav>

@@ -1,240 +1,230 @@
-<% content_for :title, "Component Test" %>
+<% content_for :title, "Component Test Page" %>
 
-<!-- Component test specific styling to override Bootstrap where needed -->
-<style>
-  .primer-components {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
-  }
-  .primer-components .Box {
-    background-color: var(--color-canvas-default);
-    border: 1px solid var(--color-border-default);
-    border-radius: 6px;
-  }
-  .primer-components .Box-header {
-    background-color: var(--color-canvas-subtle);
-    border-bottom: 1px solid var(--color-border-muted);
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    padding: 16px;
-  }
-  .primer-components .Box-body {
-    padding: 16px;
-  }
-</style>
-
-<div class="primer-components">
-  <div class="container-xl p-responsive py-4">
-    <h1 class="h1-mktg mb-4">Primer View Components Test</h1>
-    
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Layout Component</h2>
-      <p class="lead mb-3">
-        This page demonstrates the UI components created for the Document Management System using Primer View Components.
-      </p>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3">
+      <%= render(Navigation::SidebarComponent.new(current_user: current_user)) %>
     </div>
-
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Primer Component Test</h2>
-      <div class="Box">
-        <div class="Box-header">
-          <h3 class="Box-title">Available Components</h3>
+    
+    <!-- Main Content -->
+    <div class="col-md-9">
+      <!-- Header -->
+      <%= render(Navigation::HeaderComponent.new(current_user: current_user)) %>
+      
+      <!-- Breadcrumbs -->
+      <%= render(Navigation::BreadcrumbComponent.new(
+        items: [
+          { text: "Home", url: root_path },
+          { text: "Component Test", url: "#" }
+        ]
+      )) %>
+      
+      <!-- Page Title -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h1 class="mb-4">
+            <i class="bi bi-puzzle"></i> Component Test Page
+            <small class="text-muted">Demonstrating all components</small>
+          </h1>
         </div>
-        <div class="Box-body">
-          <p>Testing Primer component availability:</p>
-          <% if defined?(Primer) %>
-            <p class="text-success">✓ Primer module is available</p>
-            <% if defined?(Primer::ViewComponents) %>
-              <p class="text-success">✓ Primer::ViewComponents is available</p>
-            <% else %>
-              <p class="text-danger">✗ Primer::ViewComponents is not available</p>
-            <% end %>
+      </div>
+      
+      <!-- Search Form -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Search Components</h5>
+            </div>
+            <div class="card-body">
+              <%= render(Search::SearchFormComponent.new(q: @q)) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stats Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <%= render(Dashboard::StatsCardComponent.new(
+            title: "Sample Documents",
+            value: 25,
+            icon: "file-text",
+            color: "primary"
+          )) %>
+        </div>
+        <div class="col-md-3">
+          <%= render(Dashboard::StatsCardComponent.new(
+            title: "Active Teams",
+            value: 8,
+            icon: "people",
+            color: "success"
+          )) %>
+        </div>
+        <div class="col-md-3">
+          <%= render(Dashboard::StatsCardComponent.new(
+            title: "Pending Reviews",
+            value: 12,
+            icon: "clock",
+            color: "warning"
+          )) %>
+        </div>
+        <div class="col-md-3">
+          <%= render(Dashboard::StatsCardComponent.new(
+            title: "Total Users",
+            value: 45,
+            icon: "person-badge",
+            color: "info"
+          )) %>
+        </div>
+      </div>
+      
+      <!-- Document Components -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h3>Document Components</h3>
+        </div>
+      </div>
+      
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h5>Document Card</h5>
+          <% if @sample_document %>
+            <%= render(Document::CardComponent.new(document: @sample_document)) %>
           <% else %>
-            <p class="text-danger">✗ Primer module is not available</p>
+            <%= render(Ui::EmptyStateComponent.new(
+              title: "No Sample Document",
+              description: "Create a document to see the card component in action.",
+              icon: "file-text",
+              action_text: "Create Document",
+              action_url: new_document_path
+            )) %>
+          <% end %>
+        </div>
+        
+        <div class="col-md-6">
+          <h5>Document List</h5>
+          <% if @sample_documents&.any? %>
+            <%= render(Document::ListComponent.new(documents: @sample_documents)) %>
+          <% else %>
+            <%= render(Ui::EmptyStateComponent.new(
+              title: "No Documents",
+              description: "No documents available to display in the list.",
+              icon: "file-text"
+            )) %>
           <% end %>
         </div>
       </div>
-    </div>
-
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Document Cards</h2>
-      <div class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));">
-        <% @sample_documents.each do |document| %>
-          <div class="Box Box--condensed">
-            <div class="Box-header d-flex flex-items-center">
-              <div class="d-flex flex-items-center flex-auto">
-                <svg class="octicon octicon-file-text mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                  <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25V1.75Z"></path>
-                </svg>
-                <a href="#" class="text-bold color-fg-default">
-                  <%= document.title %>
-                </a>
-              </div>
-              <div class="ml-2">
-                <span class="Label Label--secondary">
-                  <%= document.status&.name&.titleize %>
-                </span>
-              </div>
+      
+      <!-- Team Components -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h3>Team Components</h3>
+        </div>
+      </div>
+      
+      <div class="row mb-4">
+        <% if @sample_teams&.any? %>
+          <% @sample_teams.each do |team| %>
+            <div class="col-md-4 mb-3">
+              <%= render(Teams::TeamCardComponent.new(team: team, current_user: current_user)) %>
             </div>
-            <div class="Box-body">
-              <div class="color-fg-muted f6 mb-2">
-                <%= truncate(document.content, length: 150) %>
-              </div>
-              <div class="d-flex flex-wrap gap-3 f6 color-fg-muted">
-                <div class="d-flex flex-items-center">
-                  <svg class="octicon octicon-person mr-1" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 2.125 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
-                  </svg>
-                  <%= document.author.email %>
-                </div>
-                <div class="d-flex flex-items-center">
-                  <svg class="octicon octicon-file-directory mr-1" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
-                  </svg>
-                  <a href="#" class="color-fg-muted">
-                    <%= document.folder.path %>
-                  </a>
-                </div>
-                <div class="d-flex flex-items-center">
-                  <svg class="octicon octicon-clock mr-1" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"></path>
-                  </svg>
-                  <%= time_ago_in_words(document.updated_at) %> ago
-                </div>
-              </div>
-            </div>
+          <% end %>
+        <% else %>
+          <div class="col-12">
+            <%= render(Ui::EmptyStateComponent.new(
+              title: "No Teams",
+              description: "No teams available to display.",
+              icon: "people"
+            )) %>
           </div>
         <% end %>
       </div>
-    </div>
-
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Component Implementation Status</h2>
-      <div class="Box">
-        <div class="Box-header">
-          <h3 class="Box-title">Available Components</h3>
-        </div>
-        <div class="Box-body">
-          <ul class="list-style-none">
-            <li class="d-flex flex-items-center mb-2">
-              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-              </svg>
-              <span><strong>ApplicationComponent</strong> - Base component class with Primer integration</span>
-            </li>
-            <li class="d-flex flex-items-center mb-2">
-              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-              </svg>
-              <span><strong>Document::CardComponent</strong> - Document display cards with multiple layouts</span>
-            </li>
-            <li class="d-flex flex-items-center mb-2">
-              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-              </svg>
-              <span><strong>Navigation Components</strong> - Header, sidebar, breadcrumbs (skeleton created)</span>
-            </li>
-            <li class="d-flex flex-items-center mb-2">
-              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-              </svg>
-              <span><strong>Search Components</strong> - Quick search functionality (skeleton created)</span>
-            </li>
-            <li class="d-flex flex-items-center mb-2">
-              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-              </svg>
-              <span><strong>Component Previews</strong> - Development tools at <code>/rails/view_components</code></span>
-            </li>
-          </ul>
+      
+      <!-- Activity Log Components -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h3>Activity Log Components</h3>
         </div>
       </div>
-    </div>
-
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Component Features</h2>
-      <div class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-        <!-- Feature: Multiple Layouts -->
-        <div class="Box">
-          <div class="Box-header">
-            <h3 class="Box-title">Multiple Layouts</h3>
-          </div>
-          <div class="Box-body">
-            <p>Components support different layout variants:</p>
-            <ul>
-              <li><strong>List:</strong> Full metadata display</li>
-              <li><strong>Grid:</strong> Card-style layout</li>
-              <li><strong>Compact:</strong> Minimal information</li>
-            </ul>
+      
+      <div class="row mb-4">
+        <div class="col-12">
+          <% if @sample_activities&.any? %>
+            <%= render(ActivityLogs::ActivityLogListComponent.new(
+              activity_logs: @sample_activities,
+              title: "Sample Activity Log",
+              show_pagination: false
+            )) %>
+          <% else %>
+            <%= render(Ui::EmptyStateComponent.new(
+              title: "No Activity",
+              description: "No activity logs available to display.",
+              icon: "activity"
+            )) %>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- UI Components -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h3>UI Components</h3>
+        </div>
+      </div>
+      
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h5>Status Badges</h5>
+          <div class="mb-2">
+            <% if @sample_statuses&.any? %>
+              <% @sample_statuses.each do |status| %>
+                <%= render(Ui::StatusBadgeComponent.new(status: status)) %>
+              <% end %>
+            <% else %>
+              <span class="badge bg-primary">Sample Status</span>
+              <span class="badge bg-success">Active</span>
+              <span class="badge bg-warning">Pending</span>
+            <% end %>
           </div>
         </div>
-
-        <!-- Feature: Primer Integration -->
-        <div class="Box">
-          <div class="Box-header">
-            <h3 class="Box-title">Primer Design System</h3>
-          </div>
-          <div class="Box-body">
-            <p>Built with GitHub's Primer:</p>
-            <ul>
-              <li>Consistent styling</li>
-              <li>Accessibility features</li>
-              <li>Responsive design</li>
-              <li>Octicon icons</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Feature: Extensible -->
-        <div class="Box">
-          <div class="Box-header">
-            <h3 class="Box-title">Extensible Architecture</h3>
-          </div>
-          <div class="Box-body">
-            <p>Component system features:</p>
-            <ul>
-              <li>Modular design</li>
-              <li>Prop validation</li>
-              <li>Fallback values</li>
-              <li>Rails integration</li>
-            </ul>
+        
+        <div class="col-md-6">
+          <h5>Tag Badges</h5>
+          <div class="mb-2">
+            <% if @sample_tags&.any? %>
+              <% @sample_tags.each do |tag| %>
+                <%= render(Tags::TagBadgeComponent.new(tag: tag)) %>
+              <% end %>
+            <% else %>
+              <span class="badge bg-secondary">Sample Tag</span>
+              <span class="badge bg-secondary">Important</span>
+              <span class="badge bg-secondary">Review</span>
+            <% end %>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Next Steps</h2>
-      <div class="Box Box--condensed">
-        <div class="Box-body">
-          <ol>
-            <li class="mb-2">
-              <strong>Integrate with existing views:</strong> Replace current view templates with component-based architecture
-            </li>
-            <li class="mb-2">
-              <strong>Implement remaining components:</strong> Build out table views, filters, and forms
-            </li>
-            <li class="mb-2">
-              <strong>Add interactivity:</strong> Implement JavaScript behaviors using Stimulus
-            </li>
-            <li class="mb-2">
-              <strong>Testing:</strong> Add component tests using RSpec and ViewComponent test helpers
-            </li>
-            <li class="mb-2">
-              <strong>Documentation:</strong> Complete component documentation and usage examples
-            </li>
-          </ol>
+      
+      <!-- Form Components -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h3>Form Components</h3>
         </div>
       </div>
-    </div>
-
-    <div class="mb-6">
-      <h2 class="h2 mb-3">Component Previews</h2>
-      <div class="Box">
-        <div class="Box-body">
-          <p>Access detailed component previews and documentation:</p>
-          <a href="/rails/view_components" class="btn btn-primary">
-            View Component Previews
-          </a>
+      
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Document Form</h5>
+            </div>
+            <div class="card-body">
+              <% sample_folder = Folder.first || Folder.new(name: "Sample Folder") %>
+              <% sample_document = Document.new(folder: sample_folder) %>
+              <%= render(Forms::DocumentFormComponent.new(document: sample_document)) %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
