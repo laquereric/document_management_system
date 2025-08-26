@@ -1,0 +1,99 @@
+<div class="<%= card_classes %>">
+  <!-- Document Header -->
+  <div class="Box-header d-flex flex-items-center">
+    <!-- File Icon and Title -->
+    <div class="d-flex flex-items-center flex-auto">
+      <%= render(Primer::OcticonComponent.new(
+        icon: file_icon,
+        size: :small,
+        mr: 2,
+        color: :muted
+      )) %>
+      
+      <%= render(Primer::LinkComponent.new(
+        href: document_path(document),
+        classes: "text-bold color-fg-default"
+      )) do %>
+        <%= document.title %>
+      <% end %>
+    </div>
+
+    <!-- Status Badge -->
+    <div class="ml-2">
+      <%= render(Primer::LabelComponent.new(
+        scheme: status_color,
+        size: :small
+      )) do %>
+        <%= document.status&.name&.titleize %>
+      <% end %>
+    </div>
+
+    <!-- Actions Menu -->
+    <% if show_actions %>
+      <div class="ml-2">
+        <%= render(Document::ActionsMenuComponent.new(document: document)) %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Document Content -->
+  <div class="Box-body">
+    <!-- Content Preview -->
+    <% if layout != :compact %>
+      <div class="color-fg-muted f6 mb-2">
+        <%= truncate(document.content, length: 150) %>
+      </div>
+    <% end %>
+
+    <!-- Metadata -->
+    <% if show_metadata %>
+      <div class="d-flex flex-wrap gap-3 f6 color-fg-muted">
+        <!-- Author -->
+        <div class="d-flex flex-items-center">
+          <%= render(Primer::OcticonComponent.new(icon: :person, size: :small, mr: 1)) %>
+          <%= document.author.email %>
+        </div>
+
+        <!-- Folder -->
+        <div class="d-flex flex-items-center">
+          <%= render(Primer::OcticonComponent.new(icon: :file_directory, size: :small, mr: 1)) %>
+          <%= render(Primer::LinkComponent.new(
+            href: folder_path(document.folder),
+            classes: "color-fg-muted"
+          )) do %>
+            <%= document.folder.path %>
+          <% end %>
+        </div>
+
+        <!-- File Size -->
+        <% if document.file.attached? %>
+          <div class="d-flex flex-items-center">
+            <%= render(Primer::OcticonComponent.new(icon: :file, size: :small, mr: 1)) %>
+            <%= formatted_file_size %>
+          </div>
+        <% end %>
+
+        <!-- Last Modified -->
+        <div class="d-flex flex-items-center">
+          <%= render(Primer::OcticonComponent.new(icon: :clock, size: :small, mr: 1)) %>
+          <%= time_ago_text %> ago
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Tags -->
+    <% if document.tags.any? %>
+      <div class="mt-2">
+        <% document.tags.each do |tag| %>
+          <%= render(Primer::LabelComponent.new(
+            scheme: :secondary,
+            size: :small,
+            classes: "mr-1"
+          )) do %>
+            <%= tag.name %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

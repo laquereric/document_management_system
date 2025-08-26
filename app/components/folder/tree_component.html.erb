@@ -1,0 +1,64 @@
+<div class="<%= tree_classes %>">
+  <% root_folders.each do |folder| %>
+    <%= render partial: "folder_item", locals: { folder: folder, level: 0 } %>
+  <% end %>
+</div>
+
+<!-- Folder Item Partial -->
+<% content_for :folder_item do |folder:, level:| %>
+  <div class="<%= folder_item_classes(folder) %>" data-folder-id="<%= folder.id %>">
+    <!-- Folder Header -->
+    <div class="TreeView-item-content d-flex flex-items-center">
+      <!-- Expand/Collapse Icon -->
+      <% if folder.subfolders.any? %>
+        <%= render(Primer::ButtonComponent.new(
+          scheme: :invisible,
+          size: :small,
+          classes: "TreeView-item-chevron",
+          data: { action: "folder:toggle" }
+        )) do %>
+          <%= render(Primer::OcticonComponent.new(
+            icon: folder_expanded?(folder) ? :chevron_down : :chevron_right
+          )) %>
+        <% end %>
+      <% else %>
+        <span class="TreeView-item-chevron"></span>
+      <% end %>
+
+      <!-- Folder Icon and Name -->
+      <%= render(Primer::LinkComponent.new(
+        href: folder_path(folder),
+        classes: "TreeView-item-content-text d-flex flex-items-center flex-auto"
+      )) do %>
+        <%= render(Primer::OcticonComponent.new(
+          icon: :file_directory,
+          size: :small,
+          mr: 2,
+          color: folder_selected?(folder) ? :accent : :muted
+        )) %>
+        
+        <span class="text-bold"><%= folder.name %></span>
+        
+        <span class="color-fg-muted f6 ml-2">
+          <%= document_count_text(folder) %>
+        </span>
+      <% end %>
+
+      <!-- Actions -->
+      <% if show_actions %>
+        <div class="TreeView-item-action">
+          <%= render(Folder::ActionsMenuComponent.new(folder: folder)) %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Subfolders -->
+    <% if folder.subfolders.any? && folder_expanded?(folder) %>
+      <div class="TreeView-item-children">
+        <% folder.subfolders.each do |subfolder| %>
+          <%= render partial: "folder_item", locals: { folder: subfolder, level: level + 1 } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,49 @@
+<header class="<%= header_classes %>">
+  <!-- Brand/Logo Section -->
+  <div class="<%= brand_classes %>">
+    <%= render(Primer::LinkComponent.new(
+      href: root_path,
+      classes: "Header-link d-flex flex-items-center"
+    )) do %>
+      <%= render(Primer::OcticonComponent.new(icon: :file_directory, size: :medium, mr: 2)) %>
+      <span class="f4 text-bold">DocuFlow</span>
+      <% if title %>
+        <span class="color-fg-muted ml-2">/ <%= title %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Search Section -->
+  <div class="Header-item mx-3">
+    <%= render(Search::QuickSearchComponent.new(placeholder: "Search documents...")) %>
+  </div>
+
+  <!-- Navigation Actions -->
+  <nav class="<%= nav_classes %>">
+    <!-- Notifications -->
+    <div class="Header-item">
+      <%= render(Primer::ButtonComponent.new(
+        scheme: :invisible,
+        size: :medium,
+        "aria-label": "Notifications"
+      )) do %>
+        <%= render(Primer::OcticonComponent.new(icon: :bell)) %>
+      <% end %>
+    </div>
+
+    <!-- User Menu -->
+    <div class="Header-item ml-2">
+      <% if current_user %>
+        <%= render(Ui::UserMenuComponent.new(user: current_user)) %>
+      <% else %>
+        <%= render(Primer::ButtonComponent.new(
+          href: new_user_session_path,
+          scheme: :primary,
+          size: :small
+        )) do %>
+          Sign In
+        <% end %>
+      <% end %>
+    </div>
+  </nav>
+</header>

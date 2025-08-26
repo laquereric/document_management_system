@@ -1,0 +1,24 @@
+<div class="<%= layout_classes %>">
+  <!-- Header Section -->
+  <div class="Layout-header border-bottom">
+    <%= render(Navigation::HeaderComponent.new(current_user: current_user, title: title)) %>
+  </div>
+
+  <!-- Sidebar Section -->
+  <div class="<%= sidebar_classes %>">
+    <%= render(Navigation::SidebarComponent.new(current_user: current_user, variant: sidebar_variant)) %>
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="<%= main_content_classes %>">
+    <% if show_breadcrumbs %>
+      <div class="Layout-main-centered-md px-3 py-2">
+        <%= render(Navigation::BreadcrumbComponent.new) %>
+      </div>
+    <% end %>
+    
+    <div class="Layout-main-centered-md px-3">
+      <%= content %>
+    </div>
+  </div>
+</div>

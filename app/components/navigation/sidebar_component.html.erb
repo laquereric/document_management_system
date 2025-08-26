@@ -1,0 +1,52 @@
+<nav class="<%= sidebar_classes %>">
+  <!-- Main Navigation -->
+  <div class="SideNav-items">
+    <% navigation_items.each do |item| %>
+      <%= render(Primer::Alpha::NavList::ItemComponent.new(
+        href: item[:path],
+        current: item[:active]
+      )) do |component| %>
+        <% component.with_leading_visual_icon(icon: item[:icon]) unless collapsed? %>
+        <%= collapsed? ? "" : item[:label] %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Admin Section -->
+  <% if admin_navigation_items.any? %>
+    <div class="SideNav-items border-top mt-3 pt-3">
+      <% unless collapsed? %>
+        <div class="SideNav-item">
+          <span class="color-fg-muted f6 text-uppercase text-bold">Admin</span>
+        </div>
+      <% end %>
+      
+      <% admin_navigation_items.each do |item| %>
+        <%= render(Primer::Alpha::NavList::ItemComponent.new(
+          href: item[:path],
+          current: item[:active]
+        )) do |component| %>
+          <% component.with_leading_visual_icon(icon: item[:icon]) unless collapsed? %>
+          <%= collapsed? ? "" : item[:label] %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Sidebar Toggle (for responsive) -->
+  <div class="SideNav-items border-top mt-auto pt-3">
+    <%= render(Primer::ButtonComponent.new(
+      scheme: :invisible,
+      size: :small,
+      classes: "width-full",
+      "data-action": "sidebar:toggle"
+    )) do %>
+      <%= render(Primer::OcticonComponent.new(
+        icon: collapsed? ? :chevron_right : :chevron_left
+      )) %>
+      <% unless collapsed? %>
+        <span class="ml-2">Collapse</span>
+      <% end %>
+    <% end %>
+  </div>
+</nav>

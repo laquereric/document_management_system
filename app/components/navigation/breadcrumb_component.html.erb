@@ -1,0 +1,15 @@
+<nav class="<%= breadcrumb_classes %>" aria-label="Breadcrumb">
+  <ol class="Breadcrumbs-list">
+    <% breadcrumbs.each_with_index do |crumb, index| %>
+      <li class="Breadcrumbs-item">
+        <% if crumb[:path] && index < breadcrumbs.length - 1 %>
+          <%= render(Primer::LinkComponent.new(href: crumb[:path])) do %>
+            <%= crumb[:label] %>
+          <% end %>
+        <% else %>
+          <span class="color-fg-muted"><%= crumb[:label] %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>

@@ -1,0 +1,50 @@
+<%= form_with(
+  url: search_index_path,
+  method: :get,
+  local: true,
+  class: search_form_classes,
+  data: { turbo_frame: "search-results" }
+) do |form| %>
+  
+  <div class="input-group">
+    <%= form.text_field :q,
+      value: value,
+      placeholder: placeholder,
+      class: "form-control #{input_size_class}",
+      data: {
+        action: "input->search:query",
+        search_target: "input"
+      }
+    %>
+    
+    <%= render(Primer::ButtonComponent.new(
+      type: :submit,
+      scheme: :invisible,
+      size: size,
+      classes: "input-group-button"
+    )) do %>
+      <%= render(Primer::OcticonComponent.new(icon: :search)) %>
+    <% end %>
+  </div>
+
+  <!-- Quick Results Dropdown (hidden by default) -->
+  <div class="position-absolute top-100 left-0 right-0 mt-1 d-none" 
+       data-search-target="results">
+    <div class="Box Box--overlay">
+      <div class="Box-header">
+        <h3 class="Box-title">Quick Results</h3>
+      </div>
+      <div class="Box-body" data-search-target="resultsContent">
+        <!-- Results will be loaded here -->
+      </div>
+      <div class="Box-footer">
+        <%= render(Primer::LinkComponent.new(
+          href: search_index_path,
+          classes: "btn btn-sm"
+        )) do %>
+          View all results
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

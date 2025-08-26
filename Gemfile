@@ -30,6 +30,7 @@ gem "cancancan"
 gem "image_processing", "~> 1.2"
 
 # UI Components
+gem "view_component"
 gem "primer_view_components"
 
 # Pagination
