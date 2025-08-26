@@ -1,0 +1,182 @@
+<% content_for :title, "Component Test" %>
+
+<!-- Component test specific styling to override Bootstrap where needed -->
+<style>
+  .primer-components {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+  .primer-components .Box {
+    background-color: var(--color-canvas-default);
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+  }
+  .primer-components .Box-header {
+    background-color: var(--color-canvas-subtle);
+    border-bottom: 1px solid var(--color-border-muted);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 16px;
+  }
+  .primer-components .Box-body {
+    padding: 16px;
+  }
+</style>
+
+<div class="primer-components">
+  <div class="container-xl p-responsive py-4">
+    <h1 class="h1-mktg mb-4">Primer View Components Test</h1>
+    
+    <div class="mb-6">
+      <h2 class="h2 mb-3">Layout Component</h2>
+      <p class="lead mb-3">
+        This page demonstrates the UI components created for the Document Management System using Primer View Components.
+      </p>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="h2 mb-3">Document Cards</h2>
+      <div class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));">
+        <% @sample_documents.each do |document| %>
+          <%= render(Document::CardComponent.new(
+            document: document,
+            layout: :list,
+            show_actions: true,
+            show_metadata: true
+          )) %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="h2 mb-3">Component Implementation Status</h2>
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">Available Components</h3>
+        </div>
+        <div class="Box-body">
+          <ul class="list-style-none">
+            <li class="d-flex flex-items-center mb-2">
+              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+              </svg>
+              <span><strong>ApplicationComponent</strong> - Base component class with Primer integration</span>
+            </li>
+            <li class="d-flex flex-items-center mb-2">
+              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+              </svg>
+              <span><strong>Document::CardComponent</strong> - Document display cards with multiple layouts</span>
+            </li>
+            <li class="d-flex flex-items-center mb-2">
+              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+              </svg>
+              <span><strong>Navigation Components</strong> - Header, sidebar, breadcrumbs (skeleton created)</span>
+            </li>
+            <li class="d-flex flex-items-center mb-2">
+              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+              </svg>
+              <span><strong>Search Components</strong> - Quick search functionality (skeleton created)</span>
+            </li>
+            <li class="d-flex flex-items-center mb-2">
+              <svg class="octicon octicon-check color-fg-success mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+              </svg>
+              <span><strong>Component Previews</strong> - Development tools at <code>/rails/view_components</code></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="h2 mb-3">Component Features</h2>
+      <div class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <!-- Feature: Multiple Layouts -->
+        <div class="Box">
+          <div class="Box-header">
+            <h3 class="Box-title">Multiple Layouts</h3>
+          </div>
+          <div class="Box-body">
+            <p>Components support different layout variants:</p>
+            <ul>
+              <li><strong>List:</strong> Full metadata display</li>
+              <li><strong>Grid:</strong> Card-style layout</li>
+              <li><strong>Compact:</strong> Minimal information</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Feature: Primer Integration -->
+        <div class="Box">
+          <div class="Box-header">
+            <h3 class="Box-title">Primer Design System</h3>
+          </div>
+          <div class="Box-body">
+            <p>Built with GitHub's Primer:</p>
+            <ul>
+              <li>Consistent styling</li>
+              <li>Accessibility features</li>
+              <li>Responsive design</li>
+              <li>Octicon icons</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Feature: Extensible -->
+        <div class="Box">
+          <div class="Box-header">
+            <h3 class="Box-title">Extensible Architecture</h3>
+          </div>
+          <div class="Box-body">
+            <p>Component system features:</p>
+            <ul>
+              <li>Modular design</li>
+              <li>Prop validation</li>
+              <li>Fallback values</li>
+              <li>Rails integration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="h2 mb-3">Next Steps</h2>
+      <div class="Box Box--condensed">
+        <div class="Box-body">
+          <ol>
+            <li class="mb-2">
+              <strong>Integrate with existing views:</strong> Replace current view templates with component-based architecture
+            </li>
+            <li class="mb-2">
+              <strong>Implement remaining components:</strong> Build out table views, filters, and forms
+            </li>
+            <li class="mb-2">
+              <strong>Add interactivity:</strong> Implement JavaScript behaviors using Stimulus
+            </li>
+            <li class="mb-2">
+              <strong>Testing:</strong> Add component tests using RSpec and ViewComponent test helpers
+            </li>
+            <li class="mb-2">
+              <strong>Documentation:</strong> Complete component documentation and usage examples
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="h2 mb-3">Component Previews</h2>
+      <div class="Box">
+        <div class="Box-body">
+          <p>Access detailed component previews and documentation:</p>
+          <a href="/rails/view_components" class="btn btn-primary">
+            View Component Previews
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

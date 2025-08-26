@@ -30,8 +30,10 @@ gem "cancancan"
 gem "image_processing", "~> 1.2"
 
 # UI Components
+gem 'kramdown'
 gem "view_component"
 gem "primer_view_components"
+gem "erb_lint", require: false
 
 # Pagination
 gem "kaminari"

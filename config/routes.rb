@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   # Root route
   root "dashboard#index"
   
+  # Component test route (development only)
+  get "component_test", to: "component_test#index" if Rails.env.development?
+  
   # Dashboard
   get "dashboard", to: "dashboard#index"
   

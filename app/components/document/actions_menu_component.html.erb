@@ -1,27 +1,23 @@
-<%= render(Primer::Alpha::ActionMenu.new(
-  menu_id: "document-actions-#{document.id}",
-  position: :relative
-)) do |menu| %>
-  <% menu.with_show_button do %>
-    <%= render(Primer::ButtonComponent.new(
-      scheme: :invisible,
-      size: :small,
-      "aria-label": "Document actions"
-    )) do %>
-      <%= render(Primer::OcticonComponent.new(icon: :kebab_horizontal)) %>
-    <% end %>
-  <% end %>
-
-  <% menu_items.each do |item| %>
-    <% menu.with_item(
-      label: item[:label],
-      href: item[:href],
-      target: item[:target],
-      data: item[:data],
-      classes: item[:classes]
-    ) do %>
-      <%= render(Primer::OcticonComponent.new(icon: item[:icon], mr: 2)) %>
-      <%= item[:label] %>
-    <% end %>
-  <% end %>
-<% end %>
+<!-- Simplified actions menu using basic HTML and Primer CSS -->
+<details class="details-reset details-overlay">
+  <summary class="btn btn-sm btn-invisible" aria-label="Document actions">
+    <svg class="octicon octicon-kebab-horizontal" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+    </svg>
+  </summary>
+  <div class="SelectMenu SelectMenu--right">
+    <div class="SelectMenu-list">
+      <% menu_items.each do |item| %>
+        <a href="<%= item[:href] %>" class="SelectMenu-item <%= item[:classes] %>"
+           data-action="<%= item[:data]&.dig(:action) %>"
+           data-confirm="<%= item[:data]&.dig(:confirm) %>"
+           target="<%= item[:target] %>">
+          <svg class="octicon octicon-<%= item[:icon] %> mr-2" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <!-- Icon content would be here -->
+          </svg>
+          <%= item[:label] %>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</details>

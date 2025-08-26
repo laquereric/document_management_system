@@ -3,14 +3,14 @@
   <div class="Box-header d-flex flex-items-center">
     <!-- File Icon and Title -->
     <div class="d-flex flex-items-center flex-auto">
-      <%= render(Primer::OcticonComponent.new(
+      <%= render(::Primer::Beta::Octicon.new(
         icon: file_icon,
         size: :small,
         mr: 2,
         color: :muted
       )) %>
       
-      <%= render(Primer::LinkComponent.new(
+      <%= render(::Primer::Beta::Link.new(
         href: document_path(document),
         classes: "text-bold color-fg-default"
       )) do %>
@@ -20,7 +20,7 @@
 
     <!-- Status Badge -->
     <div class="ml-2">
-      <%= render(Primer::LabelComponent.new(
+      <%= render(::Primer::Beta::Label.new(
         scheme: status_color,
         size: :small
       )) do %>
@@ -45,19 +45,19 @@
       </div>
     <% end %>
 
-    <!-- Metadata -->
+        <!-- Metadata -->
     <% if show_metadata %>
       <div class="d-flex flex-wrap gap-3 f6 color-fg-muted">
         <!-- Author -->
         <div class="d-flex flex-items-center">
-          <%= render(Primer::OcticonComponent.new(icon: :person, size: :small, mr: 1)) %>
+          <%= render(::Primer::Beta::Octicon.new(icon: :person, size: :small, mr: 1)) %>
           <%= document.author.email %>
         </div>
 
         <!-- Folder -->
         <div class="d-flex flex-items-center">
-          <%= render(Primer::OcticonComponent.new(icon: :file_directory, size: :small, mr: 1)) %>
-          <%= render(Primer::LinkComponent.new(
+          <%= render(::Primer::Beta::Octicon.new(icon: :file_directory, size: :small, mr: 1)) %>
+          <%= render(::Primer::Beta::Link.new(
             href: folder_path(document.folder),
             classes: "color-fg-muted"
           )) do %>
@@ -68,14 +68,14 @@
         <!-- File Size -->
         <% if document.file.attached? %>
           <div class="d-flex flex-items-center">
-            <%= render(Primer::OcticonComponent.new(icon: :file, size: :small, mr: 1)) %>
+            <%= render(::Primer::Beta::Octicon.new(icon: :file, size: :small, mr: 1)) %>
             <%= formatted_file_size %>
           </div>
         <% end %>
 
         <!-- Last Modified -->
         <div class="d-flex flex-items-center">
-          <%= render(Primer::OcticonComponent.new(icon: :clock, size: :small, mr: 1)) %>
+          <%= render(::Primer::Beta::Octicon.new(icon: :clock, size: :small, mr: 1)) %>
           <%= time_ago_text %> ago
         </div>
       </div>
@@ -85,7 +85,7 @@
     <% if document.tags.any? %>
       <div class="mt-2">
         <% document.tags.each do |tag| %>
-          <%= render(Primer::LabelComponent.new(
+          <%= render(::Primer::Beta::Label.new(
             scheme: :secondary,
             size: :small,
             classes: "mr-1"

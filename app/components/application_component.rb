@@ -1,9 +1,16 @@
 # Base component class for the Document Management System
-# Inherits from Primer::Component to get access to Primer design system
+# Inherits from ViewComponent::Base and uses Primer CSS classes
 
-class ApplicationComponent < Primer::Component
+# Base component class for the Document Management System
+# Inherits from ViewComponent::Base and integrates with Primer design system
+
+class ApplicationComponent < ViewComponent::Base
   # Include Rails helpers if needed
   include Rails.application.routes.url_helpers
+  include ActionView::Helpers::DateHelper
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::DateHelper
+  include ActionView::Helpers::TextHelper
   
   # Define common system arguments
   DEFAULT_SYSTEM_ARGUMENTS = {
@@ -15,6 +22,11 @@ class ApplicationComponent < Primer::Component
 
   def merge_system_arguments(args)
     DEFAULT_SYSTEM_ARGUMENTS.merge(args)
+  end
+  
+  # Helper method to validate and fallback for enum-like values
+  def fetch_or_fallback(allowed_values, value, fallback)
+    allowed_values.include?(value) ? value : fallback
   end
   
   # Helper method for consistent spacing
