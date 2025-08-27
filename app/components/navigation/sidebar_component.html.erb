@@ -1,4 +1,4 @@
-<nav class="<%= sidebar_classes %>">
+<nav class="<%= sidebar_classes %>" id="sidebar">
   <div class="SideNav-items">
     <!-- Main Navigation -->
     <% navigation_items.each do |item| %>
@@ -21,19 +21,15 @@
             <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
           <% end %>
         </svg>
-        <% unless collapsed? %>
-          <span><%= item[:label] %></span>
-        <% end %>
+        <span class="sidebar-text"><%= item[:label] %></span>
       <% end %>
     <% end %>
 
     <!-- User Section -->
     <% if user_navigation_items.any? %>
-      <% unless collapsed? %>
-        <div class="SideNav-item">
-          <span class="color-fg-muted f6 text-uppercase text-bold">User</span>
-        </div>
-      <% end %>
+      <div class="SideNav-item sidebar-section-header">
+        <span class="color-fg-muted f6 text-uppercase text-bold sidebar-text">User</span>
+      </div>
       
       <% user_navigation_items.each do |item| %>
         <%= link_to item[:path], 
@@ -55,20 +51,16 @@
               <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
             <% end %>
           </svg>
-          <% unless collapsed? %>
-            <span><%= item[:label] %></span>
-          <% end %>
+          <span class="sidebar-text"><%= item[:label] %></span>
         <% end %>
       <% end %>
     <% end %>
 
     <!-- Admin Section -->
     <% if admin_navigation_items.any? %>
-      <% unless collapsed? %>
-        <div class="SideNav-item">
-          <span class="color-fg-muted f6 text-uppercase text-bold">Admin</span>
-        </div>
-      <% end %>
+      <div class="SideNav-item sidebar-section-header">
+        <span class="color-fg-muted f6 text-uppercase text-bold sidebar-text">Admin</span>
+      </div>
       
       <% admin_navigation_items.each do |item| %>
         <%= link_to item[:path], 
@@ -91,31 +83,108 @@
               <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
             <% end %>
           </svg>
-          <% unless collapsed? %>
-            <span><%= item[:label] %></span>
-          <% end %>
+          <span class="sidebar-text"><%= item[:label] %></span>
         <% end %>
       <% end %>
     <% end %>
   </div>
 
-  <!-- Sidebar Toggle (for responsive) -->
+  <!-- Sidebar Toggle -->
   <div class="SideNav-items border-top mt-auto pt-3">
     <button class="btn btn-sm btn-outline width-full" 
-            onclick="toggleSidebar()">
-      <svg class="octicon octicon-<%= collapsed? ? 'chevron-right' : 'chevron-left' %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            onclick="toggleSidebar()" 
+            title="Toggle sidebar">
+      <svg class="octicon octicon-chevron-left toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
         <path d="M9.78 12.53a.75.75 0 0 1-1.06 0L4.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L6.81 7h7.44a.75.75 0 0 1 0 1.5H6.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
       </svg>
-      <% unless collapsed? %>
-        <span class="ml-2">Collapse</span>
-      <% end %>
+      <span class="sidebar-text ml-2">Collapse</span>
     </button>
   </div>
 </nav>
 
+<style>
+/* Sidebar collapse styles */
+.SideNav--narrow {
+  width: 60px !important;
+  min-width: 60px !important;
+}
+
+.SideNav--narrow .sidebar-text {
+  display: none !important;
+}
+
+.SideNav--narrow .sidebar-section-header {
+  display: none !important;
+}
+
+.SideNav--narrow .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.SideNav--narrow .SideNav-item {
+  justify-content: center !important;
+  padding: 8px !important;
+}
+
+.SideNav--narrow .SideNav-item svg {
+  margin-right: 0 !important;
+}
+
+/* Hover tooltips for collapsed sidebar */
+.SideNav--narrow .SideNav-item {
+  position: relative;
+}
+
+.SideNav--narrow .SideNav-item:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #24292f;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-left: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.SideNav--narrow .SideNav-item:hover::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 4px solid transparent;
+  border-right-color: #24292f;
+  margin-left: 4px;
+  z-index: 1000;
+}
+
+/* Smooth transitions */
+.SideNav {
+  transition: width 0.3s ease, min-width 0.3s ease;
+}
+
+.SideNav-item {
+  transition: padding 0.3s ease, justify-content 0.3s ease;
+}
+
+.SideNav-item svg {
+  transition: margin-right 0.3s ease;
+}
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+}
+</style>
+
 <script>
 function toggleSidebar() {
-  const sidebar = document.querySelector('.SideNav');
+  const sidebar = document.getElementById('sidebar');
   const isCollapsed = sidebar.classList.contains('SideNav--narrow');
   
   if (isCollapsed) {
@@ -129,11 +198,20 @@ function toggleSidebar() {
 
 // Restore sidebar state on page load
 document.addEventListener('DOMContentLoaded', function() {
-  const sidebar = document.querySelector('.SideNav');
+  const sidebar = document.getElementById('sidebar');
   const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
   
   if (isCollapsed) {
     sidebar.classList.add('SideNav--narrow');
   }
+  
+  // Add tooltips to sidebar items
+  const sidebarItems = sidebar.querySelectorAll('.SideNav-item a');
+  sidebarItems.forEach(item => {
+    const text = item.querySelector('.sidebar-text');
+    if (text) {
+      item.setAttribute('data-title', text.textContent.trim());
+    }
+  });
 });
 </script>
