@@ -40,18 +40,19 @@
           <%= form.label :tags_id_in, "Tags", class: "form-label" %>
           <div class="d-flex flex-wrap gap-2">
             <% tag_options.each do |tag| %>
-              <%= render(Primer::Beta::Button.new(
-                tag: :label,
-                variant: tag[:active] ? :primary : :secondary,
-                size: :small,
-                classes: "cursor-pointer"
-              )) do %>
+              <label class="cursor-pointer">
                 <%= form.check_box :tags_id_in, 
                     { multiple: true, checked: tag[:active], class: "d-none" }, 
                     tag[:value], 
                     "" %>
-                <%= tag[:label] %>
-              <% end %>
+                <%= render(Primer::Beta::Button.new(
+                  scheme: tag[:active] ? :primary : :secondary,
+                  size: :small,
+                  classes: "cursor-pointer"
+                )) do %>
+                  <%= tag[:label] %>
+                <% end %>
+              </label>
             <% end %>
           </div>
         </div>
@@ -59,7 +60,7 @@
 
       <!-- Action Buttons -->
       <div class="d-flex gap-2">
-        <%= render(Primer::Beta::Button.new(type: :submit, variant: :primary)) { "Apply Filters" } %>
+        <%= render(Primer::Beta::Button.new(type: :submit, scheme: :primary)) { "Apply Filters" } %>
         <%= link_to "Clear", documents_path, 
             class: "btn btn-secondary",
             data: { turbo_method: :get } %>
