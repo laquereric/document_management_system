@@ -21,6 +21,15 @@ class User < ApplicationRecord
   scope :team_leaders, -> { where(role: 'team_leader') }
   scope :members, -> { where(role: 'member') }
 
+  # Ransack configuration
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name email role created_at updated_at organization_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[organization teams authored_documents activity_logs team_memberships led_teams]
+  end
+
   def full_name
     name
   end
