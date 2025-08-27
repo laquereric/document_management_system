@@ -6,7 +6,22 @@
       </h4>
       <% if has_file? %>
         <span class="Label Label--secondary">
-          <%= octicon file_icon, class: "mr-1" %>
+          <svg class="octicon octicon-<%= file_icon %> mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% case file_icon %>
+            <% when "file-pdf" %>
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v6.086A1.75 1.75 0 0 1 12.25 13h-8.5A1.75 1.75 0 0 1 2 11.25V1.75Z"></path>
+            <% when "file-word" %>
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v6.086A1.75 1.75 0 0 1 12.25 13h-8.5A1.75 1.75 0 0 1 2 11.25V1.75Z"></path>
+            <% when "file-spreadsheet" %>
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v6.086A1.75 1.75 0 0 1 12.25 13h-8.5A1.75 1.75 0 0 1 2 11.25V1.75Z"></path>
+            <% when "file-presentation" %>
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v6.086A1.75 1.75 0 0 1 12.25 13h-8.5A1.75 1.75 0 0 1 2 11.25V1.75Z"></path>
+            <% when "file-text" %>
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v6.086A1.75 1.75 0 0 1 12.25 13h-8.5A1.75 1.75 0 0 1 2 11.25V1.75Z"></path>
+            <% else %>
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v6.086A1.75 1.75 0 0 1 12.25 13h-8.5A1.75 1.75 0 0 1 2 11.25V1.75Z"></path>
+            <% end %>
+          </svg>
           <%= document.file.filename.extension.upcase %>
         </span>
       <% end %>
@@ -27,15 +42,21 @@
 
     <div class="d-flex flex-items-center color-fg-muted text-small">
       <span class="mr-3">
-        <%= octicon "person", class: "mr-1" %>
+        <svg class="octicon octicon-person mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
+        </svg>
         <%= author_name %>
       </span>
       <span class="mr-3">
-        <%= octicon "folder", class: "mr-1" %>
+        <svg class="octicon octicon-folder mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+        </svg>
         <%= folder_name %>
       </span>
       <span>
-        <%= octicon "clock", class: "mr-1" %>
+        <svg class="octicon octicon-clock mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V3.442a.25.25 0 0 1 .379-.215Z"></path>
+        </svg>
         <%= formatted_date %>
       </span>
     </div>
@@ -46,11 +67,15 @@
       <div class="d-flex flex-items-center flex-justify-between">
         <div class="d-flex flex-items-center gap-2">
           <%= link_to document_path(document), class: "btn btn-sm" do %>
-            <%= octicon "eye", class: "mr-1" %>
+            <svg class="octicon octicon-eye mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2ZM8 1c-2.314 0-4.29.99-5.824 2.246C1.343 5.682.5 7.295.18 8.23a2.12 2.12 0 0 0 0 1.54c.32.935 1.163 2.548 2.996 3.984C3.71 13.01 5.686 14 8 14c2.314 0 4.29-.99 5.824-2.246C15.657 10.318 16.5 8.705 16.82 7.77a2.12 2.12 0 0 0 0-1.54c-.32-.935-1.163-2.548-2.996-3.984C12.29 2.99 10.314 2 8 2Zm0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"></path>
+            </svg>
             View
           <% end %>
           <%= link_to edit_document_path(document), class: "btn btn-sm" do %>
-            <%= octicon "pencil", class: "mr-1" %>
+            <svg class="octicon octicon-pencil mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
+            </svg>
             Edit
           <% end %>
           <%= link_to document_path(document), 
@@ -60,20 +85,26 @@
                 confirm: "Are you sure you want to delete '#{document.title}'?",
                 turbo_method: :delete
               } do %>
-            <%= octicon "trash", class: "mr-1" %>
+            <svg class="octicon octicon-trash mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M6.5 1.75V3h3V1.75a.75.75 0 0 1 1.5 0V3h2.25a.75.75 0 0 1 0 1.5H13v8.75A1.75 1.75 0 0 1 11.25 15h-6.5A1.75 1.75 0 0 1 3 13.25V4.5H1.75a.75.75 0 0 1 0-1.5H4V1.75a.75.75 0 0 1 1.5 0ZM4.5 4.5v8.75c0 .138.112.25.25.25h6.5a.25.25 0 0 0 .25-.25V4.5h-7ZM7 6.75a.75.75 0 0 1 1.5 0v5a.75.75 0 0 1-1.5 0v-5Zm3 0a.75.75 0 0 1 1.5 0v5a.75.75 0 0 1-1.5 0v-5Z"></path>
+            </svg>
             Delete
           <% end %>
         </div>
         <div class="d-flex flex-items-center gap-2">
           <% if document.url.present? %>
             <%= link_to document.url, target: "_blank", class: "btn btn-sm btn-outline" do %>
-              <%= octicon "link-external", class: "mr-1" %>
+              <svg class="octicon octicon-link-external mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M3.75 2A1.75 1.75 0 0 0 2 3.75v8.5A1.75 1.75 0 0 0 3.75 14h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5Zm10.5-1h-3.5a.75.75 0 0 0 0 1.5h2.69l-5.97 5.97a.75.75 0 1 0 1.06 1.06l5.97-5.97v2.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75Z"></path>
+              </svg>
               External
             <% end %>
           <% end %>
           <% if has_file? %>
             <%= link_to rails_blob_path(document.file, disposition: "attachment"), class: "btn btn-sm btn-outline" do %>
-              <%= octicon "download", class: "mr-1" %>
+              <svg class="octicon octicon-download mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14H2.75Zm7-10.25v7.5a.75.75 0 0 1-1.5 0v-7.5L5.22 9.22a.75.75 0 1 1-1.06-1.06l3.5-3.5a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 0 1-1.06 1.06L9.75 3.75Z"></path>
+              </svg>
               Download
             <% end %>
           <% end %>
