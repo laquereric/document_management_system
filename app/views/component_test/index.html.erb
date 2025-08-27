@@ -198,7 +198,7 @@
           <div class="mb-2">
             <% if @sample_tags&.any? %>
               <% @sample_tags.each do |tag| %>
-                <%= render(Tags::TagItemComponent.new(tag: tag)) %>
+                <%= render(Ui::TagItemComponent.new(tag: tag)) %>
               <% end %>
             <% else %>
               <span class="badge bg-secondary">Sample Tag</span>
