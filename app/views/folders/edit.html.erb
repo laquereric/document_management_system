@@ -1,2 +1,29 @@
-<h1>Folders#edit</h1>
-<p>Find me in app/views/folders/edit.html.erb</p>
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center mb-4">
+    <%= link_to folder_path(@folder), class: "btn btn-outline mr-3" do %>
+      <svg class="octicon octicon-arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
+      </svg>
+      Back to Folder
+    <% end %>
+    <div>
+      <h1 class="h2">Edit Folder</h1>
+      <p class="color-fg-muted">Update folder details and settings</p>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="Box">
+    <div class="Box-header">
+      <h3 class="Box-title">Folder Details</h3>
+    </div>
+    <div class="Box-body">
+      <%= render(Forms::FolderFormComponent.new(
+        folder: @folder,
+        submit_text: "Update Folder",
+        cancel_url: folder_path(@folder)
+      )) %>
+    </div>
+  </div>
+</div>

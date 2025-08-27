@@ -1,2 +1,143 @@
-<h1>Folders#show</h1>
-<p>Find me in app/views/folders/show.html.erb</p>
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center justify-content-between mb-4">
+    <div class="d-flex flex-items-center">
+      <%= link_to folders_path, class: "btn btn-outline mr-3" do %>
+        <svg class="octicon octicon-arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
+        </svg>
+        Back to Folders
+      <% end %>
+      <div>
+        <h1 class="h2">
+          <svg class="octicon octicon-file-directory mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+          </svg>
+          <%= @folder.name %>
+        </h1>
+        <% if @folder.description.present? %>
+          <p class="color-fg-muted"><%= @folder.description %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to new_folder_document_path(@folder), class: "btn btn-primary" do %>
+        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+        </svg>
+        New Document
+      <% end %>
+      <%= link_to edit_folder_path(@folder), class: "btn btn-outline" do %>
+        <svg class="octicon octicon-pencil mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086ZM8.293 4.293a.25.25 0 0 0-.354 0l-3.5 3.5a.25.25 0 0 0-.073.177v.5a.25.25 0 0 0 .25.25h.5a.25.25 0 0 0 .177-.073l3.5-3.5a.25.25 0 0 0 0-.354Z"></path>
+          <path d="M1.427 11.013a1.75 1.75 0 0 1 0-2.474l.897-.897a.75.75 0 0 1 .53-.22H4.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 0 .75-.75v-1.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 .53.22l.897.897a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H9.5a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H4.75a.75.75 0 0 1-.53-.22l-.897-.897Z"></path>
+        </svg>
+        Edit Folder
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div class="Box">
+      <div class="Box-body text-center">
+        <div class="h3 text-bold text-blue">
+          <svg class="octicon octicon-file-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25V1.75Z"></path>
+          </svg>
+          <%= @documents.total_count %>
+        </div>
+        <div class="text-small color-fg-muted">Documents</div>
+      </div>
+    </div>
+    
+    <div class="Box">
+      <div class="Box-body text-center">
+        <div class="h3 text-bold text-green">
+          <svg class="octicon octicon-file-directory" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+          </svg>
+          <%= @subfolders.count %>
+        </div>
+        <div class="text-small color-fg-muted">Subfolders</div>
+      </div>
+    </div>
+    
+    <div class="Box">
+      <div class="Box-body text-center">
+        <div class="h3 text-bold text-purple">
+          <svg class="octicon octicon-people" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
+          </svg>
+          <%= @folder.team&.name || "Unknown" %>
+        </div>
+        <div class="text-small color-fg-muted">Team</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Tabs -->
+  <div class="Box">
+    <div class="Box-header">
+      <ul class="nav nav-tabs nav-tabs-divider">
+        <li class="nav-item">
+          <a class="nav-link active" href="#documents" data-bs-toggle="tab">
+            <svg class="octicon octicon-file-text mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25V1.75Z"></path>
+            </svg>
+            Documents (<%= @documents.total_count %>)
+          </a>
+        </li>
+        <% if @subfolders.any? %>
+          <li class="nav-item">
+            <a class="nav-link" href="#subfolders" data-bs-toggle="tab">
+              <svg class="octicon octicon-file-directory mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+              </svg>
+              Subfolders (<%= @subfolders.count %>)
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <div class="Box-body">
+      <div class="tab-content">
+        <!-- Documents Tab -->
+        <div class="tab-pane active" id="documents">
+          <% if @documents.any? %>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <% @documents.each do |document| %>
+                <%= render(Document::CardComponent.new(document: document)) %>
+              <% end %>
+            </div>
+            
+            <!-- Pagination -->
+            <% if @documents.respond_to?(:current_page) %>
+              <div class="d-flex flex-items-center justify-content-center mt-4">
+                <%= paginate @documents, theme: 'twitter-bootstrap-4' %>
+              </div>
+            <% end %>
+          <% else %>
+            <%= render(Ui::EmptyStateComponent.new(
+              title: "No documents in this folder",
+              description: "Get started by adding your first document",
+              icon: "file-text"
+            )) %>
+          <% end %>
+        </div>
+        
+        <!-- Subfolders Tab -->
+        <% if @subfolders.any? %>
+          <div class="tab-pane" id="subfolders">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <% @subfolders.each do |subfolder| %>
+                <%= render(Folder::CardComponent.new(folder: subfolder)) %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

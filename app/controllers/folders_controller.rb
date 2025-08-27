@@ -1,6 +1,5 @@
 class FoldersController < ApplicationController
   before_action :set_folder, only: [:show, :edit, :update, :destroy, :contents]
-  before_action :set_team, only: [:new, :create]
   before_action :ensure_user_can_access_folder, only: [:show, :edit, :update, :destroy, :contents]
   
   def index
@@ -24,11 +23,11 @@ class FoldersController < ApplicationController
   end
 
   def new
-    @folder = @team.folders.build
+    @folder = Folder.new
   end
 
   def create
-    @folder = @team.folders.build(folder_params)
+    @folder = Folder.new(folder_params)
     
     if @folder.save
       redirect_to @folder, notice: 'Folder was successfully created.'
@@ -70,10 +69,6 @@ class FoldersController < ApplicationController
     @folder = Folder.find(params[:id])
   end
 
-  def set_team
-    @team = Team.find(params[:team_id]) if params[:team_id]
-  end
-
   def ensure_user_can_access_folder
     unless current_user.admin? || @folder.team.members.include?(current_user)
       redirect_to folders_path, alert: 'You do not have permission to access this folder.'
@@ -81,6 +76,6 @@ class FoldersController < ApplicationController
   end
 
   def folder_params
-    params.require(:folder).permit(:name, :description, :parent_folder_id)
+    params.require(:folder).permit(:name, :description, :team_id, :parent_folder_id)
   end
 end

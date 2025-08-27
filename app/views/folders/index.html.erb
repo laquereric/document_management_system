@@ -1,2 +1,77 @@
-<h1>Folders#index</h1>
-<p>Find me in app/views/folders/index.html.erb</p>
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center justify-content-between mb-4">
+    <div>
+      <h1 class="h2">Folders</h1>
+      <p class="color-fg-muted">Manage and organize your document folders</p>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to new_folder_path, class: "btn btn-primary" do %>
+        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+        </svg>
+        New Folder
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Search & Filters</h3>
+    </div>
+    <div class="Box-body">
+      <%= search_form_for @q, url: folders_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
+        <div class="flex-1">
+          <%= f.label :name_cont, "Name", class: "form-label sr-only" %>
+          <%= f.text_field :name_cont, class: "form-control", placeholder: "Search folders..." %>
+        </div>
+        <div class="flex-1">
+          <%= f.label :team_name_cont, "Team", class: "form-label sr-only" %>
+          <%= f.text_field :team_name_cont, class: "form-control", placeholder: "Filter by team..." %>
+        </div>
+        <div>
+          <%= f.submit "Search", class: "btn btn-primary" %>
+        </div>
+        <div>
+          <%= link_to "Clear", folders_path, class: "btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="mb-4">
+    <div class="d-flex flex-items-center justify-content-between mb-3">
+      <h3 class="h4">
+        <%= pluralize(@folders.total_count, 'folder') %>
+        <% if params[:q]&.values&.any?(&:present?) %>
+          found
+        <% end %>
+      </h3>
+    </div>
+
+    <% if @folders.any? %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% @folders.each do |folder| %>
+          <%= render(Folder::CardComponent.new(folder: folder)) %>
+        <% end %>
+      </div>
+
+      <!-- Pagination -->
+      <% if @folders.respond_to?(:current_page) %>
+        <div class="d-flex flex-items-center justify-content-center mt-4">
+          <%= paginate @folders, theme: 'twitter-bootstrap-4' %>
+        </div>
+      <% end %>
+    <% else %>
+      <%= render(Ui::EmptyStateComponent.new(
+        title: "No folders found",
+        description: params[:q]&.values&.any?(&:present?) ? 
+          "Try adjusting your search criteria" : 
+          "Get started by creating your first folder",
+        icon: "file-directory"
+      )) %>
+    <% end %>
+  </div>
+</div>
