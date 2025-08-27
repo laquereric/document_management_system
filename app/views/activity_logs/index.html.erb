@@ -1,2 +1,156 @@
-<h1>ActivityLogs#index</h1>
-<p>Find me in app/views/activity_logs/index.html.erb</p>
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center justify-content-between mb-4">
+    <div>
+      <h1 class="h2">Activity Logs</h1>
+      <p class="color-fg-muted">Track and monitor system activity and document changes</p>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Search & Filters</h3>
+    </div>
+    <div class="Box-body">
+      <%= search_form_for @q, url: activity_logs_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
+        <div class="flex-1">
+          <%= f.label :action_cont, "Action", class: "form-label sr-only" %>
+          <%= f.text_field :action_cont, class: "form-control", placeholder: "Search by action..." %>
+        </div>
+        <div class="flex-1">
+          <%= f.label :document_title_cont, "Document", class: "form-label sr-only" %>
+          <%= f.text_field :document_title_cont, class: "form-control", placeholder: "Filter by document..." %>
+        </div>
+        <div class="flex-1">
+          <%= f.label :user_name_cont, "User", class: "form-label sr-only" %>
+          <%= f.text_field :user_name_cont, class: "form-control", placeholder: "Filter by user..." %>
+        </div>
+        <div>
+          <%= f.submit "Search", class: "btn btn-primary" %>
+        </div>
+        <div>
+          <%= link_to "Clear", activity_logs_path, class: "btn" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Activity Logs List -->
+  <div class="Box">
+    <div class="Box-header d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">
+        Recent Activity
+        <% if @activity_logs.respond_to?(:total_count) %>
+          <span class="Counter"><%= @activity_logs.total_count %></span>
+        <% end %>
+      </h3>
+    </div>
+
+    <div class="Box-body">
+      <% if @activity_logs.any? %>
+        <div class="Timeline">
+          <% @activity_logs.each do |activity_log| %>
+            <div class="TimelineItem">
+              <div class="TimelineItem-badge">
+                <% case activity_log.action %>
+                <% when 'created' %>
+                  <svg class="octicon octicon-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+                  </svg>
+                <% when 'updated' %>
+                  <svg class="octicon octicon-pencil" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086ZM8.293 4.293a.25.25 0 0 0-.354 0l-3.5 3.5a.25.25 0 0 0-.073.177v.5a.25.25 0 0 0 .25.25h.5a.25.25 0 0 0 .177-.073l3.5-3.5a.25.25 0 0 0 0-.354Z"></path>
+                    <path d="M1.427 11.013a1.75 1.75 0 0 1 0-2.474l.897-.897a.75.75 0 0 1 .53-.22H4.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 0 .75-.75v-1.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 .53.22l.897.897a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H9.5a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H4.75a.75.75 0 0 1-.53-.22l-.897-.897Z"></path>
+                  </svg>
+                <% when 'status_change' %>
+                  <svg class="octicon octicon-arrow-switch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M5.22 14.78a.75.75 0 0 1-1.06 0L.47 11.03a.75.75 0 0 1 0-1.06l3.75-3.75a.75.75 0 0 1 1.06 1.06L2.81 10.5H14.5a.75.75 0 0 1 0 1.5H2.81l2.47 2.47a.75.75 0 0 1 0 1.06Zm5.56-9.5a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06l2.47-2.47H1.5a.75.75 0 0 1 0-1.5h11.69l-2.47-2.47a.75.75 0 0 1 0-1.06Z"></path>
+                  </svg>
+                <% else %>
+                  <svg class="octicon octicon-dot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M8 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"></path>
+                  </svg>
+                <% end %>
+              </div>
+              
+              <div class="TimelineItem-body">
+                <div class="d-flex flex-items-center justify-content-between">
+                  <div class="flex-1">
+                    <div class="d-flex flex-items-center gap-2 mb-1">
+                      <span class="text-bold">
+                        <%= activity_log.user&.name || "Unknown User" %>
+                      </span>
+                      <span class="color-fg-muted">
+                        <%= activity_log.action_description %>
+                      </span>
+                    </div>
+                    
+                    <% if activity_log.document %>
+                      <div class="d-flex flex-items-center gap-2 mb-1">
+                        <svg class="octicon octicon-file-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                          <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25V1.75Z"></path>
+                        </svg>
+                        <%= link_to activity_log.document.title, document_path(activity_log.document), class: "Link--primary" %>
+                      </div>
+                    <% end %>
+                    
+                    <% if activity_log.notes.present? %>
+                      <div class="color-fg-muted text-small">
+                        <%= activity_log.notes %>
+                      </div>
+                    <% end %>
+                  </div>
+                  
+                  <div class="text-small color-fg-muted">
+                    <%= time_ago_in_words(activity_log.created_at) %> ago
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Pagination -->
+        <% if @activity_logs.respond_to?(:current_page) %>
+          <div class="d-flex flex-justify-center mt-4">
+            <nav class="paginate-container" aria-label="Pagination">
+              <div class="pagination">
+                <% if @activity_logs.prev_page %>
+                  <%= link_to "Previous", url_for(page: @activity_logs.prev_page), class: "previous_page", rel: "prev" %>
+                <% else %>
+                  <span class="previous_page disabled">Previous</span>
+                <% end %>
+                
+                <% @activity_logs.total_pages.times do |page_num| %>
+                  <% page_num += 1 %>
+                  <% if page_num == @activity_logs.current_page %>
+                    <em class="current"><%= page_num %></em>
+                  <% elsif page_num == 1 || page_num == @activity_logs.total_pages || (page_num >= @activity_logs.current_page - 2 && page_num <= @activity_logs.current_page + 2) %>
+                    <%= link_to page_num, url_for(page: page_num) %>
+                  <% elsif page_num == @activity_logs.current_page - 3 || page_num == @activity_logs.current_page + 3 %>
+                    <span class="gap">…</span>
+                  <% end %>
+                <% end %>
+                
+                <% if @activity_logs.next_page %>
+                  <%= link_to "Next", url_for(page: @activity_logs.next_page), class: "next_page", rel: "next" %>
+                <% else %>
+                  <span class="next_page disabled">Next</span>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+        <% end %>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Activity Found",
+          description: params[:q]&.values&.any?(&:present?) ? 
+            "Try adjusting your search criteria" : 
+            "Activity will appear here as users interact with documents",
+          icon: "pulse"
+        )) %>
+      <% end %>
+    </div>
+  </div>
+</div>

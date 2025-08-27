@@ -13,6 +13,15 @@ class ActivityLog < ApplicationRecord
   scope :by_document, ->(document) { where(document: document) }
   scope :by_user, ->(user) { where(user: user) }
 
+  # Ransack configuration
+  def self.ransackable_attributes(auth_object = nil)
+    %w[action notes created_at updated_at]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[document user old_status new_status]
+  end
+
   def action_description
     case action
     when 'status_change'
