@@ -1,2 +1,86 @@
-<h1>Organizations#index</h1>
-<p>Find me in app/views/organizations/index.html.erb</p>
+<% content_for :title, "Organizations" %>
+
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
+    <div>
+      <h1 class="h2">Organizations</h1>
+      <p class="color-fg-muted">Manage and organize your organizations</p>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to new_organization_path, class: "btn btn-primary" do %>
+        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+        </svg>
+        New Organization
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Organizations Grid -->
+  <div class="Box">
+    <div class="Box-header d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">
+        Organizations
+        <% if @organizations.respond_to?(:total_count) %>
+          <span class="Counter"><%= @organizations.total_count %></span>
+        <% end %>
+      </h3>
+    </div>
+
+    <div class="Box-body">
+      <% if @organizations&.any? %>
+        <div class="row g-3">
+          <% @organizations.each do |organization| %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <%= render(Organization::CardComponent.new(organization: organization)) %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Pagination -->
+        <% if @organizations.respond_to?(:current_page) %>
+          <div class="d-flex flex-justify-center mt-4">
+            <nav class="paginate-container" aria-label="Pagination">
+              <div class="pagination">
+                <% if @organizations.prev_page %>
+                  <%= link_to "Previous", url_for(page: @organizations.prev_page), class: "previous_page", rel: "prev" %>
+                <% else %>
+                  <span class="previous_page disabled">Previous</span>
+                <% end %>
+                
+                <% @organizations.total_pages.times do |page_num| %>
+                  <% page_num += 1 %>
+                  <% if page_num == @organizations.current_page %>
+                    <em class="current"><%= page_num %></em>
+                  <% elsif page_num == 1 || page_num == @organizations.total_pages || (page_num >= @organizations.current_page - 2 && page_num <= @organizations.current_page + 2) %>
+                    <%= link_to page_num, url_for(page: page_num) %>
+                  <% elsif page_num == @organizations.current_page - 3 || page_num == @organizations.current_page + 3 %>
+                    <span class="gap">…</span>
+                  <% end %>
+                <% end %>
+                
+                <% if @organizations.next_page %>
+                  <%= link_to "Next", url_for(page: @organizations.next_page), class: "next_page", rel: "next" %>
+                <% else %>
+                  <span class="next_page disabled">Next</span>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+        <% end %>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Organizations Found",
+          description: "Get started by creating your first organization.",
+          icon: "organization",
+          action: {
+            text: "Create Organization",
+            url: new_organization_path,
+            class: "btn btn-primary"
+          }
+        )) %>
+      <% end %>
+    </div>
+  </div>
+</div>

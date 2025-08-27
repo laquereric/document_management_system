@@ -1,2 +1,86 @@
-<h1>Tags#index</h1>
-<p>Find me in app/views/tags/index.html.erb</p>
+<% content_for :title, "Tags" %>
+
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
+    <div>
+      <h1 class="h2">Tags</h1>
+      <p class="color-fg-muted">Manage and organize your document tags</p>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to new_tag_path, class: "btn btn-primary" do %>
+        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+        </svg>
+        New Tag
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Tags Grid -->
+  <div class="Box">
+    <div class="Box-header d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">
+        Tags
+        <% if @tags.respond_to?(:total_count) %>
+          <span class="Counter"><%= @tags.total_count %></span>
+        <% end %>
+      </h3>
+    </div>
+
+    <div class="Box-body">
+      <% if @tags&.any? %>
+        <div class="row g-3">
+          <% @tags.each do |tag| %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <%= render(Tag::CardComponent.new(tag: tag)) %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Pagination -->
+        <% if @tags.respond_to?(:current_page) %>
+          <div class="d-flex flex-justify-center mt-4">
+            <nav class="paginate-container" aria-label="Pagination">
+              <div class="pagination">
+                <% if @tags.prev_page %>
+                  <%= link_to "Previous", url_for(page: @tags.prev_page), class: "previous_page", rel: "prev" %>
+                <% else %>
+                  <span class="previous_page disabled">Previous</span>
+                <% end %>
+                
+                <% @tags.total_pages.times do |page_num| %>
+                  <% page_num += 1 %>
+                  <% if page_num == @tags.current_page %>
+                    <em class="current"><%= page_num %></em>
+                  <% elsif page_num == 1 || page_num == @tags.total_pages || (page_num >= @tags.current_page - 2 && page_num <= @tags.current_page + 2) %>
+                    <%= link_to page_num, url_for(page: page_num) %>
+                  <% elsif page_num == @tags.current_page - 3 || page_num == @tags.current_page + 3 %>
+                    <span class="gap">…</span>
+                  <% end %>
+                <% end %>
+                
+                <% if @tags.next_page %>
+                  <%= link_to "Next", url_for(page: @tags.next_page), class: "next_page", rel: "next" %>
+                <% else %>
+                  <span class="next_page disabled">Next</span>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+        <% end %>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Tags Found",
+          description: "Get started by creating your first tag.",
+          icon: "tag",
+          action: {
+            text: "Create Tag",
+            url: new_tag_path,
+            class: "btn btn-primary"
+          }
+        )) %>
+      <% end %>
+    </div>
+  </div>
+</div>

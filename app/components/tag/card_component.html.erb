@@ -1,0 +1,64 @@
+<div class="<%= card_classes %>">
+  <div class="<%= title_classes %>">
+    <div class="d-flex flex-items-center flex-justify-between">
+      <h4 class="mb-0">
+        <%= link_to tag.name, tag_path(tag), class: "Link--primary" %>
+      </h4>
+      <div class="d-flex flex-items-center">
+        <span class="Label Label--secondary" style="<%= color_style %>">
+          <%= tag.usage_count %> documents
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="<%= content_classes %>">
+    <div class="d-flex flex-items-center color-fg-muted text-small">
+      <span class="mr-3">
+        <svg class="octicon octicon-tag mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"></path>
+        </svg>
+        <%= tag.usage_count %> documents tagged
+      </span>
+      <span>
+        <svg class="octicon octicon-clock mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V3.442a.25.25 0 0 1 .379-.215Z"></path>
+        </svg>
+        <%= formatted_date %>
+      </span>
+    </div>
+  </div>
+
+  <% if show_actions %>
+    <div class="<%= footer_classes %>">
+      <div class="d-flex flex-items-center flex-justify-between">
+        <div class="d-flex flex-items-center gap-2">
+          <%= link_to tag_path(tag), class: "btn btn-sm" do %>
+            <svg class="octicon octicon-eye mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2ZM8 1c-2.314 0-4.29.99-5.824 2.246C1.343 5.682.5 7.295.18 8.23a2.12 2.12 0 0 0 0 1.54c.32.935 1.163 2.548 2.996 3.984C3.71 13.01 5.686 14 8 14c2.314 0 4.29-.99 5.824-2.246C15.657 10.318 16.5 8.705 16.82 7.77a2.12 2.12 0 0 0 0-1.54c-.32-.935-1.163-2.548-2.996-3.984C12.29 2.99 10.314 2 8 2Zm0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm0 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"></path>
+            </svg>
+            View
+          <% end %>
+          <%= link_to edit_tag_path(tag), class: "btn btn-sm" do %>
+            <svg class="octicon octicon-pencil mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
+            </svg>
+            Edit
+          <% end %>
+          <%= link_to tag_path(tag), 
+              method: :delete, 
+              class: "btn btn-sm btn-danger",
+              data: { 
+                confirm: "Are you sure you want to delete '#{tag.name}'?",
+                turbo_method: :delete
+              } do %>
+            <svg class="octicon octicon-trash mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M6.5 1.75V3h3V1.75a.75.75 0 0 1 1.5 0V3h2.25a.75.75 0 0 1 0 1.5H13v8.75A1.75 1.75 0 0 1 11.25 15h-6.5A1.75 1.75 0 0 1 3 13.25V4.5H1.75a.75.75 0 0 1 0-1.5H4V1.75a.75.75 0 0 1 1.5 0ZM4.5 4.5v8.75c0 .138.112.25.25.25h6.5a.25.25 0 0 0 .25-.25V4.5h-7ZM7 6.75a.75.75 0 0 1 1.5 0v5a.75.75 0 0 1-1.5 0v-5Zm3 0a.75.75 0 0 1 1.5 0v5a.75.75 0 0 1-1.5 0v-5Z"></path>
+            </svg>
+            Delete
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

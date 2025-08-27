@@ -1,2 +1,118 @@
-<h1>Organizations#show</h1>
-<p>Find me in app/views/organizations/show.html.erb</p>
+<% content_for :title, @organization.name %>
+
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
+    <div>
+      <h1 class="h2"><%= @organization.name %></h1>
+      <p class="color-fg-muted"><%= @organization.description %></p>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to edit_organization_path(@organization), class: "btn" do %>
+        <svg class="octicon octicon-pencil mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
+        </svg>
+        Edit Organization
+      <% end %>
+      <%= link_to organizations_path, class: "btn" do %>
+        <svg class="octicon octicon-arrow-left mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
+        </svg>
+        Back to Organizations
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <%= render(Dashboard::StatsCardComponent.new(
+        title: "Total Users",
+        value: @organization.total_users,
+        icon: "people",
+        color: "blue"
+      )) %>
+    </div>
+    <div class="col-md-6">
+      <%= render(Dashboard::StatsCardComponent.new(
+        title: "Total Teams",
+        value: @organization.total_teams,
+        icon: "organization",
+        color: "green"
+      )) %>
+    </div>
+  </div>
+
+  <!-- Teams Section -->
+  <div class="Box mb-4">
+    <div class="Box-header d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">
+        Teams
+        <span class="Counter"><%= @teams.count %></span>
+      </h3>
+      <%= link_to new_organization_team_path(@organization), class: "btn btn-sm btn-primary" do %>
+        <svg class="octicon octicon-plus mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+        </svg>
+        New Team
+      <% end %>
+    </div>
+    <div class="Box-body">
+      <% if @teams.any? %>
+        <div class="row g-3">
+          <% @teams.each do |team| %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <%= render(Teams::TeamCardComponent.new(team: team)) %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Teams",
+          description: "This organization doesn't have any teams yet.",
+          icon: "organization"
+        )) %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Users Section -->
+  <div class="Box">
+    <div class="Box-header d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">
+        Users
+        <span class="Counter"><%= @users.count %></span>
+      </h3>
+    </div>
+    <div class="Box-body">
+      <% if @users.any? %>
+        <div class="row g-3">
+          <% @users.each do |user| %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="Box Box--condensed">
+                <div class="Box-body d-flex flex-items-center">
+                  <div class="avatar avatar-small mr-3">
+                    <span class="avatar-text"><%= user.name.first.upcase %></span>
+                  </div>
+                  <div class="flex-auto">
+                    <h4 class="mb-0">
+                      <%= link_to user.name, user_path(user), class: "Link--primary" %>
+                    </h4>
+                    <p class="color-fg-muted mb-0"><%= user.email %></p>
+                    <span class="Label Label--secondary"><%= user.role.titleize %></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Users",
+          description: "This organization doesn't have any users yet.",
+          icon: "people"
+        )) %>
+      <% end %>
+    </div>
+  </div>
+</div>

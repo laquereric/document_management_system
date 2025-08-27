@@ -1,18 +1,18 @@
-<% content_for :title, "Edit Organization" %>
+<% content_for :title, "New Tag" %>
 
 <div class="container-lg px-3 py-4">
   <!-- Header -->
   <div class="d-flex flex-items-center flex-justify-between mb-4">
     <div>
-      <h1 class="h2">Edit Organization</h1>
-      <p class="color-fg-muted">Update organization details for "<%= @organization.name %>"</p>
+      <h1 class="h2">New Tag</h1>
+      <p class="color-fg-muted">Create a new tag for organizing documents</p>
     </div>
     <div class="d-flex flex-items-center gap-2">
-      <%= link_to @organization, class: "btn" do %>
+      <%= link_to tags_path, class: "btn" do %>
         <svg class="octicon octicon-arrow-left mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
           <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
         </svg>
-        Back to Organization
+        Back to Tags
       <% end %>
     </div>
   </div>
@@ -20,13 +20,13 @@
   <!-- Form -->
   <div class="Box">
     <div class="Box-header">
-      <h3 class="Box-title">Organization Details</h3>
+      <h3 class="Box-title">Tag Details</h3>
     </div>
     <div class="Box-body">
-      <%= render(Forms::OrganizationFormComponent.new(
-        organization: @organization,
-        submit_text: "Update Organization",
-        cancel_url: @organization
+      <%= render(Forms::TagFormComponent.new(
+        tag: @tag,
+        submit_text: "Create Tag",
+        cancel_url: tags_path
       )) %>
     </div>
   </div>
