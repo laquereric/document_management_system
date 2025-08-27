@@ -26,6 +26,11 @@ class Navigation::SidebarComponent < ApplicationComponent
   end
 
   def navigation_items
+    []
+  end
+
+  def user_navigation_items
+    return [] unless current_user
     [
       {
         label: "Dashboard",
@@ -56,6 +61,18 @@ class Navigation::SidebarComponent < ApplicationComponent
         icon: "pulse",
         path: activity_logs_path,
         active: @controller_name == "activity_logs"
+      },
+      {
+        label: "Profile",
+        icon: "person",
+        path: edit_user_registration_path,
+        active: @controller_name == "devise/registrations"
+      },
+      {
+        label: "Users",
+        icon: "people",
+        path: users_path,
+        active: @controller_name == "users"
       }
     ]
   end
@@ -64,7 +81,7 @@ class Navigation::SidebarComponent < ApplicationComponent
     return [] unless current_user&.admin?
     [
       {
-        label: "Admin Dashboard",
+        label: "Dashboard",
         icon: "gear",
         path: admin_root_path,
         active: @controller_name.starts_with?("admin")
