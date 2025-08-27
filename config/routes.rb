@@ -75,7 +75,12 @@ Rails.application.routes.draw do
         patch :toggle_role
       end
     end
-    resources :teams
+    resources :teams do
+      member do
+        patch :add_member
+        patch :remove_member
+      end
+    end
     resources :statuses
     resources :scenario_types
     resources :tags
