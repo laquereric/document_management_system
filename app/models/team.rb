@@ -10,6 +10,15 @@ class Team < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  # Ransack configuration
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name description created_at updated_at organization_id leader_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[organization leader users folders team_memberships]
+  end
+
   def total_members
     users.count
   end

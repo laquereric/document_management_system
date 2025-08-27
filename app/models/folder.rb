@@ -13,6 +13,15 @@ class Folder < ApplicationRecord
   scope :root_folders, -> { where(parent_folder_id: nil) }
   scope :by_team, ->(team) { where(team: team) }
 
+  # Ransack configuration
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name description created_at updated_at team_id parent_folder_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[team parent_folder subfolders documents]
+  end
+
   def root?
     parent_folder_id.nil?
   end
