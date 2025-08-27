@@ -43,20 +43,24 @@ class Document::CardComponent < ApplicationComponent
   end
 
   def file_icon
-    return :file_text unless document.file.attached?
+    return :"file-text" unless document.file.attached?
     
     content_type = document.file.content_type
     case content_type
     when /image/
-      :file_media
+      :"file-media"
     when /pdf/
-      :file_pdf
+      :"file-binary"
     when /word|doc/
-      :file_text
+      :"file-text"
     when /excel|spreadsheet/
-      :file_excel
+      :"file-binary"
     when /powerpoint|presentation/
-      :file_powerpoint
+      :"file-binary"
+    when /zip|archive/
+      :"file-zip"
+    when /text/
+      :"file-text"
     else
       :file
     end

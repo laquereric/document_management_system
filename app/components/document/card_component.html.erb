@@ -22,7 +22,7 @@
     <div class="ml-2">
       <%= render(::Primer::Beta::Label.new(
         scheme: status_color,
-        size: :small
+        size: :medium
       )) do %>
         <%= document.status&.name&.titleize %>
       <% end %>
@@ -56,7 +56,7 @@
 
         <!-- Folder -->
         <div class="d-flex flex-items-center">
-          <%= render(::Primer::Beta::Octicon.new(icon: :file_directory, size: :small, mr: 1)) %>
+          <%= render(::Primer::Beta::Octicon.new(icon: :"file-directory", size: :small, mr: 1)) %>
           <%= render(::Primer::Beta::Link.new(
             href: folder_path(document.folder),
             classes: "color-fg-muted"
@@ -87,7 +87,7 @@
         <% document.tags.each do |tag| %>
           <%= render(::Primer::Beta::Label.new(
             scheme: :secondary,
-            size: :small,
+            size: :medium,
             classes: "mr-1"
           )) do %>
             <%= tag.name %>
