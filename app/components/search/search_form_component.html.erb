@@ -1,5 +1,5 @@
 <% if q %>
-  <%= search_form_for q, url: search_path, method: :get, class: form_classes do |f| %>
+  <%= helpers.search_form_for q, url: search_path, method: :get, class: form_classes do |f| %>
     <div class="row g-3">
       <div class="col-md-4">
         <%= f.label :title_or_content_cont, "Search", class: "form-label" %>

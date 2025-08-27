@@ -6,7 +6,7 @@
 
   <!-- Sidebar Section -->
   <div class="<%= sidebar_classes %>">
-    <%= render(Navigation::SidebarComponent.new(current_user: current_user, variant: sidebar_variant)) %>
+    <%= render(Navigation::SidebarComponent.new(controller_name: @controller_name, current_user: current_user, variant: sidebar_variant)) %>
   </div>
 
   <!-- Main Content Section -->

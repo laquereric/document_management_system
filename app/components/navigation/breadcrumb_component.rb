@@ -10,15 +10,19 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
 
   attr_reader :breadcrumbs, :system_arguments
 
+  RootPath= '/'
+  
   def breadcrumb_classes
     "Breadcrumbs py-2 #{system_arguments[:class]}"
   end
 
   # Build breadcrumbs from current controller and action
   def build_breadcrumbs_from_params
-    crumbs = [{ label: "Home", path: root_path }]
+
+
+    crumbs = [{ label: "Home", path: RootPath }]
     
-    case controller_name
+    case @controller_name
     when "dashboard"
       crumbs << { label: "Dashboard", path: dashboard_index_path }
     when "documents"
