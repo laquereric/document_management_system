@@ -46,12 +46,6 @@ class Navigation::SidebarComponent < ApplicationComponent
         active: @controller_name == "folders"
       },
       {
-        label: "Organizations",
-        icon: "organization",
-        path: organizations_path,
-        active: @controller_name == "organizations"
-      },
-      {
         label: "Tags",
         icon: "tag",
         path: tags_path,
@@ -74,6 +68,42 @@ class Navigation::SidebarComponent < ApplicationComponent
         icon: "gear",
         path: admin_root_path,
         active: @controller_name.starts_with?("admin")
+      },
+      {
+        label: "Organizations",
+        icon: "organization",
+        path: organizations_path,
+        active: @controller_name == "organizations"
+      },
+      {
+        label: "Users",
+        icon: "people",
+        path: admin_users_path,
+        active: @controller_name == "admin/users"
+      },
+      {
+        label: "Teams",
+        icon: "group",
+        path: admin_teams_path,
+        active: @controller_name == "admin/teams"
+      },
+      {
+        label: "Statuses",
+        icon: "circle",
+        path: admin_statuses_path,
+        active: @controller_name == "admin/statuses"
+      },
+      {
+        label: "Scenario Types",
+        icon: "list-unordered",
+        path: admin_scenario_types_path,
+        active: @controller_name == "admin/scenario_types"
+      },
+      {
+        label: "Tags",
+        icon: "tag",
+        path: admin_tags_path,
+        active: @controller_name == "admin/tags"
       }
     ]
   end
