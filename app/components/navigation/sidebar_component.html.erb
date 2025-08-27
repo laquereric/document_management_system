@@ -1,140 +1,108 @@
 <nav class="<%= sidebar_classes %>">
   <div class="SideNav-items">
-    <!-- Main Navigation TreeView -->
-    <div class="TreeView">
-      <div class="TreeView-item">
-        <div class="TreeView-item-content">
-          <div class="TreeView-item-visual">
-            <svg class="octicon octicon-home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+    <!-- Main Navigation -->
+    <% navigation_items.each do |item| %>
+      <%= link_to item[:path], 
+          class: "SideNav-item #{item[:active] ? 'selected' : ''} d-flex flex-items-center" do %>
+        <svg class="octicon octicon-<%= item[:icon] %> mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <% case item[:icon] %>
+          <% when 'home' %>
+            <path d="M8.156 1.835a.25.25 0 0 1 .312 0l5.25 4.2a.25.25 0 0 1 .094.098l3.25 6.5a.25.25 0 0 1-.037.275L13.5 15h-1.75l.001-.001a.75.75 0 0 1-.018-.057L12.07 13H3.93l-1.664 2.942a.75.75 0 0 1-.018.057L2.25 15H.5L.094 13.908a.25.25 0 0 1-.037-.275l3.25-6.5a.25.25 0 0 1 .094-.098l5.25-4.2ZM7.5 15V9H8.5v6H7.5Z"></path>
+          <% when 'file-text' %>
+            <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25V1.75Z"></path>
+          <% when 'file-directory' %>
+            <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+          <% when 'tag' %>
+            <path d="M2.5 7.775V2.75a.25.25 0 0 1 .25-.25h5.025a.25.25 0 0 1 .177.073l6.25 6.25a.25.25 0 0 1 0 .354l-5.025 5.025a.25.25 0 0 1-.354 0l-6.25-6.25a.25.25 0 0 1-.073-.177Zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .909.184 1.237.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775Z"></path>
+            <path d="m6 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
+          <% when 'pulse' %>
+            <path d="M6 2c.306 0 .582.187.696.471L10 10.731l1.304-3.26A.751.751 0 0 1 12 7h3.25a.75.75 0 0 1 0 1.5h-2.742l-1.812 4.528a.751.751 0 0 1-1.392 0L6 4.77 4.696 8.03A.75.75 0 0 1 4 8.75H.75a.75.75 0 0 1 0-1.5h2.742l1.812-4.529A.751.751 0 0 1 6 2Z"></path>
+          <% when 'person' %>
+            <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
+          <% end %>
+        </svg>
+        <% unless collapsed? %>
+          <span><%= item[:label] %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <!-- User Section -->
+    <% if user_navigation_items.any? %>
+      <% unless collapsed? %>
+        <div class="SideNav-item">
+          <span class="color-fg-muted f6 text-uppercase text-bold">User</span>
+        </div>
+      <% end %>
+      
+      <% user_navigation_items.each do |item| %>
+        <%= link_to item[:path], 
+            class: "SideNav-item #{item[:active] ? 'selected' : ''} d-flex flex-items-center" do %>
+          <svg class="octicon octicon-<%= item[:icon] %> mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% case item[:icon] %>
+            <% when 'home' %>
               <path d="M8.156 1.835a.25.25 0 0 1 .312 0l5.25 4.2a.25.25 0 0 1 .094.098l3.25 6.5a.25.25 0 0 1-.037.275L13.5 15h-1.75l.001-.001a.75.75 0 0 1-.018-.057L12.07 13H3.93l-1.664 2.942a.75.75 0 0 1-.018.057L2.25 15H.5L.094 13.908a.25.25 0 0 1-.037-.275l3.25-6.5a.25.25 0 0 1 .094-.098l5.25-4.2ZM7.5 15V9H8.5v6H7.5Z"></path>
-            </svg>
-          </div>
-          <%= link_to dashboard_index_path, class: "TreeView-item-content #{current_page?(dashboard_index_path) ? 'selected' : ''}" do %>
-            <span class="TreeView-item-text">Dashboard</span>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="TreeView-item">
-        <div class="TreeView-item-content">
-          <div class="TreeView-item-visual">
-            <svg class="octicon octicon-file-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% when 'file-text' %>
               <path d="M3.75 1.5a.25.25 0 0 0-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5H3.75Zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06ZM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25V1.75Z"></path>
-            </svg>
-          </div>
-          <%= link_to documents_path, class: "TreeView-item-content #{@controller_name == 'documents' ? 'selected' : ''}" do %>
-            <span class="TreeView-item-text">Documents</span>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="TreeView-item">
-        <div class="TreeView-item-content">
-          <div class="TreeView-item-visual">
-            <svg class="octicon octicon-file-directory" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% when 'file-directory' %>
               <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
-            </svg>
-          </div>
-          <%= link_to folders_path, class: "TreeView-item-content #{@controller_name == 'folders' ? 'selected' : ''}" do %>
-            <span class="TreeView-item-text">Folders</span>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="TreeView-item">
-        <div class="TreeView-item-content">
-          <div class="TreeView-item-visual">
-            <svg class="octicon octicon-tag" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% when 'tag' %>
               <path d="M2.5 7.775V2.75a.25.25 0 0 1 .25-.25h5.025a.25.25 0 0 1 .177.073l6.25 6.25a.25.25 0 0 1 0 .354l-5.025 5.025a.25.25 0 0 1-.354 0l-6.25-6.25a.25.25 0 0 1-.073-.177Zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .909.184 1.237.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775Z"></path>
               <path d="m6 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
-            </svg>
-          </div>
-          <%= link_to tags_path, class: "TreeView-item-content #{@controller_name == 'tags' ? 'selected' : ''}" do %>
-            <span class="TreeView-item-text">Tags</span>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="TreeView-item">
-        <div class="TreeView-item-content">
-          <div class="TreeView-item-visual">
-            <svg class="octicon octicon-pulse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% when 'pulse' %>
               <path d="M6 2c.306 0 .582.187.696.471L10 10.731l1.304-3.26A.751.751 0 0 1 12 7h3.25a.75.75 0 0 1 0 1.5h-2.742l-1.812 4.528a.751.751 0 0 1-1.392 0L6 4.77 4.696 8.03A.75.75 0 0 1 4 8.75H.75a.75.75 0 0 1 0-1.5h2.742l1.812-4.529A.751.751 0 0 1 6 2Z"></path>
-            </svg>
-          </div>
-          <%= link_to activity_logs_path, class: "TreeView-item-content #{@controller_name == 'activity_logs' ? 'selected' : ''}" do %>
-            <span class="TreeView-item-text">Activity</span>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="TreeView-item">
-        <div class="TreeView-item-content">
-          <div class="TreeView-item-visual">
-            <svg class="octicon octicon-person" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% when 'person' %>
               <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
-            </svg>
-          </div>
-          <%= link_to edit_user_registration_path, class: "TreeView-item-content #{@controller_name == 'devise/registrations' ? 'selected' : ''}" do %>
-            <span class="TreeView-item-text">Profile</span>
+            <% end %>
+          </svg>
+          <% unless collapsed? %>
+            <span><%= item[:label] %></span>
           <% end %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Admin Section TreeView -->
-    <% if admin_navigation_items.any? %>
-      <div class="TreeView mt-3">
-        <div class="TreeView-item">
-          <div class="TreeView-item-content">
-            <div class="TreeView-item-visual">
-              <svg class="octicon octicon-gear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
-                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
-              </svg>
-            </div>
-            <span class="TreeView-item-text color-fg-muted f6 text-uppercase text-bold">Admin</span>
-          </div>
-        </div>
-
-        <% admin_navigation_items.each do |item| %>
-          <div class="TreeView-item">
-            <div class="TreeView-item-content">
-              <div class="TreeView-item-visual">
-                <svg class="octicon octicon-<%= item[:icon] %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                  <% case item[:icon] %>
-                  <% when 'organization' %>
-                    <path d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 0 1 1.5 0v1.25h2.5v-1.25a.75.75 0 0 1 1.5 0v1.25h2.25a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25v12.5ZM1.75 16A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .966-.784 1.75-1.75 1.75h-8.5ZM4 1.75A.25.25 0 0 1 4.25 1.5h3.5a.25.25 0 0 1 .25.25v3.5a.25.25 0 0 1-.25.25h-3.5A.25.25 0 0 1 4 5.25v-3.5ZM4.25 1a.75.75 0 0 0-.75.75v3.5c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75v-3.5a.75.75 0 0 0-.75-.75h-3.5ZM6 10.75A.75.75 0 0 1 6.75 10h3.5a.75.75 0 0 1 0 1.5h-3.5A.75.75 0 0 1 6 10.75ZM6.75 9a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5ZM6 6.75A.75.75 0 0 1 6.75 6h3.5a.75.75 0 0 1 0 1.5h-3.5A.75.75 0 0 1 6 6.75ZM6.75 5a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5Z"></path>
-                  <% when 'people' %>
-                    <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
-                  <% when 'group' %>
-                    <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
-                  <% when 'list-unordered' %>
-                    <path d="M2 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm2.5 3.75a.75.75 0 0 1 0-1.5h8.5a.75.75 0 0 1 0 1.5h-8.5ZM2 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm2.5 3.75a.75.75 0 0 1 0-1.5h8.5a.75.75 0 0 1 0 1.5h-8.5Z"></path>
-                  <% when 'tag' %>
-                    <path d="M2.5 7.775V2.75a.25.25 0 0 1 .25-.25h5.025a.25.25 0 0 1 .177.073l6.25 6.25a.25.25 0 0 1 0 .354l-5.025 5.025a.25.25 0 0 1-.354 0l-6.25-6.25a.25.25 0 0 1-.073-.177Zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .909.184 1.237.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775Z"></path>
-                    <path d="m6 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
-                  <% else %>
-                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
-                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
-                  <% end %>
-                </svg>
-              </div>
-              <%= link_to item[:path], class: "TreeView-item-content #{item[:active] ? 'selected' : ''}" do %>
-                <span class="TreeView-item-text"><%= item[:label] %></span>
-              <% end %>
-            </div>
-          </div>
         <% end %>
-      </div>
+      <% end %>
+    <% end %>
+
+    <!-- Admin Section -->
+    <% if admin_navigation_items.any? %>
+      <% unless collapsed? %>
+        <div class="SideNav-item">
+          <span class="color-fg-muted f6 text-uppercase text-bold">Admin</span>
+        </div>
+      <% end %>
+      
+      <% admin_navigation_items.each do |item| %>
+        <%= link_to item[:path], 
+            class: "SideNav-item #{item[:active] ? 'selected' : ''} d-flex flex-items-center" do %>
+          <svg class="octicon octicon-<%= item[:icon] %> mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <% case item[:icon] %>
+            <% when 'organization' %>
+              <path d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 0 1 1.5 0v1.25h2.5v-1.25a.75.75 0 0 1 1.5 0v1.25h2.25a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25v12.5ZM1.75 16A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .966-.784 1.75-1.75 1.75h-8.5ZM4 1.75A.25.25 0 0 1 4.25 1.5h3.5a.25.25 0 0 1 .25.25v3.5a.25.25 0 0 1-.25.25h-3.5A.25.25 0 0 1 4 5.25v-3.5ZM4.25 1a.75.75 0 0 0-.75.75v3.5c0 .414.336.75.75.75h3.5a.75.75 0 0 0 .75-.75v-3.5a.75.75 0 0 0-.75-.75h-3.5ZM6 10.75A.75.75 0 0 1 6.75 10h3.5a.75.75 0 0 1 0 1.5h-3.5A.75.75 0 0 1 6 10.75ZM6.75 9a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5ZM6 6.75A.75.75 0 0 1 6.75 6h3.5a.75.75 0 0 1 0 1.5h-3.5A.75.75 0 0 1 6 6.75ZM6.75 5a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5Z"></path>
+            <% when 'people' %>
+              <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
+            <% when 'group' %>
+              <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
+            <% when 'list-unordered' %>
+              <path d="M2 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm2.5 3.75a.75.75 0 0 1 0-1.5h8.5a.75.75 0 0 1 0 1.5h-8.5ZM2 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm2.5 3.75a.75.75 0 0 1 0-1.5h8.5a.75.75 0 0 1 0 1.5h-8.5Z"></path>
+            <% when 'tag' %>
+              <path d="M2.5 7.775V2.75a.25.25 0 0 1 .25-.25h5.025a.25.25 0 0 1 .177.073l6.25 6.25a.25.25 0 0 1 0 .354l-5.025 5.025a.25.25 0 0 1-.354 0l-6.25-6.25a.25.25 0 0 1-.073-.177Zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .909.184 1.237.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775Z"></path>
+              <path d="m6 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
+            <% else %>
+              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
+              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"></path>
+            <% end %>
+          </svg>
+          <% unless collapsed? %>
+            <span><%= item[:label] %></span>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 
   <!-- Sidebar Toggle (for responsive) -->
   <div class="SideNav-items border-top mt-auto pt-3">
     <button class="btn btn-sm btn-outline width-full" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#sidebarCollapse">
+            onclick="toggleSidebar()">
       <svg class="octicon octicon-<%= collapsed? ? 'chevron-right' : 'chevron-left' %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
         <path d="M9.78 12.53a.75.75 0 0 1-1.06 0L4.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L6.81 7h7.44a.75.75 0 0 1 0 1.5H6.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
       </svg>
@@ -144,3 +112,28 @@
     </button>
   </div>
 </nav>
+
+<script>
+function toggleSidebar() {
+  const sidebar = document.querySelector('.SideNav');
+  const isCollapsed = sidebar.classList.contains('SideNav--narrow');
+  
+  if (isCollapsed) {
+    sidebar.classList.remove('SideNav--narrow');
+    localStorage.setItem('sidebarCollapsed', 'false');
+  } else {
+    sidebar.classList.add('SideNav--narrow');
+    localStorage.setItem('sidebarCollapsed', 'true');
+  }
+}
+
+// Restore sidebar state on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebar = document.querySelector('.SideNav');
+  const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+  
+  if (isCollapsed) {
+    sidebar.classList.add('SideNav--narrow');
+  }
+});
+</script>
