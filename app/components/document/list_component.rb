@@ -5,11 +5,12 @@ class Document::ListComponent < ApplicationComponent
   SORT_OPTIONS = %i[title created_at updated_at author status].freeze
 
   def initialize(
-    documents:,
+    documents: [],
     layout: :list,
     show_filters: true,
     show_sorting: true,
     current_sort: :updated_at,
+    search: nil,
     **system_arguments
   )
     @documents = documents
@@ -17,12 +18,13 @@ class Document::ListComponent < ApplicationComponent
     @show_filters = show_filters
     @show_sorting = show_sorting
     @current_sort = fetch_or_fallback(SORT_OPTIONS, current_sort, :updated_at)
-    @system_arguments = merge_system_arguments(system_arguments)
+    @search = search
+    super(**system_arguments)
   end
 
   private
 
-  attr_reader :documents, :layout, :show_filters, :show_sorting, :current_sort, :system_arguments
+  attr_reader :documents, :layout, :show_filters, :show_sorting, :current_sort, :search
 
   def container_classes
     case layout

@@ -8,6 +8,13 @@ class ComponentTestController < ApplicationController
     # Sample data for components
     @q = defined?(Document) ? Document.ransack(params[:q]) : nil
     
+    # Sample search object for filter panel
+    @sample_search = OpenStruct.new(
+      status_eq: params[:status_eq],
+      folder_id_eq: params[:folder_id_eq],
+      tags_id_in: params[:tags_id_in]
+    )
+    
     # Sample documents
     @sample_documents = [
       OpenStruct.new(
@@ -98,10 +105,43 @@ class ComponentTestController < ApplicationController
     
     # Sample tags
     @sample_tags = [
-      OpenStruct.new(name: "Important"),
-      OpenStruct.new(name: "Draft"),
-      OpenStruct.new(name: "Technical"),
-      OpenStruct.new(name: "Review")
+      OpenStruct.new(id: 1, name: "Important"),
+      OpenStruct.new(id: 2, name: "Draft"),
+      OpenStruct.new(id: 3, name: "Technical"),
+      OpenStruct.new(id: 4, name: "Review")
     ]
+    
+    # Sample folders
+    @sample_folders = [
+      OpenStruct.new(id: 1, name: "Documentation"),
+      OpenStruct.new(id: 2, name: "API"),
+      OpenStruct.new(id: 3, name: "Projects")
+    ]
+    
+    # Mock the Tag and Folder models for the filter panel
+    unless defined?(Tag)
+      self.class.const_set(:Tag, Struct.new(:id, :name)) do
+        def self.all
+          [
+            new(1, "Important"),
+            new(2, "Draft"),
+            new(3, "Technical"),
+            new(4, "Review")
+          ]
+        end
+      end
+    end
+    
+    unless defined?(Folder)
+      self.class.const_set(:Folder, Struct.new(:id, :name)) do
+        def self.all
+          [
+            new(1, "Documentation"),
+            new(2, "API"),
+            new(3, "Projects")
+          ]
+        end
+      end
+    end
   end
 end
