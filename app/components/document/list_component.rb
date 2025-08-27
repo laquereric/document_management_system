@@ -47,7 +47,7 @@ class Document::ListComponent < ApplicationComponent
 
   def layout_options
     [
-      { icon: :list_unordered, value: :list, active: layout == :list, label: "List" },
+      { icon: :file, value: :list, active: layout == :list, label: "List" },
       { icon: :apps, value: :grid, active: layout == :grid, label: "Grid" },
       { icon: :table, value: :table, active: layout == :table, label: "Table" }
     ]

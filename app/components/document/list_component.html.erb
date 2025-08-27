@@ -12,13 +12,13 @@
       <!-- Layout Toggle -->
       <div class="BtnGroup">
         <% layout_options.each do |option| %>
-          <%= render(Primer::ButtonComponent.new(
+          <%= render(Primer::Beta::Button.new(
             scheme: option[:active] ? :primary : :default,
             size: :small,
             "aria-label": option[:label],
             data: { action: "list:layout", layout: option[:value] }
           )) do %>
-            <%= render(Primer::OcticonComponent.new(icon: option[:icon])) %>
+            <%= render(Primer::Beta::Octicon.new(icon: option[:icon])) %>
           <% end %>
         <% end %>
       </div>
@@ -30,12 +30,12 @@
           position: :relative
         )) do |menu| %>
           <% menu.with_show_button do %>
-            <%= render(Primer::ButtonComponent.new(
+            <%= render(Primer::Beta::Button.new(
               scheme: :default,
               size: :small
             )) do %>
               Sort: <%= current_sort.to_s.humanize %>
-              <%= render(Primer::OcticonComponent.new(icon: :chevron_down, ml: 1)) %>
+              <%= render(Primer::Beta::Octicon.new(icon: :"chevron-down", ml: 1)) %>
             <% end %>
           <% end %>
 
@@ -53,12 +53,12 @@
 
       <!-- Filter Toggle -->
       <% if show_filters %>
-        <%= render(Primer::ButtonComponent.new(
+        <%= render(Primer::Beta::Button.new(
           scheme: :default,
           size: :small,
           data: { action: "list:toggle-filters" }
         )) do %>
-          <%= render(Primer::OcticonComponent.new(icon: :filter, mr: 1)) %>
+          <%= render(Primer::Beta::Octicon.new(icon: :filter, mr: 1)) %>
           Filters
         <% end %>
       <% end %>
@@ -89,12 +89,12 @@
   <% else %>
     <!-- Empty State -->
     <div class="blankslate">
-      <%= render(Primer::OcticonComponent.new(icon: :file_text, size: :large, mb: 3)) %>
+      <%= render(Primer::Beta::Octicon.new(icon: :"file-text", size: :large, mb: 3)) %>
       <h3 class="blankslate-heading">No documents found</h3>
       <p class="blankslate-body">
         Get started by creating your first document.
       </p>
-      <%= render(Primer::ButtonComponent.new(
+      <%= render(Primer::Beta::Button.new(
         href: new_document_path,
         scheme: :primary
       )) do %>

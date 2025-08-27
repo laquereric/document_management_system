@@ -11,14 +11,14 @@
     <div class="TreeView-item-content d-flex flex-items-center">
       <!-- Expand/Collapse Icon -->
       <% if folder.subfolders.any? %>
-        <%= render(Primer::ButtonComponent.new(
+        <%= render(Primer::Beta::Button.new(
           scheme: :invisible,
           size: :small,
           classes: "TreeView-item-chevron",
           data: { action: "folder:toggle" }
         )) do %>
-          <%= render(Primer::OcticonComponent.new(
-            icon: folder_expanded?(folder) ? :chevron_down : :chevron_right
+          <%= render(Primer::Beta::Octicon.new(
+            icon: folder_expanded?(folder) ? :"chevron-down" : :"chevron-right"
           )) %>
         <% end %>
       <% else %>
@@ -26,12 +26,12 @@
       <% end %>
 
       <!-- Folder Icon and Name -->
-      <%= render(Primer::LinkComponent.new(
+      <%= render(Primer::Beta::Link.new(
         href: folder_path(folder),
         classes: "TreeView-item-content-text d-flex flex-items-center flex-auto"
       )) do %>
-        <%= render(Primer::OcticonComponent.new(
-          icon: :file_directory,
+        <%= render(Primer::Beta::Octicon.new(
+          icon: :"file-directory",
           size: :small,
           mr: 2,
           color: folder_selected?(folder) ? :accent : :muted
