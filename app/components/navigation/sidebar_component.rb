@@ -105,13 +105,7 @@ class Navigation::SidebarComponent < ApplicationComponent
         active: @controller_name == "admin/teams"
       },
       {
-        label: "Statuses",
-        icon: "circle",
-        path: admin_statuses_path,
-        active: @controller_name == "admin/statuses"
-      },
-      {
-        label: "Scenario Types",
+        label: "Scenarios",
         icon: "list-unordered",
         path: admin_scenario_types_path,
         active: @controller_name == "admin/scenario_types"
