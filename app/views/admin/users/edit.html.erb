@@ -1,2 +1,211 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<div class="container-lg px-3 py-6">
+  <!-- Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-6">
+    <div>
+      <div class="d-flex flex-items-center mb-2">
+        <%= link_to admin_user_path(@user), class: "btn btn-sm btn-outline mr-3" do %>
+          <svg class="octicon octicon-arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
+          </svg>
+          Back to User
+        <% end %>
+        <h1 class="h2 mb-0">Edit User</h1>
+      </div>
+      <p class="color-fg-muted">Update user information and settings</p>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-lg-8">
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">User Information</h3>
+        </div>
+        <div class="Box-body">
+          <%= form_with model: [:admin, @user], local: true do |form| %>
+            <% if @user.errors.any? %>
+              <div class="alert alert-danger mb-4">
+                <h4 class="alert-heading">Please fix the following errors:</h4>
+                <ul class="mb-0">
+                  <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <%= form.label :name, class: "form-label" %>
+                  <%= form.text_field :name, class: "form-control #{'is-invalid' if @user.errors[:name].any?}", placeholder: "Enter full name" %>
+                  <% if @user.errors[:name].any? %>
+                    <div class="invalid-feedback"><%= @user.errors[:name].first %></div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <%= form.label :email, class: "form-label" %>
+                  <%= form.email_field :email, class: "form-control #{'is-invalid' if @user.errors[:email].any?}", placeholder: "Enter email address" %>
+                  <% if @user.errors[:email].any? %>
+                    <div class="invalid-feedback"><%= @user.errors[:email].first %></div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <%= form.label :role, class: "form-label" %>
+                  <%= form.select :role, 
+                      options_for_select([['Member', 'member'], ['Team Leader', 'team_leader'], ['Admin', 'admin']], @user.role), 
+                      {}, 
+                      class: "form-select #{'is-invalid' if @user.errors[:role].any?}" %>
+                  <% if @user.errors[:role].any? %>
+                    <div class="invalid-feedback"><%= @user.errors[:role].first %></div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <%= form.label :organization_id, "Organization", class: "form-label" %>
+                  <%= form.collection_select :organization_id, 
+                      Organization.order(:name), 
+                      :id, 
+                      :name, 
+                      { prompt: "Select organization (optional)" }, 
+                      class: "form-select #{'is-invalid' if @user.errors[:organization_id].any?}" %>
+                  <% if @user.errors[:organization_id].any? %>
+                    <div class="invalid-feedback"><%= @user.errors[:organization_id].first %></div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <hr class="my-4">
+                <h4 class="h5 mb-3">Change Password (Optional)</h4>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <%= form.label :password, "New Password", class: "form-label" %>
+                      <%= form.password_field :password, class: "form-control #{'is-invalid' if @user.errors[:password].any?}", placeholder: "Leave blank to keep current password" %>
+                      <% if @user.errors[:password].any? %>
+                        <div class="invalid-feedback"><%= @user.errors[:password].first %></div>
+                      <% end %>
+                      <div class="form-text">Minimum 6 characters. Leave blank to keep current password.</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <%= form.label :password_confirmation, "Confirm New Password", class: "form-label" %>
+                      <%= form.password_field :password_confirmation, class: "form-control #{'is-invalid' if @user.errors[:password_confirmation].any?}", placeholder: "Confirm new password" %>
+                      <% if @user.errors[:password_confirmation].any? %>
+                        <div class="invalid-feedback"><%= @user.errors[:password_confirmation].first %></div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-items-center gap-3 mt-4">
+              <%= form.submit "Update User", class: "btn btn-primary" %>
+              <%= link_to "Cancel", admin_user_path(@user), class: "btn btn-outline" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-12 col-lg-4">
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">Current User Info</h3>
+        </div>
+        <div class="Box-body">
+          <div class="d-flex flex-column gap-3">
+            <div>
+              <label class="form-label">Current Role</label>
+              <div class="form-control-plaintext">
+                <span class="Label Label--<%= @user.role == 'admin' ? 'danger' : (@user.role == 'team_leader' ? 'warning' : 'secondary') %>">
+                  <%= @user.role.titleize %>
+                </span>
+              </div>
+            </div>
+            <div>
+              <label class="form-label">Current Organization</label>
+              <div class="form-control-plaintext">
+                <%= @user.organization&.name || 'None' %>
+              </div>
+            </div>
+            <div>
+              <label class="form-label">Member Since</label>
+              <div class="form-control-plaintext">
+                <%= @user.created_at.strftime("%B %d, %Y") %>
+              </div>
+            </div>
+            <div>
+              <label class="form-label">Last Updated</label>
+              <div class="form-control-plaintext">
+                <%= @user.updated_at.strftime("%B %d, %Y") %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="Box mt-4">
+        <div class="Box-header">
+          <h3 class="Box-title">Quick Actions</h3>
+        </div>
+        <div class="Box-body">
+          <div class="d-flex flex-column gap-2">
+            <% unless @user == current_user %>
+              <%= link_to toggle_role_admin_user_path(@user), 
+                  method: :patch, 
+                  class: "btn btn-outline btn-sm",
+                  data: { confirm: "Are you sure you want to change this user's role?" } do %>
+                <svg class="octicon octicon-arrow-switch mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M5.22 14.78a.75.75 0 0 1-1.06 0L.47 11.03a.75.75 0 0 1 0-1.06l3.75-3.75a.75.75 0 0 1 1.06 1.06L2.81 10h7.44a.75.75 0 0 1 0 1.5H2.81l2.47 2.47a.75.75 0 0 1 0 1.06Zm5.56-5.56a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06L13.19 6H5.75a.75.75 0 0 1 0-1.5h7.44l-2.47-2.47a.75.75 0 0 1 0-1.06Z"></path>
+                </svg>
+                Toggle Role
+              <% end %>
+            <% end %>
+            <%= link_to admin_user_path(@user), class: "btn btn-outline btn-sm" do %>
+              <svg class="octicon octicon-eye mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.329 2.992 6.019 2 8 2ZM8 1c-2.2 0-4.2.9-5.657 2.343 1.515 1.4 2.796 2.88 3.561 3.566A7.5 7.5 0 0 0 8 6.5a7.5 7.5 0 0 0 2.096.409c.765-.686 2.046-2.166 3.561-3.566C12.2 1.9 10.2 1 8 1Zm0 5.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"></path>
+              </svg>
+              View User Details
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="Box mt-4">
+        <div class="Box-header">
+          <h3 class="Box-title">Role Information</h3>
+        </div>
+        <div class="Box-body">
+          <div class="d-flex flex-column gap-3">
+            <div>
+              <h4 class="h5 mb-2">Member</h4>
+              <p class="color-fg-muted f6 mb-0">Basic user with access to documents and folders within their teams.</p>
+            </div>
+            <div>
+              <h4 class="h5 mb-2">Team Leader</h4>
+              <p class="color-fg-muted f6 mb-0">Can manage team members and team resources.</p>
+            </div>
+            <div>
+              <h4 class="h5 mb-2">Admin</h4>
+              <p class="color-fg-muted f6 mb-0">Full system access including user management and system settings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
