@@ -176,11 +176,11 @@ Status display with proper color contrast.
 <%= render(Ui::StatusBadgeComponent.new(status: @status)) %>
 ```
 
-#### TagBadgeComponent
+#### TagDisplayComponent
 Tag display with optional removal functionality.
 
 ```erb
-<%= render(Tags::TagBadgeComponent.new(
+<%= render(Tags::TagDisplayComponent.new(
   tag: @tag,
   removable: true,
   document: @document
