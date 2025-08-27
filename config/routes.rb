@@ -117,7 +117,10 @@ Rails.application.routes.draw do
   end
   
   # Tag management
-  resources :tags, only: [:index, :show, :create, :destroy]
+  resources :tags
+  
+  # User management
+  resources :users
   
   # Activity logs
   resources :activity_logs, only: [:index, :show]
