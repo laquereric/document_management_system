@@ -6,7 +6,7 @@
     <p class="mb-1">
       <strong><%= activity_log.user.name %></strong>
       <%= action_description %>
-      <% if activity_log.document %>
+      <% if activity_log.document and activity_log.document.kind_of?(ActiveRecord::Base)%>
         <strong><%= link_to activity_log.document.title, activity_log.document, class: "text-decoration-none" %></strong>
       <% end %>
     </p>
