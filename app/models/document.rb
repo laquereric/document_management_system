@@ -22,6 +22,16 @@ class Document < ApplicationRecord
   # Callbacks
   after_update :log_status_change, if: :saved_change_to_status_id?
 
+  # Ransack configuration - define searchable attributes
+  def self.ransackable_attributes(auth_object = nil)
+    %w[title content created_at updated_at author_id folder_id status_id scenario_type_id]
+  end
+
+  # Ransack configuration - define searchable associations
+  def self.ransackable_associations(auth_object = nil)
+    %w[author folder status scenario_type tags document_tags activity_logs]
+  end
+
   def tag_names
     tags.pluck(:name).join(', ')
   end
