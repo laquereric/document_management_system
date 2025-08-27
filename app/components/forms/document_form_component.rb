@@ -1,29 +1,68 @@
 class Forms::DocumentFormComponent < ApplicationComponent
-  def initialize(document:, folder: nil, **system_arguments)
+  def initialize(document:, submit_text: "Save Document", cancel_url: nil, **system_arguments)
     @document = document
-    @folder = folder || document.folder
-    @statuses = Status.all
-    @scenario_types = ScenarioType.all
+    @submit_text = submit_text
+    @cancel_url = cancel_url
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
   private
 
-  attr_reader :document, :folder, :statuses, :scenario_types, :system_arguments
+  attr_reader :document, :submit_text, :cancel_url, :system_arguments
 
   def form_classes
-    "needs-validation #{system_arguments[:class]}"
+    "form #{system_arguments[:class]}"
   end
 
-  def submit_text
-    document.new_record? ? "Create Document" : "Update Document"
+  def title_field_classes
+    "form-control input-lg"
+  end
+
+  def content_field_classes
+    "form-control"
+  end
+
+  def url_field_classes
+    "form-control"
+  end
+
+  def select_classes
+    "form-select"
+  end
+
+  def file_field_classes
+    "form-control"
+  end
+
+  def submit_button_classes
+    "btn btn-primary"
+  end
+
+  def cancel_button_classes
+    "btn"
+  end
+
+  def statuses
+    defined?(Status) ? Status.all : []
+  end
+
+  def scenario_types
+    defined?(ScenarioType) ? ScenarioType.all : []
+  end
+
+  def folders
+    defined?(Folder) ? Folder.all : []
   end
 
   def form_url
-    document.new_record? ? folder_documents_path(folder) : document_path(document)
+    if document.persisted?
+      document_path(document)
+    else
+      documents_path
+    end
   end
 
   def form_method
-    document.new_record? ? :post : :patch
+    document.persisted? ? :patch : :post
   end
 end

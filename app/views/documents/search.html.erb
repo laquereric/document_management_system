@@ -1,2 +1,68 @@
-<h1>Documents#search</h1>
-<p>Find me in app/views/documents/search.html.erb</p>
+<% content_for :title, "Search Results" %>
+
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
+    <div>
+      <h1 class="h2">Search Results</h1>
+      <p class="color-fg-muted">
+        Found <%= @documents.count %> document<%= 's' unless @documents.count == 1 %>
+        <% if params[:q] && params[:q][:title_or_content_cont].present? %>
+          for "<%= params[:q][:title_or_content_cont] %>"
+        <% end %>
+      </p>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to documents_path, class: "btn" do %>
+        <%= octicon "arrow-left", class: "mr-2" %>
+        Back to Documents
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Search Form -->
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Refine Search</h3>
+    </div>
+    <div class="Box-body">
+      <% if defined?(Document) %>
+        <% q = Document.ransack(params[:q]) %>
+        <%= render(Search::SearchFormComponent.new(q: q)) %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="Box">
+    <div class="Box-header">
+      <h3 class="Box-title">
+        Results
+        <span class="Counter"><%= @documents.count %></span>
+      </h3>
+    </div>
+
+    <div class="Box-body">
+      <% if @documents&.any? %>
+        <div class="row g-3">
+          <% @documents.each do |document| %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <%= render(Document::CardComponent.new(document: document)) %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Results Found",
+          description: "Try adjusting your search criteria or browse all documents.",
+          icon: "search",
+          action: {
+            text: "Browse All Documents",
+            url: documents_path,
+            class: "btn btn-primary"
+          }
+        )) %>
+      <% end %>
+    </div>
+  </div>
+</div>

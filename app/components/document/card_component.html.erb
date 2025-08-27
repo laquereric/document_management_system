@@ -1,99 +1,84 @@
 <div class="<%= card_classes %>">
-  <!-- Document Header -->
-  <div class="Box-header d-flex flex-items-center">
-    <!-- File Icon and Title -->
-    <div class="d-flex flex-items-center flex-auto">
-      <%= render(::Primer::Beta::Octicon.new(
-        icon: file_icon,
-        size: :small,
-        mr: 2,
-        color: :muted
-      )) %>
-      
-      <%= render(::Primer::Beta::Link.new(
-        href: document_path(document),
-        classes: "text-bold color-fg-default"
-      )) do %>
-        <%= document.title %>
+  <div class="<%= title_classes %>">
+    <div class="d-flex flex-items-center flex-justify-between">
+      <h4 class="mb-0">
+        <%= link_to document.title, document_path(document), class: "Link--primary" %>
+      </h4>
+      <% if has_file? %>
+        <span class="Label Label--secondary">
+          <%= octicon file_icon, class: "mr-1" %>
+          <%= document.file.filename.extension.upcase %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="<%= content_classes %>">
+    <p class="color-fg-muted mb-2">
+      <%= truncated_content %>
+    </p>
+
+    <div class="d-flex flex-items-center flex-wrap gap-2 mb-2">
+      <%= render(Ui::StatusBadgeComponent.new(status: document.status)) if document.status %>
+      <% document.tags.each do |tag| %>
+        <%= render(Ui::TagItemComponent.new(tag: tag)) %>
       <% end %>
     </div>
 
-    <!-- Status Badge -->
-    <div class="ml-2">
-      <%= render(::Primer::Beta::Label.new(
-        scheme: status_color,
-        size: :medium
-      )) do %>
-        <%= document.status&.name&.titleize %>
-      <% end %>
+    <div class="d-flex flex-items-center color-fg-muted text-small">
+      <span class="mr-3">
+        <%= octicon "person", class: "mr-1" %>
+        <%= author_name %>
+      </span>
+      <span class="mr-3">
+        <%= octicon "folder", class: "mr-1" %>
+        <%= folder_name %>
+      </span>
+      <span>
+        <%= octicon "clock", class: "mr-1" %>
+        <%= formatted_date %>
+      </span>
     </div>
-
-    <!-- Actions Menu -->
-    <% if show_actions %>
-      <div class="ml-2">
-        <%= render(Document::ActionsMenuComponent.new(document: document)) %>
-      </div>
-    <% end %>
   </div>
 
-  <!-- Document Content -->
-  <div class="Box-body">
-    <!-- Content Preview -->
-    <% if layout != :compact %>
-      <div class="color-fg-muted f6 mb-2">
-        <%= truncate(document.content, length: 150) %>
-      </div>
-    <% end %>
-
-        <!-- Metadata -->
-    <% if show_metadata %>
-      <div class="d-flex flex-wrap gap-3 f6 color-fg-muted">
-        <!-- Author -->
-        <div class="d-flex flex-items-center">
-          <%= render(::Primer::Beta::Octicon.new(icon: :person, size: :small, mr: 1)) %>
-          <%= document.author.email %>
-        </div>
-
-        <!-- Folder -->
-        <div class="d-flex flex-items-center">
-          <%= render(::Primer::Beta::Octicon.new(icon: :"file-directory", size: :small, mr: 1)) %>
-          <%= render(::Primer::Beta::Link.new(
-            href: folder_path(document.folder),
-            classes: "color-fg-muted"
-          )) do %>
-            <%= document.folder.path %>
+  <% if show_actions %>
+    <div class="<%= footer_classes %>">
+      <div class="d-flex flex-items-center flex-justify-between">
+        <div class="d-flex flex-items-center gap-2">
+          <%= link_to document_path(document), class: "btn btn-sm" do %>
+            <%= octicon "eye", class: "mr-1" %>
+            View
+          <% end %>
+          <%= link_to edit_document_path(document), class: "btn btn-sm" do %>
+            <%= octicon "pencil", class: "mr-1" %>
+            Edit
+          <% end %>
+          <%= link_to document_path(document), 
+              method: :delete, 
+              class: "btn btn-sm btn-danger",
+              data: { 
+                confirm: "Are you sure you want to delete '#{document.title}'?",
+                turbo_method: :delete
+              } do %>
+            <%= octicon "trash", class: "mr-1" %>
+            Delete
           <% end %>
         </div>
-
-        <!-- File Size -->
-        <% if document.file.attached? %>
-          <div class="d-flex flex-items-center">
-            <%= render(::Primer::Beta::Octicon.new(icon: :file, size: :small, mr: 1)) %>
-            <%= formatted_file_size %>
-          </div>
-        <% end %>
-
-        <!-- Last Modified -->
-        <div class="d-flex flex-items-center">
-          <%= render(::Primer::Beta::Octicon.new(icon: :clock, size: :small, mr: 1)) %>
-          <%= time_ago_text %> ago
+        <div class="d-flex flex-items-center gap-2">
+          <% if document.url.present? %>
+            <%= link_to document.url, target: "_blank", class: "btn btn-sm btn-outline" do %>
+              <%= octicon "link-external", class: "mr-1" %>
+              External
+            <% end %>
+          <% end %>
+          <% if has_file? %>
+            <%= link_to rails_blob_path(document.file, disposition: "attachment"), class: "btn btn-sm btn-outline" do %>
+              <%= octicon "download", class: "mr-1" %>
+              Download
+            <% end %>
+          <% end %>
         </div>
       </div>
-    <% end %>
-
-    <!-- Tags -->
-    <% if document.tags.any? %>
-      <div class="mt-2">
-        <% document.tags.each do |tag| %>
-          <%= render(::Primer::Beta::Label.new(
-            scheme: :secondary,
-            size: :medium,
-            classes: "mr-1"
-          )) do %>
-            <%= tag.name %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

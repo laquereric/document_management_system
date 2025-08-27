@@ -1,88 +1,75 @@
 # Document card component for displaying documents in lists
 
 class Document::CardComponent < ApplicationComponent
-  LAYOUT_VARIANTS = %i[list grid compact].freeze
-  STATUS_COLORS = {
-    "draft" => :attention,
-    "review" => :accent,
-    "approved" => :success,
-    "archived" => :subtle
-  }.freeze
-
-  def initialize(
-    document:,
-    layout: :list,
-    show_actions: true,
-    show_metadata: true,
-    **system_arguments
-  )
+  def initialize(document:, show_actions: true, **system_arguments)
     @document = document
-    @layout = fetch_or_fallback(LAYOUT_VARIANTS, layout, :list)
     @show_actions = show_actions
-    @show_metadata = show_metadata
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
   private
 
-  attr_reader :document, :layout, :show_actions, :show_metadata, :system_arguments
+  attr_reader :document, :show_actions, :system_arguments
 
   def card_classes
-    base_classes = ["Box", "Box--condensed"]
-    case layout
-    when :grid
-      base_classes << "d-flex flex-column height-full"
-    when :compact
-      base_classes << "Box--tight"
-    end
-    base_classes.join(" ")
+    "Box Box--condensed #{system_arguments[:class]}"
   end
 
-  def status_color
-    STATUS_COLORS[document.status&.name&.downcase] || :subtle
+  def title_classes
+    "Box-title"
+  end
+
+  def content_classes
+    "Box-body"
+  end
+
+  def footer_classes
+    "Box-footer"
+  end
+
+  def truncated_content
+    content = document.content || ""
+    content.length > 150 ? "#{content[0..150]}..." : content
+  end
+
+  def formatted_date
+    document.created_at&.strftime("%b %d, %Y") || "Unknown date"
+  end
+
+  def author_name
+    document.author&.name || "Unknown author"
+  end
+
+  def folder_name
+    document.folder&.name || "Unknown folder"
+  end
+
+  def team_name
+    document.team&.name || "Unknown team"
+  end
+
+  def organization_name
+    document.organization&.name || "Unknown organization"
+  end
+
+  def has_file?
+    document.file.attached?
   end
 
   def file_icon
-    return :file unless document.file.attached?
-    
-    content_type = document.file.content_type
-    case content_type
-    when /image/
-      :"file-media"
-    when /pdf/
-      :"file-binary"
-    when /word|doc/
-      :file
-    when /excel|spreadsheet/
-      :"file-binary"
-    when /powerpoint|presentation/
-      :"file-binary"
-    when /zip|archive/
-      :"file-zip"
-    when /text/
-      :file
+    case document.file.filename.extension.downcase
+    when "pdf"
+      "file-pdf"
+    when "doc", "docx"
+      "file-word"
+    when "xls", "xlsx"
+      "file-spreadsheet"
+    when "ppt", "pptx"
+      "file-presentation"
+    when "txt", "rtf"
+      "file-text"
     else
-      :file
+      "file"
     end
-  end
-
-  def formatted_file_size
-    return "" unless document.file.attached?
-    
-    bytes = document.file.byte_size
-    units = %w[B KB MB GB]
-    size = bytes.to_f
-    unit_index = 0
-    
-    while size >= 1024 && unit_index < units.length - 1
-      size /= 1024
-      unit_index += 1
-    end
-    
-    "#{size.round(1)} #{units[unit_index]}"
-  end
-
-  def time_ago_text
-    time_ago_in_words(document.updated_at)
   end
 end

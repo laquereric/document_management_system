@@ -1,2 +1,106 @@
-<h1>Documents#index</h1>
-<p>Find me in app/views/documents/index.html.erb</p>
+<% content_for :title, "Documents" %>
+
+<div class="container-lg px-3 py-4">
+  <!-- Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
+    <div>
+      <h1 class="h2">Documents</h1>
+      <p class="color-fg-muted">Manage and organize your documents</p>
+    </div>
+    <div class="d-flex flex-items-center gap-2">
+      <%= link_to new_document_path, class: "btn btn-primary" do %>
+        <%= octicon "plus", class: "mr-2" %>
+        New Document
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Search & Filters</h3>
+    </div>
+    <div class="Box-body">
+      <% if defined?(Document) %>
+        <% q = Document.ransack(params[:q]) %>
+        <%= render(Search::SearchFormComponent.new(q: q)) %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Documents Grid -->
+  <div class="Box">
+    <div class="Box-header d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">
+        Documents
+        <% if @documents.respond_to?(:total_count) %>
+          <span class="Counter"><%= @documents.total_count %></span>
+        <% end %>
+      </h3>
+      <div class="d-flex flex-items-center gap-2">
+        <div class="Select">
+          <select class="form-select" onchange="window.location.href=this.value">
+            <option value="<%= documents_path %>" <%= 'selected' unless params[:sort] %>>Sort by Date</option>
+            <option value="<%= documents_path(sort: 'title') %>" <%= 'selected' if params[:sort] == 'title' %>>Sort by Title</option>
+            <option value="<%= documents_path(sort: 'status') %>" <%= 'selected' if params[:sort] == 'status' %>>Sort by Status</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="Box-body">
+      <% if @documents&.any? %>
+        <div class="row g-3">
+          <% @documents.each do |document| %>
+            <div class="col-12 col-md-6 col-lg-4">
+              <%= render(Document::CardComponent.new(document: document)) %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Pagination -->
+        <% if @documents.respond_to?(:current_page) %>
+          <div class="d-flex flex-justify-center mt-4">
+            <nav class="paginate-container" aria-label="Pagination">
+              <div class="pagination">
+                <% if @documents.prev_page %>
+                  <%= link_to "Previous", url_for(page: @documents.prev_page), class: "previous_page", rel: "prev" %>
+                <% else %>
+                  <span class="previous_page disabled">Previous</span>
+                <% end %>
+                
+                <% @documents.total_pages.times do |page_num| %>
+                  <% page_num += 1 %>
+                  <% if page_num == @documents.current_page %>
+                    <em class="current"><%= page_num %></em>
+                  <% elsif page_num == 1 || page_num == @documents.total_pages || (page_num >= @documents.current_page - 2 && page_num <= @documents.current_page + 2) %>
+                    <%= link_to page_num, url_for(page: page_num) %>
+                  <% elsif page_num == @documents.current_page - 3 || page_num == @documents.current_page + 3 %>
+                    <span class="gap">…</span>
+                  <% end %>
+                <% end %>
+                
+                <% if @documents.next_page %>
+                  <%= link_to "Next", url_for(page: @documents.next_page), class: "next_page", rel: "next" %>
+                <% else %>
+                  <span class="next_page disabled">Next</span>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+        <% end %>
+      <% else %>
+        <%= render(Ui::EmptyStateComponent.new(
+          title: "No Documents Found",
+          description: "Get started by creating your first document.",
+          icon: "file-text",
+          action: {
+            text: "Create Document",
+            url: new_document_path,
+            class: "btn btn-primary"
+          }
+        )) %>
+      <% end %>
+    </div>
+  </div>
+</div>

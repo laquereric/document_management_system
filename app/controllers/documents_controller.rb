@@ -1,12 +1,23 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy, :change_status, :add_tag, :remove_tag]
   before_action :set_folder, only: [:new, :create]
+  before_action :ensure_user_can_access_document, only: [:show, :edit, :update, :destroy]
   
   def index
     @q = Document.ransack(params[:q])
     @documents = @q.result.includes(:author, :folder, :status, :tags, :scenario_type)
                    .page(params[:page])
                    .per(20)
+    
+    # Apply sorting
+    case params[:sort]
+    when 'title'
+      @documents = @documents.order(:title)
+    when 'status'
+      @documents = @documents.joins(:status).order('statuses.name')
+    else
+      @documents = @documents.order(created_at: :desc)
+    end
     
     # Filter by user's accessible documents
     unless current_user.admin?
@@ -20,13 +31,13 @@ class DocumentsController < ApplicationController
   end
 
   def new
-    @document = @folder.documents.build
+    @document = @folder ? @folder.documents.build : Document.new
     @statuses = Status.all
     @scenario_types = ScenarioType.all
   end
 
   def create
-    @document = @folder.documents.build(document_params)
+    @document = @folder ? @folder.documents.build(document_params) : Document.new(document_params)
     @document.author = current_user
     
     if @document.save
@@ -66,8 +77,17 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    @document.destroy
-    redirect_to documents_url, notice: 'Document was successfully deleted.'
+    document_title = @document.title
+    if @document.destroy
+      ActivityLog.create!(
+        user: current_user,
+        action: 'deleted',
+        notes: "Deleted document: #{document_title}"
+      )
+      redirect_to documents_url, notice: 'Document was successfully deleted.'
+    else
+      redirect_to @document, alert: 'Failed to delete document.'
+    end
   end
 
   def change_status
@@ -136,7 +156,13 @@ class DocumentsController < ApplicationController
     @folder = Folder.find(params[:folder_id]) if params[:folder_id]
   end
 
+  def ensure_user_can_access_document
+    unless current_user.admin? || @document.team.members.include?(current_user)
+      redirect_to documents_path, alert: 'You do not have permission to access this document.'
+    end
+  end
+
   def document_params
-    params.require(:document).permit(:title, :url, :content, :status_id, :scenario_type_id, :file)
+    params.require(:document).permit(:title, :url, :content, :status_id, :scenario_type_id, :folder_id, :file)
   end
 end
