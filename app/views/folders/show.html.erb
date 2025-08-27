@@ -114,8 +114,33 @@
             
             <!-- Pagination -->
             <% if @documents.respond_to?(:current_page) %>
-              <div class="d-flex flex-items-center justify-content-center mt-4">
-                <%= paginate @documents, theme: 'twitter-bootstrap-4' %>
+              <div class="d-flex flex-justify-center mt-4">
+                <nav class="paginate-container" aria-label="Pagination">
+                  <div class="pagination">
+                    <% if @documents.prev_page %>
+                      <%= link_to "Previous", url_for(page: @documents.prev_page), class: "previous_page", rel: "prev" %>
+                    <% else %>
+                      <span class="previous_page disabled">Previous</span>
+                    <% end %>
+                    
+                    <% @documents.total_pages.times do |page_num| %>
+                      <% page_num += 1 %>
+                      <% if page_num == @documents.current_page %>
+                        <em class="current"><%= page_num %></em>
+                      <% elsif page_num == 1 || page_num == @documents.total_pages || (page_num >= @documents.current_page - 2 && page_num <= @documents.current_page + 2) %>
+                        <%= link_to page_num, url_for(page: page_num) %>
+                      <% elsif page_num == @documents.current_page - 3 || page_num == @documents.current_page + 3 %>
+                        <span class="gap">…</span>
+                      <% end %>
+                    <% end %>
+                    
+                    <% if @documents.next_page %>
+                      <%= link_to "Next", url_for(page: @documents.next_page), class: "next_page", rel: "next" %>
+                    <% else %>
+                      <span class="next_page disabled">Next</span>
+                    <% end %>
+                  </div>
+                </nav>
               </div>
             <% end %>
           <% else %>
