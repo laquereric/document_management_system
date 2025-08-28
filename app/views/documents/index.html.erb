@@ -1,11 +1,11 @@
 <% content_for :title, "Documents" %>
 
+<!-- Header Region -->
 <div class="container-lg px-3 py-4">
-  <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-4">
-    <div>
-      <h1 class="h2">Documents</h1>
-      <p class="color-fg-muted">Manage and organize your documents</p>
+  <div class="d-flex flex-column flex-sm-row flex-items-start flex-sm-items-center flex-sm-justify-between mb-4">
+    <div class="mb-3 mb-sm-0">
+      <h1 class="h1">Documents</h1>
+      <p class="color-fg-muted mb-0">Manage and organize your documents</p>
     </div>
     <div class="d-flex flex-items-center gap-2">
       <%= link_to new_document_path, class: "btn btn-primary" do %>
@@ -30,10 +30,10 @@
     </div>
   </div>
 
-  <!-- Documents Grid -->
+  <!-- Content Region -->
   <div class="Box">
-    <div class="Box-header d-flex flex-items-center flex-justify-between">
-      <h3 class="Box-title">
+    <div class="Box-header d-flex flex-column flex-sm-row flex-items-start flex-sm-items-center flex-sm-justify-between">
+      <h3 class="Box-title mb-2 mb-sm-0">
         Documents
         <% if @documents.respond_to?(:total_count) %>
           <span class="Counter"><%= @documents.total_count %></span>
@@ -52,9 +52,9 @@
 
     <div class="Box-body">
       <% if @documents&.any? %>
-        <div class="row g-3">
+        <div class="d-flex flex-wrap gap-3">
           <% @documents.each do |document| %>
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
               <%= render(Document::CardComponent.new(document: document)) %>
             </div>
           <% end %>

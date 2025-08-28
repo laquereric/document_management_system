@@ -1,10 +1,179 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
  *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
- * Consider organizing styles into separate files for maintainability.
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
  */
+
+/* Primer Layout Responsive Utilities */
+@media (max-width: 767.98px) {
+  /* Narrow viewport (< 768px) - Single column layout */
+  .Layout {
+    flex-direction: column;
+  }
+  
+  .Layout-sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-border-default);
+  }
+  
+  .Layout-main {
+    width: 100% !important;
+  }
+  
+  /* Stack header elements vertically on mobile */
+  .Header .d-flex {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .Header-item {
+    margin: 0.5rem 0;
+  }
+  
+  /* Adjust content padding for mobile */
+  .container-lg {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1399.98px) {
+  /* Regular viewport (>= 768px) - Up to 2 columns */
+  .container-lg {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  /* Wide viewport (>= 1400px) - Up to 3 columns */
+  .container-lg {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+/* Layout component styles */
+.Layout {
+  display: flex;
+  min-height: calc(100vh - 60px); /* Account for header height */
+}
+
+.Layout--sidebarPosition-start {
+  flex-direction: row;
+}
+
+.Layout--sidebar-narrow .Layout-sidebar {
+  width: 240px;
+  min-width: 240px;
+}
+
+.Layout-sidebar {
+  border-right: 1px solid var(--color-border-default);
+  background-color: var(--color-canvas-default);
+}
+
+.Layout-main {
+  flex: 1;
+  min-width: 0;
+  background-color: var(--color-canvas-default);
+}
+
+.Layout-content {
+  padding: 24px 0;
+}
+
+/* Flash message improvements */
+.flash {
+  border: none;
+  border-radius: 0;
+}
+
+.flash-success {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success-fg);
+}
+
+.flash-error {
+  background-color: var(--color-danger-subtle);
+  color: var(--color-danger-fg);
+}
+
+/* Footer improvements */
+.footer {
+  background-color: var(--color-canvas-default);
+  border-top: 1px solid var(--color-border-default);
+}
+
+/* Responsive grid improvements */
+@media (max-width: 767.98px) {
+  .d-flex.flex-wrap .flex-auto {
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Ensure proper spacing and typography */
+.h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.color-fg-muted {
+  color: var(--color-fg-muted) !important;
+}
+
+/* Improve button and form styling */
+.btn {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.form-select {
+  border-radius: 6px;
+  border-color: var(--color-border-default);
+}
+
+/* Box component improvements */
+.Box {
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
+  background-color: var(--color-canvas-default);
+}
+
+.Box-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border-default);
+  background-color: var(--color-canvas-subtle);
+}
+
+.Box-body {
+  padding: 16px;
+}
+
+/* Counter badge styling */
+.Counter {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-fg-muted);
+  background-color: var(--color-neutral-subtle);
+  border-radius: 20px;
+  margin-left: 8px;
+}

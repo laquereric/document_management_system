@@ -1,94 +1,68 @@
 <% content_for :title, "Component Test Page" %>
 
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3">
-      <%= render(Navigation::SidebarComponent.new(controller_name: @controller_name,current_user: current_user)) %>
+<!-- Header Region -->
+<div class="container-lg px-3 py-4">
+  <div class="d-flex flex-column flex-sm-row flex-items-start flex-sm-items-center flex-sm-justify-between mb-4">
+    <div class="mb-3 mb-sm-0">
+      <h1 class="h1">Component Test Page</h1>
+      <p class="color-fg-muted mb-0">Demonstrating all components with Primer layout</p>
     </div>
-    
-    <!-- Main Content -->
-    <div class="col-md-9">
-      <!-- Header -->
-      <%= render(Navigation::HeaderComponent.new(current_user: current_user)) %>
+  </div>
       
-      <!-- Breadcrumbs -->
-      <%= render(Navigation::BreadcrumbComponent.new(
-        items: [
-          { text: "Home", url: root_path },
-          { text: "Component Test", url: "#" }
-        ]
+  <!-- Search Form -->
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Search Components</h3>
+    </div>
+    <div class="Box-body">
+      <%= render(Search::SearchFormComponent.new(q: @q)) %>
+    </div>
+  </div>
+      
+  <!-- Stats Cards -->
+  <div class="d-flex flex-wrap gap-3 mb-4">
+    <div class="flex-auto" style="min-width: 200px;">
+      <%= render(Dashboard::StatsCardComponent.new(
+        title: "Sample Documents",
+        value: 25,
+        icon: "file-text",
+        color: "primary"
       )) %>
+    </div>
+    <div class="flex-auto" style="min-width: 200px;">
+      <%= render(Dashboard::StatsCardComponent.new(
+        title: "Active Teams",
+        value: 8,
+        icon: "people",
+        color: "success"
+      )) %>
+    </div>
+    <div class="flex-auto" style="min-width: 200px;">
+      <%= render(Dashboard::StatsCardComponent.new(
+        title: "Pending Reviews",
+        value: 12,
+        icon: "clock",
+        color: "warning"
+      )) %>
+    </div>
+    <div class="flex-auto" style="min-width: 200px;">
+      <%= render(Dashboard::StatsCardComponent.new(
+        title: "Total Users",
+        value: 45,
+        icon: "person-badge",
+        color: "info"
+      )) %>
+    </div>
+  </div>
       
-      <!-- Page Title -->
-      <div class="row mb-4">
-        <div class="col-12">
-          <h1 class="mb-4">
-            <i class="bi bi-puzzle"></i> Component Test Page
-            <small class="text-muted">Demonstrating all components</small>
-          </h1>
-        </div>
-      </div>
-      
-      <!-- Search Form -->
-      <div class="row mb-4">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h5 class="mb-0">Search Components</h5>
-            </div>
-            <div class="card-body">
-              <%= render(Search::SearchFormComponent.new(q: @q)) %>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Stats Cards -->
-      <div class="row mb-4">
-        <div class="col-md-3">
-          <%= render(Dashboard::StatsCardComponent.new(
-            title: "Sample Documents",
-            value: 25,
-            icon: "file-text",
-            color: "primary"
-          )) %>
-        </div>
-        <div class="col-md-3">
-          <%= render(Dashboard::StatsCardComponent.new(
-            title: "Active Teams",
-            value: 8,
-            icon: "people",
-            color: "success"
-          )) %>
-        </div>
-        <div class="col-md-3">
-          <%= render(Dashboard::StatsCardComponent.new(
-            title: "Pending Reviews",
-            value: 12,
-            icon: "clock",
-            color: "warning"
-          )) %>
-        </div>
-        <div class="col-md-3">
-          <%= render(Dashboard::StatsCardComponent.new(
-            title: "Total Users",
-            value: 45,
-            icon: "person-badge",
-            color: "info"
-          )) %>
-        </div>
-      </div>
-      
-      <!-- Document Components -->
-      <div class="row mb-4">
-        <div class="col-12">
-          <h3>Document Components</h3>
-        </div>
-      </div>
-      
-      <div class="row mb-4">
-        <div class="col-md-6">
+  <!-- Document Components -->
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Document Components</h3>
+    </div>
+    <div class="Box-body">
+      <div class="d-flex flex-wrap gap-3">
+        <div class="flex-auto" style="min-width: 300px;">
           <h5>Document Card</h5>
           <% if @sample_document %>
             <%= render(Document::CardComponent.new(document: @sample_document)) %>
@@ -97,8 +71,11 @@
               title: "No Sample Document",
               description: "Create a document to see the card component in action.",
               icon: "file-text",
-              action_text: "Create Document",
-              action_url: new_document_path
+                            action: {
+                text: "Create Document",
+                url: new_document_path,
+                class: "btn btn-primary"
+              }
             )) %>
           <% end %>
         </div>

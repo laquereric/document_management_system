@@ -14,11 +14,7 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <!-- Primer CSS for components -->
+    <!-- Primer CSS -->
     <link href="https://unpkg.com/@primer/css@^21.0.7/dist/primer.css" rel="stylesheet">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
@@ -30,47 +26,75 @@
     <!-- Header Navigation -->
     <%= render(Navigation::HeaderComponent.new(title: content_for(:title))) %>
 
-    <div class="d-flex">
-      <!-- Sidebar Navigation -->
+    <!-- Page Layout Container -->
+    <div class="Layout Layout--sidebarPosition-start Layout--sidebar-narrow">
+      <!-- Sidebar Navigation (Left Pane Region) -->
       <% if user_signed_in? %>
-        <%= render(Navigation::SidebarComponent.new(
-          controller_name: controller_name,
-          current_user: current_user
-        )) %>
+        <div class="Layout-sidebar">
+          <%= render(Navigation::SidebarComponent.new(
+            controller_name: controller_name,
+            current_user: current_user
+          )) %>
+        </div>
       <% end %>
 
-      <!-- Main Content Area -->
-      <div class="flex-1 min-width-0">
+      <!-- Main Content Area (Content Region) -->
+      <div class="Layout-main">
         <!-- Flash Messages -->
         <% if notice %>
-          <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
-            <%= notice %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <div class="flash flash-success mb-4" role="alert">
+            <div class="container-lg px-3">
+              <div class="d-flex flex-items-center">
+                <svg class="octicon octicon-check-circle-fill mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+                </svg>
+                <%= notice %>
+                <button type="button" class="btn-close btn-close-white ml-auto" onclick="this.parentElement.parentElement.remove()"></button>
+              </div>
+            </div>
           </div>
         <% end %>
         
         <% if alert %>
-          <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
-            <%= alert %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <div class="flash flash-error mb-4" role="alert">
+            <div class="container-lg px-3">
+              <div class="d-flex flex-items-center">
+                <svg class="octicon octicon-alert-fill mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575L6.457 1.047ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1-8a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 3Z"></path>
+                </svg>
+                <%= alert %>
+                <button type="button" class="btn-close btn-close-white ml-auto" onclick="this.parentElement.parentElement.remove()"></button>
+              </div>
+            </div>
           </div>
         <% end %>
 
         <!-- Page Content -->
-        <main class="p-3">
+        <main class="Layout-content">
           <%= yield %>
         </main>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-light mt-5 py-4">
-      <div class="container text-center">
-        <p class="text-muted">&copy; 2025 Document Management System. All rights reserved.</p>
+    <!-- App Footer -->
+    <footer class="footer mt-auto py-6 border-top">
+      <div class="container-lg px-3">
+        <div class="d-flex flex-column flex-sm-row flex-items-center flex-sm-justify-between">
+          <div class="d-flex flex-items-center">
+            <svg class="octicon octicon-file-directory mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+            </svg>
+            <span class="color-fg-muted">&copy; 2025 DocuFlow. All rights reserved.</span>
+          </div>
+          <div class="d-flex flex-items-center mt-3 mt-sm-0">
+            <a href="#" class="Link--secondary mr-3">Privacy</a>
+            <a href="#" class="Link--secondary mr-3">Terms</a>
+            <a href="#" class="Link--secondary">Support</a>
+          </div>
+        </div>
       </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   </body>
 </html>
