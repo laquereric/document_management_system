@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+
+# CI/CD Setup Script
+# This script sets up the Rails application for CI/CD environments without starting the server
+
+set -e  # Exit on any error
+
+echo "🔧 Setting up CI/CD Environment..."
+echo "=================================="
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to print colored output
+print_status() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Function to configure Ruby environment
+configure_ruby_environment() {
+    print_status "Configuring Ruby environment..."
+    
+    # Check if we're in the right directory
+    if [ ! -f "Gemfile" ]; then
+        print_error "Gemfile not found. Please run this script from the Rails application root directory."
+        exit 1
+    fi
+    
+    # Check if Ruby is available
+    if ! command -v ruby &> /dev/null; then
+        print_error "Ruby not found. Please install Ruby first."
+        exit 1
+    fi
+    
+    # Get Ruby version
+    RUBY_VERSION=$(ruby -v | cut -d' ' -f2)
+    print_status "Detected Ruby version: $RUBY_VERSION"
+    
+    # Check if .ruby-version file exists and compare
+    if [ -f ".ruby-version" ]; then
+        REQUIRED_RUBY_VERSION=$(cat .ruby-version | tr -d '\n')
+        print_status "Required Ruby version: $REQUIRED_RUBY_VERSION"
+        
+        if [ "$RUBY_VERSION" != "$REQUIRED_RUBY_VERSION" ]; then
+            print_warning "Ruby version mismatch. Expected: $REQUIRED_RUBY_VERSION, Found: $RUBY_VERSION"
+            print_status "Attempting to use rbenv or rvm to switch Ruby version..."
+            
+            # Try rbenv
+            if command -v rbenv &> /dev/null; then
+                print_status "Using rbenv to switch to Ruby $REQUIRED_RUBY_VERSION"
+                eval "$(rbenv init -)"
+                rbenv install -s $REQUIRED_RUBY_VERSION 2>/dev/null || true
+                rbenv local $REQUIRED_RUBY_VERSION
+                RUBY_VERSION=$(ruby -v | cut -d' ' -f2)
+                print_success "Switched to Ruby version: $RUBY_VERSION"
+            # Try rvm
+            elif command -v rvm &> /dev/null; then
+                print_status "Using rvm to switch to Ruby $REQUIRED_RUBY_VERSION"
+                rvm use $REQUIRED_RUBY_VERSION --install --create
+                RUBY_VERSION=$(ruby -v | cut -d' ' -f2)
+                print_success "Switched to Ruby version: $RUBY_VERSION"
+            else
+                print_warning "No Ruby version manager found. Continuing with current version."
+            fi
+        fi
+    fi
+    
+    # Check if Bundler is available
+    if ! command -v bundle &> /dev/null; then
+        print_status "Bundler not found. Installing Bundler..."
+        gem install bundler
+        if [ $? -ne 0 ]; then
+            print_error "Failed to install Bundler. Please install it manually."
+            exit 1
+        fi
+    fi
+    
+    # Get Bundler version
+    BUNDLER_VERSION=$(bundle --version | cut -d' ' -f3)
+    print_status "Bundler version: $BUNDLER_VERSION"
+    
+    # Check if gems are installed
+    if [ ! -d "vendor/bundle" ] && [ ! -f ".bundle/config" ]; then
+        print_status "Installing Ruby gems..."
+        bundle install
+        if [ $? -ne 0 ]; then
+            print_error "Failed to install Ruby gems. Please run 'bundle install' manually."
+            exit 1
+        fi
+    else
+        print_status "Checking if gems are up to date..."
+        bundle check || bundle install
+    fi
+    
+    # Check if Rails is available
+    if ! bundle exec rails --version &> /dev/null; then
+        print_error "Rails not found. Please ensure Rails is in your Gemfile and run 'bundle install'."
+        exit 1
+    fi
+    
+    # Get Rails version
+    RAILS_VERSION=$(bundle exec rails --version | cut -d' ' -f2)
+    print_status "Rails version: $RAILS_VERSION"
+    
+    print_success "Ruby environment configured successfully"
+}
+
+# Configure Ruby environment
+configure_ruby_environment
+
+# Step 1: Disable CI/CD security
+print_status "Step 1: Disabling CI/CD security..."
+if bundle exec rake cicd_security:disable; then
+    print_success "CI/CD security disabled"
+else
+    print_error "Failed to disable CI/CD security"
+    exit 1
+fi
+
+# Step 2: Create database
+print_status "Step 2: Creating database..."
+if bundle exec rake db:create; then
+    print_success "Database created successfully"
+else
+    print_warning "Database creation failed (might already exist)"
+fi
+
+# Step 3: Run migrations
+print_status "Step 3: Running database migrations..."
+if bundle exec rake db:migrate; then
+    print_success "Database migrations completed"
+else
+    print_error "Database migrations failed"
+    exit 1
+fi
+
+# Step 4: Check if we need to seed the database
+print_status "Step 4: Checking if database needs seeding..."
+if bundle exec rake db:seed RAILS_ENV=development 2>/dev/null; then
+    print_success "Database seeded successfully"
+else
+    print_warning "Database seeding failed or not needed"
+fi
+
+# Step 5: Precompile assets (if needed)
+print_status "Step 5: Precompiling assets..."
+if bundle exec rake assets:precompile RAILS_ENV=development; then
+    print_success "Assets precompiled successfully"
+else
+    print_warning "Asset precompilation failed or not needed"
+fi
+
+echo ""
+echo "=================================="
+print_success "🎉 CI/CD setup complete!"
+echo "=================================="
+print_status "The application is ready for CI/CD operations"
+print_status "To start the server, run: bin/cicd_run"
+echo ""

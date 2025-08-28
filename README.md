@@ -179,7 +179,7 @@ The application includes built-in CI/CD support with automated setup scripts and
 #### Setup Only (for CI/CD pipelines)
 ```bash
 # Setup environment without starting server
-./bin/setup_cicd
+./bin/cicd_setup
 ```
 
 ### CI/CD Security Management
@@ -199,12 +199,17 @@ rake cicd_security:enable
 
 ### What the CI/CD Scripts Do
 
-1. **Environment Validation**: Check Ruby, Rails, and Bundler availability
+1. **Ruby Environment Setup**: 
+   - Detect and validate Ruby version (supports .ruby-version file)
+   - Auto-switch Ruby versions using rbenv or rvm if needed
+   - Install Bundler if not available
+   - Install/update Ruby gems automatically
+   - Validate Rails installation
 2. **Security Setup**: Disable authentication for automated testing
 3. **Database Setup**: Create database and run migrations
 4. **Data Seeding**: Populate with initial data (admin user, etc.)
 5. **Asset Compilation**: Precompile assets for production readiness
-6. **Server Start**: Launch Rails server (run_cicd only)
+6. **Server Start**: Launch Rails server (cicd_run only)
 
 ### CI/CD Security Features
 
@@ -213,12 +218,23 @@ rake cicd_security:enable
 - **Easy Management**: Simple rake tasks to enable/disable security
 - **Status Checking**: Clear status messages with current security state
 
+### Ruby Environment Management
+
+The CI/CD scripts include comprehensive Ruby environment setup:
+
+- **Version Detection**: Automatically detects current Ruby version
+- **Version Management**: Supports `.ruby-version` file for version specification
+- **Auto-switching**: Uses rbenv or rvm to switch Ruby versions if needed
+- **Bundler Setup**: Installs Bundler if not available
+- **Gem Management**: Automatically installs/updates Ruby gems
+- **Rails Validation**: Ensures Rails is properly installed and configured
+
 ### Example CI/CD Pipeline Usage
 
 ```yaml
 # Example GitHub Actions workflow
 - name: Setup CI/CD Environment
-  run: ./bin/setup_cicd
+  run: ./bin/cicd_setup
 
 - name: Run Tests
   run: bundle exec rspec
