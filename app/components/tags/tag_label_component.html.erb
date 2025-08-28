@@ -1,0 +1,13 @@
+<span class="<%= badge_classes %>">
+  <%= tag.name %>
+  <% if can_remove_tag? %>
+    <%= button_to remove_tag_document_path(document, tag_id: tag.id),
+        method: :delete,
+        class: remove_button_classes,
+        data: { 
+          confirm: "Remove tag '#{tag.name}' from this document?",
+          turbo_method: :delete
+        },
+        title: "Remove tag" %>
+  <% end %>
+</span>

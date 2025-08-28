@@ -11,7 +11,7 @@
           <svg class="octicon octicon-file mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
             <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
           </svg>
-          <span class="f6 text-semibold"><%= document.file.filename.extension.upcase %></span>
+          <span class="f6 text-semibold"><%= file_extension %></span>
         </span>
       <% end %>
     </div>
@@ -27,7 +27,7 @@
     <div class="d-flex flex-items-center flex-wrap mb-3" style="gap: 6px;">
       <%= render(Ui::StatusBadgeComponent.new(status: document.status)) if document.status %>
       <% document.tags.each do |tag| %>
-        <%= render(Tags::TagLabelComponent.new(tag: tag)) %>
+        <%= render(Ui::TagItemComponent.new(tag: tag)) %>
       <% end %>
     </div>
 
@@ -79,10 +79,10 @@
               External
             <% end %>
           <% end %>
-          <% if has_file? %>
+          <% if has_file? && document.file.present? && document.file.respond_to?(:signed_id) %>
             <%= link_to rails_blob_path(document.file, disposition: "attachment"), class: "btn btn-sm", title: "Download attachment" do %>
               <svg class="octicon octicon-download mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
-                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14H2.75Zm7-10.25v7.5a.75.75 0 0 1-1.5 0v-7.5L5.22 9.22a.75.75 0 1 1-1.06-1.06l3.5-3.5a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 0 1-1.06 1.06L9.75 3.75Z"></path>
+                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14H2.75Zm7-10.25v7.5a.75.75 0 0 1-1.5 0v-7.5L5.22 9.22a.75.75 0 1 1-1.06-1.06l3.5-3.5a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 1 1-1.06 1.06L9.75 3.75Z"></path>
               </svg>
               Download
             <% end %>

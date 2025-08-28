@@ -53,11 +53,20 @@ class Document::CardComponent < ApplicationComponent
   end
 
   def has_file?
-    document.file.attached?
+    document.file.attached? && document.file.present?
+  end
+
+  def file_extension
+    return nil unless has_file?
+    filename = document.file.filename.to_s
+    filename.split('.').last&.upcase
   end
 
   def file_icon
-    case document.file.filename.extension.downcase
+    return "file" unless has_file?
+    
+    extension = file_extension&.downcase
+    case extension
     when "pdf"
       "file-pdf"
     when "doc", "docx"
