@@ -14,8 +14,8 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- Primer CSS -->
-    <link href="https://unpkg.com/@primer/css@^21.0.7/dist/primer.css" rel="stylesheet">
+    <!-- Primer CSS (Latest Version) -->
+    <link href="https://unpkg.com/@primer/css@^21.5.0/dist/primer.css" rel="stylesheet">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -42,28 +42,40 @@
       <div class="Layout-main">
         <!-- Flash Messages -->
         <% if notice %>
-          <div class="flash flash-success mb-4" role="alert">
-            <div class="container-lg px-3">
-              <div class="d-flex flex-items-center">
-                <svg class="octicon octicon-check-circle-fill mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
-                </svg>
-                <%= notice %>
-                <button type="button" class="btn-close btn-close-white ml-auto" onclick="this.parentElement.parentElement.remove()"></button>
+          <div class="flash flash-success" role="alert">
+            <div class="container-lg px-3 py-2">
+              <div class="d-flex flex-items-center flex-justify-between">
+                <div class="d-flex flex-items-center">
+                  <svg class="octicon octicon-check-circle-fill mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16Zm3.78-9.72a.751.751 0 0 0-.018-1.042.751.751 0 0 0-1.042-.018L6.75 9.19 5.28 7.72a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l2 2a.75.75 0 0 0 1.06 0Z"></path>
+                  </svg>
+                  <span class="f5"><%= notice %></span>
+                </div>
+                <button type="button" class="btn-octicon btn-octicon-danger" onclick="this.closest('.flash').remove()" aria-label="Dismiss notice">
+                  <svg class="octicon octicon-x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
         <% end %>
-        
+
         <% if alert %>
-          <div class="flash flash-error mb-4" role="alert">
-            <div class="container-lg px-3">
-              <div class="d-flex flex-items-center">
-                <svg class="octicon octicon-alert-fill mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                  <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575L6.457 1.047ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1-8a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 3Z"></path>
-                </svg>
-                <%= alert %>
-                <button type="button" class="btn-close btn-close-white ml-auto" onclick="this.parentElement.parentElement.remove()"></button>
+          <div class="flash flash-error" role="alert">
+            <div class="container-lg px-3 py-2">
+              <div class="d-flex flex-items-center flex-justify-between">
+                <div class="d-flex flex-items-center">
+                  <svg class="octicon octicon-alert-fill mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm2.763 6.703a.75.75 0 0 0-1.44 0v2.5a.75.75 0 0 0 1.44 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+                  </svg>
+                  <span class="f5"><%= alert %></span>
+                </div>
+                <button type="button" class="btn-octicon btn-octicon-danger" onclick="this.closest('.flash').remove()" aria-label="Dismiss alert">
+                  <svg class="octicon octicon-x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -77,20 +89,20 @@
     </div>
 
     <!-- App Footer -->
-    <footer class="footer mt-auto py-6 border-top">
-      <div class="container-lg px-3">
+    <footer class="footer border-top color-bg-default">
+      <div class="container-lg px-3 py-4">
         <div class="d-flex flex-column flex-sm-row flex-items-center flex-sm-justify-between">
           <div class="d-flex flex-items-center">
-            <svg class="octicon octicon-file-directory mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <svg class="octicon octicon-file-directory mr-2 color-fg-muted" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
               <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
             </svg>
-            <span class="color-fg-muted">&copy; 2025 DocuFlow. All rights reserved.</span>
+            <span class="color-fg-muted f6">&copy; 2025 DocuFlow. All rights reserved.</span>
           </div>
-          <div class="d-flex flex-items-center mt-3 mt-sm-0">
-            <a href="#" class="Link--secondary mr-3">Privacy</a>
-            <a href="#" class="Link--secondary mr-3">Terms</a>
-            <a href="#" class="Link--secondary">Support</a>
-          </div>
+          <nav class="d-flex flex-items-center mt-3 mt-sm-0" aria-label="Footer">
+            <a href="#" class="Link--muted mr-3 f6">Privacy Policy</a>
+            <a href="#" class="Link--muted mr-3 f6">Terms of Service</a>
+            <a href="#" class="Link--muted f6">Support</a>
+          </nav>
         </div>
       </div>
     </footer>

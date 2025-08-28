@@ -1,4 +1,4 @@
-# Header navigation component
+# Header navigation component following Primer design patterns
 
 class Navigation::HeaderComponent < ApplicationComponent
   def initialize(current_user: nil, title: nil, **system_arguments)
@@ -12,11 +12,11 @@ class Navigation::HeaderComponent < ApplicationComponent
   attr_reader :current_user, :title, :system_arguments
 
   def header_classes
-    "Header px-3 py-2 d-flex flex-items-center #{system_arguments[:class]}"
+    "Header Header--full border-bottom color-bg-default px-3 py-2 d-flex flex-items-center #{system_arguments[:class]}"
   end
 
   def brand_classes
-    "Header-item Header-item--full d-flex flex-items-center"
+    "Header-item d-flex flex-items-center"
   end
 
   def nav_classes

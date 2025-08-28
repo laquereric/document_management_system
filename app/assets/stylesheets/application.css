@@ -14,61 +14,54 @@
  *= require_self
  */
 
-/* Primer Layout Responsive Utilities */
+/* Enhanced Primer Layout with Modern Responsive Design */
 @media (max-width: 767.98px) {
-  /* Narrow viewport (< 768px) - Single column layout */
+  /* Mobile-first responsive design */
   .Layout {
     flex-direction: column;
   }
-  
+
   .Layout-sidebar {
     width: 100% !important;
     min-width: 100% !important;
     border-right: none !important;
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 1px solid var(--borderColor-default);
   }
-  
+
   .Layout-main {
     width: 100% !important;
   }
-  
-  /* Stack header elements vertically on mobile */
-  .Header .d-flex {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
+
+  /* Enhanced header responsive behavior */
   .Header-item {
-    margin: 0.5rem 0;
+    margin: var(--base-size-4) 0;
   }
-  
-  /* Adjust content padding for mobile */
+
+  /* Modern spacing tokens */
   .container-lg {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: var(--base-size-16) !important;
+    padding-right: var(--base-size-16) !important;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1399.98px) {
-  /* Regular viewport (>= 768px) - Up to 2 columns */
   .container-lg {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: var(--base-size-16) !important;
+    padding-right: var(--base-size-16) !important;
   }
 }
 
 @media (min-width: 1400px) {
-  /* Wide viewport (>= 1400px) - Up to 3 columns */
   .container-lg {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
+    padding-left: var(--base-size-24) !important;
+    padding-right: var(--base-size-24) !important;
   }
 }
 
-/* Layout component styles - following Primer guidelines exactly */
+/* Modern Layout component styles using latest Primer tokens */
 .Layout {
   display: flex;
-  min-height: calc(100vh - 60px); /* Account for header height */
+  min-height: calc(100vh - var(--base-size-60));
 }
 
 .Layout--sidebarPosition-start {
@@ -78,101 +71,224 @@
 .Layout-sidebar {
   width: 296px;
   min-width: 296px;
-  border-right: 1px solid var(--color-border-default);
-  background-color: var(--color-canvas-default);
+  border-right: 1px solid var(--borderColor-default);
+  background-color: var(--bgColor-default);
 }
 
 .Layout-main {
   flex: 1;
   min-width: 0;
-  background-color: var(--color-canvas-default);
+  background-color: var(--bgColor-default);
 }
 
 .Layout-content {
-  padding: 24px 0;
+  padding: var(--base-size-24) 0;
 }
 
-/* Flash message improvements */
+/* Enhanced flash messages with modern Primer tokens */
 .flash {
   border: none;
-  border-radius: 0;
+  border-radius: var(--borderRadius-medium);
+  margin-bottom: var(--base-size-16);
 }
 
 .flash-success {
-  background-color: var(--color-success-subtle);
-  color: var(--color-success-fg);
+  background-color: var(--bgColor-success-muted);
+  color: var(--fgColor-success);
+  border: 1px solid var(--borderColor-success-muted);
 }
 
 .flash-error {
-  background-color: var(--color-danger-subtle);
-  color: var(--color-danger-fg);
+  background-color: var(--bgColor-danger-muted);
+  color: var(--fgColor-danger);
+  border: 1px solid var(--borderColor-danger-muted);
 }
 
-/* Footer improvements */
+/* Enhanced footer with modern Primer tokens */
 .footer {
-  background-color: var(--color-canvas-default);
-  border-top: 1px solid var(--color-border-default);
+  background-color: var(--bgColor-default);
+  border-top: 1px solid var(--borderColor-default);
+  margin-top: auto;
 }
 
-/* Responsive grid improvements */
+/* Enhanced responsive grid improvements */
 @media (max-width: 767.98px) {
   .d-flex.flex-wrap .flex-auto {
     min-width: 100% !important;
     max-width: 100% !important;
   }
+
+  /* Better mobile spacing */
+  .gap-mobile {
+    gap: var(--base-size-8) !important;
+  }
 }
 
-/* Ensure proper spacing and typography */
-.h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.25;
-  margin-bottom: 0.5rem;
+/* Modern typography improvements */
+.text-semibold {
+  font-weight: var(--base-text-weight-semibold) !important;
 }
 
-.color-fg-muted {
-  color: var(--color-fg-muted) !important;
+.lh-condensed {
+  line-height: var(--text-body-lineHeight-condensed) !important;
 }
 
-/* Improve button and form styling */
+.lh-default {
+  line-height: var(--text-body-lineHeight-default) !important;
+}
+
+/* Enhanced button and form styling with modern Primer tokens */
 .btn {
-  font-weight: 500;
-  border-radius: 6px;
+  font-weight: var(--base-text-weight-medium);
+  border-radius: var(--borderRadius-medium);
+  transition: all 0.15s ease-in-out;
 }
 
-.form-select {
-  border-radius: 6px;
-  border-color: var(--color-border-default);
+.FormControl-select {
+  border-radius: var(--borderRadius-medium);
+  border-color: var(--borderColor-default);
+  background-color: var(--bgColor-default);
 }
 
-/* Box component improvements */
+/* Enhanced Box component with modern tokens */
 .Box {
-  border: 1px solid var(--color-border-default);
-  border-radius: 6px;
-  background-color: var(--color-canvas-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium);
+  background-color: var(--bgColor-default);
+  overflow: hidden;
 }
 
 .Box-header {
-  padding: 16px;
-  border-bottom: 1px solid var(--color-border-default);
-  background-color: var(--color-canvas-subtle);
+  padding: var(--base-size-16);
+  border-bottom: 1px solid var(--borderColor-muted);
+  background-color: var(--bgColor-muted);
 }
 
 .Box-body {
-  padding: 16px;
+  padding: var(--base-size-16);
 }
 
-/* Counter badge styling */
+/* Enhanced Counter badge with modern Primer tokens */
 .Counter {
   display: inline-block;
-  padding: 2px 6px;
-  font-size: 12px;
-  font-weight: 500;
+  padding: var(--base-size-2) var(--base-size-6);
+  font-size: var(--text-caption-size);
+  font-weight: var(--base-text-weight-medium);
   line-height: 1;
-  color: var(--color-fg-muted);
-  background-color: var(--color-neutral-subtle);
-  border-radius: 20px;
-  margin-left: 8px;
+  color: var(--fgColor-muted);
+  background-color: var(--bgColor-neutral-muted);
+  border-radius: var(--borderRadius-full);
+  margin-left: var(--base-size-8);
+}
+
+/* Modern notification indicator */
+.notification-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--bgColor-attention-emphasis);
+  border: 1px solid var(--bgColor-default);
+  border-radius: var(--borderRadius-full);
+}
+
+/* Enhanced SideNav with latest Primer patterns */
+.SideNav-item.aria-current {
+  background-color: var(--bgColor-accent-muted);
+  color: var(--fgColor-accent);
+  font-weight: var(--base-text-weight-semibold);
+  border-left: 3px solid var(--borderColor-accent-emphasis);
+}
+
+.SideNav-item:hover:not(.aria-current) {
+  background-color: var(--bgColor-neutral-muted);
+  color: var(--fgColor-default);
+  text-decoration: none;
+}
+
+/* Modern Link improvements */
+.Link--primary {
+  color: var(--fgColor-accent) !important;
+  text-decoration: none !important;
+}
+
+.Link--primary:hover {
+  color: var(--fgColor-accent) !important;
+  text-decoration: underline !important;
+}
+
+.Link--muted {
+  color: var(--fgColor-muted) !important;
+  text-decoration: none !important;
+}
+
+.Link--muted:hover {
+  color: var(--fgColor-default) !important;
+  text-decoration: none !important;
+}
+
+/* Enhanced form controls */
+.FormControl-input:focus,
+.FormControl-select:focus,
+.FormControl-textarea:focus {
+  border-color: var(--borderColor-accent-emphasis);
+  box-shadow: 0 0 0 3px var(--color-accent-fg);
+  outline: none;
+}
+
+/* Modern button enhancements */
+.btn:focus,
+.btn-octicon:focus {
+  box-shadow: 0 0 0 3px var(--color-accent-fg);
+  outline: none;
+}
+
+/* Label enhancements */
+.Label--accent {
+  background-color: var(--bgColor-accent-muted);
+  color: var(--fgColor-accent);
+  border: 1px solid var(--borderColor-accent-muted);
+}
+
+.Label--large {
+  padding: var(--base-size-4) var(--base-size-8);
+  font-size: var(--text-caption-size);
+}
+
+/* Modern spacing utilities */
+.gap-8 {
+  gap: var(--base-size-8) !important;
+}
+
+.gap-16 {
+  gap: var(--base-size-16) !important;
+}
+
+.gap-24 {
+  gap: var(--base-size-24) !important;
+}
+
+/* Enhanced accessibility and focus states */
+.btn-octicon:focus-visible,
+.btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--fgColor-accent);
+}
+
+/* Print styles */
+@media print {
+  .Header,
+  .Layout-sidebar,
+  .footer,
+  .btn,
+  .flash {
+    display: none !important;
+  }
+
+  .Layout-main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 /* Enhanced modern styling for organizations page */

@@ -11,27 +11,27 @@ class Forms::DocumentFormComponent < ApplicationComponent
   attr_reader :document, :submit_text, :cancel_url, :system_arguments
 
   def form_classes
-    "form #{system_arguments[:class]}"
+    "#{system_arguments[:class]}"
   end
 
   def title_field_classes
-    "form-control input-lg"
+    "FormControl-input FormControl-large"
   end
 
   def content_field_classes
-    "form-control"
+    "FormControl-textarea"
   end
 
   def url_field_classes
-    "form-control"
+    "FormControl-input"
   end
 
   def select_classes
-    "form-select"
+    "FormControl-select"
   end
 
   def file_field_classes
-    "form-control"
+    "FormControl-input"
   end
 
   def submit_button_classes

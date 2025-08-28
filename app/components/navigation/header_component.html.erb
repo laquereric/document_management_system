@@ -1,42 +1,49 @@
 <header class="<%= header_classes %>">
   <!-- Brand/Logo Section -->
   <div class="<%= brand_classes %>">
-    <%= link_to root_path, class: "Header-link d-flex flex-items-center" do %>
-      <svg class="octicon octicon-file-directory mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+    <%= link_to root_path, class: "Header-link d-flex flex-items-center color-fg-default no-underline" do %>
+      <svg class="octicon octicon-file-directory mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20">
         <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
       </svg>
-      <span class="f4 text-bold">DocuFlow</span>
+      <span class="f4 text-semibold">DocuFlow</span>
     <% end %>
   </div>
 
   <!-- Context Region -->
   <% if title %>
-    <div class="Header-item">
+    <div class="Header-item d-none d-lg-flex">
       <span class="color-fg-muted f5">/ <%= title %></span>
     </div>
   <% end %>
 
   <!-- Search Section -->
-  <div class="Header-item mx-3">
+  <div class="Header-item flex-auto d-none d-md-flex mx-3">
     <%= render(Search::QuickSearchComponent.new(placeholder: "Search documents...")) %>
   </div>
 
   <!-- Navigation Actions -->
-  <nav class="<%= nav_classes %>">
+  <div class="Header-item d-flex flex-items-center">
+    <!-- Mobile search toggle -->
+    <button class="btn-octicon d-md-none mr-2" type="button" aria-label="Search" data-toggle="search">
+      <svg class="octicon octicon-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+      </svg>
+    </button>
+
     <!-- Notifications -->
-    <div class="Header-item">
-      <button class="btn btn-sm btn-outline" aria-label="Notifications">
-        <i class="octicon octicon-bell"></i>
-      </button>
-    </div>
+    <button class="btn-octicon position-relative mr-2" type="button" aria-label="Notifications">
+      <svg class="octicon octicon-bell" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M8 16a2 2 0 0 0 1.985-1.75c.017-.137-.097-.25-.235-.25h-3.5c-.138 0-.252.113-.235.25A2 2 0 0 0 8 16ZM3 5a5 5 0 0 1 10 0v2.947c0 .05.015.098.042.139l1.703 2.555A.5.5 0 0 1 14.321 11H1.679a.5.5 0 0 1-.424-.859l1.703-2.555c.027-.041.042-.089.042-.139V5Z"></path>
+      </svg>
+      <!-- Notification badge -->
+      <span class="notification-indicator"></span>
+    </button>
 
     <!-- User Menu -->
-    <div class="Header-item ml-2">
-      <% if current_user %>
-        <%= render(Ui::UserMenuComponent.new(user: current_user)) %>
-      <% else %>
-        <%= link_to "Sign In", new_user_session_path, class: "btn btn-sm btn-primary" %>
-      <% end %>
-    </div>
-  </nav>
+    <% if current_user %>
+      <%= render(Ui::UserMenuComponent.new(user: current_user)) %>
+    <% else %>
+      <%= link_to "Sign In", new_user_session_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </header>
