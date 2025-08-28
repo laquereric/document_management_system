@@ -13,7 +13,63 @@
  *= require_tree .
  *= require_self
  */
-
+:root {
+  /* Border Colors */
+  --borderColor-default: #021631;
+  --borderColor-muted: #d0d7de;
+  --borderColor-accent-emphasis: #0969da;
+  --borderColor-accent-muted: #ddf4ff;
+  --borderColor-success-muted: #dafbe1;
+  --borderColor-danger-muted: #ffebe9;
+  --color-border-default: #021631;
+  --color-border-muted: #d0d7de;
+  
+  /* Background Colors */
+  --bgColor-default: #ffffff;
+  --bgColor-muted: #f6f8fa;
+  --bgColor-neutral-muted: #f6f8fa;
+  --bgColor-accent-muted: #ddf4ff;
+  --bgColor-success-muted: #dafbe1;
+  --bgColor-danger-muted: #ffebe9;
+  --bgColor-attention-emphasis: #9a6700;
+  --color-canvas-default: #ffffff;
+  --color-canvas-subtle: #f6f8fa;
+  --color-accent-subtle: #ddf4ff;
+  
+  /* Foreground Colors */
+  --fgColor-default: #24292f;
+  --fgColor-muted: #656d76;
+  --fgColor-accent: #0969da;
+  --fgColor-success: #1a7f37;
+  --fgColor-danger: #cf222e;
+  --color-fg-default: #24292f;
+  --color-fg-muted: #656d76;
+  --color-accent-fg: #0969da;
+  
+  /* Border Radius */
+  --borderRadius-medium: 6px;
+  --borderRadius-full: 9999px;
+  
+  /* Spacing Tokens */
+  --base-size-2: 4px;
+  --base-size-4: 8px;
+  --base-size-6: 12px;
+  --base-size-8: 16px;
+  --base-size-16: 24px;
+  --base-size-24: 32px;
+  --base-size-60: 80px;
+  
+  /* Typography */
+  --base-text-weight-medium: 500;
+  --base-text-weight-semibold: 600;
+  --text-caption-size: 12px;
+  --text-body-lineHeight-condensed: 1.25;
+  --text-body-lineHeight-default: 1.5;
+  
+  /* Bootstrap Grid Variables */
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
 /* Enhanced Primer Layout with Modern Responsive Design */
 @media (max-width: 767.98px) {
   /* Mobile-first responsive design */
@@ -156,6 +212,13 @@
   border-radius: var(--borderRadius-medium);
   background-color: var(--bgColor-default);
   overflow: hidden;
+}
+
+/* Ensure document cards render full borders consistently */
+.document-card {
+  border: 1px solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium);
+  background-color: var(--bgColor-default);
 }
 
 .Box-header {

@@ -12,11 +12,12 @@ class Document::CardComponent < ApplicationComponent
   attr_reader :document, :show_actions, :system_arguments
 
   def card_classes
-    "Box Box--condensed #{system_arguments[:class]}"
+    classes = ["Box", "Box--condensed", "document-card", system_arguments[:class]].compact.join(" ")
+    classes
   end
 
   def title_classes
-    "Box-title"
+    "Box-header"
   end
 
   def content_classes
