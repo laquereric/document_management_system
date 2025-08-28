@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   
   before_action :set_controller_path
 
-  # Devise authentication
-  before_action :authenticate_user!
+  # Devise authentication - skip if CI/CD security is disabled
+  before_action :authenticate_user!, unless: :cicd_security_disabled?
   before_action :configure_permitted_parameters, if: :devise_controller?
   
   # Set current user for activity logging
@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     Current.user = current_user if user_signed_in?
+  end
+  
+  def cicd_security_disabled?
+    defined?(CiCdSecurityDisable) && CiCdSecurityDisable == true
   end
   
   def ensure_admin
