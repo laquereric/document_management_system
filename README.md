@@ -164,6 +164,69 @@ The application includes API endpoints for AJAX requests:
 - **SQL Injection Prevention**: ActiveRecord parameterized queries
 - **Host Authorization**: Configured for development and production
 
+## CI/CD Support
+
+The application includes built-in CI/CD support with automated setup scripts and security bypass capabilities for automated testing and deployment.
+
+### CI/CD Scripts
+
+#### Quick Setup and Run
+```bash
+# Complete setup and start server (recommended for development)
+./bin/run_cicd
+```
+
+#### Setup Only (for CI/CD pipelines)
+```bash
+# Setup environment without starting server
+./bin/setup_cicd
+```
+
+### CI/CD Security Management
+
+The application includes rake tasks to manage authentication for CI/CD environments:
+
+```bash
+# Check current security status
+rake cicd_security:status
+
+# Disable authentication for CI/CD
+rake cicd_security:disable
+
+# Re-enable authentication
+rake cicd_security:enable
+```
+
+### What the CI/CD Scripts Do
+
+1. **Environment Validation**: Check Ruby, Rails, and Bundler availability
+2. **Security Setup**: Disable authentication for automated testing
+3. **Database Setup**: Create database and run migrations
+4. **Data Seeding**: Populate with initial data (admin user, etc.)
+5. **Asset Compilation**: Precompile assets for production readiness
+6. **Server Start**: Launch Rails server (run_cicd only)
+
+### CI/CD Security Features
+
+- **Authentication Bypass**: Temporarily disable user authentication for automated testing
+- **Git Ignored**: Security bypass file is automatically ignored by Git
+- **Easy Management**: Simple rake tasks to enable/disable security
+- **Status Checking**: Clear status messages with current security state
+
+### Example CI/CD Pipeline Usage
+
+```yaml
+# Example GitHub Actions workflow
+- name: Setup CI/CD Environment
+  run: ./bin/setup_cicd
+
+- name: Run Tests
+  run: bundle exec rspec
+
+- name: Re-enable Security
+  run: bundle exec rake cicd_security:enable
+```
+
 ## Deployment
 
 ### Production Deployment
