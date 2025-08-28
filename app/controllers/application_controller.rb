@@ -31,7 +31,36 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_user
-    Current.user = current_user if user_signed_in?
+    if cicd_security_disabled?
+      # Set admin user for CI/CD environments
+      cicd_user = User.find_by(email: 'admin@example.com')
+      if cicd_user
+        Current.user = cicd_user
+        # Set current_user for Devise compatibility
+        @current_user = cicd_user
+      else
+        # Create admin user if it doesn't exist
+        cicd_user = create_cicd_admin_user
+        Current.user = cicd_user
+        @current_user = cicd_user
+      end
+    else
+      Current.user = current_user if user_signed_in?
+    end
+  end
+
+  def create_cicd_admin_user
+    User.create!(
+      email: 'admin@example.com',
+      password: 'password123',
+      password_confirmation: 'password123',
+      name: 'CI/CD Admin',
+      role: 'admin',
+      confirmed_at: Time.current
+    )
+  rescue ActiveRecord::RecordInvalid => e
+    # If user already exists, find and return it
+    User.find_by(email: 'admin@example.com')
   end
   
   def cicd_security_disabled?
