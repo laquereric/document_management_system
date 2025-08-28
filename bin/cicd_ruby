@@ -29,6 +29,153 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Function to detect OS
+detect_os() {
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "linux"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "macos"
+    elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+        echo "windows"
+    else
+        echo "unknown"
+    fi
+}
+
+# Function to install Ruby on macOS
+install_ruby_macos() {
+    local required_version=$1
+    print_status "Installing Ruby on macOS..."
+    
+    # Check if Homebrew is available
+    if command -v brew &> /dev/null; then
+        print_status "Using Homebrew to install Ruby..."
+        brew install ruby
+        print_success "Ruby installed via Homebrew"
+        return 0
+    fi
+    
+    # Check if rbenv is available
+    if command -v rbenv &> /dev/null; then
+        print_status "Using rbenv to install Ruby $required_version..."
+        eval "$(rbenv init -)"
+        rbenv install $required_version
+        rbenv local $required_version
+        print_success "Ruby $required_version installed via rbenv"
+        return 0
+    fi
+    
+    # Check if rvm is available
+    if command -v rvm &> /dev/null; then
+        print_status "Using rvm to install Ruby $required_version..."
+        rvm install $required_version
+        rvm use $required_version --default
+        print_success "Ruby $required_version installed via rvm"
+        return 0
+    fi
+    
+    # Try to install rbenv and then Ruby
+    print_status "Installing rbenv and Ruby..."
+    if command -v brew &> /dev/null; then
+        brew install rbenv ruby-build
+        eval "$(rbenv init -)"
+        rbenv install $required_version
+        rbenv local $required_version
+        print_success "Ruby $required_version installed via rbenv"
+        return 0
+    fi
+    
+    print_error "Could not install Ruby automatically. Please install Ruby manually:"
+    print_error "  - Install Homebrew: https://brew.sh/"
+    print_error "  - Then run: brew install ruby"
+    print_error "  - Or install rbenv: brew install rbenv ruby-build"
+    return 1
+}
+
+# Function to install Ruby on Linux
+install_ruby_linux() {
+    local required_version=$1
+    print_status "Installing Ruby on Linux..."
+    
+    # Check if rbenv is available
+    if command -v rbenv &> /dev/null; then
+        print_status "Using rbenv to install Ruby $required_version..."
+        eval "$(rbenv init -)"
+        rbenv install $required_version
+        rbenv local $required_version
+        print_success "Ruby $required_version installed via rbenv"
+        return 0
+    fi
+    
+    # Check if rvm is available
+    if command -v rvm &> /dev/null; then
+        print_status "Using rvm to install Ruby $required_version..."
+        rvm install $required_version
+        rvm use $required_version --default
+        print_success "Ruby $required_version installed via rvm"
+        return 0
+    fi
+    
+    # Try to install rbenv
+    print_status "Installing rbenv and Ruby..."
+    
+    # Detect package manager
+    if command -v apt-get &> /dev/null; then
+        # Ubuntu/Debian
+        sudo apt-get update
+        sudo apt-get install -y git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev libgdbm-compat-dev
+        curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+        eval "$(rbenv init -)"
+        rbenv install $required_version
+        rbenv local $required_version
+        print_success "Ruby $required_version installed via rbenv"
+        return 0
+    elif command -v yum &> /dev/null; then
+        # CentOS/RHEL/Fedora
+        sudo yum groupinstall -y "Development Tools"
+        sudo yum install -y git curl openssl-devel readline-devel zlib-devel
+        curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+        eval "$(rbenv init -)"
+        rbenv install $required_version
+        rbenv local $required_version
+        print_success "Ruby $required_version installed via rbenv"
+        return 0
+    fi
+    
+    print_error "Could not install Ruby automatically. Please install Ruby manually:"
+    print_error "  - Install rbenv: https://github.com/rbenv/rbenv#installation"
+    print_error "  - Or install rvm: https://rvm.io/rvm/install"
+    return 1
+}
+
+# Function to install Ruby automatically
+install_ruby_automatically() {
+    local required_version=$1
+    local os=$(detect_os)
+    
+    print_warning "Ruby not found. Attempting to install automatically..."
+    
+    case $os in
+        "macos")
+            install_ruby_macos $required_version
+            ;;
+        "linux")
+            install_ruby_linux $required_version
+            ;;
+        "windows")
+            print_error "Automatic Ruby installation not supported on Windows."
+            print_error "Please install Ruby manually:"
+            print_error "  - Download from: https://rubyinstaller.org/"
+            print_error "  - Or use WSL (Windows Subsystem for Linux)"
+            return 1
+            ;;
+        *)
+            print_error "Unknown operating system. Please install Ruby manually."
+            return 1
+            ;;
+    esac
+}
+
 # Function to configure Ruby environment
 configure_ruby_environment() {
     print_status "Configuring Ruby environment..."
@@ -39,10 +186,28 @@ configure_ruby_environment() {
         exit 1
     fi
     
+    # Get required Ruby version if .ruby-version exists
+    local required_version=""
+    if [ -f ".ruby-version" ]; then
+        required_version=$(cat .ruby-version | tr -d '\n')
+    fi
+    
     # Check if Ruby is available
     if ! command -v ruby &> /dev/null; then
-        print_error "Ruby not found. Please install Ruby first."
-        exit 1
+        if [ -n "$required_version" ]; then
+            install_ruby_automatically $required_version
+        else
+            print_error "Ruby not found and no .ruby-version file specified."
+            print_error "Please install Ruby manually or create a .ruby-version file."
+            exit 1
+        fi
+        
+        # Verify Ruby is now available
+        if ! command -v ruby &> /dev/null; then
+            print_error "Ruby installation failed or Ruby is not in PATH."
+            print_error "Please restart your terminal or add Ruby to your PATH."
+            exit 1
+        fi
     fi
     
     # Get Ruby version
@@ -130,18 +295,28 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo ""
     echo "This script:"
     echo "  - Checks Ruby version against .ruby-version file"
+    echo "  - Automatically installs Ruby if not available"
     echo "  - Switches Ruby version using rbenv or rvm if needed"
     echo "  - Installs Bundler if not available"
     echo "  - Installs/updates Ruby gems"
     echo "  - Validates Rails installation"
+    echo ""
+    echo "Supported platforms:"
+    echo "  - macOS (Homebrew, rbenv, rvm)"
+    echo "  - Linux (rbenv, rvm, apt-get, yum)"
+    echo "  - Windows (manual installation required)"
     exit 0
 elif [ "$1" = "--version" ]; then
     if [ -f ".ruby-version" ]; then
         REQUIRED_RUBY_VERSION=$(cat .ruby-version | tr -d '\n')
         echo "Required Ruby version: $REQUIRED_RUBY_VERSION"
     fi
-    CURRENT_RUBY_VERSION=$(ruby -v | cut -d' ' -f2)
-    echo "Current Ruby version: $CURRENT_RUBY_VERSION"
+    if command -v ruby &> /dev/null; then
+        CURRENT_RUBY_VERSION=$(ruby -v | cut -d' ' -f2)
+        echo "Current Ruby version: $CURRENT_RUBY_VERSION"
+    else
+        echo "Ruby not installed"
+    fi
     exit 0
 else
     configure_ruby_environment

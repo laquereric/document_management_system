@@ -212,12 +212,14 @@ rake cicd_security:enable
 ### What the CI/CD Scripts Do
 
 #### `bin/cicd_ruby` - Ruby Environment Manager
-- Detect and validate Ruby version (supports .ruby-version file)
-- Auto-switch Ruby versions using rbenv or rvm if needed
-- Install Bundler if not available
-- Install/update Ruby gems automatically
-- Validate Rails installation
-- Can be run independently with `--version` or `--help` options
+- **Automatic Ruby Installation**: Installs Ruby if not available on the system
+- **Cross-Platform Support**: Works on macOS, Linux, and Windows (with manual install)
+- **Version Management**: Detect and validate Ruby version (supports .ruby-version file)
+- **Auto-switch Ruby versions**: Uses rbenv or rvm if needed
+- **Bundler Management**: Install Bundler if not available
+- **Gem Management**: Install/update Ruby gems automatically
+- **Rails Validation**: Validate Rails installation
+- **Independent Operation**: Can be run independently with `--version` or `--help` options
 
 #### `bin/cicd_setup` - Complete Environment Setup
 1. **Ruby Environment**: Calls `bin/cicd_ruby` to configure Ruby
@@ -237,6 +239,8 @@ rake cicd_security:enable
 
 The CI/CD scripts include comprehensive Ruby environment setup:
 
+- **Automatic Installation**: Installs Ruby automatically if not available on the system
+- **Cross-Platform**: Supports macOS (Homebrew, rbenv, rvm), Linux (rbenv, rvm, apt-get, yum), and Windows
 - **Version Detection**: Automatically detects current Ruby version
 - **Version Management**: Supports `.ruby-version` file for version specification
 - **Auto-switching**: Uses rbenv or rvm to switch Ruby versions if needed
