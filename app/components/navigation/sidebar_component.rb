@@ -14,16 +14,7 @@ class Navigation::SidebarComponent < ApplicationComponent
 
   attr_reader :current_user, :variant, :system_arguments
 
-  def sidebar_classes
-    base_classes = ["SideNav", "height-full", "border-right"]
-    base_classes << "SideNav--narrow" if variant == :collapsed
-    base_classes << system_arguments[:class] if system_arguments[:class]
-    base_classes.join(" ")
-  end
 
-  def collapsed?
-    variant == :collapsed
-  end
 
   def navigation_items
     []

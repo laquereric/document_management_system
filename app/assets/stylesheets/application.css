@@ -65,7 +65,7 @@
   }
 }
 
-/* Layout component styles */
+/* Layout component styles - following Primer guidelines exactly */
 .Layout {
   display: flex;
   min-height: calc(100vh - 60px); /* Account for header height */
@@ -75,12 +75,9 @@
   flex-direction: row;
 }
 
-.Layout--sidebar-narrow .Layout-sidebar {
-  width: 240px;
-  min-width: 240px;
-}
-
 .Layout-sidebar {
+  width: 296px;
+  min-width: 296px;
   border-right: 1px solid var(--color-border-default);
   background-color: var(--color-canvas-default);
 }
@@ -176,4 +173,73 @@
   background-color: var(--color-neutral-subtle);
   border-radius: 20px;
   margin-left: 8px;
+}
+
+/* SideNav styling to match Primer exactly */
+.SideNav {
+  height: 100%;
+  border-right: 1px solid var(--color-border-default);
+  background-color: var(--color-canvas-default);
+}
+
+.SideNav-items {
+  padding: 8px 0;
+}
+
+.SideNav-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  color: var(--color-fg-default);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.5;
+  border: 0;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.SideNav-item:hover {
+  background-color: var(--color-canvas-subtle);
+  text-decoration: none;
+  color: var(--color-fg-default);
+}
+
+.SideNav-item.selected {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent-fg);
+  font-weight: 600;
+}
+
+.SideNav-item svg {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.SideNav-item span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Section headers in sidebar */
+.SideNav-item .color-fg-muted {
+  color: var(--color-fg-muted) !important;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 16px 8px 16px;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  cursor: default;
+}
+
+.SideNav-item .color-fg-muted:hover {
+  background: transparent;
 }

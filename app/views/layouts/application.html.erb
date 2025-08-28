@@ -27,7 +27,7 @@
     <%= render(Navigation::HeaderComponent.new(title: content_for(:title))) %>
 
     <!-- Page Layout Container -->
-    <div class="Layout Layout--sidebarPosition-start Layout--sidebar-narrow">
+    <div class="Layout Layout--sidebarPosition-start">
       <!-- Sidebar Navigation (Left Pane Region) -->
       <% if user_signed_in? %>
         <div class="Layout-sidebar">
