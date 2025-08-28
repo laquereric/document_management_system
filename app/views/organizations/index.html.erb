@@ -1,14 +1,14 @@
 <% content_for :title, "Organizations" %>
 
-<div class="container-lg px-3 py-4">
-  <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-4">
-    <div>
-      <h1 class="h2">Organizations</h1>
-      <p class="color-fg-muted">Manage and organize your organizations</p>
+<div class="container-xl px-3 py-6">
+  <!-- Page Header -->
+  <div class="d-flex flex-column flex-sm-row flex-items-center flex-sm-justify-between mb-6">
+    <div class="mb-4 mb-sm-0">
+      <h1 class="h1 mb-2">Organizations</h1>
+      <p class="color-fg-muted f4">Manage and organize your organizations with ease</p>
     </div>
-    <div class="d-flex flex-items-center gap-2">
-      <%= link_to new_organization_path, class: "btn btn-primary" do %>
+    <div class="d-flex flex-items-center gap-3">
+      <%= link_to new_organization_path, class: "btn btn-primary btn-large" do %>
         <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
           <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
         </svg>
@@ -17,20 +17,23 @@
     </div>
   </div>
 
-  <!-- Organizations Grid -->
-  <div class="Box">
-    <div class="Box-header d-flex flex-items-center flex-justify-between">
-      <h3 class="Box-title">
-        Organizations
-        <% if @organizations.respond_to?(:total_count) %>
-          <span class="Counter"><%= @organizations.total_count %></span>
-        <% end %>
-      </h3>
+  <!-- Organizations Content -->
+  <div class="Box border-0 bg-transparent">
+    <div class="Box-header border-0 bg-transparent pb-0">
+      <div class="d-flex flex-items-center flex-justify-between mb-4">
+        <h2 class="h3 mb-0">
+          All Organizations
+          <% if @organizations.respond_to?(:total_count) %>
+            <span class="Counter Counter--primary ml-2"><%= @organizations.total_count %></span>
+          <% end %>
+        </h2>
+      </div>
     </div>
 
-    <div class="Box-body">
+    <div class="Box-body border-0 bg-transparent p-0">
       <% if @organizations&.any? %>
-        <div class="row g-3">
+        <!-- Organizations Grid -->
+        <div class="row g-4">
           <% @organizations.each do |organization| %>
             <div class="col-12 col-md-6 col-lg-4">
               <%= render(Organization::CardComponent.new(organization: organization)) %>
@@ -40,7 +43,7 @@
 
         <!-- Pagination -->
         <% if @organizations.respond_to?(:current_page) %>
-          <div class="d-flex flex-justify-center mt-4">
+          <div class="d-flex flex-justify-center mt-6">
             <nav class="paginate-container" aria-label="Pagination">
               <div class="pagination">
                 <% if @organizations.prev_page %>
@@ -70,16 +73,19 @@
           </div>
         <% end %>
       <% else %>
-        <%= render(Ui::EmptyStateComponent.new(
-          title: "No Organizations Found",
-          description: "Get started by creating your first organization.",
-          icon: "organization",
-          action: {
-            text: "Create Organization",
-            url: new_organization_path,
-            class: "btn btn-primary"
-          }
-        )) %>
+        <!-- Empty State -->
+        <div class="Box border-0 bg-transparent">
+          <%= render(Ui::EmptyStateComponent.new(
+            title: "No Organizations Found",
+            description: "Get started by creating your first organization to begin managing your documents and teams.",
+            icon: "organization",
+            action: {
+              text: "Create Organization",
+              url: new_organization_path,
+              class: "btn btn-primary btn-large"
+            }
+          )) %>
+        </div>
       <% end %>
     </div>
   </div>

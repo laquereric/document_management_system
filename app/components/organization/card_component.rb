@@ -10,19 +10,19 @@ class Organization::CardComponent < ApplicationComponent
   attr_reader :organization, :show_actions, :system_arguments
 
   def card_classes
-    "Box Box--condensed #{system_arguments[:class]}"
+    "Box Box--condensed h-full #{system_arguments[:class]}"
   end
 
   def title_classes
-    "Box-title"
+    "Box-header border-bottom-0 pb-2"
   end
 
   def content_classes
-    "Box-body"
+    "Box-body pt-0 pb-3"
   end
 
   def footer_classes
-    "Box-footer"
+    "Box-footer border-top pt-3"
   end
 
   def truncated_description

@@ -175,6 +175,88 @@
   margin-left: 8px;
 }
 
+/* Enhanced modern styling for organizations page */
+.container-xl {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Improved card styling for modern appearance */
+.Box--condensed {
+  transition: all 0.2s ease-in-out;
+  border: 1px solid var(--color-border-default);
+  background-color: var(--color-canvas-default);
+}
+
+.Box--condensed:hover {
+  border-color: var(--color-border-muted);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Enhanced typography */
+.text-semibold {
+  font-weight: 600 !important;
+}
+
+.text-body {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Improved spacing for modern layout */
+.g-4 {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
+
+.g-4 > * {
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: calc(var(--bs-gutter-y) * 0.5);
+  margin-bottom: calc(var(--bs-gutter-y) * 0.5);
+}
+
+/* Enhanced button styling */
+.btn-large {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.btn-outline {
+  color: var(--color-fg-default);
+  background-color: var(--color-canvas-default);
+  border: 1px solid var(--color-border-default);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-canvas-subtle);
+  border-color: var(--color-border-muted);
+  color: var(--color-fg-default);
+}
+
+/* Counter styling improvements */
+.Counter--primary {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent-fg);
+}
+
+/* Enhanced empty state styling */
+.Box.border-0.bg-transparent {
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Improved grid layout */
+.row.g-4 {
+  margin-right: calc(-1.5rem * 0.5);
+  margin-left: calc(-1.5rem * 0.5);
+}
+
 /* SideNav styling to match Primer exactly */
 .SideNav {
   height: 100%;
