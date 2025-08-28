@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
-# CI/CD Application Runner Script
-# This script sets up and runs the Rails application for CI/CD environments
+# CI/CD Ruby Environment Manager
+# This script manages Ruby version and environment for CI/CD
 
 set -e  # Exit on any error
-
-echo "🚀 Starting CI/CD Application Setup..."
-echo "======================================"
 
 # Colors for output
 RED='\033[0;31m'
@@ -121,61 +118,31 @@ configure_ruby_environment() {
     print_success "Ruby environment configured successfully"
 }
 
-# Configure Ruby environment
-configure_ruby_environment
-
-# Step 1: Disable CI/CD security
-print_status "Step 1: Disabling CI/CD security..."
-if bundle exec rake cicd_security:disable; then
-    print_success "CI/CD security disabled"
+# Main execution
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    echo "CI/CD Ruby Environment Manager"
+    echo ""
+    echo "Usage: $0 [options]"
+    echo ""
+    echo "Options:"
+    echo "  --help, -h    Show this help message"
+    echo "  --version     Show Ruby version information only"
+    echo ""
+    echo "This script:"
+    echo "  - Checks Ruby version against .ruby-version file"
+    echo "  - Switches Ruby version using rbenv or rvm if needed"
+    echo "  - Installs Bundler if not available"
+    echo "  - Installs/updates Ruby gems"
+    echo "  - Validates Rails installation"
+    exit 0
+elif [ "$1" = "--version" ]; then
+    if [ -f ".ruby-version" ]; then
+        REQUIRED_RUBY_VERSION=$(cat .ruby-version | tr -d '\n')
+        echo "Required Ruby version: $REQUIRED_RUBY_VERSION"
+    fi
+    CURRENT_RUBY_VERSION=$(ruby -v | cut -d' ' -f2)
+    echo "Current Ruby version: $CURRENT_RUBY_VERSION"
+    exit 0
 else
-    print_error "Failed to disable CI/CD security"
-    exit 1
+    configure_ruby_environment
 fi
-
-# Step 2: Create database
-print_status "Step 2: Creating database..."
-if bundle exec rake db:create; then
-    print_success "Database created successfully"
-else
-    print_warning "Database creation failed (might already exist)"
-fi
-
-# Step 3: Run migrations
-print_status "Step 3: Running database migrations..."
-if bundle exec rake db:migrate; then
-    print_success "Database migrations completed"
-else
-    print_error "Database migrations failed"
-    exit 1
-fi
-
-# Step 4: Check if we need to seed the database
-print_status "Step 4: Checking if database needs seeding..."
-if bundle exec rake db:seed RAILS_ENV=development 2>/dev/null; then
-    print_success "Database seeded successfully"
-else
-    print_warning "Database seeding failed or not needed"
-fi
-
-# Step 5: Precompile assets (if needed)
-print_status "Step 5: Precompiling assets..."
-if bundle exec rake assets:precompile RAILS_ENV=development; then
-    print_success "Assets precompiled successfully"
-else
-    print_warning "Asset precompilation failed or not needed"
-fi
-
-# Step 6: Start the Rails server
-print_status "Step 6: Starting Rails server..."
-echo ""
-echo "======================================"
-print_success "🎉 CI/CD setup complete! Starting server..."
-echo "======================================"
-echo ""
-print_status "Server will be available at: http://localhost:3000"
-print_status "Press Ctrl+C to stop the server"
-echo ""
-
-# Start the Rails server
-bundle exec rails server -b 0.0.0.0 -p 3000

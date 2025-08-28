@@ -170,16 +170,28 @@ The application includes built-in CI/CD support with automated setup scripts and
 
 ### CI/CD Scripts
 
-#### Quick Setup and Run
+#### Ruby Environment Management
 ```bash
-# Complete setup and start server (recommended for development)
-./bin/run_cicd
+# Configure Ruby environment only
+./bin/cicd_ruby
+
+# Check Ruby version information
+./bin/cicd_ruby --version
+
+# Show help
+./bin/cicd_ruby --help
 ```
 
-#### Setup Only (for CI/CD pipelines)
+#### Complete Setup (for CI/CD pipelines)
 ```bash
 # Setup environment without starting server
 ./bin/cicd_setup
+```
+
+#### Start Server (after setup)
+```bash
+# Start the Rails server
+bundle exec rails server
 ```
 
 ### CI/CD Security Management
@@ -199,17 +211,20 @@ rake cicd_security:enable
 
 ### What the CI/CD Scripts Do
 
-1. **Ruby Environment Setup**: 
-   - Detect and validate Ruby version (supports .ruby-version file)
-   - Auto-switch Ruby versions using rbenv or rvm if needed
-   - Install Bundler if not available
-   - Install/update Ruby gems automatically
-   - Validate Rails installation
+#### `bin/cicd_ruby` - Ruby Environment Manager
+- Detect and validate Ruby version (supports .ruby-version file)
+- Auto-switch Ruby versions using rbenv or rvm if needed
+- Install Bundler if not available
+- Install/update Ruby gems automatically
+- Validate Rails installation
+- Can be run independently with `--version` or `--help` options
+
+#### `bin/cicd_setup` - Complete Environment Setup
+1. **Ruby Environment**: Calls `bin/cicd_ruby` to configure Ruby
 2. **Security Setup**: Disable authentication for automated testing
 3. **Database Setup**: Create database and run migrations
 4. **Data Seeding**: Populate with initial data (admin user, etc.)
 5. **Asset Compilation**: Precompile assets for production readiness
-6. **Server Start**: Launch Rails server (cicd_run only)
 
 ### CI/CD Security Features
 
@@ -241,6 +256,19 @@ The CI/CD scripts include comprehensive Ruby environment setup:
 
 - name: Re-enable Security
   run: bundle exec rake cicd_security:enable
+```
+
+### Example Development Workflow
+
+```bash
+# 1. Configure Ruby environment (if needed)
+./bin/cicd_ruby
+
+# 2. Setup complete environment
+./bin/cicd_setup
+
+# 3. Start the server
+bundle exec rails server
 ```
 
 ## Deployment
