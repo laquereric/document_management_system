@@ -1,25 +1,22 @@
 class Teams::TeamCardComponent < ApplicationComponent
+  include CardConcerns
+
   def initialize(team:, current_user: nil, **system_arguments)
     @team = team
     @current_user = current_user
-    @system_arguments = merge_system_arguments(system_arguments)
+    initialize_card_base(show_actions: true, **system_arguments)
   end
 
   private
 
-  attr_reader :team, :current_user, :system_arguments
+  attr_reader :team, :current_user
 
   def card_classes
-    "Box h-100 #{system_arguments[:class]}"
+    "#{base_card_classes} h-100 #{system_arguments[:class]}".strip
   end
 
   def member_count
-    # Handle test data vs real ActiveRecord models
-    if team.team_memberships.respond_to?(:count) && !team.team_memberships.is_a?(Array)
-      team.team_memberships.count
-    else
-      team.team_memberships&.length || 0
-    end
+    safe_count(team.team_memberships)
   end
 
   def document_count
@@ -31,6 +28,8 @@ class Teams::TeamCardComponent < ApplicationComponent
       # Test data - count documents in folders array
       team.folders.sum { |folder| folder.documents&.count || 0 }
     end
+  rescue
+    0
   end
 
   def can_manage_team?
@@ -38,6 +37,6 @@ class Teams::TeamCardComponent < ApplicationComponent
   end
 
   def organization_name
-    team.organization&.name || "No Organization"
+    safe_name(team.organization, "No Organization")
   end
 end

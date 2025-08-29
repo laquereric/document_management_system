@@ -1,56 +1,44 @@
 class Folder::CardComponent < ApplicationComponent
+  include CardConcerns
+
   def initialize(folder:, show_actions: true, **system_arguments)
     @folder = folder
-    @show_actions = show_actions
-    @system_arguments = merge_system_arguments(system_arguments)
+    initialize_card_base(show_actions: show_actions, **system_arguments)
   end
 
   private
 
-  attr_reader :folder, :show_actions, :system_arguments
+  attr_reader :folder
 
   def card_classes
-    "Box Box--condensed #{system_arguments[:class]}"
-  end
-
-  def title_classes
-    "Box-title"
-  end
-
-  def content_classes
-    "Box-body"
-  end
-
-  def footer_classes
-    "Box-footer"
+    "#{condensed_card_classes} #{system_arguments[:class]}".strip
   end
 
   def truncated_description
-    description = folder.description || ""
-    description.length > 150 ? "#{description[0..150]}..." : description
+    super(folder.description)
   end
 
   def formatted_date
-    folder.created_at&.strftime("%b %d, %Y") || "Unknown date"
+    super(folder.created_at)
   end
 
   def team_name
-    folder.team&.name || "Unknown team"
+    super(folder.team)
   end
 
   def organization_name
-    folder.team&.organization&.name || "Unknown organization"
+    folder.team&.organization ? safe_name(folder.team.organization, "Unknown organization") : "Unknown organization"
   end
 
   def parent_folder_name
-    folder.parent_folder&.name || "Root"
+    safe_name(folder.parent_folder, "Root")
   end
 
   def document_count
-    folder.documents.count
+    safe_count(folder.documents)
   end
 
   def subfolder_count
-    folder.subfolders.count
+    safe_count(folder.subfolders)
   end
 end

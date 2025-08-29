@@ -122,25 +122,36 @@
   <!-- User Information Section -->
   <div class="mt-5">
     <h2 class="f4 text-semibold mb-3">User Information</h2>
-    <div class="Box p-4">
-      <div class="d-flex flex-wrap" style="gap: 24px;">
-        <div class="flex-1" style="min-width: 200px;">
-          <dl class="form-group">
-            <dt class="f5 text-semibold color-fg-default">Organization</dt>
-            <dd class="f5 color-fg-muted"><%= @user.organization&.name || 'None assigned' %></dd>
-          </dl>
-        </div>
-        <div class="flex-1" style="min-width: 200px;">
-          <dl class="form-group">
-            <dt class="f5 text-semibold color-fg-default">Member Since</dt>
-            <dd class="f5 color-fg-muted"><%= @user.created_at.strftime("%B %d, %Y") %></dd>
-          </dl>
-        </div>
-        <div class="flex-1" style="min-width: 200px;">
-          <dl class="form-group">
-            <dt class="f5 text-semibold color-fg-default">Last Updated</dt>
-            <dd class="f5 color-fg-muted"><%= @user.updated_at.strftime("%B %d, %Y") %></dd>
-          </dl>
+    <div class="d-lg-flex" style="gap: 24px;">
+      <div class="flex-1" style="min-width: 320px; max-width: 400px;">
+        <%= render User::CardComponent.new(
+          user: @user, 
+          show_admin_actions: false, 
+          context: :profile
+        ) %>
+      </div>
+      <div class="flex-1">
+        <div class="Box p-4">
+          <div class="d-flex flex-wrap" style="gap: 24px;">
+            <div class="flex-1" style="min-width: 200px;">
+              <dl class="form-group">
+                <dt class="f5 text-semibold color-fg-default">Organization</dt>
+                <dd class="f5 color-fg-muted"><%= @user.organization&.name || 'None assigned' %></dd>
+              </dl>
+            </div>
+            <div class="flex-1" style="min-width: 200px;">
+              <dl class="form-group">
+                <dt class="f5 text-semibold color-fg-default">Member Since</dt>
+                <dd class="f5 color-fg-muted"><%= @user.created_at.strftime("%B %d, %Y") %></dd>
+              </dl>
+            </div>
+            <div class="flex-1" style="min-width: 200px;">
+              <dl class="form-group">
+                <dt class="f5 text-semibold color-fg-default">Last Updated</dt>
+                <dd class="f5 color-fg-muted"><%= @user.updated_at.strftime("%B %d, %Y") %></dd>
+              </dl>
+            </div>
+          </div>
         </div>
       </div>
     </div>

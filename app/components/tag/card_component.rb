@@ -1,21 +1,22 @@
 class Tag::CardComponent < ApplicationComponent
+  include CardConcerns
+
   def initialize(tag:, show_actions: true, admin_context: false, **system_arguments)
     @tag = tag
-    @show_actions = show_actions
     @admin_context = admin_context
-    @system_arguments = merge_system_arguments(system_arguments)
+    initialize_card_base(show_actions: show_actions, **system_arguments)
   end
 
   private
 
-  attr_reader :tag, :show_actions, :admin_context, :system_arguments
+  attr_reader :tag, :admin_context
 
   def card_classes
-    "Box mb-4 mb-lg-0 #{system_arguments[:class]}".strip
+    "#{base_card_classes} mb-4 mb-lg-0 #{system_arguments[:class]}".strip
   end
 
   def formatted_date
-    tag.created_at&.strftime("%b %d, %Y") || "Unknown date"
+    super(tag.created_at)
   end
 
   def tag_color_style
@@ -33,7 +34,7 @@ class Tag::CardComponent < ApplicationComponent
   end
 
   def usage_count
-    tag.respond_to?(:usage_count) ? tag.usage_count : tag.documents.count
+    tag.respond_to?(:usage_count) ? tag.usage_count : safe_count(tag.documents)
   end
 
   def base_path_prefix

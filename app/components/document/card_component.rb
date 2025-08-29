@@ -1,56 +1,43 @@
 # Document card component for displaying documents in lists
 
 class Document::CardComponent < ApplicationComponent
+  include CardConcerns
+
   def initialize(document:, show_actions: true, **system_arguments)
     @document = document
-    @show_actions = show_actions
-    @system_arguments = merge_system_arguments(system_arguments)
+    initialize_card_base(show_actions: show_actions, **system_arguments)
   end
 
   private
 
-  attr_reader :document, :show_actions, :system_arguments
+  attr_reader :document
 
   def card_classes
-    classes = ["Box", "Box--condensed", "document-card", system_arguments[:class]].compact.join(" ")
-    classes
-  end
-
-  def title_classes
-    "Box-header"
-  end
-
-  def content_classes
-    "Box-body"
-  end
-
-  def footer_classes
-    "Box-footer"
+    "#{condensed_card_classes} document-card #{system_arguments[:class]}".strip
   end
 
   def truncated_content
-    content = document.content || ""
-    content.length > 150 ? "#{content[0..150]}..." : content
+    super(document.content)
   end
 
   def formatted_date
-    document.created_at&.strftime("%b %d, %Y") || "Unknown date"
+    super(document.created_at)
   end
 
   def author_name
-    document.author&.name || "Unknown author"
+    super(document.author)
   end
 
   def folder_name
-    document.folder&.name || "Unknown folder"
+    super(document.folder)
   end
 
   def team_name
-    document.team&.name || "Unknown team"
+    super(document.team)
   end
 
   def organization_name
-    document.organization&.name || "Unknown organization"
+    super(document.organization)
   end
 
   def has_file?
