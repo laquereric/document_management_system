@@ -109,18 +109,22 @@ module CardConcerns
   end
 
   # Permission helpers (can be overridden in components)
+  def current_user
+    helpers.current_user
+  end
+
   def can_edit?
-    return false unless respond_to?(:current_user) && current_user
+    return false unless current_user
     show_actions
   end
 
   def can_delete?
-    return false unless respond_to?(:current_user) && current_user
+    return false unless current_user
     current_user.admin?
   end
 
   def can_manage?
-    return false unless respond_to?(:current_user) && current_user
+    return false unless current_user
     current_user.admin?
   end
 
