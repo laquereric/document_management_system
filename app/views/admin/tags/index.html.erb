@@ -1,13 +1,18 @@
-<% content_for :title, "Admin - Tags" %>
+<% content_for :title, "Manage Tags" %>
 
-<div class="container-lg px-3 py-4">
-  <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-4">
-    <div>
-      <h1 class="h2">Tags Management</h1>
-      <p class="color-fg-muted">Manage and organize document tags across the system</p>
+<div class="container-lg px-3">
+  <!-- Page Header -->
+  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
+    <div class="d-flex flex-items-center">
+      <svg class="octicon octicon-tag mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
+        <path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"></path>
+      </svg>
+      <div>
+        <h1 class="f2 lh-condensed text-semibold mb-1">Manage Tags</h1>
+        <p class="f5 color-fg-muted mb-0">Manage and organize document tags across the system</p>
+      </div>
     </div>
-    <div class="d-flex flex-items-center gap-2">
+    <div class="d-flex flex-items-center" style="gap: 8px;">
       <%= link_to new_admin_tag_path, class: "btn btn-primary" do %>
         <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
           <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
@@ -18,10 +23,11 @@
   </div>
 
   <!-- Search and Filters -->
-  <div class="Box mb-4">
-    <div class="Box-header">
-      <h3 class="Box-title">Search & Filters</h3>
-    </div>
+  <div class="mt-5">
+    <div class="Box">
+      <div class="Box-header d-flex flex-items-center flex-justify-between">
+        <h3 class="f4 text-semibold">Search & Filters</h3>
+      </div>
     <div class="Box-body">
       <%= search_form_for @q, url: admin_tags_path, method: :get, class: "form" do |f| %>
         <div class="d-flex flex-items-center gap-3">
