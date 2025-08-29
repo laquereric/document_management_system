@@ -28,16 +28,16 @@ A comprehensive Ruby on Rails application for managing documents with organizati
 
 - **Ruby**: 3.3.6
 - **Rails**: 8.0.2.1
-- **Database**: PostgreSQL
+- **Database**: SQLite (converted from PostgreSQL)
 - **Authentication**: Devise
-- **Frontend**: Bootstrap 5.3.0 with Bootstrap Icons
+- **Frontend**: GitHub Primer CSS with Octicons
 - **Testing**: RSpec and Cucumber
 
 ## Installation
 
 ### Prerequisites
 - Ruby 3.3.6
-- PostgreSQL
+- SQLite3 (included in most systems)
 - Node.js (for asset compilation)
 
 ### Setup Instructions
@@ -365,4 +365,4 @@ For support and questions:
   - Workflow states and activity logging
   - Tagging system
   - Admin panel with user management
-  - Bootstrap-based responsive UI
+  - GitHub Primer CSS-based responsive UI

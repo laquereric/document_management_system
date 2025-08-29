@@ -1,6 +1,6 @@
 # UI Components
 
-This directory contains the View Components for the Document Management System, built with Rails ViewComponent and styled with Bootstrap.
+This directory contains the View Components for the Document Management System, built with Rails ViewComponent and styled with GitHub Primer CSS.
 
 ## Structure
 
@@ -213,11 +213,11 @@ Advanced search form with multiple filters.
 
 These components follow consistent design patterns:
 
-- **Bootstrap 5** for styling and layout
-- **Bootstrap Icons** for consistent iconography
+- **GitHub Primer CSS** for styling and layout
+- **GitHub Octicons** for consistent iconography
 - **Responsive design** for all screen sizes
 - **Accessible** by default with proper ARIA labels
-- **Consistent spacing** using Bootstrap's spacing utilities
+- **Consistent spacing** using Primer's spacing utilities
 - **Semantic colors** for status and interaction states
 
 ## Development Guidelines
