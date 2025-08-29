@@ -1,9 +1,16 @@
-<div class="container-lg px-3 py-4">
-  <!-- Header -->
-  <div class="d-flex flex-items-center justify-content-between mb-4">
-    <div>
-      <h1 class="h2">Folders</h1>
-      <p class="color-fg-muted">Manage and organize your document folders</p>
+<% content_for :title, "Folders" %>
+
+<div class="container-lg px-3">
+  <!-- Page Header -->
+  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
+    <div class="d-flex flex-items-center">
+      <svg class="octicon octicon-file-directory mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
+        <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+      </svg>
+      <div>
+        <h1 class="f2 lh-condensed text-semibold mb-1">Folders</h1>
+        <p class="f5 color-fg-muted mb-0">Manage and organize your document folders</p>
+      </div>
     </div>
     <div class="d-flex flex-items-center gap-2">
       <%= link_to new_folder_path, class: "btn btn-primary" do %>
@@ -15,88 +22,186 @@
     </div>
   </div>
 
-  <!-- Search and Filters -->
-  <div class="Box mb-4">
-    <div class="Box-header">
-      <h3 class="Box-title">Search & Filters</h3>
-    </div>
-    <div class="Box-body">
-      <%= search_form_for @q, url: folders_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
-        <div class="flex-1">
-          <%= f.label :name_cont, "Name", class: "form-label sr-only" %>
-          <%= f.text_field :name_cont, class: "form-control", placeholder: "Search folders..." %>
+  <!-- Statistics Cards -->
+  <div class="mt-4">
+    <h2 class="f4 text-semibold mb-3">Folder Overview</h2>
+    <div class="d-flex flex-wrap" style="gap: 16px;">
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-file-directory color-fg-accent" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <% if @folders.respond_to?(:total_count) %>
+                  <%= @folders.total_count %>
+                <% else %>
+                  <%= @folders.count %>
+                <% end %>
+              </div>
+              <div class="f6 color-fg-muted">Total Folders</div>
+            </div>
+          </div>
         </div>
-        <div class="flex-1">
-          <%= f.label :team_name_cont, "Team", class: "form-label sr-only" %>
-          <%= f.text_field :team_name_cont, class: "form-control", placeholder: "Filter by team..." %>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-file-directory-fill color-fg-success" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <%= Folder.joins(:documents).distinct.count %>
+              </div>
+              <div class="f6 color-fg-muted">With Documents</div>
+            </div>
+          </div>
         </div>
-        <div>
-          <%= f.submit "Search", class: "btn btn-primary" %>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-organization color-fg-attention" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 .75.75v1.25h2.25a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25ZM1.75 0A1.75 1.75 0 0 0 0 1.75v12.5C0 15.216.784 16 1.75 16h12.5A1.75 1.75 0 0 0 16 14.25V1.75A1.75 1.75 0 0 0 14.25 0ZM6.5 4.75A.75.75 0 0 1 7.25 4h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM7.25 7a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5ZM6.5 9.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <%= Team.joins(:folders).distinct.count %>
+              </div>
+              <div class="f6 color-fg-muted">Active Teams</div>
+            </div>
+          </div>
         </div>
-        <div>
-          <%= link_to "Clear", folders_path, class: "btn" %>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-calendar color-fg-done" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M4.75 0a.75.75 0 0 1 .75.75V2h5V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v11.5A1.75 1.75 0 0 1 13.25 17H2.75A1.75 1.75 0 0 1 1 15.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 0 1 4.75 0Zm0 3.5h8.5a.25.25 0 0 1 .25.25V6h-11V3.75a.25.25 0 0 1 .25-.25H2.5v.75a.75.75 0 0 0 1.5 0V3.5Zm-2 4.25h11v7.5a.25.25 0 0 1-.25.25H2.75a.25.25 0 0 1-.25-.25v-7.5Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <%= Folder.where('created_at >= ?', 7.days.ago).count %>
+              </div>
+              <div class="f6 color-fg-muted">This Week</div>
+            </div>
+          </div>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 
-  <!-- Results -->
-  <div class="mb-4">
-    <div class="d-flex flex-items-center justify-content-between mb-3">
-      <h3 class="h4">
-        <%= pluralize(@folders.total_count, 'folder') %>
-        <% if params[:q]&.values&.any?(&:present?) %>
-          found
-        <% end %>
-      </h3>
-    </div>
-
-    <% if @folders.any? %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <% @folders.each do |folder| %>
-          <%= render(Folder::CardComponent.new(folder: folder)) %>
+  <!-- Search and Filters -->
+  <div class="mt-5">
+    <h2 class="f4 text-semibold mb-3">Search & Filters</h2>
+    <div class="Box">
+      <div class="Box-body">
+        <%= search_form_for @q, url: folders_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
+          <div class="flex-1">
+            <%= f.label :name_cont, "Name", class: "form-label sr-only" %>
+            <%= f.text_field :name_cont, class: "form-control", placeholder: "Search folders..." %>
+          </div>
+          <div class="flex-1">
+            <%= f.label :team_name_cont, "Team", class: "form-label sr-only" %>
+            <%= f.text_field :team_name_cont, class: "form-control", placeholder: "Filter by team..." %>
+          </div>
+          <div>
+            <%= f.submit "Search", class: "btn btn-primary" %>
+          </div>
+          <div>
+            <%= link_to "Clear", folders_path, class: "btn" %>
+          </div>
         <% end %>
       </div>
+    </div>
+  </div>
 
-      <!-- Pagination -->
-      <% if @folders.respond_to?(:current_page) %>
-        <div class="d-flex flex-justify-center mt-4">
-          <nav class="paginate-container" aria-label="Pagination">
-            <div class="pagination">
-              <% if @folders.prev_page %>
-                <%= link_to "Previous", url_for(page: @folders.prev_page), class: "previous_page", rel: "prev" %>
-              <% else %>
-                <span class="previous_page disabled">Previous</span>
-              <% end %>
-              
-              <% @folders.total_pages.times do |page_num| %>
-                <% page_num += 1 %>
-                <% if page_num == @folders.current_page %>
-                  <em class="current"><%= page_num %></em>
-                <% elsif page_num == 1 || page_num == @folders.total_pages || (page_num >= @folders.current_page - 2 && page_num <= @folders.current_page + 2) %>
-                  <%= link_to page_num, url_for(page: page_num) %>
-                <% elsif page_num == @folders.current_page - 3 || page_num == @folders.current_page + 3 %>
-                  <span class="gap">…</span>
-                <% end %>
-              <% end %>
-              
-              <% if @folders.next_page %>
-                <%= link_to "Next", url_for(page: @folders.next_page), class: "next_page", rel: "next" %>
-              <% else %>
-                <span class="next_page disabled">Next</span>
-              <% end %>
+  <!-- Folders Section -->
+  <div class="mt-5">
+    <div class="d-flex flex-items-center flex-justify-between mb-3">
+      <h2 class="f4 text-semibold">
+        All Folders
+        <% if @folders.respond_to?(:total_count) %>
+          <span class="Counter"><%= @folders.total_count %></span>
+        <% else %>
+          <span class="Counter"><%= @folders.count %></span>
+        <% end %>
+        <% if params[:q]&.values&.any?(&:present?) %>
+          <span class="color-fg-muted f5">found</span>
+        <% end %>
+      </h2>
+    </div>
+
+    <div class="Box">
+      <div class="Box-body">
+        <% if @folders.any? %>
+          <div class="d-flex flex-wrap gap-3">
+            <% @folders.each do |folder| %>
+              <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
+                <%= render(Folder::CardComponent.new(folder: folder)) %>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Pagination -->
+          <% if @folders.respond_to?(:current_page) %>
+            <div class="d-flex flex-justify-center mt-4">
+              <nav class="paginate-container" aria-label="Pagination">
+                <div class="pagination">
+                  <% if @folders.prev_page %>
+                    <%= link_to "Previous", url_for(page: @folders.prev_page), class: "previous_page", rel: "prev" %>
+                  <% else %>
+                    <span class="previous_page disabled">Previous</span>
+                  <% end %>
+                  
+                  <% @folders.total_pages.times do |page_num| %>
+                    <% page_num += 1 %>
+                    <% if page_num == @folders.current_page %>
+                      <em class="current"><%= page_num %></em>
+                    <% elsif page_num == 1 || page_num == @folders.total_pages || (page_num >= @folders.current_page - 2 && page_num <= @folders.current_page + 2) %>
+                      <%= link_to page_num, url_for(page: page_num) %>
+                    <% elsif page_num == @folders.current_page - 3 || page_num == @folders.current_page + 3 %>
+                      <span class="gap">…</span>
+                    <% end %>
+                  <% end %>
+                  
+                  <% if @folders.next_page %>
+                    <%= link_to "Next", url_for(page: @folders.next_page), class: "next_page", rel: "next" %>
+                  <% else %>
+                    <span class="next_page disabled">Next</span>
+                  <% end %>
+                </div>
+              </nav>
             </div>
-          </nav>
-        </div>
-      <% end %>
-    <% else %>
-      <%= render(Ui::EmptyStateComponent.new(
-        title: "No folders found",
-        description: params[:q]&.values&.any?(&:present?) ? 
-          "Try adjusting your search criteria" : 
-          "Get started by creating your first folder",
-        icon: "file-directory"
-      )) %>
-    <% end %>
+          <% end %>
+        <% else %>
+          <%= render(Ui::EmptyStateComponent.new(
+            title: "No folders found",
+            description: params[:q]&.values&.any?(&:present?) ? 
+              "Try adjusting your search criteria" : 
+              "Get started by creating your first folder",
+            icon: "file-directory",
+            action: {
+              text: "Create Folder",
+              url: new_folder_path,
+              class: "btn btn-primary"
+            }
+          )) %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

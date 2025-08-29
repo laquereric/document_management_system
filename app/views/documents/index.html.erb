@@ -1,11 +1,16 @@
 <% content_for :title, "Documents" %>
 
-<!-- Header Region -->
-<div class="container-lg px-3 py-4">
-  <div class="d-flex flex-column flex-sm-row flex-items-start flex-sm-items-center flex-sm-justify-between mb-4">
-    <div class="mb-3 mb-sm-0">
-      <h1 class="h1">Documents</h1>
-      <p class="color-fg-muted mb-0">Manage and organize your documents</p>
+<div class="container-lg px-3">
+  <!-- Page Header -->
+  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
+    <div class="d-flex flex-items-center">
+      <svg class="octicon octicon-file-text mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
+        <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+      </svg>
+      <div>
+        <h1 class="f2 lh-condensed text-semibold mb-1">Documents</h1>
+        <p class="f5 color-fg-muted mb-0">Manage and organize your documents</p>
+      </div>
     </div>
     <div class="d-flex flex-items-center gap-2">
       <%= link_to new_document_path, class: "btn btn-primary" do %>
@@ -17,28 +22,110 @@
     </div>
   </div>
 
-  <!-- Search and Filters -->
-  <div class="Box mb-4">
-    <div class="Box-header">
-      <h3 class="Box-title">Search & Filters</h3>
-    </div>
-    <div class="Box-body">
-      <% if defined?(Document) %>
-        <% q = Document.ransack(params[:q]) %>
-        <%= render(Search::SearchFormComponent.new(q: q)) %>
-      <% end %>
+  <!-- Statistics Cards -->
+  <div class="mt-4">
+    <h2 class="f4 text-semibold mb-3">Document Overview</h2>
+    <div class="d-flex flex-wrap" style="gap: 16px;">
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-file-text color-fg-accent" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <% if @documents.respond_to?(:total_count) %>
+                  <%= @documents.total_count %>
+                <% else %>
+                  <%= @documents.count %>
+                <% end %>
+              </div>
+              <div class="f6 color-fg-muted">Total Documents</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-clock color-fg-attention" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7-3.25v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5a.75.75 0 0 1 1.5 0Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <%= Document.joins(:status).where(statuses: { name: ['Pending', 'Draft', 'In Progress'] }).count %>
+              </div>
+              <div class="f6 color-fg-muted">Pending Review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-check-circle color-fg-success" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16Zm3.78-9.72a.751.751 0 0 0-.018-1.042.751.751 0 0 0-1.042-.018L6.75 9.19 5.28 7.72a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l2 2a.75.75 0 0 0 1.06 0Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <%= Document.joins(:status).where(statuses: { name: ['Published', 'Approved', 'Active'] }).count %>
+              </div>
+              <div class="f6 color-fg-muted">Published</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-calendar color-fg-done" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M4.75 0a.75.75 0 0 1 .75.75V2h5V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v11.5A1.75 1.75 0 0 1 13.25 17H2.75A1.75 1.75 0 0 1 1 15.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 0 1 4.75 0Zm0 3.5h8.5a.25.25 0 0 1 .25.25V6h-11V3.75a.25.25 0 0 1 .25-.25H2.5v.75a.75.75 0 0 0 1.5 0V3.5Zm-2 4.25h11v7.5a.25.25 0 0 1-.25.25H2.75a.25.25 0 0 1-.25-.25v-7.5Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <%= Document.where('created_at >= ?', 7.days.ago).count %>
+              </div>
+              <div class="f6 color-fg-muted">This Week</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Content Region -->
-  <div class="Box">
-    <div class="Box-header d-flex flex-column flex-sm-row flex-items-start flex-sm-items-center flex-sm-justify-between">
-      <h3 class="Box-title mb-2 mb-sm-0">
-        Documents
+  <!-- Search and Filters -->
+  <div class="mt-5">
+    <h2 class="f4 text-semibold mb-3">Search & Filters</h2>
+    <div class="Box">
+      <div class="Box-body">
+        <% if defined?(Document) %>
+          <% q = Document.ransack(params[:q]) %>
+          <%= render(Search::SearchFormComponent.new(q: q)) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Documents Section -->
+  <div class="mt-5">
+    <div class="d-flex flex-items-center flex-justify-between mb-3">
+      <h2 class="f4 text-semibold">
+        All Documents
         <% if @documents.respond_to?(:total_count) %>
           <span class="Counter"><%= @documents.total_count %></span>
         <% end %>
-      </h3>
+      </h2>
       <div class="d-flex flex-items-center gap-2">
         <div class="Select">
           <select class="form-select" onchange="window.location.href=this.value">
@@ -50,59 +137,61 @@
       </div>
     </div>
 
-    <div class="Box-body">
-      <% if @documents&.any? %>
-        <div class="d-flex flex-wrap gap-3">
-          <% @documents.each do |document| %>
-            <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
-              <%= render(Document::CardComponent.new(document: document)) %>
+    <div class="Box">
+      <div class="Box-body">
+        <% if @documents&.any? %>
+          <div class="d-flex flex-wrap gap-3">
+            <% @documents.each do |document| %>
+              <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
+                <%= render(Document::CardComponent.new(document: document)) %>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Pagination -->
+          <% if @documents.respond_to?(:current_page) %>
+            <div class="d-flex flex-justify-center mt-4">
+              <nav class="paginate-container" aria-label="Pagination">
+                <div class="pagination">
+                  <% if @documents.prev_page %>
+                    <%= link_to "Previous", url_for(page: @documents.prev_page), class: "previous_page", rel: "prev" %>
+                  <% else %>
+                    <span class="previous_page disabled">Previous</span>
+                  <% end %>
+                  
+                  <% @documents.total_pages.times do |page_num| %>
+                    <% page_num += 1 %>
+                    <% if page_num == @documents.current_page %>
+                      <em class="current"><%= page_num %></em>
+                    <% elsif page_num == 1 || page_num == @documents.total_pages || (page_num >= @documents.current_page - 2 && page_num <= @documents.current_page + 2) %>
+                      <%= link_to page_num, url_for(page: page_num) %>
+                    <% elsif page_num == @documents.current_page - 3 || page_num == @documents.current_page + 3 %>
+                      <span class="gap">…</span>
+                    <% end %>
+                  <% end %>
+                  
+                  <% if @documents.next_page %>
+                    <%= link_to "Next", url_for(page: @documents.next_page), class: "next_page", rel: "next" %>
+                  <% else %>
+                    <span class="next_page disabled">Next</span>
+                  <% end %>
+                </div>
+              </nav>
             </div>
           <% end %>
-        </div>
-
-        <!-- Pagination -->
-        <% if @documents.respond_to?(:current_page) %>
-          <div class="d-flex flex-justify-center mt-4">
-            <nav class="paginate-container" aria-label="Pagination">
-              <div class="pagination">
-                <% if @documents.prev_page %>
-                  <%= link_to "Previous", url_for(page: @documents.prev_page), class: "previous_page", rel: "prev" %>
-                <% else %>
-                  <span class="previous_page disabled">Previous</span>
-                <% end %>
-                
-                <% @documents.total_pages.times do |page_num| %>
-                  <% page_num += 1 %>
-                  <% if page_num == @documents.current_page %>
-                    <em class="current"><%= page_num %></em>
-                  <% elsif page_num == 1 || page_num == @documents.total_pages || (page_num >= @documents.current_page - 2 && page_num <= @documents.current_page + 2) %>
-                    <%= link_to page_num, url_for(page: page_num) %>
-                  <% elsif page_num == @documents.current_page - 3 || page_num == @documents.current_page + 3 %>
-                    <span class="gap">…</span>
-                  <% end %>
-                <% end %>
-                
-                <% if @documents.next_page %>
-                  <%= link_to "Next", url_for(page: @documents.next_page), class: "next_page", rel: "next" %>
-                <% else %>
-                  <span class="next_page disabled">Next</span>
-                <% end %>
-              </div>
-            </nav>
-          </div>
+        <% else %>
+          <%= render(Ui::EmptyStateComponent.new(
+            title: "No Documents Found",
+            description: "Get started by creating your first document.",
+            icon: "file-text",
+            action: {
+              text: "Create Document",
+              url: new_document_path,
+              class: "btn btn-primary"
+            }
+          )) %>
         <% end %>
-      <% else %>
-        <%= render(Ui::EmptyStateComponent.new(
-          title: "No Documents Found",
-          description: "Get started by creating your first document.",
-          icon: "file-text",
-          action: {
-            text: "Create Document",
-            url: new_document_path,
-            class: "btn btn-primary"
-          }
-        )) %>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
