@@ -1,13 +1,18 @@
-<% content_for :title, "Admin - Scenarios" %>
+<% content_for :title, "Manage Scenarios" %>
 
-<div class="container-lg px-3 py-4">
-  <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-4">
-    <div>
-      <h1 class="h2">Scenarios Management</h1>
-      <p class="color-fg-muted">Manage and organize document scenario types across the system</p>
+<div class="container-lg px-3">
+  <!-- Page Header -->
+  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
+    <div class="d-flex flex-items-center">
+      <svg class="octicon octicon-list-ordered mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
+        <path d="M5 3.25a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 3.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 5 8.25Zm0 5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1-.75-.75ZM.924 10.32a.5.5 0 0 1-.851-.525l.001-.001.001-.002.002-.004.007-.011c.097-.144.215-.273.348-.384.228-.19.588-.392 1.068-.392.468 0 .858.181 1.126.484.29.328.447.722.447 1.135 0 .457-.186.815-.414 1.13-.114.157-.239.306-.345.447l-.257.343c-.1.133-.189.248-.259.352-.05.074-.081.125-.095.146h1.125a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5c0-.228.08-.48.233-.708.07-.105.163-.188.232-.275l.324-.434c.083-.11.174-.234.258-.364.172-.265.272-.489.272-.742 0-.2-.093-.385-.279-.534-.186-.148-.489-.26-.797-.26-.306 0-.554.112-.684.213-.26.203-.305.45-.288.632l-.848-.327Z"></path>
+      </svg>
+      <div>
+        <h1 class="f2 lh-condensed text-semibold mb-1">Manage Scenarios</h1>
+        <p class="f5 color-fg-muted mb-0">Manage and organize document scenario types across the system</p>
+      </div>
     </div>
-    <div class="d-flex flex-items-center gap-2">
+    <div class="d-flex flex-items-center" style="gap: 8px;">
       <%= link_to new_admin_scenario_type_path, class: "btn btn-primary" do %>
         <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
           <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
