@@ -56,8 +56,8 @@ class Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Profile",
         icon: "person",
-        path: edit_user_registration_path,
-        active: @controller_name == "devise/registrations"
+        path: user_path(current_user),
+        active: @controller_name == "users" && action_name == "show"
       }
     ]
   end

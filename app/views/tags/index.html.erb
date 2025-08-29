@@ -149,7 +149,7 @@
           <div class="d-flex flex-wrap gap-3">
             <% @tags.each do |tag| %>
               <div class="flex-auto" style="min-width: 280px; max-width: 350px;">
-                <%= render(Tags::TagBadgeComponent.new(tag: tag, removable: false, document: nil)) %>
+                <%= render(Tag::CardComponent.new(tag: tag)) %>
               </div>
             <% end %>
           </div>

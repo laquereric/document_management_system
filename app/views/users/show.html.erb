@@ -1,12 +1,15 @@
-<div class="container-lg px-3 py-4">
-  <div class="d-flex flex-items-center flex-justify-between mb-4">
+<% content_for :title, "User Profile - #{@user.name}" %>
+
+<div class="container-lg px-3">
+  <!-- Page Header -->
+  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
     <div class="d-flex flex-items-center">
       <div class="avatar avatar-8 mr-3">
         <img src="https://github.com/<%= @user.name.parameterize %>.png" alt="<%= @user.name %>" class="avatar-img" />
       </div>
       <div>
-        <h1 class="h2 mb-1"><%= @user.name %></h1>
-        <p class="text-gray mb-0"><%= @user.email %></p>
+        <h1 class="f2 lh-condensed text-semibold mb-1"><%= @user.name %></h1>
+        <p class="f5 color-fg-muted mb-0"><%= @user.email %></p>
       </div>
     </div>
     <div class="d-flex flex-items-center gap-2">
@@ -29,214 +32,385 @@
     </div>
   </div>
 
-  <div class="Layout Layout--sidebarPosition-start Layout--sidebar-narrow">
-    <div class="Layout-sidebar">
-      <div class="Box mb-3">
-        <div class="Box-header">
-          <h3 class="Box-title">User Information</h3>
-        </div>
-        <div class="Box-body">
-          <dl class="form-group">
-            <dt>Role</dt>
-            <dd>
-              <span class="Label Label--<%= @user.admin? ? 'danger' : 'secondary' %>">
-                <%= @user.role&.titleize %>
-              </span>
-            </dd>
-          </dl>
-          <dl class="form-group">
-            <dt>Organization</dt>
-            <dd><%= @user.organization&.name || 'None' %></dd>
-          </dl>
-          <dl class="form-group">
-            <dt>Member Since</dt>
-            <dd><%= @user.created_at.strftime("%B %d, %Y") %></dd>
-          </dl>
-          <dl class="form-group">
-            <dt>Last Updated</dt>
-            <dd><%= @user.updated_at.strftime("%B %d, %Y") %></dd>
-          </dl>
+  <!-- Statistics Cards -->
+  <div class="mt-4">
+    <h2 class="f4 text-semibold mb-3">Profile Overview</h2>
+    <div class="d-flex flex-wrap" style="gap: 16px;">
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-file-text color-fg-accent" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <% if @authored_documents.respond_to?(:total_count) %>
+                  <%= @authored_documents.total_count %>
+                <% else %>
+                  <%= @authored_documents.count %>
+                <% end %>
+              </div>
+              <div class="f6 color-fg-muted">Documents Created</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="Box">
-        <div class="Box-header d-flex flex-items-center flex-justify-between">
-          <h3 class="Box-title">Quick Stats</h3>
-        </div>
-        <div class="Box-body">
-          <div class="d-flex flex-items-center mb-2">
-            <svg class="octicon octicon-file mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"/>
-            </svg>
-            <span class="text-gray"><%= @authored_documents.total_count %> Documents</span>
-          </div>
-          <div class="d-flex flex-items-center mb-2">
-            <svg class="octicon octicon-people mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M2 5.5a3.5 3.5 0 101.665 2.95L8.585 10l-.665.665 1.948 1.948a3.5 3.5 0 101.414-1.414l1.948-1.948L10 8.585l-1.55 1.665a3.5 3.5 0 10-2.95-1.665H2zM5.5 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm4.5-1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-            </svg>
-            <span class="text-gray"><%= @user.teams.count %> Teams</span>
-          </div>
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
           <div class="d-flex flex-items-center">
-            <svg class="octicon octicon-activity mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 16A8 8 0 108 0a8 8 0 000 16zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zm4.879-2.773l4.264-1.559a.25.25 0 010 .465l-4.264 1.559A.25.25 0 016 10.559V8.5a.5.5 0 01.879-.273z"/>
-            </svg>
-            <span class="text-gray"><%= @activity_logs.total_count %> Activities</span>
+            <div class="mr-3">
+              <svg class="octicon octicon-people color-fg-success" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold"><%= @user.teams.count %></div>
+              <div class="f6 color-fg-muted">Teams Joined</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-pulse color-fg-attention" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M6 2c.306 0 .582.187.696.471L10 10.731l1.304-3.26A.751.751 0 0 1 12 7h3.25a.75.75 0 0 1 0 1.5H12.58l-1.855 4.64a.751.751 0 0 1-1.393-.011L6 5.069 4.696 8.329A.751.751 0 0 1 4 8.5H.75a.75.75 0 0 1 0-1.5h2.68l1.85-4.629A.751.751 0 0 1 6 2Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <% if @activity_logs.respond_to?(:total_count) %>
+                  <%= @activity_logs.total_count %>
+                <% else %>
+                  <%= @activity_logs.count %>
+                <% end %>
+              </div>
+              <div class="f6 color-fg-muted">Activities Logged</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1" style="min-width: 240px;">
+        <div class="Box p-3">
+          <div class="d-flex flex-items-center">
+            <div class="mr-3">
+              <svg class="octicon octicon-organization color-fg-done" width="24" height="24" viewBox="0 0 16 16">
+                <path d="M1.75 16A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 0 0 .25-.25V8.285a.25.25 0 0 0-.111-.208l-1.055-.703a.749.749 0 1 1 .832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0 1 14.25 16h-3.5a.766.766 0 0 1-.197-.026c-.099.017-.2.026-.303.026h-8.5ZM3.75 4.5a.25.25 0 0 0-.25.25v.852c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25h-.88ZM3.5 7.204A.25.25 0 0 1 3.75 6.96h.88a.25.25 0 0 1 .25.25v.851a.25.25 0 0 1-.25.25h-.88a.25.25 0 0 1-.25-.25V7.204ZM3.75 9.5a.25.25 0 0 0-.25.25v.851c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V9.75a.25.25 0 0 0-.25-.25h-.88Zm3.5-5a.25.25 0 0 0-.25.25v.852c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25h-.88ZM7 7.204a.25.25 0 0 1 .25-.244h.88a.25.25 0 0 1 .25.25v.851a.25.25 0 0 1-.25.25h-.88a.25.25 0 0 1-.25-.25V7.204ZM7.25 9.5a.25.25 0 0 0-.25.25v.851c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V9.75a.25.25 0 0 0-.25-.25h-.88Z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="f1 lh-condensed text-semibold">
+                <span class="Label Label--<%= @user.admin? ? 'danger' : 'secondary' %>">
+                  <%= @user.role&.titleize || 'User' %>
+                </span>
+              </div>
+              <div class="f6 color-fg-muted">User Role</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="Layout-main">
+  <!-- User Information Section -->
+  <div class="mt-5">
+    <h2 class="f4 text-semibold mb-3">User Information</h2>
+    <div class="Box p-4">
+      <div class="d-flex flex-wrap" style="gap: 24px;">
+        <div class="flex-1" style="min-width: 200px;">
+          <dl class="form-group">
+            <dt class="f5 text-semibold color-fg-default">Organization</dt>
+            <dd class="f5 color-fg-muted"><%= @user.organization&.name || 'None assigned' %></dd>
+          </dl>
+        </div>
+        <div class="flex-1" style="min-width: 200px;">
+          <dl class="form-group">
+            <dt class="f5 text-semibold color-fg-default">Member Since</dt>
+            <dd class="f5 color-fg-muted"><%= @user.created_at.strftime("%B %d, %Y") %></dd>
+          </dl>
+        </div>
+        <div class="flex-1" style="min-width: 200px;">
+          <dl class="form-group">
+            <dt class="f5 text-semibold color-fg-default">Last Updated</dt>
+            <dd class="f5 color-fg-muted"><%= @user.updated_at.strftime("%B %d, %Y") %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="mt-5">
+    <div class="d-lg-flex" style="gap: 24px;">
       <!-- Teams Section -->
-      <div class="Box mb-4">
-        <div class="Box-header d-flex flex-items-center flex-justify-between">
-          <h3 class="Box-title">Teams</h3>
-          <% if current_user.admin? || current_user == @user %>
-            <button class="btn btn-primary" onclick="openAddTeamModal()">
-              <svg class="octicon octicon-plus mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 4a.75.75 0 01.75.75v2.5h2.5a.75.75 0 010 1.5h-2.5v2.5a.75.75 0 01-1.5 0v-2.5h-2.5a.75.75 0 010-1.5h2.5v-2.5A.75.75 0 018 4z"/>
-              </svg>
-              Add to Team
-            </button>
-          <% end %>
-        </div>
-        <div class="Box-body">
-          <% if @user.teams.any? %>
-            <div class="d-flex flex-wrap gap-2">
-              <% @user.teams.each do |team| %>
-                <div class="Box p-3" style="min-width: 200px;">
-                  <div class="d-flex flex-items-center mb-2">
-                    <svg class="octicon octicon-people mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M2 5.5a3.5 3.5 0 101.665 2.95L8.585 10l-.665.665 1.948 1.948a3.5 3.5 0 101.414-1.414l1.948-1.948L10 8.585l-1.55 1.665a3.5 3.5 0 10-2.95-1.665H2zM5.5 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm4.5-1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                    </svg>
-                    <strong><%= team.name %></strong>
-                  </div>
-                  <p class="text-gray text-small mb-2"><%= team.description %></p>
-                  <div class="d-flex flex-items-center justify-content-between">
-                    <span class="text-gray text-small"><%= team.organization.name %></span>
-                    <% if current_user.admin? %>
-                      <%= link_to admin_team_path(team), class: "btn btn-sm btn-outline" do %>
-                        View
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="blankslate">
-              <svg class="octicon octicon-people blankslate-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M2 5.5a3.5 3.5 0 101.665 2.95L8.585 10l-.665.665 1.948 1.948a3.5 3.5 0 101.414-1.414l1.948-1.948L10 8.585l-1.55 1.665a3.5 3.5 0 10-2.95-1.665H2zM5.5 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm4.5-1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-              </svg>
-              <h3 class="blankslate-heading">No teams yet</h3>
-              <p class="blankslate-text">This user hasn't been added to any teams yet.</p>
-              <% if current_user.admin? || current_user == @user %>
-                <button class="btn btn-primary" onclick="openAddTeamModal()">
-                  <svg class="octicon octicon-plus mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 4a.75.75 0 01.75.75v2.5h2.5a.75.75 0 010 1.5h-2.5v2.5a.75.75 0 01-1.5 0v-2.5h-2.5a.75.75 0 010-1.5h2.5v-2.5A.75.75 0 018 4z"/>
-                  </svg>
-                  Add to Team
-                </button>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-      <!-- Documents Section -->
-      <div class="Box mb-4">
-        <div class="Box-header d-flex flex-items-center flex-justify-between">
-          <h3 class="Box-title">Recent Documents</h3>
-          <%= link_to documents_path(author: @user.id), class: "btn btn-sm btn-outline" do %>
-            View All
-          <% end %>
-        </div>
-        <div class="Box-body">
-          <% if @authored_documents.any? %>
-            <div class="list-style-none">
-              <% @authored_documents.each do |document| %>
-                <div class="Box-row d-flex flex-items-center">
-                  <div class="flex-auto">
-                    <div class="d-flex flex-items-center">
-                      <svg class="octicon octicon-file mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"/>
+      <div class="flex-1 mb-4 mb-lg-0">
+        <div class="Box">
+          <div class="Box-header d-flex flex-items-center flex-justify-between">
+            <h3 class="f4 text-semibold">
+              Teams
+              <span class="Counter"><%= @user.teams.count %></span>
+            </h3>
+            <% if current_user.admin? || current_user == @user %>
+              <button class="btn btn-primary btn-sm" onclick="openAddTeamModal()">
+                <svg class="octicon octicon-plus mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M8 4a.75.75 0 01.75.75v2.5h2.5a.75.75 0 010 1.5h-2.5v2.5a.75.75 0 01-1.5 0v-2.5h-2.5a.75.75 0 010-1.5h2.5v-2.5A.75.75 0 018 4z"/>
+                </svg>
+                Add to Team
+              </button>
+            <% end %>
+          </div>
+          <div class="Box-body">
+            <% if @user.teams.any? %>
+              <div class="d-flex flex-column" style="gap: 12px;">
+                <% @user.teams.each do |team| %>
+                  <div class="d-flex flex-items-center p-3 border rounded-2">
+                    <div class="mr-3">
+                      <svg class="octicon octicon-people color-fg-muted" width="20" height="20" viewBox="0 0 16 16">
+                        <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"></path>
                       </svg>
-                      <%= link_to document.title, document_path(document), class: "Link--primary" %>
                     </div>
-                    <p class="text-gray text-small mb-0">
-                      <%= document.folder&.name %> • <%= document.status&.name %> • <%= time_ago_in_words(document.created_at) %> ago
-                    </p>
-                  </div>
-                  <div class="d-flex flex-items-center gap-2">
-                    <% document.tags.each do |tag| %>
-                      <span class="Label Label--secondary"><%= tag.name %></span>
+                    <div class="flex-1">
+                      <div class="d-flex flex-items-center mb-1">
+                        <strong class="f5"><%= team.name %></strong>
+                      </div>
+                      <p class="f6 color-fg-muted mb-1"><%= team.description %></p>
+                      <div class="f6 color-fg-muted">
+                        <span><%= team.organization.name %></span>
+                      </div>
+                    </div>
+                    <% if current_user.admin? %>
+                      <div class="ml-3">
+                        <%= link_to admin_team_path(team), class: "btn btn-sm btn-outline" do %>
+                          View
+                        <% end %>
+                      </div>
                     <% end %>
                   </div>
-                </div>
-              <% end %>
-            </div>
-            <% if @authored_documents.total_pages > 1 %>
-              <div class="d-flex flex-justify-center mt-3">
-                <%= paginate @authored_documents, theme: 'primer' %>
+                <% end %>
               </div>
+            <% else %>
+              <%= render(Ui::EmptyStateComponent.new(
+                title: "No teams yet",
+                description: "This user hasn't been added to any teams yet.",
+                icon: "people"
+              )) do %>
+                <% if current_user.admin? || current_user == @user %>
+                  <button class="btn btn-primary" onclick="openAddTeamModal()">
+                    <svg class="octicon octicon-plus mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 4a.75.75 0 01.75.75v2.5h2.5a.75.75 0 010 1.5h-2.5v2.5a.75.75 0 01-1.5 0v-2.5h-2.5a.75.75 0 010-1.5h2.5v-2.5A.75.75 0 018 4z"/>
+                    </svg>
+                    Add to Team
+                  </button>
+                <% end %>
+              <% end %>
             <% end %>
-          <% else %>
-            <div class="blankslate">
-              <svg class="octicon octicon-file blankslate-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"/>
-              </svg>
-              <h3 class="blankslate-heading">No documents yet</h3>
-              <p class="blankslate-text">This user hasn't created any documents yet.</p>
-            </div>
-          <% end %>
+          </div>
         </div>
       </div>
 
-      <!-- Activity Section -->
-      <div class="Box">
-        <div class="Box-header d-flex flex-items-center flex-justify-between">
-          <h3 class="Box-title">Recent Activity</h3>
-          <%= link_to activity_logs_path(user: @user.id), class: "btn btn-sm btn-outline" do %>
-            View All
-          <% end %>
-        </div>
-        <div class="Box-body">
-          <% if @activity_logs.any? %>
-            <div class="Timeline">
-              <% @activity_logs.each do |activity| %>
-                <div class="TimelineItem">
-                  <div class="TimelineItem-badge">
-                    <svg class="octicon octicon-activity" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M8 16A8 8 0 108 0a8 8 0 000 16zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zm4.879-2.773l4.264-1.559a.25.25 0 010 .465l-4.264 1.559A.25.25 0 016 10.559V8.5a.5.5 0 01.879-.273z"/>
-                    </svg>
-                  </div>
-                  <div class="TimelineItem-body">
-                    <div class="d-flex flex-items-center">
-                      <span class="text-bold"><%= activity.action %></span>
-                      <% if activity.document %>
-                        <%= link_to activity.document.title, document_path(activity.document), class: "Link--primary ml-1" %>
+      <!-- Recent Activity -->
+      <div class="flex-1">
+        <div class="Box">
+          <div class="Box-header d-flex flex-items-center flex-justify-between">
+            <h3 class="f4 text-semibold">
+              Recent Activity
+              <% if @activity_logs.respond_to?(:total_count) %>
+                <span class="Counter"><%= @activity_logs.total_count %></span>
+              <% else %>
+                <span class="Counter"><%= @activity_logs.count %></span>
+              <% end %>
+            </h3>
+            <%= link_to activity_logs_path(user: @user.id), class: "btn btn-sm btn-outline" do %>
+              View All
+            <% end %>
+          </div>
+          <div class="Box-body">
+            <% if @activity_logs.any? %>
+              <div class="Timeline">
+                <% @activity_logs.each do |activity| %>
+                  <div class="TimelineItem">
+                    <div class="TimelineItem-badge">
+                      <% case activity.action %>
+                      <% when 'created' %>
+                        <svg class="octicon octicon-plus color-fg-success" width="16" height="16" viewBox="0 0 16 16">
+                          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+                        </svg>
+                      <% when 'updated' %>
+                        <svg class="octicon octicon-pencil color-fg-accent" width="16" height="16" viewBox="0 0 16 16">
+                          <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086Z"></path>
+                        </svg>
+                      <% when 'status_change' %>
+                        <svg class="octicon octicon-arrow-switch color-fg-attention" width="16" height="16" viewBox="0 0 16 16">
+                          <path d="M5.22 14.78a.75.75 0 0 1-1.06 0L.47 11.03a.75.75 0 0 1 0-1.06l3.75-3.75a.75.75 0 0 1 1.06 1.06L2.81 10.5H14.5a.75.75 0 0 1 0 1.5H2.81l2.47 2.47a.75.75 0 0 1 0 1.06Zm5.56-9.5a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06l2.47-2.47H1.5a.75.75 0 0 1 0-1.5h11.69l-2.47-2.47a.75.75 0 0 1 0-1.06Z"></path>
+                        </svg>
+                      <% else %>
+                        <svg class="octicon octicon-pulse color-fg-muted" width="16" height="16" viewBox="0 0 16 16">
+                          <path d="M6 2c.306 0 .582.187.696.471L10 10.731l1.304-3.26A.751.751 0 0 1 12 7h3.25a.75.75 0 0 1 0 1.5H12.58l-1.855 4.64a.751.751 0 0 1-1.393-.011L6 5.069 4.696 8.329A.751.751 0 0 1 4 8.5H.75a.75.75 0 0 1 0-1.5h2.68l1.85-4.629A.751.751 0 0 1 6 2Z"></path>
+                        </svg>
                       <% end %>
                     </div>
-                    <p class="text-gray text-small mb-0"><%= time_ago_in_words(activity.created_at) %> ago</p>
+                    <div class="TimelineItem-body">
+                      <div class="d-flex flex-items-center flex-justify-between">
+                        <div class="flex-1">
+                          <div class="d-flex flex-items-center gap-2 mb-1">
+                            <span class="f6 text-semibold"><%= activity.action.humanize %></span>
+                            <% if activity.document %>
+                              <%= link_to activity.document.title, document_path(activity.document), class: "Link--primary f6" %>
+                            <% end %>
+                          </div>
+                          <% if activity.notes.present? %>
+                            <div class="f6 color-fg-muted mb-1">
+                              <%= activity.notes %>
+                            </div>
+                          <% end %>
+                        </div>
+                        <div class="f6 color-fg-muted">
+                          <%= time_ago_in_words(activity.created_at) %> ago
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                <% end %>
+              </div>
+              <% if @activity_logs.respond_to?(:current_page) && @activity_logs.total_pages > 1 %>
+                <div class="d-flex flex-justify-center mt-3">
+                  <nav class="paginate-container" aria-label="Pagination">
+                    <div class="pagination">
+                      <% if @activity_logs.prev_page %>
+                        <%= link_to "Previous", url_for(page: @activity_logs.prev_page), class: "previous_page", rel: "prev" %>
+                      <% else %>
+                        <span class="previous_page disabled">Previous</span>
+                      <% end %>
+                      
+                      <% @activity_logs.total_pages.times do |page_num| %>
+                        <% page_num += 1 %>
+                        <% if page_num == @activity_logs.current_page %>
+                          <em class="current"><%= page_num %></em>
+                        <% elsif page_num == 1 || page_num == @activity_logs.total_pages || (page_num >= @activity_logs.current_page - 2 && page_num <= @activity_logs.current_page + 2) %>
+                          <%= link_to page_num, url_for(page: page_num) %>
+                        <% elsif page_num == @activity_logs.current_page - 3 || page_num == @activity_logs.current_page + 3 %>
+                          <span class="gap">…</span>
+                        <% end %>
+                      <% end %>
+                      
+                      <% if @activity_logs.next_page %>
+                        <%= link_to "Next", url_for(page: @activity_logs.next_page), class: "next_page", rel: "next" %>
+                      <% else %>
+                        <span class="next_page disabled">Next</span>
+                      <% end %>
+                    </div>
+                  </nav>
                 </div>
               <% end %>
-            </div>
-            <% if @activity_logs.total_pages > 1 %>
-              <div class="d-flex flex-justify-center mt-3">
-                <%= paginate @activity_logs, theme: 'primer' %>
+            <% else %>
+              <%= render(Ui::EmptyStateComponent.new(
+                title: "No activity yet",
+                description: "This user hasn't performed any actions yet.",
+                icon: "pulse"
+              )) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Documents Section -->
+  <div class="mt-5">
+    <div class="Box">
+      <div class="Box-header d-flex flex-items-center flex-justify-between">
+        <h3 class="f4 text-semibold">
+          Recent Documents
+          <% if @authored_documents.respond_to?(:total_count) %>
+            <span class="Counter"><%= @authored_documents.total_count %></span>
+          <% else %>
+            <span class="Counter"><%= @authored_documents.count %></span>
+          <% end %>
+        </h3>
+        <%= link_to documents_path(author: @user.id), class: "btn btn-sm btn-outline" do %>
+          View All
+        <% end %>
+      </div>
+      <div class="Box-body">
+        <% if @authored_documents.any? %>
+          <div class="list-style-none">
+            <% @authored_documents.each do |document| %>
+              <div class="Box-row d-flex flex-items-center">
+                <div class="mr-3">
+                  <svg class="octicon octicon-file-text color-fg-muted" width="16" height="16" viewBox="0 0 16 16">
+                    <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="d-flex flex-items-center mb-1">
+                    <%= link_to document.title, document_path(document), class: "Link--primary f5 text-semibold" %>
+                  </div>
+                  <div class="d-flex flex-items-center f6 color-fg-muted">
+                    <% if document.folder %>
+                      <span><%= document.folder.name %></span>
+                      <span class="mx-1">•</span>
+                    <% end %>
+                    <% if document.status %>
+                      <span class="Label Label--secondary"><%= document.status.name %></span>
+                      <span class="mx-1">•</span>
+                    <% end %>
+                    <span><%= time_ago_in_words(document.created_at) %> ago</span>
+                  </div>
+                </div>
+                <div class="d-flex flex-items-center gap-1">
+                  <% document.tags.limit(3).each do |tag| %>
+                    <span class="Label Label--accent Label--small"><%= tag.name %></span>
+                  <% end %>
+                  <% if document.tags.count > 3 %>
+                    <span class="f6 color-fg-muted">+<%= document.tags.count - 3 %> more</span>
+                  <% end %>
+                </div>
               </div>
             <% end %>
-          <% else %>
-            <div class="blankslate">
-              <svg class="octicon octicon-activity blankslate-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 16A8 8 0 108 0a8 8 0 000 16zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zm4.879-2.773l4.264-1.559a.25.25 0 010 .465l-4.264 1.559A.25.25 0 016 10.559V8.5a.5.5 0 01.879-.273z"/>
-              </svg>
-              <h3 class="blankslate-heading">No activity yet</h3>
-              <p class="blankslate-text">This user hasn't performed any actions yet.</p>
+          </div>
+          <% if @authored_documents.respond_to?(:current_page) && @authored_documents.total_pages > 1 %>
+            <div class="d-flex flex-justify-center mt-3">
+              <nav class="paginate-container" aria-label="Pagination">
+                <div class="pagination">
+                  <% if @authored_documents.prev_page %>
+                    <%= link_to "Previous", url_for(page: @authored_documents.prev_page), class: "previous_page", rel: "prev" %>
+                  <% else %>
+                    <span class="previous_page disabled">Previous</span>
+                  <% end %>
+                  
+                  <% @authored_documents.total_pages.times do |page_num| %>
+                    <% page_num += 1 %>
+                    <% if page_num == @authored_documents.current_page %>
+                      <em class="current"><%= page_num %></em>
+                    <% elsif page_num == 1 || page_num == @authored_documents.total_pages || (page_num >= @authored_documents.current_page - 2 && page_num <= @authored_documents.current_page + 2) %>
+                      <%= link_to page_num, url_for(page: page_num) %>
+                    <% elsif page_num == @authored_documents.current_page - 3 || page_num == @authored_documents.current_page + 3 %>
+                      <span class="gap">…</span>
+                    <% end %>
+                  <% end %>
+                  
+                  <% if @authored_documents.next_page %>
+                    <%= link_to "Next", url_for(page: @authored_documents.next_page), class: "next_page", rel: "next" %>
+                  <% else %>
+                    <span class="next_page disabled">Next</span>
+                  <% end %>
+                </div>
+              </nav>
             </div>
           <% end %>
-        </div>
+        <% else %>
+          <%= render(Ui::EmptyStateComponent.new(
+            title: "No documents yet",
+            description: "This user hasn't created any documents yet.",
+            icon: "file-text"
+          )) %>
+        <% end %>
       </div>
     </div>
   </div>
