@@ -8,7 +8,11 @@
       </div>
       <div class="flex-1">
         <h4 class="f4 text-semibold mb-1">
-          <%= link_to team.name, organization_team_path(team.organization, team), class: "Link--primary" %>
+          <% if admin_context? %>
+            <%= link_to team.name, admin_team_path(team), class: "Link--primary" %>
+          <% else %>
+            <%= link_to team.name, organization_team_path(team.organization, team), class: "Link--primary" %>
+          <% end %>
         </h4>
         <span class="f6 color-fg-muted">
           <svg class="octicon octicon-organization mr-1" width="12" height="12" viewBox="0 0 16 16">
@@ -43,17 +47,32 @@
     <div class="Box-footer">
       <div class="d-flex flex-items-center flex-justify-between">
         <div class="d-flex flex-items-center" style="gap: 8px;">
-          <%= link_to organization_team_path(team.organization, team), class: "btn btn-sm btn-outline" do %>
-            <svg class="octicon octicon-eye mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-              <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2ZM8 1c-2.331 0-4.264 1.186-5.615 2.354C1.343 4.524.5 5.79.5 6.5c0 .71.843 1.976 1.885 3.146C3.736 10.814 5.669 12 8 12c2.331 0 4.264-1.186 5.615-2.354C14.657 7.476 15.5 6.21 15.5 6.5c0-.71-.843-1.976-1.885-3.146C12.264 1.186 10.331 0 8 0Z"></path>
-            </svg>
-            Manage
-          <% end %>
-          <%= link_to edit_organization_team_path(team.organization, team), class: "btn btn-sm btn-outline" do %>
-            <svg class="octicon octicon-pencil mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-              <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
-            </svg>
-            Edit
+          <% if admin_context? %>
+            <%= link_to admin_team_path(team), class: "btn btn-sm btn-outline" do %>
+              <svg class="octicon octicon-eye mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2ZM8 1c-2.331 0-4.264 1.186-5.615 2.354C1.343 4.524.5 5.79.5 6.5c0 .71.843 1.976 1.885 3.146C3.736 10.814 5.669 12 8 12c2.331 0 4.264-1.186 5.615-2.354C14.657 7.476 15.5 6.21 15.5 6.5c0-.71-.843-1.976-1.885-3.146C12.264 1.186 10.331 0 8 0Z"></path>
+              </svg>
+              Manage
+            <% end %>
+            <%= link_to edit_admin_team_path(team), class: "btn btn-sm btn-outline" do %>
+              <svg class="octicon octicon-pencil mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
+              </svg>
+              Edit
+            <% end %>
+          <% else %>
+            <%= link_to organization_team_path(team.organization, team), class: "btn btn-sm btn-outline" do %>
+              <svg class="octicon octicon-eye mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2ZM8 1c-2.331 0-4.264 1.186-5.615 2.354C1.343 4.524.5 5.79.5 6.5c0 .71.843 1.976 1.885 3.146C3.736 10.814 5.669 12 8 12c2.331 0 4.264-1.186 5.615-2.354C14.657 7.476 15.5 6.21 15.5 6.5c0-.71-.843-1.976-1.885-3.146C12.264 1.186 10.331 0 8 0Z"></path>
+              </svg>
+              Manage
+            <% end %>
+            <%= link_to edit_organization_team_path(team.organization, team), class: "btn btn-sm btn-outline" do %>
+              <svg class="octicon octicon-pencil mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
+              </svg>
+              Edit
+            <% end %>
           <% end %>
         </div>
       </div>
