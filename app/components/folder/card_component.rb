@@ -1,5 +1,4 @@
-class Folder::CardComponent < ApplicationComponent
-  include CardConcerns
+class Folder::CardComponent < Organization::CardComponent
 
   def initialize(folder:, show_actions: true, **system_arguments)
     @folder = folder
