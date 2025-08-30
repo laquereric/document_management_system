@@ -145,57 +145,54 @@
 
     <div class="Box">
       <div class="Box-body">
-        <% if @tags&.any? %>
-          <div class="d-lg-flex flex-wrap" style="gap: 24px;">
-            <% @tags.each do |tag| %>
-              <div class="flex-1" style="min-width: 320px; max-width: 400px;">
-                <%= render(Tag::CardComponent.new(tag: tag, admin_context: false)) %>
-              </div>
-            <% end %>
-          </div>
-
-          <!-- Pagination -->
-          <% if @tags.respond_to?(:current_page) %>
-            <div class="d-flex flex-justify-center mt-4">
-              <nav class="paginate-container" aria-label="Pagination">
-                <div class="pagination">
-                  <% if @tags.prev_page %>
-                    <%= link_to "Previous", url_for(page: @tags.prev_page), class: "previous_page", rel: "prev" %>
-                  <% else %>
-                    <span class="previous_page disabled">Previous</span>
-                  <% end %>
-                  
-                  <% @tags.total_pages.times do |page_num| %>
-                    <% page_num += 1 %>
-                    <% if page_num == @tags.current_page %>
-                      <em class="current"><%= page_num %></em>
-                    <% elsif page_num == 1 || page_num == @tags.total_pages || (page_num >= @tags.current_page - 2 && page_num <= @tags.current_page + 2) %>
-                      <%= link_to page_num, url_for(page: page_num) %>
-                    <% elsif page_num == @tags.current_page - 3 || page_num == @tags.current_page + 3 %>
-                      <span class="gap">…</span>
-                    <% end %>
-                  <% end %>
-                  
-                  <% if @tags.next_page %>
-                    <%= link_to "Next", url_for(page: @tags.next_page), class: "next_page", rel: "next" %>
-                  <% else %>
-                    <span class="next_page disabled">Next</span>
-                  <% end %>
-                </div>
-              </nav>
+        <%= render(Organization::CardList.new(
+          cards: @tags,
+          layout: :grid,
+          title: "Tags",
+          empty_state_title: "No Tags Found",
+          empty_state_description: "Get started by creating your first tag.",
+          empty_state_action: {
+            text: "Create Tag",
+            url: new_tag_path
+          }
+        )) do %>
+          <% @tags.each do |tag| %>
+            <div class="flex-1" style="min-width: 320px; max-width: 400px;">
+              <%= render(Tag::CardComponent.new(tag: tag, admin_context: false)) %>
             </div>
           <% end %>
-        <% else %>
-          <%= render(Ui::EmptyStateComponent.new(
-            title: "No Tags Found",
-            description: "Get started by creating your first tag.",
-            icon: "tag",
-            action: {
-              text: "Create Tag",
-              url: new_tag_path,
-              class: "btn btn-primary"
-            }
-          )) %>
+        <% end %>
+
+        <!-- Pagination -->
+        <% if @tags.respond_to?(:current_page) && @tags.any? %>
+          <div class="d-flex flex-justify-center mt-4">
+            <nav class="paginate-container" aria-label="Pagination">
+              <div class="pagination">
+                <% if @tags.prev_page %>
+                  <%= link_to "Previous", url_for(page: @tags.prev_page), class: "previous_page", rel: "prev" %>
+                <% else %>
+                  <span class="previous_page disabled">Previous</span>
+                <% end %>
+                
+                <% @tags.total_pages.times do |page_num| %>
+                  <% page_num += 1 %>
+                  <% if page_num == @tags.current_page %>
+                    <em class="current"><%= page_num %></em>
+                  <% elsif page_num == 1 || page_num == @tags.total_pages || (page_num >= @tags.current_page - 2 && page_num <= @tags.current_page + 2) %>
+                    <%= link_to page_num, url_for(page: page_num) %>
+                  <% elsif page_num == @tags.current_page - 3 || page_num == @tags.current_page + 3 %>
+                    <span class="gap">…</span>
+                  <% end %>
+                <% end %>
+                
+                <% if @tags.next_page %>
+                  <%= link_to "Next", url_for(page: @tags.next_page), class: "next_page", rel: "next" %>
+                <% else %>
+                  <span class="next_page disabled">Next</span>
+                <% end %>
+              </div>
+            </nav>
+          </div>
         <% end %>
       </div>
     </div>

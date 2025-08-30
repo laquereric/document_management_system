@@ -1,5 +1,4 @@
-class Organization::CardComponent < ApplicationComponent
-  include CardConcerns
+class Organization::CardComponent < Organization::CardComponent
 
   def initialize(organization:, show_actions: true, admin_context: false, **system_arguments)
     @organization = organization

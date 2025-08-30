@@ -1,5 +1,4 @@
-class Teams::TeamCardComponent < ApplicationComponent
-  include CardConcerns
+class Teams::TeamCardComponent < Organization::CardComponent
 
   def initialize(team:, current_user: nil, admin_context: false, **system_arguments)
     @team = team

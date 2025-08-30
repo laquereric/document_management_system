@@ -1,5 +1,4 @@
-class Tag::CardComponent < ApplicationComponent
-  include CardConcerns
+class Tag::CardComponent < Organization::CardComponent
 
   def initialize(tag:, show_actions: true, admin_context: false, **system_arguments)
     @tag = tag
