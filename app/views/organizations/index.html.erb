@@ -36,7 +36,7 @@
         <div class="row g-4">
           <% @organizations.each do |organization| %>
             <div class="col-12 col-md-6 col-lg-4">
-              <%= render(Organization::CardComponent.new(organization: organization)) %>
+              <%= render(Layout::CardComponent.new(organization: organization)) %>
             </div>
           <% end %>
         </div>
