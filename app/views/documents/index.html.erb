@@ -44,87 +44,44 @@
   )) %>
 
   <!-- Search and Filters -->
-  <div class="mt-5">
-    <h2 class="f4 text-semibold mb-3">Search & Filters</h2>
-    <div class="Box">
-      <div class="Box-body">
-        <% if defined?(Document) %>
-          <% q = Document.ransack(params[:q]) %>
-          <%= render(Search::SearchFormComponent.new(q: q)) %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render(Layout::SearchSection.new) do %>
+    <% if defined?(Document) %>
+      <% q = Document.ransack(params[:q]) %>
+      <%= render(Search::SearchFormComponent.new(q: q)) %>
+    <% end %>
+  <% end %>
 
   <!-- Documents Section -->
-  <div class="mt-5">
-    <div class="d-flex flex-items-center flex-justify-between mb-3">
-      <h2 class="f4 text-semibold">
-        All Documents
-        <% if @documents.respond_to?(:total_count) %>
-          <span class="Counter"><%= @documents.total_count %></span>
-        <% end %>
-      </h2>
-      <div class="d-flex flex-items-center gap-2">
-        <div class="Select">
-          <select class="form-select" onchange="window.location.href=this.value">
-            <option value="<%= documents_path %>" <%= 'selected' unless params[:sort] %>>Sort by Date</option>
-            <option value="<%= documents_path(sort: 'title') %>" <%= 'selected' if params[:sort] == 'title' %>>Sort by Title</option>
-            <option value="<%= documents_path(sort: 'status') %>" <%= 'selected' if params[:sort] == 'status' %>>Sort by Status</option>
-          </select>
-        </div>
-      </div>
-    </div>
+  <%= render(Layout::ContentSection.new(
+    title: "All Documents",
+    count: @documents.respond_to?(:total_count) ? @documents.total_count : nil,
+    controls: render(Layout::SortDropdown.new(
+      current_sort: params[:sort],
+      sort_options: [
+        { label: "Sort by Date", value: nil },
+        { label: "Sort by Title", value: "title" },
+        { label: "Sort by Status", value: "status" }
+      ],
+      base_url: documents_path
+    ))
+  )) do %>
+    <% if @documents&.any? %>
+      <%= render(Layout::DocumentGrid.new(documents: @documents)) %>
 
-    <div class="Box">
-      <div class="Box-body">
-        <% if @documents&.any? %>
-          <%= render(Layout::DocumentGrid.new(documents: @documents)) %>
-        <% end %>
-
-          <!-- Pagination -->
-          <% if @documents.respond_to?(:current_page) %>
-            <div class="d-flex flex-justify-center mt-4">
-              <nav class="paginate-container" aria-label="Pagination">
-                <div class="pagination">
-                  <% if @documents.prev_page %>
-                    <%= link_to "Previous", url_for(page: @documents.prev_page), class: "previous_page", rel: "prev" %>
-                  <% else %>
-                    <span class="previous_page disabled">Previous</span>
-                  <% end %>
-                  
-                  <% @documents.total_pages.times do |page_num| %>
-                    <% page_num += 1 %>
-                    <% if page_num == @documents.current_page %>
-                      <em class="current"><%= page_num %></em>
-                    <% elsif page_num == 1 || page_num == @documents.total_pages || (page_num >= @documents.current_page - 2 && page_num <= @documents.current_page + 2) %>
-                      <%= link_to page_num, url_for(page: page_num) %>
-                    <% elsif page_num == @documents.current_page - 3 || page_num == @documents.current_page + 3 %>
-                      <span class="gap">…</span>
-                    <% end %>
-                  <% end %>
-                  
-                  <% if @documents.next_page %>
-                    <%= link_to "Next", url_for(page: @documents.next_page), class: "next_page", rel: "next" %>
-                  <% else %>
-                    <span class="next_page disabled">Next</span>
-                  <% end %>
-                </div>
-              </nav>
-            </div>
-          <% end %>
-        <% else %>
-          <%= render(Ui::EmptyStateComponent.new(
-            title: "No Documents Found",
-            description: "Get started by creating your first document.",
-            icon: "file-text",
-            action: {
-              text: "Create Document",
-              url: new_document_path
-            }
-          )) %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+      <!-- Pagination -->
+      <% if @documents.respond_to?(:current_page) %>
+        <%= render(Layout::CardListPagination.new(collection: @documents)) %>
+      <% end %>
+    <% else %>
+      <%= render(Ui::EmptyStateComponent.new(
+        title: "No Documents Found",
+        description: "Get started by creating your first document.",
+        icon: "file-text",
+        action: {
+          text: "Create Document",
+          url: new_document_path
+        }
+      )) %>
+    <% end %>
+  <% end %>
+<% end %>

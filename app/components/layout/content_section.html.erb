@@ -1,0 +1,15 @@
+<div class="mt-5">
+  <% if has_header? %>
+    <%= render(Layout::SectionHeader.new(
+      title: title,
+      count: count,
+      controls: controls
+    )) %>
+  <% end %>
+
+  <div class="Box">
+    <div class="Box-body">
+      <%= content %>
+    </div>
+  </div>
+</div>

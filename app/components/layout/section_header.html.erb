@@ -1,0 +1,13 @@
+<div class="d-flex flex-items-center flex-justify-between mb-3">
+  <h2 class="f4 text-semibold">
+    <%= title %>
+    <% if has_count? %>
+      <span class="Counter"><%= count %></span>
+    <% end %>
+  </h2>
+  <% if has_controls? %>
+    <div class="d-flex flex-items-center gap-2">
+      <%= controls %>
+    </div>
+  <% end %>
+</div>

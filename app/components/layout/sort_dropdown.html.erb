@@ -1,0 +1,9 @@
+<div class="Select">
+  <select class="form-select" onchange="window.location.href=this.value">
+    <% sort_options.each do |option| %>
+      <option value="<%= option_url(option) %>" <%= 'selected' if selected_option?(option) %>>
+        <%= option[:label] %>
+      </option>
+    <% end %>
+  </select>
+</div>
