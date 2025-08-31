@@ -1,116 +1,47 @@
 <% content_for :title, "Manage Tags" %>
 
-<div class="container-lg px-3">
+<%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
-    <div class="d-flex flex-items-center">
-      <svg class="octicon octicon-tag mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-        <path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"></path>
-      </svg>
-      <div>
-        <h1 class="f2 lh-condensed text-semibold mb-1">Manage Tags</h1>
-        <p class="f5 color-fg-muted mb-0">Manage and organize document tags across the system</p>
-      </div>
-    </div>
-    <div class="d-flex flex-items-center" style="gap: 8px;">
-      <%= link_to new_admin_tag_path, class: "btn btn-primary" do %>
-        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
-        </svg>
-        New Tag
-      <% end %>
-    </div>
-  </div>
+  <%= render(Layout::PageHeader.new(
+    title: "Manage Tags",
+    description: "Manage and organize document tags across the system",
+    icon: "tag",
+    action: {
+      text: "New Tag",
+      url: new_admin_tag_path
+    }
+  )) %>
 
   <!-- Search and Filters -->
-  <div class="mt-5">
-    <div class="Box">
-      <div class="Box-header d-flex flex-items-center flex-justify-between">
-        <h3 class="f4 text-semibold">Search & Filters</h3>
-      </div>
-    <div class="Box-body">
-      <%= search_form_for @q, url: admin_tags_path, method: :get, class: "form" do |f| %>
-        <div class="d-flex flex-items-center gap-3">
-          <div class="flex-auto">
-            <%= f.text_field :name_cont, class: "form-control", placeholder: "Search by tag name..." %>
-          </div>
-          <div class="d-flex flex-items-center gap-2">
-            <%= f.submit "Search", class: "btn btn-primary" %>
-            <%= link_to "Clear", admin_tags_path, class: "btn btn-outline" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <%= render(Layout::CardListSearchAndFilters.new(
+    search_object: @q,
+    url: admin_tags_path,
+    title: "Search & Filters",
+    fields: [
+      {
+        name: :name_cont,
+        label: "Tag Name",
+        placeholder: "Search by tag name..."
+      }
+    ]
+  )) %>
 
   <!-- Tags Grid -->
-  <div class="mt-5">
-    <div class="Box">
-      <div class="Box-header d-flex flex-items-center flex-justify-between">
-        <h3 class="f4 text-semibold">
-          Tags
-          <% if @tags.respond_to?(:total_count) %>
-            <span class="Counter"><%= @tags.total_count %></span>
-          <% end %>
-        </h3>
+  <%= render(Layout::CardList.new(
+    cards: @tags,
+    layout: :grid,
+    title: "Tags",
+    empty_state_title: "No tags found",
+    empty_state_description: "Get started by creating your first tag.",
+    empty_state_action: {
+      text: "Create Tag",
+      url: new_admin_tag_path
+    }
+  )) do %>
+    <% @tags.each do |tag| %>
+      <div class="flex-1" style="min-width: 320px; max-width: 400px;">
+        <%= render(Tag::CardComponent.new(tag: tag, admin_context: true)) %>
       </div>
-
-      <div class="Box-body">
-        <% if @tags&.any? %>
-          <div class="d-lg-flex flex-wrap" style="gap: 24px;">
-            <% @tags.each do |tag| %>
-              <div class="flex-1" style="min-width: 320px; max-width: 400px;">
-                <%= render(Tag::CardComponent.new(tag: tag, admin_context: true)) %>
-              </div>
-            <% end %>
-          </div>
-
-        <!-- Pagination -->
-        <% if @tags.respond_to?(:current_page) %>
-          <div class="d-flex flex-justify-center mt-4">
-            <nav class="paginate-container" aria-label="Pagination">
-              <div class="pagination">
-                <% if @tags.prev_page %>
-                  <%= link_to "Previous", url_for(page: @tags.prev_page), class: "previous_page", rel: "prev" %>
-                <% else %>
-                  <span class="previous_page disabled">Previous</span>
-                <% end %>
-                
-                <% @tags.total_pages.times do |page_num| %>
-                  <% page_num += 1 %>
-                  <% if page_num == @tags.current_page %>
-                    <em class="current"><%= page_num %></em>
-                  <% elsif page_num == 1 || page_num == @tags.total_pages || (page_num >= @tags.current_page - 2 && page_num <= @tags.current_page + 2) %>
-                    <%= link_to page_num, url_for(page: page_num) %>
-                  <% elsif page_num == @tags.current_page - 3 || page_num == @tags.current_page + 3 %>
-                    <span class="gap">…</span>
-                  <% end %>
-                <% end %>
-                
-                <% if @tags.next_page %>
-                  <%= link_to "Next", url_for(page: @tags.next_page), class: "next_page", rel: "next" %>
-                <% else %>
-                  <span class="next_page disabled">Next</span>
-                <% end %>
-              </div>
-            </nav>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="blankslate">
-          <svg class="octicon octicon-tag blankslate-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .909.184 1.237.513l6.25 6.25c.329.328.513.773.513 1.237v5.025A1.75 1.75 0 0112.25 15h-5.025c-.464 0-.909-.184-1.237-.513l-6.25-6.25A1.75 1.75 0 011 12.25zM6 5a1 1 0 100 2 1 1 0 000-2z"/>
-          </svg>
-          <h3 class="blankslate-heading">No tags found</h3>
-          <p class="blankslate-text">Get started by creating your first tag.</p>
-          <%= link_to new_admin_tag_path, class: "btn btn-primary" do %>
-            <svg class="octicon octicon-plus mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 4a.75.75 0 01.75.75v2.5h2.5a.75.75 0 010 1.5h-2.5v2.5a.75.75 0 01-1.5 0v-2.5h-2.5a.75.75 0 010-1.5h2.5v-2.5A.75.75 0 018 4z"/>
-            </svg>
-            Create Tag
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+    <% end %>
+  <% end %>
+<% end %>

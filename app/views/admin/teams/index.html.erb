@@ -1,128 +1,59 @@
 <% content_for :title, "Manage Teams" %>
 
-<div class="container-lg px-3">
+<%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
-    <div class="d-flex flex-items-center">
-      <svg class="octicon octicon-people mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-        <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
-      </svg>
-      <div>
-        <h1 class="f2 lh-condensed text-semibold mb-1">Manage Teams</h1>
-        <p class="f5 color-fg-muted mb-0">Admin team management and member control</p>
-      </div>
-    </div>
-    <div class="d-flex flex-items-center" style="gap: 8px;">
-      <%= link_to new_admin_team_path, class: "btn btn-primary" do %>
-        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M8 4a.75.75 0 0 1 .75.75v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5A.75.75 0 0 1 8 4Z"></path>
-        </svg>
-        New Team
-      <% end %>
-    </div>
-  </div>
+  <%= render(Layout::PageHeader.new(
+    title: "Manage Teams",
+    description: "Admin team management and member control",
+    icon: "people",
+    action: {
+      text: "New Team",
+      url: new_admin_team_path
+    }
+  )) %>
 
   <!-- Search and Filters -->
-  <div class="mt-5">
-    <div class="Box">
-      <div class="Box-header d-flex flex-items-center flex-justify-between">
-        <h3 class="f4 text-semibold">Search & Filters</h3>
-      </div>
-      <div class="Box-body">
-        <%= search_form_for @q, url: admin_teams_path, method: :get do |f| %>
-          <div class="d-lg-flex" style="gap: 16px;">
-            <div class="flex-1 mb-3 mb-lg-0">
-              <div class="form-group">
-                <%= f.label :name_cont, "Team Name", class: "form-label" %>
-                <%= f.text_field :name_cont, class: "form-control", placeholder: "Search by team name..." %>
-              </div>
-            </div>
-            <div class="flex-1 mb-3 mb-lg-0">
-              <div class="form-group">
-                <%= f.label :organization_name_cont, "Organization", class: "form-label" %>
-                <%= f.text_field :organization_name_cont, class: "form-control", placeholder: "Search by organization..." %>
-              </div>
-            </div>
-            <div class="flex-1 mb-3 mb-lg-0">
-              <div class="form-group">
-                <%= f.label :leader_name_cont, "Team Leader", class: "form-label" %>
-                <%= f.text_field :leader_name_cont, class: "form-control", placeholder: "Search by leader name..." %>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex flex-items-center mt-3" style="gap: 8px;">
-            <%= f.submit "Search", class: "btn btn-primary" %>
-            <%= link_to "Clear", admin_teams_path, class: "btn btn-outline" %>
-          </div>
-        <% end %>
-      </div>
-  </div>
+  <%= render(Layout::CardListSearchAndFilters.new(
+    search_object: @q,
+    url: admin_teams_path,
+    title: "Search & Filters",
+    fields: [
+      {
+        name: :name_cont,
+        label: "Team Name",
+        placeholder: "Search by team name..."
+      },
+      {
+        name: :organization_name_cont,
+        label: "Organization",
+        placeholder: "Search by organization..."
+      },
+      {
+        name: :leader_name_cont,
+        label: "Team Leader",
+        placeholder: "Search by leader name..."
+      }
+    ]
+  )) %>
 
   <!-- Teams Grid -->
-  <% if @teams.any? %>
-    <div class="row g-4">
-      <% @teams.each do |team| %>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="Box-body">
-            <%= render Teams::TeamCardComponent.new(team: team, current_user: current_user, admin_context: true) %>
-          </div>
+  <%= render(Layout::CardList.new(
+    cards: @teams,
+    layout: :grid,
+    title: "Teams",
+    empty_state_title: "No teams found",
+    empty_state_description: params[:q].present? ? "No teams match your search criteria. Try adjusting your filters." : "Get started by creating your first team.",
+    empty_state_action: {
+      text: "Create Team",
+      url: new_admin_team_path
+    }
+  )) do %>
+    <% @teams.each do |team| %>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="Box-body">
+          <%= render Teams::TeamCardComponent.new(team: team, current_user: current_user, admin_context: true) %>
         </div>
-      <% end %>
-    </div>
-
-    <!-- Pagination -->
-    <% if @teams.total_pages > 1 %>
-      <div class="d-flex flex-items-center flex-justify-center mt-6">
-        <nav class="paginate-container" role="navigation" aria-label="Pagination Navigation">
-          <div class="pagination">
-            <% if @teams.prev_page %>
-              <%= link_to "Previous", admin_teams_path(page: @teams.prev_page, q: params[:q]), class: "previous_page" %>
-            <% else %>
-              <span class="previous_page disabled">Previous</span>
-            <% end %>
-
-            <% @teams.total_pages.times do |page_num| %>
-              <% page_num += 1 %>
-              <% if page_num == @teams.current_page %>
-                <em class="current"><%= page_num %></em>
-              <% elsif page_num == 1 || page_num == @teams.total_pages || (page_num >= @teams.current_page - 2 && page_num <= @teams.current_page + 2) %>
-                <%= link_to page_num, admin_teams_path(page: page_num, q: params[:q]) %>
-              <% elsif page_num == @teams.current_page - 3 || page_num == @teams.current_page + 3 %>
-                <span class="gap">…</span>
-              <% end %>
-            <% end %>
-
-            <% if @teams.next_page %>
-              <%= link_to "Next", admin_teams_path(page: @teams.next_page, q: params[:q]), class: "next_page" %>
-            <% else %>
-              <span class="next_page disabled">Next</span>
-            <% end %>
-          </div>
-        </nav>
       </div>
     <% end %>
-  <% else %>
-    <!-- Empty State -->
-    <div class="Box text-center py-6">
-      <div class="CircleBadge CircleBadge--large bg-gray mb-4 mx-auto">
-        <svg class="octicon octicon-group" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-          <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.665-.57 3.51 3.51 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 4Zm-5.5 1.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM9.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"></path>
-        </svg>
-      </div>
-      <h3 class="h3 mb-2">No teams found</h3>
-      <p class="color-fg-muted mb-4">
-        <% if params[:q].present? %>
-          No teams match your search criteria. Try adjusting your filters.
-        <% else %>
-          Get started by creating your first team.
-        <% end %>
-      </p>
-      <%= link_to new_admin_team_path, class: "btn btn-primary" do %>
-        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M8 4a.75.75 0 0 1 .75.75v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5A.75.75 0 0 1 8 4Z"></path>
-        </svg>
-        Create Team
-      <% end %>
-    </div>
   <% end %>
-</div>
+<% end %>

@@ -1,26 +1,16 @@
 <% content_for :title, "Manage Organizations" %>
 
-<div class="container-lg px-3">
+<%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
-    <div class="d-flex flex-items-center">
-      <svg class="octicon octicon-organization mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-        <path d="M1.75 16A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 0 0 .25-.25V8.285a.25.25 0 0 0-.111-.208l-1.055-.703a.749.749 0 1 1 .832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0 1 14.25 16h-3.5a.766.766 0 0 1-.197-.026c-.099.017-.2.026-.303.026h-8.5ZM3.75 4.5a.25.25 0 0 0-.25.25v.852c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25h-.88ZM3.5 7.204A.25.25 0 0 1 3.75 6.96h.88a.25.25 0 0 1 .25.25v.851a.25.25 0 0 1-.25.25h-.88a.25.25 0 0 1-.25-.25V7.204ZM3.75 9.5a.25.25 0 0 0-.25.25v.851c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V9.75a.25.25 0 0 0-.25-.25h-.88Zm3.5-5a.25.25 0 0 0-.25.25v.852c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25h-.88ZM7 7.204a.25.25 0 0 1 .25-.244h.88a.25.25 0 0 1 .25.25v.851a.25.25 0 0 1-.25.25h-.88a.25.25 0 0 1-.25-.25V7.204ZM7.25 9.5a.25.25 0 0 0-.25.25v.851c0 .138.112.25.25.25h.88a.25.25 0 0 0 .25-.25V9.75a.25.25 0 0 0-.25-.25h-.88Z"></path>
-      </svg>
-      <div>
-        <h1 class="f2 lh-condensed text-semibold mb-1">Manage Organizations</h1>
-        <p class="f5 color-fg-muted mb-0">Admin organization management and settings</p>
-      </div>
-    </div>
-    <div class="d-flex flex-items-center" style="gap: 8px;">
-      <%= link_to new_admin_organization_path, class: "btn btn-primary" do %>
-        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M8 4a.75.75 0 0 1 .75.75v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5A.75.75 0 0 1 8 4Z"></path>
-        </svg>
-        New Organization
-      <% end %>
-    </div>
-  </div>
+  <%= render(Layout::PageHeader.new(
+    title: "Manage Organizations",
+    description: "Admin organization management and settings",
+    icon: "organization",
+    action: {
+      text: "New Organization",
+      url: new_admin_organization_path
+    }
+  )) %>
 
   <!-- Content Section -->
   <div class="mt-5">
@@ -30,4 +20,4 @@
       icon: "organization"
     )) %>
   </div>
-</div>
+<% end %>

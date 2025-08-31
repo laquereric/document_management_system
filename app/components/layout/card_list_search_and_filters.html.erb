@@ -7,7 +7,14 @@
           <% fields.each do |field| %>
             <div class="<%= field_container_classes %>">
               <%= f.label field[:name], field[:label], class: label_classes %>
-              <%= f.text_field field[:name], class: input_classes, placeholder: field[:placeholder] %>
+              <% if field[:type] == :select %>
+                <%= f.select field[:name], 
+                    options_for_select(field[:options], params.dig(:q, field[:name])), 
+                    {}, 
+                    class: input_classes %>
+              <% else %>
+                <%= f.text_field field[:name], class: input_classes, placeholder: field[:placeholder] %>
+              <% end %>
             </div>
           <% end %>
           <div>
