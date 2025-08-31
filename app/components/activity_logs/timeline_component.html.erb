@@ -1,0 +1,62 @@
+<div class="Timeline">
+  <% activity_logs.each do |activity_log| %>
+    <div class="TimelineItem">
+      <div class="TimelineItem-badge">
+        <svg class="octicon octicon-<%= action_icon(activity_log.action) %> color-fg-<%= action_color(activity_log.action) %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <% case activity_log.action %>
+          <% when 'created' %>
+            <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+          <% when 'updated' %>
+            <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086Z"></path>
+          <% when 'status_change' %>
+            <path d="M5.22 14.78a.75.75 0 0 1-1.06 0L.47 11.03a.75.75 0 0 1 0-1.06l3.75-3.75a.75.75 0 0 1 1.06 1.06L2.81 10.5H14.5a.75.75 0 0 1 0 1.5H2.81l2.47 2.47a.75.75 0 0 1 0 1.06Zm5.56-9.5a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06l2.47-2.47H1.5a.75.75 0 0 1 0-1.5h11.69l-2.47-2.47a.75.75 0 0 1 0-1.06Z"></path>
+          <% when 'deleted' %>
+            <path d="M11 1.75V3h2.25a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75ZM4.496 6.675l.66 6.6a.25.25 0 0 0 .249.225h5.19a.25.25 0 0 0 .249-.225l.66-6.6a.75.75 0 0 1 1.492.149l-.66 6.6A1.748 1.748 0 0 1 10.595 15h-5.19a1.748 1.748 0 0 1-1.741-1.575l-.66-6.6a.75.75 0 1 1 1.492-.15ZM6.5 1.75V3h3V1.75a.25.25 0 0 0-.25-.25h-2.5a.25.25 0 0 0-.25.25Z"></path>
+          <% else %>
+            <path d="M8 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"></path>
+          <% end %>
+        </svg>
+      </div>
+      
+      <div class="TimelineItem-body">
+        <div class="d-flex flex-items-center justify-content-between">
+          <div class="flex-1">
+            <div class="d-flex flex-items-center gap-2 mb-1">
+              <span class="text-bold">
+                <%= activity_log.user&.name || "Unknown User" %>
+              </span>
+              <span class="color-fg-muted">
+                <%= activity_log.action.humanize.downcase %>
+              </span>
+              <% if activity_log.action == 'status_change' && activity_log.old_status && activity_log.new_status %>
+                <span class="color-fg-muted">from</span>
+                <span class="Label Label--secondary"><%= activity_log.old_status.name %></span>
+                <span class="color-fg-muted">to</span>
+                <span class="Label Label--accent"><%= activity_log.new_status.name %></span>
+              <% end %>
+            </div>
+            
+            <% if activity_log.document %>
+              <div class="d-flex flex-items-center gap-2 mb-1">
+                <svg class="octicon octicon-file-text color-fg-muted" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+                </svg>
+                <%= link_to activity_log.document.title, document_path(activity_log.document), class: "Link--primary" %>
+              </div>
+            <% end %>
+            
+            <% if activity_log.notes.present? %>
+              <div class="color-fg-muted f6 mt-1">
+                <%= activity_log.notes %>
+              </div>
+            <% end %>
+          </div>
+          
+          <div class="f6 color-fg-muted">
+            <%= time_ago_in_words(activity_log.created_at) %> ago
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
