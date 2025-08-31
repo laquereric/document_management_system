@@ -92,8 +92,8 @@ class Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Scenarios",
         icon: "list-unordered",
-        path: admin_scenario_types_path,
-        active: @controller_name == "admin/scenario_types"
+        path: admin_scenarios_path,
+        active: @controller_name == "admin/scenarios"
       },
       {
         label: "Tags",

@@ -5,9 +5,9 @@
   <div class="d-flex flex-items-center flex-justify-between mb-4">
     <div>
       <h1 class="h2 mb-1">Create New Scenario</h1>
-      <p class="text-gray">Add a new scenario type to categorize documents</p>
+      <p class="text-gray">Add a new scenario to categorize documents</p>
     </div>
-    <%= link_to admin_scenario_types_path, class: "btn btn-outline" do %>
+    <%= link_to admin_scenarios_path, class: "btn btn-outline" do %>
       <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
         <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
       </svg>
@@ -22,12 +22,12 @@
           <h3 class="Box-title">Scenario Information</h3>
         </div>
         <div class="Box-body">
-          <%= form_with model: [:admin, @scenario_type], local: true, class: "form" do |form| %>
-            <% if @scenario_type.errors.any? %>
+          <%= form_with model: [:admin, @scenario], local: true, class: "form" do |form| %>
+            <% if @scenario.errors.any? %>
               <div class="flash flash-error mb-3">
                 <h4 class="flash-heading">Please correct the following errors:</h4>
                 <ul class="list-style-none">
-                  <% @scenario_type.errors.full_messages.each do |message| %>
+                  <% @scenario.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
                   <% end %>
                 </ul>
@@ -37,18 +37,18 @@
             <div class="form-group">
               <%= form.label :name, class: "form-label" %>
               <%= form.text_field :name, class: "form-control", placeholder: "Enter scenario name" %>
-              <p class="form-note">Choose a descriptive name for the scenario type</p>
+              <p class="form-note">Choose a descriptive name for the scenario</p>
             </div>
 
             <div class="form-group">
               <%= form.label :description, class: "form-label" %>
               <%= form.text_area :description, class: "form-control", rows: 3, placeholder: "Enter scenario description" %>
-              <p class="form-note">Provide a clear description of when this scenario type should be used</p>
+              <p class="form-note">Provide a clear description of when this scenario should be used</p>
             </div>
 
             <div class="form-actions">
               <%= form.submit "Create Scenario", class: "btn btn-primary" %>
-              <%= link_to "Cancel", admin_scenario_types_path, class: "btn" %>
+              <%= link_to "Cancel", admin_scenarios_path, class: "btn" %>
             </div>
           <% end %>
         </div>
@@ -90,7 +90,7 @@
         </div>
         <div class="Box-body">
           <div class="d-flex flex-column gap-2">
-            <%= link_to admin_scenario_types_path, class: "btn btn-outline btn-sm" do %>
+            <%= link_to admin_scenarios_path, class: "btn btn-outline btn-sm" do %>
               <svg class="octicon octicon-list mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 3a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM2 7a1 1 0 11-2 0 1 1 0 012 0zm-1 3a1 1 0 100 2 1 1 0 000-2zm3.75.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/>
               </svg>

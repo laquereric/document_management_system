@@ -46,8 +46,8 @@ class Forms::DocumentFormComponent < ApplicationComponent
     defined?(Status) ? Status.all : []
   end
 
-  def scenario_types
-    defined?(ScenarioType) ? ScenarioType.all : []
+  def scenarios
+    defined?(Scenario) ? Scenario.all : []
   end
 
   def folders

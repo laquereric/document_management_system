@@ -1,20 +1,20 @@
-<% content_for :title, "Admin - Edit Scenario: #{@scenario_type.name}" %>
+<% content_for :title, "Admin - Edit Scenario: #{@scenario.name}" %>
 
 <div class="container-lg px-3 py-4">
   <!-- Header -->
   <div class="d-flex flex-items-center flex-justify-between mb-4">
     <div>
       <h1 class="h2 mb-1">Edit Scenario</h1>
-      <p class="text-gray">Update scenario type information and settings</p>
+      <p class="text-gray">Update scenario information and settings</p>
     </div>
     <div class="d-flex flex-items-center gap-2">
-      <%= link_to admin_scenario_type_path(@scenario_type), class: "btn btn-outline" do %>
+      <%= link_to admin_scenario_path(@scenario), class: "btn btn-outline" do %>
         <svg class="octicon octicon-eye mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M1.679 7.932c.412-.621 1.242-1.75 2.366-2.717C5.175 4.242 6.527 3.5 8 3.5c1.473 0 2.824.742 3.955 1.715 1.124.967 1.954 2.096 2.366 2.717a.119.119 0 010 .136c-.412.621-1.242 1.75-2.366 2.717C10.825 11.758 9.473 12.5 8 12.5c-1.473 0-2.824-.742-3.955-1.715C2.868 9.687 2.038 8.558 1.626 7.937a.119.119 0 010-.136zM8 2c-1.981 0-3.67.992-4.933 2.078C1.797 5.169.88 6.423.43 7.1a1.619 1.619 0 000 1.798c.45.678 1.367 1.932 2.637 3.024C4.329 13.008 6.019 14 8 14c1.981 0 3.67-.992 4.933-2.078 1.27-1.091 2.187-2.345 2.637-3.023a1.619 1.619 0 000-1.798c-.45-.678-1.367-1.932-2.637-3.023C11.671 2.992 9.981 2 8 2zm0 8a2 2 0 100-4 2 2 0 000 4z"/>
         </svg>
         View Scenario
       <% end %>
-      <%= link_to admin_scenario_types_path, class: "btn btn-outline" do %>
+      <%= link_to admin_scenarios_path, class: "btn btn-outline" do %>
         <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
         </svg>
@@ -30,12 +30,12 @@
           <h3 class="Box-title">Scenario Information</h3>
         </div>
         <div class="Box-body">
-          <%= form_with model: [:admin, @scenario_type], local: true, class: "form" do |form| %>
-            <% if @scenario_type.errors.any? %>
+          <%= form_with model: [:admin, @scenario], local: true, class: "form" do |form| %>
+            <% if @scenario.errors.any? %>
               <div class="flash flash-error mb-3">
                 <h4 class="flash-heading">Please correct the following errors:</h4>
                 <ul class="list-style-none">
-                  <% @scenario_type.errors.full_messages.each do |message| %>
+                  <% @scenario.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
                   <% end %>
                 </ul>
@@ -45,18 +45,18 @@
             <div class="form-group">
               <%= form.label :name, class: "form-label" %>
               <%= form.text_field :name, class: "form-control", placeholder: "Enter scenario name" %>
-              <p class="form-note">Choose a descriptive name for the scenario type</p>
+              <p class="form-note">Choose a descriptive name for the scenario</p>
             </div>
 
             <div class="form-group">
               <%= form.label :description, class: "form-label" %>
               <%= form.text_area :description, class: "form-control", rows: 3, placeholder: "Enter scenario description" %>
-              <p class="form-note">Provide a clear description of when this scenario type should be used</p>
+              <p class="form-note">Provide a clear description of when this scenario should be used</p>
             </div>
 
             <div class="form-actions">
               <%= form.submit "Update Scenario", class: "btn btn-primary" %>
-              <%= link_to "Cancel", admin_scenario_type_path(@scenario_type), class: "btn" %>
+              <%= link_to "Cancel", admin_scenario_path(@scenario), class: "btn" %>
             </div>
           <% end %>
         </div>
@@ -74,17 +74,17 @@
             <svg class="octicon octicon-file-code mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"/>
             </svg>
-            <strong><%= @scenario_type.name %></strong>
+            <strong><%= @scenario.name %></strong>
           </div>
           <div class="text-gray text-small">
             <div class="mb-1">
-              <strong>Description:</strong> <%= @scenario_type.description %>
+              <strong>Description:</strong> <%= @scenario.description %>
             </div>
             <div class="mb-1">
-              <strong>Documents:</strong> <%= pluralize(@scenario_type.documents.count, 'document') %>
+              <strong>Documents:</strong> <%= pluralize(@scenario.documents.count, 'document') %>
             </div>
             <div>
-              <strong>Created:</strong> <%= @scenario_type.created_at.strftime("%B %d, %Y") %>
+              <strong>Created:</strong> <%= @scenario.created_at.strftime("%B %d, %Y") %>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@
         </div>
         <div class="Box-body">
           <div class="d-flex flex-column gap-2">
-            <%= link_to admin_scenario_type_path(@scenario_type), class: "btn btn-outline btn-sm" do %>
+            <%= link_to admin_scenario_path(@scenario), class: "btn btn-outline btn-sm" do %>
               <svg class="octicon octicon-eye mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M1.679 7.932c.412-.621 1.242-1.75 2.366-2.717C5.175 4.242 6.527 3.5 8 3.5c1.473 0 2.824.742 3.955 1.715 1.124.967 1.954 2.096 2.366 2.717a.119.119 0 010 .136c-.412.621-1.242 1.75-2.366 2.717C10.825 11.758 9.473 12.5 8 12.5c-1.473 0-2.824-.742-3.955-1.715C2.868 9.687 2.038 8.558 1.626 7.937a.119.119 0 010-.136zM8 2c-1.981 0-3.67.992-4.933 2.078C1.797 5.169.88 6.423.43 7.1a1.619 1.619 0 000 1.798c.45.678 1.367 1.932 2.637 3.024C4.329 13.008 6.019 14 8 14c1.981 0 3.67-.992 4.933-2.078 1.27-1.091 2.187-2.345 2.637-3.023a1.619 1.619 0 000-1.798c-.45-.678-1.367-1.932-2.637-3.023C11.671 2.992 9.981 2 8 2zm0 8a2 2 0 100-4 2 2 0 000 4z"/>
               </svg>

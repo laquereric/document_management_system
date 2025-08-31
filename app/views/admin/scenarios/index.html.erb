@@ -4,18 +4,18 @@
   <!-- Page Header -->
   <%= render(Layout::PageHeader.new(
     title: "Manage Scenarios",
-    description: "Manage and organize document scenario types across the system",
+    description: "Manage and organize document scenarios across the system",
     icon: "list-ordered",
     action: {
       text: "New Scenario",
-      url: new_admin_scenario_type_path
+      url: new_admin_scenario_path
     }
   )) %>
 
   <!-- Search and Filters -->
   <%= render(Layout::CardListSearchAndFilters.new(
     search_object: @q,
-    url: admin_scenario_types_path,
+    url: admin_scenarios_path,
     title: "Search & Filters",
     fields: [
       {
@@ -28,17 +28,17 @@
 
   <!-- Scenarios Grid -->
   <%= render(Layout::CardList.new(
-    cards: @scenario_types,
+    cards: @scenarios,
     layout: :grid,
     title: "Scenarios",
     empty_state_title: "No scenarios found",
-    empty_state_description: "Get started by creating your first scenario type.",
+    empty_state_description: "Get started by creating your first scenario.",
     empty_state_action: {
       text: "Create Scenario",
-      url: new_admin_scenario_type_path
+      url: new_admin_scenario_path
     }
   )) do %>
-    <% @scenario_types.each do |scenario_type| %>
+    <% @scenarios.each do |scenario| %>
       <div class="col-12 col-md-6 col-lg-4">
         <div class="Box p-3">
           <div class="d-flex flex-items-center justify-content-between mb-2">
@@ -46,7 +46,7 @@
               <svg class="octicon octicon-file-code mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"/>
               </svg>
-              <strong><%= scenario_type.name %></strong>
+              <strong><%= scenario.name %></strong>
             </div>
             <div class="dropdown">
               <button class="btn btn-sm" type="button" aria-expanded="false" data-bs-toggle="dropdown">
@@ -56,7 +56,7 @@
               </button>
               <ul class="dropdown-menu">
                 <li>
-                  <%= link_to admin_scenario_type_path(scenario_type), class: "dropdown-item" do %>
+                  <%= link_to admin_scenario_path(scenario), class: "dropdown-item" do %>
                     <svg class="octicon octicon-eye mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M1.679 7.932c.412-.621 1.242-1.75 2.366-2.717C5.175 4.242 6.527 3.5 8 3.5c1.473 0 2.824.742 3.955 1.715 1.124.967 1.954 2.096 2.366 2.717a.119.119 0 010 .136c-.412.621-1.242 1.75-2.366 2.717C10.825 11.758 9.473 12.5 8 12.5c-1.473 0-2.824-.742-3.955-1.715C2.868 9.687 2.038 8.558 1.626 7.937a.119.119 0 010-.136zM8 2c-1.981 0-3.67.992-4.933 2.078C1.797 5.169.88 6.423.43 7.1a1.619 1.619 0 000 1.798c.45.678 1.367 1.932 2.637 3.024C4.329 13.008 6.019 14 8 14c1.981 0 3.67-.992 4.933-2.078 1.27-1.091 2.187-2.345 2.637-3.023a1.619 1.619 0 000-1.798c-.45-.678-1.367-1.932-2.637-3.023C11.671 2.992 9.981 2 8 2zm0 8a2 2 0 100-4 2 2 0 000 4z"/>
                     </svg>
@@ -64,7 +64,7 @@
                   <% end %>
                 </li>
                 <li>
-                  <%= link_to edit_admin_scenario_type_path(scenario_type), class: "dropdown-item" do %>
+                  <%= link_to edit_admin_scenario_path(scenario), class: "dropdown-item" do %>
                     <svg class="octicon octicon-pencil mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.249.249 0 00.108-.064l6.286-6.286z"/>
                     </svg>
@@ -73,7 +73,7 @@
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                  <%= link_to admin_scenario_type_path(scenario_type), method: :delete, data: { confirm: "Are you sure you want to delete this scenario type? This action cannot be undone." }, class: "dropdown-item text-danger" do %>
+                  <%= link_to admin_scenario_path(scenario), method: :delete, data: { confirm: "Are you sure you want to delete this scenario? This action cannot be undone." }, class: "dropdown-item text-danger" do %>
                     <svg class="octicon octicon-trash mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                       <path d="M10.5 4.5a.75.75 0 00-1.5 0v1h-3v-1a.75.75 0 00-1.5 0v1h-2.25a.75.75 0 000 1.5H2v8.25c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 15.25V7h.75a.75.75 0 000-1.5H12.5v-1zM11 7v8.25a.25.25 0 01-.25.25h-8.5A.25.25 0 013 15.25V7h8z"/>
                     </svg>
@@ -83,15 +83,15 @@
               </ul>
             </div>
           </div>
-          <p class="text-gray text-small mb-2"><%= scenario_type.description %></p>
+          <p class="text-gray text-small mb-2"><%= scenario.description %></p>
           <div class="d-flex flex-items-center text-gray text-small">
             <svg class="octicon octicon-file mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M3.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h8.5a.25.25 0 00.25-.25V6H9.75A1.75 1.75 0 018 4.25V1.5H3.75zm5.75.56v2.19c0 .138.112.25.25.25h2.19L9.5 2.06zM2 1.75C2 .784 2.784 0 3.75 0h5.086c.464 0 .909.184 1.237.513l3.414 3.414c.329.328.513.773.513 1.237v8.086A1.75 1.75 0 0112.25 15h-8.5A1.75 1.75 0 012 13.25V1.75z"/>
             </svg>
-            <%= pluralize(scenario_type.documents.count, 'document') %>
+            <%= pluralize(scenario.documents.count, 'document') %>
           </div>
           <div class="text-gray text-small mt-1">
-            Created <%= time_ago_in_words(scenario_type.created_at) %> ago
+            Created <%= time_ago_in_words(scenario.created_at) %> ago
           </div>
         </div>
       </div>

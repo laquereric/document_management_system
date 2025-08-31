@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   
   def index
     @q = Document.ransack(params[:q])
-    @documents = @q.result.includes(:author, :folder, :status, :tags, :scenario_type)
+    @documents = @q.result.includes(:author, :folder, :status, :tags, :scenario)
                    .page(params[:page])
                    .per(20)
     
@@ -33,7 +33,7 @@ class DocumentsController < ApplicationController
   def new
     @document = @folder ? @folder.documents.build : Document.new
     @statuses = Status.all
-    @scenario_types = ScenarioType.all
+    @scenarios = Scenario.all
   end
 
   def create
@@ -50,14 +50,14 @@ class DocumentsController < ApplicationController
       redirect_to @document, notice: 'Document was successfully created.'
     else
       @statuses = Status.all
-      @scenario_types = ScenarioType.all
+      @scenarios = Scenario.all
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     @statuses = Status.all
-    @scenario_types = ScenarioType.all
+    @scenarios = Scenario.all
   end
 
   def update
@@ -71,7 +71,7 @@ class DocumentsController < ApplicationController
       redirect_to @document, notice: 'Document was successfully updated.'
     else
       @statuses = Status.all
-      @scenario_types = ScenarioType.all
+      @scenarios = Scenario.all
       render :edit, status: :unprocessable_entity
     end
   end
@@ -163,6 +163,6 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:title, :url, :content, :status_id, :scenario_type_id, :folder_id, :file)
+    params.require(:document).permit(:title, :url, :content, :status_id, :scenario_id, :folder_id, :file)
   end
 end

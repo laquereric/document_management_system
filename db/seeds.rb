@@ -14,8 +14,8 @@ statuses.each do |status_attrs|
   end
 end
 
-# Create default scenario types
-scenario_types = [
+# Create default scenarios
+scenarios = [
   { name: 'Standard Document', description: 'Standard document workflow' },
   { name: 'Policy Document', description: 'Policy document requiring approval' },
   { name: 'Technical Specification', description: 'Technical specification document' },
@@ -23,8 +23,8 @@ scenario_types = [
   { name: 'Report', description: 'Report or analysis document' }
 ]
 
-scenario_types.each do |scenario_attrs|
-  ScenarioType.find_or_create_by(name: scenario_attrs[:name]) do |scenario|
+scenarios.each do |scenario_attrs|
+  Scenario.find_or_create_by(name: scenario_attrs[:name]) do |scenario|
     scenario.description = scenario_attrs[:description]
   end
 end
@@ -81,7 +81,7 @@ if Document.count == 0
     folder: folder,
     author: admin,
     status: Status.find_by(name: 'Draft'),
-    scenario_type: ScenarioType.find_by(name: 'Standard Document')
+    scenario: Scenario.find_by(name: 'Standard Document')
   )
   
   # Add tags to document

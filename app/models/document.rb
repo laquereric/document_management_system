@@ -3,7 +3,7 @@ class Document < ApplicationRecord
   belongs_to :folder
   belongs_to :author, class_name: 'User'
   belongs_to :status
-  belongs_to :scenario_type
+  belongs_to :scenario
   has_many :document_tags, dependent: :destroy
   has_many :tags, through: :document_tags
   has_many :activity_logs, dependent: :destroy
@@ -24,12 +24,12 @@ class Document < ApplicationRecord
 
   # Ransack configuration - define searchable attributes
   def self.ransackable_attributes(auth_object = nil)
-    %w[title content created_at updated_at author_id folder_id status_id scenario_type_id]
+    %w[title content created_at updated_at author_id folder_id status_id scenario_id]
   end
 
   # Ransack configuration - define searchable associations
   def self.ransackable_associations(auth_object = nil)
-    %w[author folder status scenario_type tags document_tags activity_logs]
+    %w[author folder status scenario tags document_tags activity_logs]
   end
 
   def tag_names

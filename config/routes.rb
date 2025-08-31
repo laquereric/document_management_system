@@ -82,7 +82,7 @@ Rails.application.routes.draw do
       end
     end
     resources :statuses
-    resources :scenario_types
+    resources :scenarios
     resources :tags
     get "infrastructure", to: "infrastructure#index"
     get "financial", to: "financial#index"

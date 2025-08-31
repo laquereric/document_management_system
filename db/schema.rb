@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_27_155846) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_31_155132) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -70,12 +70,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_155846) do
     t.bigint "folder_id", null: false
     t.bigint "author_id", null: false
     t.bigint "status_id", null: false
-    t.bigint "scenario_type_id", null: false
+    t.bigint "scenario_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_documents_on_author_id"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
-    t.index ["scenario_type_id"], name: "index_documents_on_scenario_type_id"
+    t.index ["scenario_id"], name: "index_documents_on_scenario_id"
     t.index ["status_id"], name: "index_documents_on_status_id"
   end
 
@@ -97,7 +97,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_155846) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "scenario_types", force: :cascade do |t|
+  create_table "scenarios", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
@@ -165,7 +165,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_155846) do
   add_foreign_key "document_tags", "documents"
   add_foreign_key "document_tags", "tags"
   add_foreign_key "documents", "folders"
-  add_foreign_key "documents", "scenario_types"
+  add_foreign_key "documents", "scenarios"
   add_foreign_key "documents", "statuses"
   add_foreign_key "documents", "users", column: "author_id"
   add_foreign_key "folders", "folders", column: "parent_folder_id"

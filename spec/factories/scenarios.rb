@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :scenario_type do
+  factory :scenario do
     name { "MyString" }
     description { "MyText" }
   end

@@ -1,4 +1,4 @@
-class ScenarioType < ApplicationRecord
+class Scenario < ApplicationRecord
   # Associations
   has_many :documents, dependent: :restrict_with_error
 

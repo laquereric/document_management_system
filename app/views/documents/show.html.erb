@@ -132,8 +132,8 @@
                   <%= render(Ui::StatusBadgeComponent.new(status: @document.status)) %>
                 </dd>
                 
-                <dt class="col-sm-4">Scenario Type</dt>
-                <dd class="col-sm-8"><%= @document.scenario_type.name %></dd>
+                <dt class="col-sm-4">Scenario</dt>
+                <dd class="col-sm-8"><%= @document.scenario.name %></dd>
                 
                 <dt class="col-sm-4">Created</dt>
                 <dd class="col-sm-8"><%= @document.created_at.strftime("%B %d, %Y") %></dd>

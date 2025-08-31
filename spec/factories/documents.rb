@@ -6,6 +6,6 @@ FactoryBot.define do
     folder { nil }
     author { nil }
     status { nil }
-    scenario_type { nil }
+    scenario { nil }
   end
 end

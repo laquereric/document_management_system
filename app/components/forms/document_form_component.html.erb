@@ -43,10 +43,10 @@
     </div>
 
     <div class="FormControl mb-3 flex-1">
-      <%= f.label :scenario_type_id, "Scenario Type", class: "FormControl-label" %>
-      <%= f.select :scenario_type_id,
-          options_from_collection_for_select(scenario_types, :id, :name, document.scenario_type_id),
-          { prompt: "Select a scenario type" },
+      <%= f.label :scenario_id, "Scenario", class: "FormControl-label" %>
+      <%= f.select :scenario_id,
+          options_from_collection_for_select(scenarios, :id, :name, document.scenario_id),
+          { prompt: "Select a scenario" },
           { class: select_classes } %>
     </div>
   </div>
