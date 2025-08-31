@@ -1,0 +1,26 @@
+<div class="<%= container_classes %>">
+  <h2 class="<%= title_classes %>"><%= title %></h2>
+  <div class="<%= cards_container_classes %>" style="gap: 16px;">
+    <% statistics.each do |stat| %>
+      <div class="<%= card_container_classes %>" style="<%= card_styles %>">
+        <div class="<%= card_classes %>">
+          <div class="<%= card_content_classes %>">
+            <div class="<%= icon_container_classes %>">
+              <svg class="octicon octicon-<%= stat[:icon] %> <%= stat[:icon_color] || 'color-fg-accent' %>" width="24" height="24" viewBox="0 0 16 16">
+                <%= render_icon_svg(stat[:icon]) %>
+              </svg>
+            </div>
+            <div>
+              <div class="<%= value_classes %>">
+                <%= stat[:value] %>
+              </div>
+              <div class="<%= label_classes %>">
+                <%= stat[:label] %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
