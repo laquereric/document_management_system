@@ -1,0 +1,15 @@
+<div class="mt-4">
+  <h2 class="f4 text-semibold mb-3"><%= title %></h2>
+  <div class="<%= container_classes %>" style="<%= container_styles %>">
+    <% statistics.each do |statistic| %>
+      <div class="<%= card_classes %>" style="<%= card_styles %>">
+        <%= render(Dashboard::StatsCardComponent.new(
+          title: statistic[:title],
+          value: statistic[:value],
+          icon: statistic[:icon],
+          color: statistic[:color]
+        )) %>
+      </div>
+    <% end %>
+  </div>
+</div>

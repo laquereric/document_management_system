@@ -1,73 +1,52 @@
 <% content_for :title, "Dashboard" %>
 
-<div class="container-lg px-3">
+<%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <div class="d-flex flex-items-center flex-justify-between py-4 border-bottom">
-    <div class="d-flex flex-items-center">
-      <svg class="octicon octicon-home mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
-        <path d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25H13a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
-      </svg>
-      <div>
-        <h1 class="f2 lh-condensed text-semibold mb-1">Dashboard</h1>
-        <p class="f5 color-fg-muted mb-0">Welcome back, <%= current_user.name %></p>
-      </div>
-    </div>
-  </div>
+  <%= render(Layout::PageHeader.new(
+    title: "Dashboard",
+    description: "Welcome back, #{current_user.name}",
+    icon: "home"
+  )) %>
 
   <!-- Statistics Cards -->
-  <div class="mt-4">
-    <h2 class="f4 text-semibold mb-3">Overview</h2>
-    <div class="d-flex flex-wrap" style="gap: 16px;">
-      <div class="flex-1" style="min-width: 240px;">
-        <%= render(Dashboard::StatsCardComponent.new(
-          title: "My Documents",
-          value: @stats[:total_documents],
-          icon: "file-text",
-          color: "accent"
-        )) %>
-      </div>
-
-      <div class="flex-1" style="min-width: 240px;">
-        <%= render(Dashboard::StatsCardComponent.new(
-          title: "My Teams",
-          value: @stats[:total_teams],
-          icon: "people",
-          color: "success"
-        )) %>
-      </div>
-
-      <div class="flex-1" style="min-width: 240px;">
-        <%= render(Dashboard::StatsCardComponent.new(
-          title: "Teams I Lead",
-          value: @stats[:led_teams],
-          icon: "person-badge",
-          color: "attention"
-        )) %>
-      </div>
-
-      <div class="flex-1" style="min-width: 240px;">
-        <%= render(Dashboard::StatsCardComponent.new(
-          title: "Pending Documents",
-          value: @stats[:pending_documents],
-          icon: "clock",
-          color: "severe"
-        )) %>
-      </div>
-    </div>
-  </div>
+  <%= render(Layout::StatisticsGrid.new(
+    title: "Overview",
+    statistics: [
+      {
+        title: "My Documents",
+        value: @stats[:total_documents],
+        icon: "file-text",
+        color: "accent"
+      },
+      {
+        title: "My Teams",
+        value: @stats[:total_teams],
+        icon: "people",
+        color: "success"
+      },
+      {
+        title: "Teams I Lead",
+        value: @stats[:led_teams],
+        icon: "person-badge",
+        color: "attention"
+      },
+      {
+        title: "Pending Documents",
+        value: @stats[:pending_documents],
+        icon: "clock",
+        color: "severe"
+      }
+    ]
+  )) %>
 
   <!-- Content Sections -->
   <div class="mt-5">
-    <div class="d-lg-flex" style="gap: 24px;">
-      <!-- Recent Documents -->
-      <div class="flex-1 mb-4 mb-lg-0">
-        <%= render(Dashboard::RecentDocumentsComponent.new(documents: @recent_documents)) %>
-      </div>
-
-      <!-- Recent Activity -->
-      <div class="flex-1">
-        <%= render(Dashboard::RecentActivityComponent.new(activities: @recent_activity)) %>
-      </div>
-    </div>
+    <%= render(Layout::TwoColumnLayout.new) do %>
+      <%= render(Dashboard::RecentDocumentsComponent.new(documents: @recent_documents)) %>
+    <% end %>
+    
+    <% content_for :right_column do %>
+      <%= render(Dashboard::RecentActivityComponent.new(activities: @recent_activity)) %>
+    <% end %>
   </div>
-</div>
+<% end %>
