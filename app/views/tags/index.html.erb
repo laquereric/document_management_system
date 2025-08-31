@@ -1,6 +1,6 @@
 <% content_for :title, "Tags" %>
 
-<div class="container-lg px-3">
+<%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
   <%= render(Layout::PageHeader.new(
     title: "Tags",
@@ -67,4 +67,4 @@
     tags: @tags,
     title: "All Tags"
   )) %>
-</div>
+<% end %>
