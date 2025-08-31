@@ -178,7 +178,7 @@
     <div class="Box">
       <div class="Box-header d-flex flex-items-center flex-justify-between">
         <h3 class="f4 text-semibold">Recent Activity</h3>
-        <%= link_to activities_path, class: "btn btn-sm btn-outline" do %>
+        <%= link_to user_activities_path(current_user), class: "btn btn-sm btn-outline" do %>
           View All Activity
         <% end %>
       </div>

@@ -127,8 +127,10 @@ Rails.application.routes.draw do
   # User management
   resources :users
   
-  # Activities
-  resources :activities, only: [:index, :show]
+  # User activities
+  resources :user, only: [] do
+    resources :activities, only: [:index, :show]
+  end
   
   # Search
   get "search", to: "search#index"

@@ -3,7 +3,7 @@
     <h3 class="Box-title mb-0">
       <i class="octicon octicon-pulse mr-2"></i> Recent Activity
     </h3>
-    <%= link_to "View All", activities_path, class: "btn btn-sm btn-outline ml-auto" %>
+    <%= link_to "View All", user_activities_path(current_user), class: "btn btn-sm btn-outline ml-auto" %>
   </div>
   <div class="Box-body">
     <% if has_activities? %>

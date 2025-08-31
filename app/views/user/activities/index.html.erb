@@ -1,10 +1,10 @@
-<% content_for :title, "Activities" %>
+<% content_for :title, "#{@user.name}'s Activities" %>
 
 <%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
   <%= render(Layout::PageHeader.new(
-    title: "Activities",
-    description: "Track and monitor system activity and document changes",
+    title: "#{@user.name}'s Activities",
+    description: "Track and monitor activity and document changes for #{@user.name}",
     icon: "pulse"
   )) %>
 
@@ -20,19 +20,19 @@
       },
       {
         title: "Last 24 Hours",
-        value: Activity.where('created_at >= ?', 24.hours.ago).count,
+        value: @user.activities.where('created_at >= ?', 24.hours.ago).count,
         icon: "calendar",
         color: "success"
       },
       {
-        title: "Active Users",
-        value: Activity.joins(:user).distinct.count('activities.user_id'),
-        icon: "person",
+        title: "Documents Modified",
+        value: @user.activities.joins(:document).distinct.count('activities.document_id'),
+        icon: "file-text",
         color: "attention"
       },
       {
         title: "Status Changes",
-        value: Activity.where(action: 'status_change').count,
+        value: @user.activities.where(action: 'status_change').count,
         icon: "arrow-switch",
         color: "done"
       }
@@ -41,7 +41,7 @@
 
   <!-- Search and Filters -->
   <%= render(Layout::SearchSection.new) do %>
-    <%= search_form_for @q, url: activities_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
+    <%= search_form_for @q, url: user_activities_path(@user), method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
       <div class="flex-1">
         <%= f.label :action_cont, "Action", class: "form-label sr-only" %>
         <%= f.text_field :action_cont, class: "form-control", placeholder: "Search by action..." %>
@@ -58,7 +58,7 @@
         <%= f.submit "Search", class: "btn btn-primary" %>
       </div>
       <div>
-        <%= link_to "Clear", activities_path, class: "btn" %>
+        <%= link_to "Clear", user_activities_path(@user), class: "btn" %>
       </div>
     <% end %>
   <% end %>

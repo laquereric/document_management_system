@@ -189,8 +189,11 @@
 
       <!-- Recent Activity -->
       <div class="Box">
-        <div class="Box-header">
+        <div class="Box-header d-flex flex-items-center flex-justify-between">
           <h3 class="Box-title">Recent Activity</h3>
+          <%= link_to user_activities_path(@user), class: "btn btn-sm btn-outline" do %>
+            View All
+          <% end %>
         </div>
         <div class="Box-body">
           <% recent_activity = @user.activities.includes(:document).order(created_at: :desc).limit(5) %>

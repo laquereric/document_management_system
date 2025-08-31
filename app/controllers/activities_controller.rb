@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+  before_action :set_user, only: [:index, :show]
   before_action :set_activity, only: [:show]
   
   def index
@@ -25,6 +26,10 @@ class ActivitiesController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:user_id])
+  end
 
   def set_activity
     @activity = Activity.find(params[:id])
