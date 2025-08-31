@@ -39,9 +39,7 @@
     }
   )) do %>
     <% @tags.each do |tag| %>
-      <div class="flex-1" style="min-width: 320px; max-width: 400px;">
-        <%= render(Tag::CardComponent.new(tag: tag, admin_context: true)) %>
-      </div>
+      <%= render(Tag::CardComponent.new(tag: tag, admin_context: true)) %>
     <% end %>
   <% end %>
 <% end %>
