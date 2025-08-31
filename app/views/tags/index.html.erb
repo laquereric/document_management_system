@@ -63,38 +63,8 @@
   )) %>
 
   <!-- Tags Section -->
-  <div class="mt-5">
-    <div class="d-flex flex-items-center flex-justify-between mb-3">
-      <h2 class="f4 text-semibold">
-        All Tags
-        <% if @tags.respond_to?(:total_count) %>
-          <span class="Counter"><%= @tags.total_count %></span>
-        <% else %>
-          <span class="Counter"><%= @tags.count %></span>
-        <% end %>
-      </h2>
-    </div>
-
-    <div class="Box">
-      <div class="Box-body">
-        <%= render(Layout::CardList.new(
-          cards: @tags,
-          layout: :grid,
-          title: "Tags",
-          empty_state_title: "No Tags Found",
-          empty_state_description: "Get started by creating your first tag.",
-          empty_state_action: {
-            text: "Create Tag",
-            url: new_tag_path
-          }
-        )) do %>
-          <% @tags.each do |tag| %>
-            <div class="flex-1" style="min-width: 320px; max-width: 400px;">
-              <%= render(Tag::CardComponent.new(tag: tag, admin_context: false)) %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render(Layout::TagsSection.new(
+    tags: @tags,
+    title: "All Tags"
+  )) %>
 </div>

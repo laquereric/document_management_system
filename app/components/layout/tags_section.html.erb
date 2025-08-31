@@ -1,0 +1,49 @@
+<% if render? %>
+  <div class="<%= container_classes %>">
+    <div class="<%= header_classes %>">
+      <h2 class="<%= title_classes %>">
+        <%= title %>
+        <span class="<%= counter_classes %>"><%= tags_count %></span>
+      </h2>
+      
+      <% if render_sorting? %>
+        <div class="<%= sorting_container_classes %>">
+          <div class="<%= select_classes %>">
+            <select class="<%= form_select_classes %>" onchange="window.location.href=this.value">
+              <% sorting_options.each do |option| %>
+                <option value="<%= option[:url] %>" <%= 'selected' if option[:selected] %>>
+                  <%= option[:label] %>
+                </option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="<%= box_classes %>">
+      <div class="<%= box_body_classes %>">
+        <% if tags.any? %>
+          <div class="<%= cards_container_classes %>">
+            <% tags.each do |tag| %>
+              <div class="<%= card_container_classes %>" style="<%= card_styles %>">
+                <%= render(Tag::CardComponent.new(tag: tag, admin_context: false)) %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <%= render(Ui::EmptyStateComponent.new(
+            title: "No Tags Found",
+            description: "Get started by creating your first tag.",
+            icon: "tag",
+            action: {
+              text: "Create Tag",
+              url: new_tag_path,
+              class: "btn btn-primary"
+            }
+          )) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
