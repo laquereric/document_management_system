@@ -78,6 +78,7 @@
   <% if cards.any? %>
     <div class="<%= container_classes %>">
       <%= content %>
+      <%= render(Layout::CardListPagination.new(collection: cards)) %>
     </div>
   <% else %>
     <!-- Empty State -->
@@ -99,36 +100,4 @@
   <% end %>
 </div>
 
-=begin
-          <!-- Pagination -->
-          < % if @tags.respond_to?(:current_page) %>
-            <div class="d-flex flex-justify-center mt-4">
-              <nav class="paginate-container" aria-label="Pagination">
-                <div class="pagination">
-                  < % if @tags.prev_page %>
-                    <%= link_to "Previous", url_for(page: @tags.prev_page), class: "previous_page", rel: "prev" %>
-                  < % else %>
-                    <span class="previous_page disabled">Previous</span>
-                  < % end %>
-                  
-                  < % @tags.total_pages.times do |page_num| %>
-                    < % page_num += 1 %>
-                    < % if page_num == @tags.current_page %>
-                      <em class="current"><%= page_num %></em>
-                    < % elsif page_num == 1 || page_num == @tags.total_pages || (page_num >= @tags.current_page - 2 && page_num <= @tags.current_page + 2) %>
-                      <%= link_to page_num, url_for(page: page_num) %>
-                    < % elsif page_num == @tags.current_page - 3 || page_num == @tags.current_page + 3 %>
-                      <span class="gap">…</span>
-                    < % end %>
-                  < % end %>
-                  
-                  < % if @tags.next_page %>
-                    <%= link_to "Next", url_for(page: @tags.next_page), class: "next_page", rel: "next" %>
-                  < % else %>
-                    <span class="next_page disabled">Next</span>
-                  < % end %>
-                </div>
-              </nav>
-            </div>
 
-=end
