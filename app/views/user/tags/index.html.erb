@@ -1,0 +1,71 @@
+<% content_for :title, "#{@user.name}'s Tags" %>
+
+<%= render(Layout::PageContent.new(padding: :none)) do %>
+  <!-- Page Header -->
+  <%= render(Layout::PageHeader.new(
+    title: "#{@user.name}'s Tags",
+    description: "Tags used in #{@user.name}'s documents",
+    icon: "tag"
+  )) %>
+
+  <!-- Statistics Cards -->
+  <%= render(Layout::StatisticsGrid.new(
+    title: "Tag Overview",
+    statistics: [
+      {
+        title: "Total Tags",
+        value: @tags.respond_to?(:total_count) ? @tags.total_count : @tags.count,
+        icon: "tag",
+        color: "accent"
+      },
+      {
+        title: "Most Used",
+        value: @tags.max_by(&:document_count)&.document_count || 0,
+        icon: "star",
+        color: "success"
+      },
+      {
+        title: "Documents Tagged",
+        value: @user.authored_documents.joins(:tags).distinct.count('documents.id'),
+        icon: "file-text",
+        color: "attention"
+      },
+      {
+        title: "This Week",
+        value: @user.authored_documents.joins(:tags).where('documents.updated_at >= ?', 1.week.ago).distinct.count('tags.id'),
+        icon: "calendar",
+        color: "done"
+      }
+    ]
+  )) %>
+
+  <!-- Tags Section -->
+  <%= render(Layout::ContentSection.new(
+    title: "My Tags",
+    count: @tags.respond_to?(:total_count) ? @tags.total_count : @tags.count
+  )) do %>
+    <% if @tags.any? %>
+      <div class="d-flex flex-wrap gap-3">
+        <% @tags.each do |tag| %>
+          <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
+            <%= render(Tag::CardComponent.new(
+              tag: tag,
+              show_actions: false
+            )) %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Pagination -->
+      <% if @tags.respond_to?(:current_page) %>
+        <%= render(Layout::CardListPagination.new(collection: @tags)) %>
+      <% end %>
+    <% else %>
+      <%= render(Ui::EmptyStateComponent.new(
+        title: "No Tags Found",
+        description: "#{@user.name} hasn't used any tags in documents yet.",
+        icon: "tag"
+      )) %>
+    <% end %>
+  <% end %>
+<% end %>

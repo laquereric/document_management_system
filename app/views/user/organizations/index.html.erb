@@ -1,0 +1,71 @@
+<% content_for :title, "#{@user.name}'s Organizations" %>
+
+<%= render(Layout::PageContent.new(padding: :none)) do %>
+  <!-- Page Header -->
+  <%= render(Layout::PageHeader.new(
+    title: "#{@user.name}'s Organizations",
+    description: "Organizations that #{@user.name} is part of through teams",
+    icon: "organization"
+  )) %>
+
+  <!-- Statistics Cards -->
+  <%= render(Layout::StatisticsGrid.new(
+    title: "Organization Overview",
+    statistics: [
+      {
+        title: "Total Organizations",
+        value: @organizations.respond_to?(:total_count) ? @organizations.total_count : @organizations.count,
+        icon: "organization",
+        color: "accent"
+      },
+      {
+        title: "Total Teams",
+        value: @user.teams.count,
+        icon: "people",
+        color: "success"
+      },
+      {
+        title: "Teams Led",
+        value: @user.led_teams.count,
+        icon: "person-badge",
+        color: "attention"
+      },
+      {
+        title: "Active This Week",
+        value: @user.teams.joins(:organization).where('teams.updated_at >= ?', 1.week.ago).distinct.count('organizations.id'),
+        icon: "calendar",
+        color: "done"
+      }
+    ]
+  )) %>
+
+  <!-- Organizations Section -->
+  <%= render(Layout::ContentSection.new(
+    title: "My Organizations",
+    count: @organizations.respond_to?(:total_count) ? @organizations.total_count : @organizations.count
+  )) do %>
+    <% if @organizations.any? %>
+      <div class="d-flex flex-wrap gap-3">
+        <% @organizations.each do |organization| %>
+          <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
+            <%= render(Organization::CardComponent.new(
+              organization: organization,
+              show_actions: false
+            )) %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Pagination -->
+      <% if @organizations.respond_to?(:current_page) %>
+        <%= render(Layout::CardListPagination.new(collection: @organizations)) %>
+      <% end %>
+    <% else %>
+      <%= render(Ui::EmptyStateComponent.new(
+        title: "No Organizations Found",
+        description: "#{@user.name} is not part of any organizations yet.",
+        icon: "organization"
+      )) %>
+    <% end %>
+  <% end %>
+<% end %>

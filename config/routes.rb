@@ -121,16 +121,17 @@ Rails.application.routes.draw do
     end
   end
   
-  # Tag management
-  resources :tags
-  
-  # User management
-  resources :users
-  
-  # User activities
+  # User management and nested resources
   resources :user, only: [] do
     resources :activities, only: [:index, :show]
+    resources :teams, only: [:index, :show]
+    resources :tags, only: [:index, :show]
+    resources :organizations, only: [:index, :show]
   end
+  
+  # Legacy routes for backward compatibility
+  resources :tags
+  resources :users
   
   # Search
   get "search", to: "search#index"

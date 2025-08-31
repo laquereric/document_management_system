@@ -54,6 +54,24 @@ class Navigation::SidebarComponent < ApplicationComponent
         active: @controller_name == "activities"
       },
       {
+        label: "Teams",
+        icon: "people",
+        path: user_teams_path(current_user),
+        active: @controller_name == "teams"
+      },
+      {
+        label: "Tags",
+        icon: "tag",
+        path: user_tags_path(current_user),
+        active: @controller_name == "tags"
+      },
+      {
+        label: "Organizations",
+        icon: "organization",
+        path: user_organizations_path(current_user),
+        active: @controller_name == "organizations"
+      },
+      {
         label: "Profile",
         icon: "person",
         path: user_path(current_user),
