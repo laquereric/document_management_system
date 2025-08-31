@@ -38,8 +38,10 @@
         title: "No documents yet",
         description: "Create your first document to get started",
         icon: "file-text",
-        action_text: "Create Document",
-        action_url: new_document_path
+        action: {
+          text: "Create Document",
+          url: new_document_path
+        }
       )) %>
     <% end %>
   </div>

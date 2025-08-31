@@ -4,6 +4,6 @@
   <p class="color-fg-muted mb-4"><%= description %></p>
   
   <% if has_action? %>
-    <%= link_to action_text, action_url, class: "btn btn-primary" %>
+    <%= link_to action_text_value, action_url_value, class: action_classes %>
   <% end %>
 </div>
