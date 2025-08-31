@@ -44,29 +44,23 @@
   )) %>
 
   <!-- Search and Filters -->
-  <div class="mt-5">
-    <h2 class="f4 text-semibold mb-3">Search & Filters</h2>
-    <div class="Box">
-      <div class="Box-body">
-        <%= search_form_for @q, url: tags_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
-          <div class="flex-1">
-            <%= f.label :name_cont, "Name", class: "form-label sr-only" %>
-            <%= f.text_field :name_cont, class: "form-control", placeholder: "Search tags..." %>
-          </div>
-          <div class="flex-1">
-            <%= f.label :color_cont, "Color", class: "form-label sr-only" %>
-            <%= f.text_field :color_cont, class: "form-control", placeholder: "Filter by color..." %>
-          </div>
-          <div>
-            <%= f.submit "Search", class: "btn btn-primary" %>
-          </div>
-          <div>
-            <%= link_to "Clear", tags_path, class: "btn" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render(Layout::CardListSearchAndFilters.new(
+    search_object: @q,
+    url: tags_path,
+    title: "Search & Filters",
+    fields: [
+      {
+        name: :name_cont,
+        label: "Name",
+        placeholder: "Search tags..."
+      },
+      {
+        name: :color_cont,
+        label: "Color",
+        placeholder: "Filter by color..."
+      }
+    ]
+  )) %>
 
   <!-- Tags Section -->
   <div class="mt-5">

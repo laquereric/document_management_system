@@ -1,0 +1,23 @@
+<% if render? %>
+  <div class="<%= container_classes %>">
+    <h2 class="<%= title_classes %>"><%= title %></h2>
+    <div class="<%= box_classes %>">
+      <div class="<%= box_body_classes %>">
+        <%= search_form_for search_object, url: url, method: :get, class: form_classes do |f| %>
+          <% fields.each do |field| %>
+            <div class="<%= field_container_classes %>">
+              <%= f.label field[:name], field[:label], class: label_classes %>
+              <%= f.text_field field[:name], class: input_classes, placeholder: field[:placeholder] %>
+            </div>
+          <% end %>
+          <div>
+            <%= f.submit "Search", class: search_button_classes %>
+          </div>
+          <div>
+            <%= link_to "Clear", url, class: clear_button_classes %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
