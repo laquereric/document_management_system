@@ -1,6 +1,6 @@
 # Card list component for displaying multiple cards (documents, tags, organizations, etc.)
 
-class Organization::CardList < ApplicationComponent
+class Layout::CardList < ApplicationComponent
   LAYOUT_VARIANTS = %i[list grid table].freeze
   SORT_OPTIONS = %i[title created_at updated_at author status name].freeze
 
