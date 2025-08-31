@@ -1,9 +1,9 @@
-<% content_for :title, "Activity Logs" %>
+<% content_for :title, "Activities" %>
 
 <%= render(Layout::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
   <%= render(Layout::PageHeader.new(
-    title: "Activity Logs",
+    title: "Activities",
     description: "Track and monitor system activity and document changes",
     icon: "pulse"
   )) %>
@@ -14,25 +14,25 @@
     statistics: [
       {
         title: "Total Activities",
-        value: @activity_logs.respond_to?(:total_count) ? @activity_logs.total_count : @activity_logs.count,
+        value: @activities.respond_to?(:total_count) ? @activities.total_count : @activities.count,
         icon: "pulse",
         color: "accent"
       },
       {
         title: "Last 24 Hours",
-        value: ActivityLog.where('created_at >= ?', 24.hours.ago).count,
+        value: Activity.where('created_at >= ?', 24.hours.ago).count,
         icon: "calendar",
         color: "success"
       },
       {
         title: "Active Users",
-        value: ActivityLog.joins(:user).distinct.count('activity_logs.user_id'),
+        value: Activity.joins(:user).distinct.count('activities.user_id'),
         icon: "person",
         color: "attention"
       },
       {
         title: "Status Changes",
-        value: ActivityLog.where(action: 'status_change').count,
+        value: Activity.where(action: 'status_change').count,
         icon: "arrow-switch",
         color: "done"
       }
@@ -41,7 +41,7 @@
 
   <!-- Search and Filters -->
   <%= render(Layout::SearchSection.new) do %>
-    <%= search_form_for @q, url: activity_logs_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
+    <%= search_form_for @q, url: activities_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
       <div class="flex-1">
         <%= f.label :action_cont, "Action", class: "form-label sr-only" %>
         <%= f.text_field :action_cont, class: "form-control", placeholder: "Search by action..." %>
@@ -58,7 +58,7 @@
         <%= f.submit "Search", class: "btn btn-primary" %>
       </div>
       <div>
-        <%= link_to "Clear", activity_logs_path, class: "btn" %>
+        <%= link_to "Clear", activities_path, class: "btn" %>
       </div>
     <% end %>
   <% end %>
@@ -66,14 +66,14 @@
   <!-- Activity Logs Section -->
   <%= render(Layout::ContentSection.new(
     title: "Recent Activity",
-    count: @activity_logs.respond_to?(:total_count) ? @activity_logs.total_count : @activity_logs.count
+    count: @activities.respond_to?(:total_count) ? @activities.total_count : @activities.count
   )) do %>
-    <% if @activity_logs.any? %>
-      <%= render(ActivityLogs::TimelineComponent.new(activity_logs: @activity_logs)) %>
+    <% if @activities.any? %>
+      <%= render(Activities::TimelineComponent.new(activities: @activities)) %>
 
       <!-- Pagination -->
-      <% if @activity_logs.respond_to?(:current_page) %>
-        <%= render(Layout::CardListPagination.new(collection: @activity_logs)) %>
+      <% if @activities.respond_to?(:current_page) %>
+        <%= render(Layout::CardListPagination.new(collection: @activities)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(

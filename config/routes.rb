@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "search/index"
-  get "activity_logs/index"
-  get "activity_logs/show"
+  get "activities/index"
+  get "activities/show"
   get "tags/index"
   get "tags/show"
   get "tags/create"
@@ -127,8 +127,8 @@ Rails.application.routes.draw do
   # User management
   resources :users
   
-  # Activity logs
-  resources :activity_logs, only: [:index, :show]
+  # Activities
+  resources :activities, only: [:index, :show]
   
   # Search
   get "search", to: "search#index"

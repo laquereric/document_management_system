@@ -50,7 +50,7 @@ class Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Activity",
         icon: "pulse",
-        path: activity_logs_path,
+        path: activities_path,
         active: @controller_name == "activity_logs"
       },
       {

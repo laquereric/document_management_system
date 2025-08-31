@@ -238,7 +238,7 @@
                 <span class="Counter"><%= @activity_logs.count %></span>
               <% end %>
             </h3>
-            <%= link_to activity_logs_path(user: @user.id), class: "btn btn-sm btn-outline" do %>
+            <%= link_to activities_path(user: @user.id), class: "btn btn-sm btn-outline" do %>
               View All
             <% end %>
           </div>

@@ -44,7 +44,7 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
     when "tags"
       crumbs << { label: "Tags", path: tags_path }
     when "activity_logs"
-      crumbs << { label: "Activity", path: activity_logs_path }
+              crumbs << { label: "Activity", path: activities_path }
     end
     
     crumbs
