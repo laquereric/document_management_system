@@ -93,9 +93,9 @@
               <h5 class="mb-0">Activity</h5>
             </div>
             <div class="card-body">
-              <% if @activity_logs.any? %>
-                <% @activity_logs.each do |activity_log| %>
-                  <%= render(ActivityLogs::ActivityLogItemComponent.new(activity_log: activity_log)) %>
+                      <% if @activities.any? %>
+          <% @activities.each do |activity| %>
+                                      <%= render(Activities::ActivityItemComponent.new(activity: activity)) %>
                 <% end %>
               <% else %>
                 <%= render(Ui::EmptyStateComponent.new(

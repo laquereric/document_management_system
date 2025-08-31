@@ -43,7 +43,7 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
       crumbs << { label: "Teams", path: organizations_path }
     when "tags"
       crumbs << { label: "Tags", path: tags_path }
-    when "activity_logs"
+          when "activities"
               crumbs << { label: "Activity", path: activities_path }
     end
     

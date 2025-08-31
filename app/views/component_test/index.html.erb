@@ -131,8 +131,8 @@
       <div class="row mb-4">
         <div class="col-12">
           <% if @sample_activities&.any? %>
-            <%= render(ActivityLogs::ActivityLogListComponent.new(
-              activity_logs: @sample_activities,
+                          <%= render(Activities::ActivityListComponent.new(
+              activities: @sample_activities,
               title: "Sample Activity Log",
               show_pagination: false
             )) %>

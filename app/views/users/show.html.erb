@@ -85,11 +85,11 @@
             </div>
             <div>
               <div class="f1 lh-condensed text-semibold">
-                <% if @activity_logs.respond_to?(:total_count) %>
-                  <%= @activity_logs.total_count %>
-                <% else %>
-                  <%= @activity_logs.count %>
-                <% end %>
+                        <% if @activities.respond_to?(:total_count) %>
+          <%= @activities.total_count %>
+        <% else %>
+          <%= @activities.count %>
+        <% end %>
               </div>
               <div class="f6 color-fg-muted">Activities Logged</div>
             </div>
@@ -232,20 +232,20 @@
           <div class="Box-header d-flex flex-items-center flex-justify-between">
             <h3 class="f4 text-semibold">
               Recent Activity
-              <% if @activity_logs.respond_to?(:total_count) %>
-                <span class="Counter"><%= @activity_logs.total_count %></span>
-              <% else %>
-                <span class="Counter"><%= @activity_logs.count %></span>
-              <% end %>
+                      <% if @activities.respond_to?(:total_count) %>
+          <span class="Counter"><%= @activities.total_count %></span>
+        <% else %>
+          <span class="Counter"><%= @activities.count %></span>
+        <% end %>
             </h3>
             <%= link_to activities_path(user: @user.id), class: "btn btn-sm btn-outline" do %>
               View All
             <% end %>
           </div>
           <div class="Box-body">
-            <% if @activity_logs.any? %>
-              <div class="Timeline">
-                <% @activity_logs.each do |activity| %>
+                    <% if @activities.any? %>
+          <div class="Timeline">
+            <% @activities.each do |activity| %>
                   <div class="TimelineItem">
                     <div class="TimelineItem-badge">
                       <% case activity.action %>
@@ -290,29 +290,29 @@
                   </div>
                 <% end %>
               </div>
-              <% if @activity_logs.respond_to?(:current_page) && @activity_logs.total_pages > 1 %>
+              <% if @activities.respond_to?(:current_page) && @activities.total_pages > 1 %>
                 <div class="d-flex flex-justify-center mt-3">
                   <nav class="paginate-container" aria-label="Pagination">
                     <div class="pagination">
-                      <% if @activity_logs.prev_page %>
-                        <%= link_to "Previous", url_for(page: @activity_logs.prev_page), class: "previous_page", rel: "prev" %>
+                      <% if @activities.prev_page %>
+                        <%= link_to "Previous", url_for(page: @activities.prev_page), class: "previous_page", rel: "prev" %>
                       <% else %>
                         <span class="previous_page disabled">Previous</span>
                       <% end %>
                       
-                      <% @activity_logs.total_pages.times do |page_num| %>
+                      <% @activities.total_pages.times do |page_num| %>
                         <% page_num += 1 %>
-                        <% if page_num == @activity_logs.current_page %>
+                        <% if page_num == @activities.current_page %>
                           <em class="current"><%= page_num %></em>
-                        <% elsif page_num == 1 || page_num == @activity_logs.total_pages || (page_num >= @activity_logs.current_page - 2 && page_num <= @activity_logs.current_page + 2) %>
+                        <% elsif page_num == 1 || page_num == @activities.total_pages || (page_num >= @activities.current_page - 2 && page_num <= @activities.current_page + 2) %>
                           <%= link_to page_num, url_for(page: page_num) %>
-                        <% elsif page_num == @activity_logs.current_page - 3 || page_num == @activity_logs.current_page + 3 %>
+                        <% elsif page_num == @activities.current_page - 3 || page_num == @activities.current_page + 3 %>
                           <span class="gap">…</span>
                         <% end %>
                       <% end %>
                       
-                      <% if @activity_logs.next_page %>
-                        <%= link_to "Next", url_for(page: @activity_logs.next_page), class: "next_page", rel: "next" %>
+                      <% if @activities.next_page %>
+                        <%= link_to "Next", url_for(page: @activities.next_page), class: "next_page", rel: "next" %>
                       <% else %>
                         <span class="next_page disabled">Next</span>
                       <% end %>

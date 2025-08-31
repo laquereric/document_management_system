@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    @activity_logs = @document.activity_logs.recent.includes(:user, :old_status, :new_status)
+    @activities = @document.activities.recent.includes(:user, :old_status, :new_status)
   end
 
   def new

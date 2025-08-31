@@ -3,14 +3,14 @@
     <h5 class="mb-0"><i class="bi bi-activity"></i> <%= title %></h5>
   </div>
   <div class="card-body">
-    <% if has_activity_logs? %>
-      <% activity_logs.each do |activity_log| %>
-        <%= render(ActivityLogs::ActivityLogItemComponent.new(activity_log: activity_log)) %>
+    <% if has_activities? %>
+      <% activities.each do |activity| %>
+        <%= render(Activities::ActivityItemComponent.new(activity: activity)) %>
       <% end %>
       
-      <% if show_pagination && activity_logs.respond_to?(:current_page) %>
+      <% if show_pagination && activities.respond_to?(:current_page) %>
         <div class="d-flex justify-content-center mt-3">
-          <%= paginate activity_logs %>
+          <%= paginate activities %>
         </div>
       <% end %>
     <% else %>

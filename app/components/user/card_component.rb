@@ -24,7 +24,7 @@ class User::CardComponent < Layout::CardComponent
   end
 
   def activity_count
-    @activity_count ||= safe_count(user.activity_logs)
+    @activity_count ||= safe_count(user.activities)
   end
 
   def organization_name

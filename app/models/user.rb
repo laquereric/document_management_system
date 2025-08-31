@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :teams, through: :team_memberships
   has_many :led_teams, class_name: 'Team', foreign_key: 'leader_id', dependent: :nullify
   has_many :authored_documents, class_name: 'Document', foreign_key: 'author_id', dependent: :destroy
-  has_many :activity_logs, dependent: :destroy
+  has_many :activities, dependent: :destroy
 
   # Validations
   validates :name, presence: true
@@ -27,7 +27,7 @@ class User < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[organization teams authored_documents activity_logs team_memberships led_teams]
+    %w[organization teams authored_documents activities team_memberships led_teams]
   end
 
   def full_name

@@ -6,7 +6,7 @@ class Document < ApplicationRecord
   belongs_to :scenario
   has_many :document_tags, dependent: :destroy
   has_many :tags, through: :document_tags
-  has_many :activity_logs, dependent: :destroy
+  has_many :activities, dependent: :destroy
   has_one_attached :file
 
   # Validations
@@ -29,7 +29,7 @@ class Document < ApplicationRecord
 
   # Ransack configuration - define searchable associations
   def self.ransackable_associations(auth_object = nil)
-    %w[author folder status scenario tags document_tags activity_logs]
+    %w[author folder status scenario tags document_tags activities]
   end
 
   def tag_names

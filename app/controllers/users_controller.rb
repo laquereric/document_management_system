@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @authored_documents = @user.authored_documents.includes(:folder, :status, :tags)
                                .page(params[:page])
                                .per(10)
-    @activity_logs = @user.activity_logs.includes(:document)
+    @activities = @user.activities.includes(:document)
                           .recent
                           .page(params[:page])
                           .per(10)

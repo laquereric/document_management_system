@@ -51,7 +51,7 @@ class Navigation::SidebarComponent < ApplicationComponent
         label: "Activity",
         icon: "pulse",
         path: activities_path,
-        active: @controller_name == "activity_logs"
+        active: @controller_name == "activities"
       },
       {
         label: "Profile",

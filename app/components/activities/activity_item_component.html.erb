@@ -1,0 +1,21 @@
+<div class="<%= item_classes %>">
+  <div class="me-3">
+    <i class="<%= action_icon %>" style="font-size: 0.5rem;"></i>
+  </div>
+  <div class="flex-grow-1">
+    <p class="mb-1">
+      <strong><%= activity.user.name %></strong>
+      <%= action_description %>
+      <% if activity.document and activity.document.kind_of?(ActiveRecord::Base)%>
+        <strong><%= link_to activity.document.title, activity.document, class: "text-decoration-none" %></strong>
+      <% end %>
+    </p>
+    <small class="text-muted">
+      <%= time_ago_in_words(activity.created_at) %> ago
+    </small>
+    <% if activity.notes.present? && !activity.notes.start_with?('Added tag:', 'Removed tag:') %>
+      <br>
+      <small class="text-muted"><%= activity.notes %></small>
+    <% end %>
+  </div>
+</div>
