@@ -1,0 +1,26 @@
+<div class="<%= container_classes %>">
+  <div class="<%= title_container_classes %>">
+    <% if render_icon? %>
+      <svg class="<%= icon_classes %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="<%= icon_size %>" height="<%= icon_size %>">
+        <%= render_icon_svg %>
+      </svg>
+    <% end %>
+    <div>
+      <h1 class="<%= title_classes %>"><%= title %></h1>
+      <% if render_description? %>
+        <p class="<%= description_classes %>"><%= description %></p>
+      <% end %>
+    </div>
+  </div>
+  
+  <% if render_action? %>
+    <div class="<%= action_container_classes %>">
+      <%= link_to action[:url], class: action_button_classes do %>
+        <svg class="octicon octicon-plus mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+        </svg>
+        <%= action[:text] %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
