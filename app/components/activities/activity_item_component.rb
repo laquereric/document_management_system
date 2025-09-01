@@ -45,4 +45,14 @@ class Activities::ActivityItemComponent < ApplicationComponent
       activity.action
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      item_classes: item_classes,
+      action_icon: action_icon,
+      action_description: action_description,
+      activity: activity
+    }
+  end
 end

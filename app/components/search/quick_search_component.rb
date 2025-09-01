@@ -28,4 +28,15 @@ class Search::QuickSearchComponent < ApplicationComponent
     else ""
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      search_form_classes: search_form_classes,
+      input_size_class: input_size_class,
+      placeholder: placeholder,
+      value: value,
+      size: size
+    }
+  end
 end

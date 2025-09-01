@@ -22,4 +22,25 @@ class Navigation::HeaderComponent < ApplicationComponent
   def nav_classes
     "Header-item d-flex"
   end
+
+  def root_path
+    root_path
+  end
+
+  def new_user_session_path
+    new_user_session_path
+  end
+
+  # Context methods for the template
+  def template_context
+    {
+      header_classes: header_classes,
+      brand_classes: brand_classes,
+      nav_classes: nav_classes,
+      root_path: root_path,
+      new_user_session_path: new_user_session_path,
+      current_user: current_user,
+      title: title
+    }
+  end
 end

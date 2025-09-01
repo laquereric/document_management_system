@@ -29,5 +29,18 @@ class Organization::CardComponent < Layout::CardComponent
   def admin_context?
     admin_context
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      truncated_description: truncated_description,
+      formatted_date: formatted_date,
+      organization_name: organization_name,
+      admin_context?: admin_context?,
+      organization: organization,
+      admin_context: admin_context
+    }
+  end
 end
 

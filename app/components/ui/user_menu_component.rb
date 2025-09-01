@@ -42,4 +42,13 @@ class Ui::UserMenuComponent < ApplicationComponent
     names = user.email.split('@').first.split('.')
     names.map(&:first).join.upcase[0..1]
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      menu_items: menu_items,
+      user_initials: user_initials,
+      user: user
+    }
+  end
 end

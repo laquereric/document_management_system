@@ -43,4 +43,19 @@ class Teams::TeamCardComponent < Layout::CardComponent
   def admin_context?
     admin_context
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      member_count: member_count,
+      document_count: document_count,
+      can_manage_team?: can_manage_team?,
+      organization_name: organization_name,
+      admin_context?: admin_context?,
+      team: team,
+      current_user: current_user,
+      admin_context: admin_context
+    }
+  end
 end

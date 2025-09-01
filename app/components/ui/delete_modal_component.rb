@@ -42,4 +42,18 @@ class Ui::DeleteModalComponent < ApplicationComponent
       message
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      modal_id: modal_id,
+      modal_classes: modal_classes,
+      danger_button_classes: danger_button_classes,
+      cancel_button_classes: cancel_button_classes,
+      display_message: display_message,
+      title: title,
+      delete_url: delete_url,
+      cancel_url: cancel_url
+    }
+  end
 end

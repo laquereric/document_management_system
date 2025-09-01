@@ -18,8 +18,6 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
 
   # Build breadcrumbs from current controller and action
   def build_breadcrumbs_from_params
-
-
     crumbs = [{ label: "Home", path: RootPath }]
     
     case @controller_name
@@ -43,10 +41,18 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
       crumbs << { label: "Teams", path: organizations_path }
     when "tags"
       crumbs << { label: "Tags", path: tags_path }
-          when "activities"
-              crumbs << { label: "Activity", path: user_activities_path(current_user) }
+    when "activities"
+      crumbs << { label: "Activity", path: user_activities_path(current_user) }
     end
     
     crumbs
+  end
+
+  # Context methods for the template
+  def template_context
+    {
+      breadcrumbs: breadcrumbs,
+      breadcrumb_classes: breadcrumb_classes
+    }
   end
 end

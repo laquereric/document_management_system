@@ -62,4 +62,22 @@ class Forms::FolderFormComponent < ApplicationComponent
   def form_method
     folder.persisted? ? :patch : :post
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      form_classes: form_classes,
+      name_field_classes: name_field_classes,
+      description_field_classes: description_field_classes,
+      select_classes: select_classes,
+      submit_button_classes: submit_button_classes,
+      cancel_button_classes: cancel_button_classes,
+      teams: teams,
+      parent_folders: parent_folders,
+      form_url: form_url,
+      form_method: form_method,
+      submit_text: submit_text,
+      cancel_url: cancel_url
+    }
+  end
 end

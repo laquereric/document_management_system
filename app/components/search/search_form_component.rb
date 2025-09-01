@@ -15,4 +15,13 @@ class Search::SearchFormComponent < ApplicationComponent
   def search_placeholder
     "Search documents by title, content, author..."
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      form_classes: form_classes,
+      search_placeholder: search_placeholder,
+      q: q
+    }
+  end
 end

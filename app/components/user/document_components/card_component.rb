@@ -68,4 +68,21 @@ class User::DocumentComponents::CardComponent < Layout::CardComponent
       "file"
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      truncated_content: truncated_content,
+      formatted_date: formatted_date,
+      author_name: author_name,
+      folder_name: folder_name,
+      team_name: team_name,
+      organization_name: organization_name,
+      has_file?: has_file?,
+      file_extension: file_extension,
+      file_icon: file_icon,
+      document: document
+    }
+  end
 end

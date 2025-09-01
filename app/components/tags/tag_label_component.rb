@@ -21,4 +21,16 @@ class TagLabelComponent < ApplicationComponent
   def can_remove_tag?
     removable && document.present?
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      badge_classes: badge_classes,
+      remove_button_classes: remove_button_classes,
+      can_remove_tag?: can_remove_tag?,
+      tag: tag,
+      removable: removable,
+      document: document
+    }
+  end
 end

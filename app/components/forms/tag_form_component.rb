@@ -54,4 +54,20 @@ class Forms::TagFormComponent < ApplicationComponent
       ['Gray', '#6a737d']
     ]
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      form_classes: form_classes,
+      name_field_classes: name_field_classes,
+      color_field_classes: color_field_classes,
+      submit_button_classes: submit_button_classes,
+      cancel_button_classes: cancel_button_classes,
+      form_url: form_url,
+      form_method: form_method,
+      color_options: color_options,
+      submit_text: submit_text,
+      cancel_url: cancel_url
+    }
+  end
 end

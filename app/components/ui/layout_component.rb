@@ -44,4 +44,17 @@ class Ui::LayoutComponent < ApplicationComponent
     base_classes << "Layout-main--divided" if sidebar_variant != :hidden
     base_classes.join(" ")
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      layout_classes: layout_classes,
+      sidebar_classes: sidebar_classes,
+      main_content_classes: main_content_classes,
+      title: title,
+      sidebar_variant: sidebar_variant,
+      show_breadcrumbs: show_breadcrumbs,
+      current_user: current_user
+    }
+  end
 end

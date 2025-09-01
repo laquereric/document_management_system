@@ -65,4 +65,25 @@ class Forms::DocumentFormComponent < ApplicationComponent
   def form_method
     document.persisted? ? :patch : :post
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      form_classes: form_classes,
+      title_field_classes: title_field_classes,
+      content_field_classes: content_field_classes,
+      url_field_classes: url_field_classes,
+      select_classes: select_classes,
+      file_field_classes: file_field_classes,
+      submit_button_classes: submit_button_classes,
+      cancel_button_classes: cancel_button_classes,
+      statuses: statuses,
+      scenarios: scenarios,
+      folders: folders,
+      form_url: form_url,
+      form_method: form_method,
+      submit_text: submit_text,
+      cancel_url: cancel_url
+    }
+  end
 end

@@ -52,4 +52,21 @@ class Ui::EmptyStateComponent < ApplicationComponent
       "btn btn-primary"
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      container_classes: container_classes,
+      has_action?: has_action?,
+      action_text_value: action_text_value,
+      action_url_value: action_url_value,
+      action_classes: action_classes,
+      title: title,
+      description: description,
+      icon: icon,
+      action: action,
+      action_text: action_text,
+      action_url: action_url
+    }
+  end
 end
