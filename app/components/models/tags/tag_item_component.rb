@@ -1,4 +1,4 @@
-class Ui::TagItemComponent < ApplicationComponent
+class Models::Tags::TagItemComponent < ApplicationComponent
   def initialize(tag:, removable: false, document: nil, **system_arguments)
     @tag = tag
     @removable = removable

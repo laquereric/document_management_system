@@ -1,0 +1,70 @@
+<%= render(Primer::Beta::BorderBox.new(classes: "mb-3")) do %>
+  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+    <%= render(Primer::Beta::Heading.new(tag: :h3, size: :small)) { "Filters" } %>
+  <% end %>
+  
+  <div class="p-3">
+    <%= form_with url: documents_path, method: :get, local: true, class: "d-flex flex-column gap-3" do |form| %>
+      <!-- Search Input -->
+      <div class="form-group">
+        <%= form.label :q, "Search documents", class: "form-label" %>
+        <%= form.text_field :q, 
+            value: params[:q], 
+            placeholder: "Search by title, content, or tags...", 
+            class: "form-control" %>
+      </div>
+
+      <!-- Status Filter -->
+      <div class="form-group">
+        <%= form.label :status_eq, "Status", class: "form-label" %>
+        <%= form.select :status_eq, 
+            options_for_select([["All", ""]] + status_options.map { |opt| [opt[:label], opt[:value]] }, params[:status_eq]),
+            {}, 
+            { class: "form-select" } %>
+      </div>
+
+      <!-- Folder Filter -->
+      <% if folder_options.any? %>
+        <div class="form-group">
+          <%= form.label :folder_id_eq, "Folder", class: "form-label" %>
+          <%= form.select :folder_id_eq, 
+              options_for_select([["All Folders", ""]] + folder_options.map { |opt| [opt[:label], opt[:value]] }, params[:folder_id_eq]),
+              {}, 
+              { class: "form-select" } %>
+        </div>
+      <% end %>
+
+      <!-- Tags Filter -->
+      <% if tag_options.any? %>
+        <div class="form-group">
+          <%= form.label :tags_id_in, "Tags", class: "form-label" %>
+          <div class="d-flex flex-wrap gap-2">
+            <% tag_options.each do |tag| %>
+              <label class="cursor-pointer">
+                <%= form.check_box :tags_id_in, 
+                    { multiple: true, checked: tag[:active], class: "d-none" }, 
+                    tag[:value], 
+                    "" %>
+                <%= render(Primer::Beta::Button.new(
+                  scheme: tag[:active] ? :primary : :secondary,
+                  size: :small,
+                  classes: "cursor-pointer"
+                )) do %>
+                  <%= tag[:label] %>
+                <% end %>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Action Buttons -->
+      <div class="d-flex gap-2">
+        <%= render(Primer::Beta::Button.new(type: :submit, scheme: :primary)) { "Apply Filters" } %>
+        <%= link_to "Clear", documents_path, 
+            class: "btn btn-secondary",
+            data: { turbo_method: :get } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

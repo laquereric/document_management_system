@@ -1,0 +1,39 @@
+<div class="<%= table_classes %>">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Folder</th>
+        <th>Status</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% documents.each do |document| %>
+        <tr>
+          <td>
+            <strong><%= document.title %></strong>
+            <% if document.content.present? %>
+              <div class="text-small color-fg-muted">
+                <%= truncate(document.content, length: 100) %>
+              </div>
+            <% end %>
+          </td>
+          <td><%= document.author&.name || document.author&.email %></td>
+          <td><%= document.folder&.name %></td>
+          <td>
+            <span class="Label Label--<%= document.status&.name == 'active' ? 'success' : 'default' %>">
+              <%= document.status&.name&.humanize %>
+            </span>
+          </td>
+          <td><%= time_ago_in_words(document.updated_at) %> ago</td>
+          <td>
+            <%= render(User::DocumentComponents::ActionsMenuComponent.new(document: document)) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

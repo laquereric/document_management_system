@@ -1,6 +1,6 @@
 # Folder tree component for hierarchical navigation
 
-class User::Folder::TreeComponent < ApplicationComponent
+class Models::Folder::TreeComponent < ApplicationComponent
   def initialize(
     folders:,
     current_folder: nil,
