@@ -1,4 +1,4 @@
-class Layout::UserCardComponent < ApplicationComponent
+class Models::Users::CardComponent < ApplicationComponent
 
   def initialize(user:, show_admin_actions: false, context: :general)
     @user = user
