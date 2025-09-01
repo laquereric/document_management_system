@@ -68,18 +68,18 @@
   <!-- Filter Panel (Hidden by default) -->
   <% if show_filters %>
     <div class="filter-panel d-none mb-4">
-      <%= render(User::Document::FilterPanelComponent.new(search: search)) %>
+      <%= render(User::DocumentComponents::FilterPanelComponent.new(search: search)) %>
     </div>
   <% end %>
 
   <!-- Document List/Grid -->
   <% if documents.any? %>
     <% if layout == :table %>
-      <%= render(User::Document::TableComponent.new(documents: documents)) %>
+      <%= render(User::DocumentComponents::TableComponent.new(documents: documents)) %>
     <% else %>
       <div class="<%= container_classes %>">
         <% documents.each do |document| %>
-          <%= render(User::Document::CardComponent.new(
+          <%= render(User::DocumentComponents::CardComponent.new(
             document: document,
             layout: layout
           )) %>

@@ -1,11 +1,11 @@
 # Component preview for Document::CardComponent
 
-class User::Document::CardComponentPreview < ViewComponent::Preview
+class User::DocumentComponents::CardComponentPreview < ViewComponent::Preview
   # @param layout select { choices: [list, grid, compact] } "Layout variant"
   # @param show_actions toggle "Show action menu"
   # @param show_metadata toggle "Show metadata"
   def default(layout: :list, show_actions: true, show_metadata: true)
-    render(User::Document::CardComponent.new(
+    render(User::DocumentComponents::CardComponent.new(
       document: sample_document,
       layout: layout.to_sym,
       show_actions: show_actions,
@@ -14,14 +14,14 @@ class User::Document::CardComponentPreview < ViewComponent::Preview
   end
 
   def grid_layout
-    render(User::Document::CardComponent.new(
+    render(User::DocumentComponents::CardComponent.new(
       document: sample_document,
       layout: :grid
     ))
   end
 
   def compact_layout
-    render(User::Document::CardComponent.new(
+    render(User::DocumentComponents::CardComponent.new(
       document: sample_document,
       layout: :compact,
       show_metadata: false
@@ -36,7 +36,7 @@ class User::Document::CardComponentPreview < ViewComponent::Preview
       OpenStruct.new(name: "Review")
     ]
     
-    render(User::Document::CardComponent.new(
+    render(User::DocumentComponents::CardComponent.new(
       document: document,
       layout: :list
     ))

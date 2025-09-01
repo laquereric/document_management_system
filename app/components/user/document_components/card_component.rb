@@ -1,6 +1,6 @@
 # Document card component for displaying documents in lists
 
-class User::Document::CardComponent < Layout::CardComponent
+class User::DocumentComponents::CardComponent < Layout::CardComponent
 
   def initialize(document:, show_actions: true, **system_arguments)
     @document = document

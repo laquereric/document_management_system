@@ -65,7 +65,7 @@
         <div class="flex-auto" style="min-width: 300px;">
           <h5>Document Card</h5>
           <% if @sample_document %>
-            <%= render(User::Document::CardComponent.new(document: @sample_document)) %>
+            <%= render(User::DocumentComponents::CardComponent.new(document: @sample_document)) %>
           <% else %>
             <%= render(Ui::EmptyStateComponent.new(
               title: "No Sample Document",
@@ -82,7 +82,7 @@
         <div class="col-md-6">
           <h5>Document List</h5>
           <% if @sample_documents&.any? %>
-            <%= render(User::Document::ListComponent.new(
+            <%= render(User::DocumentComponents::ListComponent.new(
               documents: @sample_documents,
               search: @sample_search
             )) %>

@@ -1,6 +1,6 @@
-class User::Document::FilterPanelComponentPreview < ViewComponent::Preview
+class User::DocumentComponents::FilterPanelComponentPreview < ViewComponent::Preview
   def default
-    render(User::Document::FilterPanelComponent.new)
+    render(User::DocumentComponents::FilterPanelComponent.new)
   end
 
   def with_search_params
@@ -11,6 +11,6 @@ class User::Document::FilterPanelComponentPreview < ViewComponent::Preview
       tags_id_in: ["1", "2"]
     )
     
-    render(User::Document::FilterPanelComponent.new(search: search))
+    render(User::DocumentComponents::FilterPanelComponent.new(search: search))
   end
 end
