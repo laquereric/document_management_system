@@ -1,85 +1,54 @@
-<%= form_with model: document, url: form_url, method: form_method, class: form_classes, local: true do |f| %>
-  <% if document.errors.any? %>
-    <div class="flash flash-error mb-4">
-      <div class="d-flex flex-items-start">
-        <svg class="octicon octicon-alert-fill mr-2 mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm2.763 6.703a.75.75 0 0 0-1.44 0v2.5a.75.75 0 0 0 1.44 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
-        </svg>
-        <div class="flex-auto">
-          <h4 class="f5 text-semibold mb-2">Please fix the following errors:</h4>
-          <ul class="pl-3 mb-0">
-            <% document.errors.full_messages.each do |message| %>
-              <li class="f6"><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="FormControl mb-3">
-    <%= f.label :title, "Title", class: "FormControl-label" %>
-    <%= f.text_field :title, class: title_field_classes, placeholder: "Enter document title" %>
-  </div>
-
-  <div class="FormControl mb-3">
-    <%= f.label :content, "Content", class: "FormControl-label" %>
-    <%= f.text_area :content, class: content_field_classes, rows: 8, placeholder: "Enter document content" %>
-  </div>
-
-  <div class="FormControl mb-3">
-    <%= f.label :url, "External URL", class: "FormControl-label" %>
-    <span class="FormControl-caption">Optional - Link to external resource</span>
-    <%= f.url_field :url, class: url_field_classes, placeholder: "https://example.com" %>
-  </div>
-
-  <div class="d-lg-flex" style="gap: 16px;">
-    <div class="FormControl mb-3 flex-1">
-      <%= f.label :status_id, "Status", class: "FormControl-label" %>
-      <%= f.select :status_id,
-          options_from_collection_for_select(statuses, :id, :name, document.status_id),
-          { prompt: "Select a status" },
-          { class: select_classes } %>
-    </div>
-
-    <div class="FormControl mb-3 flex-1">
-      <%= f.label :scenario_id, "Scenario", class: "FormControl-label" %>
-      <%= f.select :scenario_id,
-          options_from_collection_for_select(scenarios, :id, :name, document.scenario_id),
-          { prompt: "Select a scenario" },
-          { class: select_classes } %>
-    </div>
-  </div>
-
-  <% if document.new_record? && folders.any? %>
+<%= form_with model: document, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
+  <div class="Box p-4">
     <div class="FormControl mb-3">
-      <%= f.label :folder_id, "Folder", class: "FormControl-label" %>
-      <span class="FormControl-caption">Choose the folder where this document will be stored</span>
-      <%= f.select :folder_id,
-          options_from_collection_for_select(folders, :id, :name, document.folder_id),
-          { prompt: "Select a folder" },
-          { class: select_classes } %>
+      <%= form.label :title, class: "FormControl-label" %>
+      <%= form.text_field :title, class: "FormControl-input FormControl-large" %>
     </div>
-  <% end %>
 
-  <div class="FormControl mb-4">
-    <%= f.label :file, "Attach File", class: "FormControl-label" %>
-    <span class="FormControl-caption">Optional - Supported formats: PDF, DOC, DOCX, TXT, RTF</span>
-    <%= f.file_field :file, class: file_field_classes, accept: ".pdf,.doc,.docx,.txt,.rtf" %>
-    <% if document.file.attached? %>
-      <div class="FormControl-caption mt-2 d-flex flex-items-center">
-        <svg class="octicon octicon-file mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="12" height="12">
-          <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
-        </svg>
-        Current file: <%= link_to document.file.filename, rails_blob_path(document.file, disposition: "attachment"), class: "Link--primary" %>
-      </div>
-    <% end %>
-  </div>
+    <div class="FormControl mb-3">
+      <%= form.label :content, class: "FormControl-label" %>
+      <%= form.text_area :content, class: "FormControl-textarea", rows: 5 %>
+    </div>
 
-  <div class="d-flex flex-items-center" style="gap: 8px;">
-    <%= f.submit submit_text, class: submit_button_classes %>
-    <% if cancel_url %>
-      <%= link_to "Cancel", cancel_url, class: cancel_button_classes %>
-    <% end %>
+    <div class="FormControl mb-3">
+      <%= form.label :url, class: "FormControl-label" %>
+      <%= form.url_field :url, class: "FormControl-input" %>
+    </div>
+
+    <div class="FormControl mb-3">
+      <%= form.label :status_id, class: "FormControl-label" %>
+      <%= form.select :status_id, 
+          options_from_collection_for_select(statuses, :id, :name, document.status_id),
+          { prompt: "Select status" },
+          { class: "FormControl-select" } %>
+    </div>
+
+    <div class="FormControl mb-3">
+      <%= form.label :scenario_id, class: "FormControl-label" %>
+      <%= form.select :scenario_id, 
+          options_from_collection_for_select(scenarios, :id, :name, document.scenario_id),
+          { prompt: "Select scenario" },
+          { class: "FormControl-select" } %>
+    </div>
+
+    <div class="FormControl mb-3">
+      <%= form.label :folder_id, class: "FormControl-label" %>
+      <%= form.select :folder_id, 
+          options_from_collection_for_select(folders, :id, :name, document.folder_id),
+          { prompt: "Select folder" },
+          { class: "FormControl-select" } %>
+    </div>
+
+    <div class="FormControl mb-3">
+      <%= form.label :file, class: "FormControl-label" %>
+      <%= form.file_field :file, class: "FormControl-input" %>
+    </div>
+
+    <div class="d-flex gap-2">
+      <%= form.submit submit_text, class: "btn btn-primary" %>
+      <% if cancel_url %>
+        <%= link_to "Cancel", cancel_url, class: "btn" %>
+      <% end %>
+    </div>
   </div>
 <% end %>

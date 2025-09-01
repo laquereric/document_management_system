@@ -1,50 +1,23 @@
-<%= form_with model: tag, url: form_url, method: form_method, class: form_classes, local: true do |f| %>
-  <% if tag.errors.any? %>
-    <div class="flash flash-error mb-3">
-      <h4 class="flash-heading">Please fix the following errors:</h4>
-      <ul class="mb-0">
-        <% tag.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with model: tag, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
+  <div class="Box p-4">
+    <div class="FormControl mb-3">
+      <%= form.label :name, class: "FormControl-label" %>
+      <%= form.text_field :name, class: "FormControl-input FormControl-large" %>
     </div>
-  <% end %>
 
-  <div class="form-group mb-3">
-    <%= f.label :name, class: "form-label" %>
-    <%= f.text_field :name, class: name_field_classes, placeholder: "Enter tag name" %>
-  </div>
-
-  <div class="form-group mb-3">
-    <%= f.label :color, class: "form-label" %>
-    <div class="d-flex flex-items-center gap-2">
-      <%= f.select :color, color_options, {}, { class: color_field_classes } %>
-      <div class="color-preview" style="width: 30px; height: 30px; border-radius: 4px; border: 1px solid #d0d7de;" id="color-preview"></div>
+    <div class="FormControl mb-3">
+      <%= form.label :color, class: "FormControl-label" %>
+      <%= form.select :color, 
+          options_for_select(color_options, tag.color),
+          { prompt: "Select color" },
+          { class: "FormControl-select" } %>
     </div>
-  </div>
 
-  <div class="form-actions d-flex flex-items-center gap-2">
-    <%= f.submit submit_text, class: submit_button_classes %>
-    <% if cancel_url %>
-      <%= link_to "Cancel", cancel_url, class: cancel_button_classes %>
-    <% end %>
+    <div class="d-flex gap-2">
+      <%= form.submit submit_text, class: "btn btn-primary" %>
+      <% if cancel_url %>
+        <%= link_to "Cancel", cancel_url, class: "btn" %>
+      <% end %>
+    </div>
   </div>
 <% end %>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const colorSelect = document.querySelector('select[name="tag[color]"]');
-  const colorPreview = document.getElementById('color-preview');
-  
-  function updateColorPreview() {
-    if (colorSelect && colorPreview) {
-      colorPreview.style.backgroundColor = colorSelect.value;
-    }
-  }
-  
-  if (colorSelect) {
-    colorSelect.addEventListener('change', updateColorPreview);
-    updateColorPreview();
-  }
-});
-</script>

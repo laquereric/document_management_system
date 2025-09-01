@@ -1,4 +1,6 @@
 class Models::Documents::DocumentFormComponent < ApplicationComponent
+  include ViewComponent::Form::Helpers
+
   def initialize(document:, submit_text: "Save Document", cancel_url: nil, **system_arguments)
     @document = document
     @submit_text = submit_text
@@ -12,34 +14,6 @@ class Models::Documents::DocumentFormComponent < ApplicationComponent
 
   def form_classes
     "#{system_arguments[:class]}"
-  end
-
-  def title_field_classes
-    "FormControl-input FormControl-large"
-  end
-
-  def content_field_classes
-    "FormControl-textarea"
-  end
-
-  def url_field_classes
-    "FormControl-input"
-  end
-
-  def select_classes
-    "FormControl-select"
-  end
-
-  def file_field_classes
-    "FormControl-input"
-  end
-
-  def submit_button_classes
-    "btn btn-primary"
-  end
-
-  def cancel_button_classes
-    "btn"
   end
 
   def statuses
@@ -70,13 +44,6 @@ class Models::Documents::DocumentFormComponent < ApplicationComponent
   def template_context
     {
       form_classes: form_classes,
-      title_field_classes: title_field_classes,
-      content_field_classes: content_field_classes,
-      url_field_classes: url_field_classes,
-      select_classes: select_classes,
-      file_field_classes: file_field_classes,
-      submit_button_classes: submit_button_classes,
-      cancel_button_classes: cancel_button_classes,
       statuses: statuses,
       scenarios: scenarios,
       folders: folders,

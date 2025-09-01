@@ -1,4 +1,6 @@
 class Models::Tags::TagFormComponent < ApplicationComponent
+  include ViewComponent::Form::Helpers
+
   def initialize(tag:, submit_text: "Save Tag", cancel_url: nil, **system_arguments)
     @tag = tag
     @submit_text = submit_text
@@ -12,22 +14,6 @@ class Models::Tags::TagFormComponent < ApplicationComponent
 
   def form_classes
     "form #{system_arguments[:class]}"
-  end
-
-  def name_field_classes
-    "form-control input-lg"
-  end
-
-  def color_field_classes
-    "form-control"
-  end
-
-  def submit_button_classes
-    "btn btn-primary"
-  end
-
-  def cancel_button_classes
-    "btn"
   end
 
   def form_url
@@ -59,10 +45,6 @@ class Models::Tags::TagFormComponent < ApplicationComponent
   def template_context
     {
       form_classes: form_classes,
-      name_field_classes: name_field_classes,
-      color_field_classes: color_field_classes,
-      submit_button_classes: submit_button_classes,
-      cancel_button_classes: cancel_button_classes,
       form_url: form_url,
       form_method: form_method,
       color_options: color_options,

@@ -1,29 +1,20 @@
-<%= form_with model: organization, url: form_url, method: form_method, class: form_classes, local: true do |f| %>
-  <% if organization.errors.any? %>
-    <div class="flash flash-error mb-3">
-      <h4 class="flash-heading">Please fix the following errors:</h4>
-      <ul class="mb-0">
-        <% organization.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with model: organization, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
+  <div class="Box p-4">
+    <div class="FormControl mb-3">
+      <%= form.label :name, class: "FormControl-label" %>
+      <%= form.text_field :name, class: "FormControl-input FormControl-large" %>
     </div>
-  <% end %>
 
-  <div class="form-group mb-3">
-    <%= f.label :name, class: "form-label" %>
-    <%= f.text_field :name, class: name_field_classes, placeholder: "Enter organization name" %>
-  </div>
+    <div class="FormControl mb-3">
+      <%= form.label :description, class: "FormControl-label" %>
+      <%= form.text_area :description, class: "FormControl-textarea", rows: 3 %>
+    </div>
 
-  <div class="form-group mb-3">
-    <%= f.label :description, class: "form-label" %>
-    <%= f.text_area :description, class: description_field_classes, rows: 4, placeholder: "Enter organization description" %>
-  </div>
-
-  <div class="form-actions d-flex flex-items-center gap-2">
-    <%= f.submit submit_text, class: submit_button_classes %>
-    <% if cancel_url %>
-      <%= link_to "Cancel", cancel_url, class: cancel_button_classes %>
-    <% end %>
+    <div class="d-flex gap-2">
+      <%= form.submit submit_text, class: "btn btn-primary" %>
+      <% if cancel_url %>
+        <%= link_to "Cancel", cancel_url, class: "btn" %>
+      <% end %>
+    </div>
   </div>
 <% end %>

@@ -1,4 +1,6 @@
 class Models::Folder::FolderFormComponent < ApplicationComponent
+  include ViewComponent::Form::Helpers
+
   def initialize(folder:, submit_text: "Save Folder", cancel_url: nil, **system_arguments)
     @folder = folder
     @submit_text = submit_text
@@ -12,26 +14,6 @@ class Models::Folder::FolderFormComponent < ApplicationComponent
 
   def form_classes
     "form #{system_arguments[:class]}"
-  end
-
-  def name_field_classes
-    "form-control input-lg"
-  end
-
-  def description_field_classes
-    "form-control"
-  end
-
-  def select_classes
-    "form-select"
-  end
-
-  def submit_button_classes
-    "btn btn-primary"
-  end
-
-  def cancel_button_classes
-    "btn"
   end
 
   def teams
@@ -67,11 +49,6 @@ class Models::Folder::FolderFormComponent < ApplicationComponent
   def template_context
     {
       form_classes: form_classes,
-      name_field_classes: name_field_classes,
-      description_field_classes: description_field_classes,
-      select_classes: select_classes,
-      submit_button_classes: submit_button_classes,
-      cancel_button_classes: cancel_button_classes,
       teams: teams,
       parent_folders: parent_folders,
       form_url: form_url,
