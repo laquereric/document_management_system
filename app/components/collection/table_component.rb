@@ -1,4 +1,4 @@
-class Models::Documents::TableComponent < ApplicationComponent
+class Collection::TableComponent < ApplicationComponent
   def initialize(documents:, **system_arguments)
     @documents = documents
     @system_arguments = merge_system_arguments(system_arguments)

@@ -1,6 +1,6 @@
 # Document list component for displaying multiple documents
 
-class Models::Documents::ListComponent < ApplicationComponent
+class Collection::ListComponent < ApplicationComponent
   LAYOUT_VARIANTS = %i[list grid table].freeze
   SORT_OPTIONS = %i[title created_at updated_at author status].freeze
 
