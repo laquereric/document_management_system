@@ -1,4 +1,4 @@
-class Folder::CardComponent < Layout::CardComponent
+class User::Folder::CardComponent < Layout::CardComponent
 
   def initialize(folder:, show_actions: true, **system_arguments)
     @folder = folder

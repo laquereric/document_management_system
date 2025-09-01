@@ -1,4 +1,4 @@
-class Dashboard::RecentActivityComponent < ApplicationComponent
+class User::Dashboard::RecentActivityComponent < ApplicationComponent
   def initialize(activities:, limit: 10, **system_arguments)
     @activities = activities.limit(limit)
     @system_arguments = merge_system_arguments(system_arguments)

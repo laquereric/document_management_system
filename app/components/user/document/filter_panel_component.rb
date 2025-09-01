@@ -1,4 +1,4 @@
-class Document::FilterPanelComponent < ApplicationComponent
+class User::Document::FilterPanelComponent < ApplicationComponent
   def initialize(search: nil, **system_arguments)
     @search = search
     super(**system_arguments)

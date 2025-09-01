@@ -22,7 +22,7 @@
   <!-- Stats Cards -->
   <div class="d-flex flex-wrap gap-3 mb-4">
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(Dashboard::StatsCardComponent.new(
+      <%= render(User::Dashboard::StatsCardComponent.new(
         title: "Sample Documents",
         value: 25,
         icon: "file-text",
@@ -30,7 +30,7 @@
       )) %>
     </div>
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(Dashboard::StatsCardComponent.new(
+      <%= render(User::Dashboard::StatsCardComponent.new(
         title: "Active Teams",
         value: 8,
         icon: "people",
@@ -38,7 +38,7 @@
       )) %>
     </div>
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(Dashboard::StatsCardComponent.new(
+      <%= render(User::Dashboard::StatsCardComponent.new(
         title: "Pending Reviews",
         value: 12,
         icon: "clock",
@@ -46,7 +46,7 @@
       )) %>
     </div>
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(Dashboard::StatsCardComponent.new(
+      <%= render(User::Dashboard::StatsCardComponent.new(
         title: "Total Users",
         value: 45,
         icon: "person-badge",
@@ -65,7 +65,7 @@
         <div class="flex-auto" style="min-width: 300px;">
           <h5>Document Card</h5>
           <% if @sample_document %>
-            <%= render(Document::CardComponent.new(document: @sample_document)) %>
+            <%= render(User::Document::CardComponent.new(document: @sample_document)) %>
           <% else %>
             <%= render(Ui::EmptyStateComponent.new(
               title: "No Sample Document",
@@ -82,7 +82,7 @@
         <div class="col-md-6">
           <h5>Document List</h5>
           <% if @sample_documents&.any? %>
-            <%= render(Document::ListComponent.new(
+            <%= render(User::Document::ListComponent.new(
               documents: @sample_documents,
               search: @sample_search
             )) %>

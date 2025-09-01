@@ -1,4 +1,4 @@
-class Dashboard::StatsCardComponent < ApplicationComponent
+class User::Dashboard::StatsCardComponent < ApplicationComponent
   COLOR_OPTIONS = %i[default accent success attention severe danger].freeze
 
   def initialize(title:, value:, icon:, color: :default, **system_arguments)

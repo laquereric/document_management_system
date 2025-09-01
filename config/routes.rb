@@ -50,9 +50,6 @@ Rails.application.routes.draw do
   # Component test route (development only)
   get "component_test", to: "component_test#index" if Rails.env.development?
   
-  # Dashboard
-  get "dashboard", to: "dashboard#index"
-  
   # Admin routes
   namespace :admin do
     get "users/index"
@@ -101,32 +98,31 @@ Rails.application.routes.draw do
     end
   end
   
-  # Direct document routes for easier access
-  resources :documents do
-    member do
-      patch :change_status
-      post :add_tag
-      delete :remove_tag
-    end
-    collection do
-      get :search
-    end
-  end
-  
-  # Folder routes for hierarchical navigation
-  resources :folders do
-    resources :documents
-    member do
-      get :contents
-    end
-  end
+
   
   # User management and nested resources
   resources :user, only: [] do
+    get "dashboard", to: "dashboard#index"
     resources :activities, only: [:index, :show]
     resources :teams, only: [:index, :show]
     resources :tags, only: [:index, :show]
     resources :organizations, only: [:index, :show]
+    resources :documents do
+      member do
+        patch :change_status
+        post :add_tag
+        delete :remove_tag
+      end
+      collection do
+        get :search
+      end
+    end
+    resources :folders do
+      resources :documents
+      member do
+        get :contents
+      end
+    end
   end
   
   # Legacy routes for backward compatibility

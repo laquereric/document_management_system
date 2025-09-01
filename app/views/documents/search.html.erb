@@ -49,7 +49,7 @@
         <div class="row g-3">
           <% @documents.each do |document| %>
             <div class="col-12 col-md-6 col-lg-4">
-              <%= render(Document::CardComponent.new(document: document)) %>
+              <%= render(User::Document::CardComponent.new(document: document)) %>
             </div>
           <% end %>
         </div>

@@ -1,6 +1,6 @@
 # Document actions menu component
 
-class Document::ActionsMenuComponent < ApplicationComponent
+class User::Document::ActionsMenuComponent < ApplicationComponent
   def initialize(document:, **system_arguments)
     @document = document
     @system_arguments = merge_system_arguments(system_arguments)

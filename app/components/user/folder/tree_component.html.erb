@@ -47,7 +47,7 @@
       <!-- Actions -->
       <% if show_actions %>
         <div class="TreeView-item-action">
-          <%= render(Folder::ActionsMenuComponent.new(folder: folder)) %>
+          <%= render(User::Folder::ActionsMenuComponent.new(folder: folder)) %>
         </div>
       <% end %>
     </div>

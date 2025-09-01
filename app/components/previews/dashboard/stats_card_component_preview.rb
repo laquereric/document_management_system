@@ -1,6 +1,6 @@
-class Dashboard::StatsCardComponentPreview < ViewComponent::Preview
+class User::Dashboard::StatsCardComponentPreview < ViewComponent::Preview
   def default
-    render(Dashboard::StatsCardComponent.new(
+    render(User::Dashboard::StatsCardComponent.new(
       title: "Total Documents",
       value: 42,
       icon: "file-text",
@@ -9,7 +9,7 @@ class Dashboard::StatsCardComponentPreview < ViewComponent::Preview
   end
 
   def success
-    render(Dashboard::StatsCardComponent.new(
+    render(User::Dashboard::StatsCardComponent.new(
       title: "Active Teams",
       value: 8,
       icon: "people",
@@ -18,7 +18,7 @@ class Dashboard::StatsCardComponentPreview < ViewComponent::Preview
   end
 
   def warning
-    render(Dashboard::StatsCardComponent.new(
+    render(User::Dashboard::StatsCardComponent.new(
       title: "Pending Reviews",
       value: 15,
       icon: "clock",
@@ -27,7 +27,7 @@ class Dashboard::StatsCardComponentPreview < ViewComponent::Preview
   end
 
   def info
-    render(Dashboard::StatsCardComponent.new(
+    render(User::Dashboard::StatsCardComponent.new(
       title: "Teams Led",
       value: 3,
       icon: "person-badge",

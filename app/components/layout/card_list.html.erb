@@ -70,7 +70,7 @@
   <!-- Filter Panel (Hidden by default) -->
   <% if show_filters %>
     <div class="filter-panel d-none mb-4">
-      <%= render(Document::FilterPanelComponent.new(search: search)) %>
+      <%= render(User::Document::FilterPanelComponent.new(search: search)) %>
     </div>
   <% end %>
 

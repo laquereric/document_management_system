@@ -108,7 +108,7 @@
           <% if @documents.any? %>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <% @documents.each do |document| %>
-                <%= render(Document::CardComponent.new(document: document)) %>
+                <%= render(User::Document::CardComponent.new(document: document)) %>
               <% end %>
             </div>
             
@@ -157,7 +157,7 @@
           <div class="tab-pane" id="subfolders">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <% @subfolders.each do |subfolder| %>
-                <%= render(Folder::CardComponent.new(folder: subfolder)) %>
+                <%= render(User::Folder::CardComponent.new(folder: subfolder)) %>
               <% end %>
             </div>
           </div>

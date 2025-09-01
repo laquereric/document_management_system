@@ -42,11 +42,11 @@
   <!-- Content Sections -->
   <div class="mt-5">
     <%= render(Layout::TwoColumnLayout.new) do %>
-      <%= render(Dashboard::RecentDocumentsComponent.new(documents: @recent_documents)) %>
+      <%= render(User::Dashboard::RecentDocumentsComponent.new(documents: @recent_documents)) %>
     <% end %>
     
     <% content_for :right_column do %>
-      <%= render(Dashboard::RecentActivityComponent.new(activities: @recent_activity)) %>
+      <%= render(User::Dashboard::RecentActivityComponent.new(activities: @recent_activity)) %>
     <% end %>
   </div>
 <% end %>

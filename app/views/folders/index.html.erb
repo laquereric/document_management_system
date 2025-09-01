@@ -167,7 +167,7 @@
           <div class="d-flex flex-wrap gap-3">
             <% @folders.each do |folder| %>
               <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
-                <%= render(Folder::CardComponent.new(folder: folder)) %>
+                <%= render(User::Folder::CardComponent.new(folder: folder)) %>
               </div>
             <% end %>
           </div>
