@@ -30,7 +30,7 @@
           </td>
           <td><%= time_ago_in_words(document.updated_at) %> ago</td>
           <td>
-            <%= render(User::DocumentComponents::ActionsMenuComponent.new(document: document)) %>
+            <%= render(Collection::ActionsMenuComponent.new(document: document)) %>
           </td>
         </tr>
       <% end %>
