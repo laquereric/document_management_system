@@ -1,4 +1,4 @@
-class Scenario::CardComponent < ApplicationComponent
+class Models::Scenario::CardComponent < ApplicationComponent
   def initialize(scenario:, show_actions: true, admin_context: false, **system_arguments)
     @scenario = scenario
     @show_actions = show_actions
