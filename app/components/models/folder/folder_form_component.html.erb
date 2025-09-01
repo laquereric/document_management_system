@@ -27,9 +27,13 @@
     </div>
 
     <div class="d-flex gap-2">
-      <%= form.submit submit_text, class: "btn btn-primary" %>
+      <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
+        <%= submit_text %>
+      <% end %>
       <% if cancel_url %>
-        <%= link_to "Cancel", cancel_url, class: "btn" %>
+        <%= render Primer::Beta::Button.new(href: cancel_url, variant: :secondary) do %>
+          Cancel
+        <% end %>
       <% end %>
     </div>
   </div>
