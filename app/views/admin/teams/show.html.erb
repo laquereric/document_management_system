@@ -161,7 +161,7 @@
             <div class="d-flex flex-column" style="gap: 16px;">
               <% @team.users.each do |user| %>
                 <div class="position-relative">
-                  <%= render User::CardComponent.new(
+                  <%= render Layout::UserCardComponent.new(
                     user: user, 
                     show_admin_actions: false, 
                     context: :admin
