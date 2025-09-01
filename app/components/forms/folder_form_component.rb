@@ -77,7 +77,13 @@ class Forms::FolderFormComponent < ApplicationComponent
       form_url: form_url,
       form_method: form_method,
       submit_text: submit_text,
-      cancel_url: cancel_url
+      cancel_url: cancel_url,
+      folder: folder,
+      current_user: current_user,
+      folder_path: method(:folder_path),
+      folders_path: folders_path,
+      Team: Team,
+      Folder: Folder
     }
   end
 end

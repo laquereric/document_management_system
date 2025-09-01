@@ -25,7 +25,9 @@ class Activities::ActivityListComponent < ApplicationComponent
       has_activities?: has_activities?,
       activities: activities,
       title: title,
-      show_pagination: show_pagination
+      show_pagination: show_pagination,
+      render: method(:render),
+      paginate: method(:paginate)
     }
   end
 end

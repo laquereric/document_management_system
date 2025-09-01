@@ -61,7 +61,11 @@ class User::Folder::TreeComponent < ApplicationComponent
       folders: folders,
       current_folder: current_folder,
       expanded_folders: expanded_folders,
-      show_actions: show_actions
+      show_actions: show_actions,
+      folder_path: method(:folder_path),
+      render: method(:render),
+      content_for: method(:content_for),
+      Primer: Primer
     }
   end
 end

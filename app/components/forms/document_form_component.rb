@@ -83,7 +83,13 @@ class Forms::DocumentFormComponent < ApplicationComponent
       form_url: form_url,
       form_method: form_method,
       submit_text: submit_text,
-      cancel_url: cancel_url
+      cancel_url: cancel_url,
+      document: document,
+      document_path: method(:document_path),
+      documents_path: documents_path,
+      Status: defined?(Status) ? Status : nil,
+      Scenario: defined?(Scenario) ? Scenario : nil,
+      Folder: defined?(Folder) ? Folder : nil
     }
   end
 end

@@ -82,7 +82,13 @@ class User::DocumentComponents::CardComponent < Layout::CardComponent
       has_file?: has_file?,
       file_extension: file_extension,
       file_icon: file_icon,
-      document: document
+      document: document,
+      document_path: method(:document_path),
+      edit_document_path: method(:edit_document_path),
+      rails_blob_path: method(:rails_blob_path),
+      button_to: method(:button_to),
+      link_to: method(:link_to),
+      render: method(:render)
     }
   end
 end

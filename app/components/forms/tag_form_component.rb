@@ -67,7 +67,10 @@ class Forms::TagFormComponent < ApplicationComponent
       form_method: form_method,
       color_options: color_options,
       submit_text: submit_text,
-      cancel_url: cancel_url
+      cancel_url: cancel_url,
+      tag: tag,
+      tag_path: method(:tag_path),
+      tags_path: tags_path
     }
   end
 end

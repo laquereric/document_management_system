@@ -43,7 +43,10 @@ class Activities::TimelineComponent < ApplicationComponent
     {
       action_icon: method(:action_icon),
       action_color: method(:action_color),
-      activities: activities
+      activities: activities,
+      document_path: method(:document_path),
+      link_to: method(:link_to),
+      time_ago_in_words: method(:time_ago_in_words)
     }
   end
 end

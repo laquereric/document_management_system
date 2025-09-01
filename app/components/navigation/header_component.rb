@@ -40,7 +40,10 @@ class Navigation::HeaderComponent < ApplicationComponent
       root_path: root_path,
       new_user_session_path: new_user_session_path,
       current_user: current_user,
-      title: title
+      title: title,
+      Rails: Rails,
+      root_path_helper: method(:root_path),
+      new_user_session_path_helper: method(:new_user_session_path)
     }
   end
 end

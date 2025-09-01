@@ -30,7 +30,9 @@ class TagLabelComponent < ApplicationComponent
       can_remove_tag?: can_remove_tag?,
       tag: tag,
       removable: removable,
-      document: document
+      document: document,
+      remove_tag_document_path: method(:remove_tag_document_path),
+      button_to: method(:button_to)
     }
   end
 end

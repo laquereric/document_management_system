@@ -54,7 +54,10 @@ class Ui::LayoutComponent < ApplicationComponent
       title: title,
       sidebar_variant: sidebar_variant,
       show_breadcrumbs: show_breadcrumbs,
-      current_user: current_user
+      current_user: current_user,
+      render: method(:render),
+      content: content,
+      controller_name: @controller_name
     }
   end
 end

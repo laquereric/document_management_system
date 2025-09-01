@@ -52,7 +52,10 @@ class Activities::ActivityItemComponent < ApplicationComponent
       item_classes: item_classes,
       action_icon: action_icon,
       action_description: action_description,
-      activity: activity
+      activity: activity,
+      link_to: method(:link_to),
+      time_ago_in_words: method(:time_ago_in_words),
+      ActiveRecord: ActiveRecord
     }
   end
 end

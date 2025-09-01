@@ -74,7 +74,9 @@ class User::DocumentComponents::ActionsMenuComponent < ApplicationComponent
   def template_context
     {
       menu_items: menu_items,
-      document: document
+      document: document,
+      document_path: method(:document_path),
+      edit_document_path: method(:edit_document_path)
     }
   end
 end

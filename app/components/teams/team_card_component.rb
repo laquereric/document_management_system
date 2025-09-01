@@ -55,7 +55,12 @@ class Teams::TeamCardComponent < Layout::CardComponent
       admin_context?: admin_context?,
       team: team,
       current_user: current_user,
-      admin_context: admin_context
+      admin_context: admin_context,
+      admin_team_path: method(:admin_team_path),
+      edit_admin_team_path: method(:edit_admin_team_path),
+      organization_team_path: method(:organization_team_path),
+      edit_organization_team_path: method(:edit_organization_team_path),
+      link_to: method(:link_to)
     }
   end
 end

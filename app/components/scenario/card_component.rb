@@ -35,7 +35,12 @@ class Scenario::CardComponent < ApplicationComponent
       created_time_ago: created_time_ago,
       scenario: scenario,
       show_actions: show_actions,
-      admin_context: admin_context
+      admin_context: admin_context,
+      admin_scenario_path: method(:admin_scenario_path),
+      edit_admin_scenario_path: method(:edit_admin_scenario_path),
+      link_to: method(:link_to),
+      pluralize: method(:pluralize),
+      time_ago_in_words: method(:time_ago_in_words)
     }
   end
 end

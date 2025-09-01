@@ -66,7 +66,10 @@ class User::DocumentComponents::ListComponent < ApplicationComponent
       show_filters: show_filters,
       show_sorting: show_sorting,
       current_sort: current_sort,
-      search: search
+      search: search,
+      render: method(:render),
+      new_document_path: new_document_path,
+      Primer: Primer
     }
   end
 end

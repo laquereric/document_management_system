@@ -21,7 +21,10 @@ class User::Dashboard::RecentActivityComponent < ApplicationComponent
     {
       card_classes: card_classes,
       has_activities?: has_activities?,
-      activities: activities
+      activities: activities,
+      activities_path: activities_path,
+      document_path: method(:document_path),
+      time_ago_in_words: method(:time_ago_in_words)
     }
   end
 end

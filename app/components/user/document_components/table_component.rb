@@ -16,7 +16,10 @@ class User::DocumentComponents::TableComponent < ApplicationComponent
   def template_context
     {
       table_classes: table_classes,
-      documents: documents
+      documents: documents,
+      truncate: method(:truncate),
+      time_ago_in_words: method(:time_ago_in_words),
+      render: method(:render)
     }
   end
 end

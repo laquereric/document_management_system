@@ -66,7 +66,8 @@ class Ui::EmptyStateComponent < ApplicationComponent
       icon: icon,
       action: action,
       action_text: action_text,
-      action_url: action_url
+      action_url: action_url,
+      link_to: method(:link_to)
     }
   end
 end

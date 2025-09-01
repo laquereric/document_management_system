@@ -36,7 +36,10 @@ class Search::QuickSearchComponent < ApplicationComponent
       input_size_class: input_size_class,
       placeholder: placeholder,
       value: value,
-      size: size
+      size: size,
+      form_with: method(:form_with),
+      search_index_path: search_index_path,
+      link_to: method(:link_to)
     }
   end
 end

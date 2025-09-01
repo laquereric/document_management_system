@@ -53,7 +53,10 @@ class Forms::OrganizationFormComponent < ApplicationComponent
       form_url: form_url,
       form_method: form_method,
       submit_text: submit_text,
-      cancel_url: cancel_url
+      cancel_url: cancel_url,
+      organization: organization,
+      organization_path: method(:organization_path),
+      organizations_path: organizations_path
     }
   end
 end

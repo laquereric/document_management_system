@@ -53,7 +53,9 @@ class Ui::DeleteModalComponent < ApplicationComponent
       display_message: display_message,
       title: title,
       delete_url: delete_url,
-      cancel_url: cancel_url
+      cancel_url: cancel_url,
+      SecureRandom: SecureRandom,
+      modal_id_generator: method(:modal_id)
     }
   end
 end

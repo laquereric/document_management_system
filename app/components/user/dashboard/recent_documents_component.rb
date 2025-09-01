@@ -21,7 +21,12 @@ class User::Dashboard::RecentDocumentsComponent < ApplicationComponent
     {
       card_classes: card_classes,
       has_documents?: has_documents?,
-      documents: documents
+      documents: documents,
+      documents_path: documents_path,
+      document_path: method(:document_path),
+      new_document_path: new_document_path,
+      time_ago_in_words: method(:time_ago_in_words),
+      render: method(:render)
     }
   end
 end

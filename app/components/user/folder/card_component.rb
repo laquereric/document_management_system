@@ -52,7 +52,11 @@ class User::Folder::CardComponent < Layout::CardComponent
       parent_folder_name: parent_folder_name,
       document_count: document_count,
       subfolder_count: subfolder_count,
-      folder: folder
+      folder: folder,
+      folder_path: method(:folder_path),
+      edit_folder_path: method(:edit_folder_path),
+      link_to: method(:link_to),
+      pluralize: method(:pluralize)
     }
   end
 end

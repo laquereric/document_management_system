@@ -48,7 +48,10 @@ class Ui::UserMenuComponent < ApplicationComponent
     {
       menu_items: menu_items,
       user_initials: user_initials,
-      user: user
+      user: user,
+      destroy_user_session_path: destroy_user_session_path,
+      user_path: method(:user_path),
+      edit_user_path: method(:edit_user_path)
     }
   end
 end

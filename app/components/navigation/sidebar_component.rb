@@ -154,7 +154,27 @@ class Navigation::SidebarComponent < ApplicationComponent
     {
       user_navigation_items: user_navigation_items,
       admin_navigation_items: admin_navigation_items,
-      render_icon_path: method(:render_icon_path)
+      render_icon_path: method(:render_icon_path),
+      current_user: current_user,
+      controller_name: @controller_name,
+      variant: variant,
+      current_page?: method(:current_page?),
+      action_name: action_name,
+      dashboard_index_path: dashboard_index_path,
+      documents_path: documents_path,
+      folders_path: folders_path,
+      tags_path: tags_path,
+      user_activities_path: method(:user_activities_path),
+      user_teams_path: method(:user_teams_path),
+      user_tags_path: method(:user_tags_path),
+      user_organizations_path: method(:user_organizations_path),
+      user_path: method(:user_path),
+      admin_root_path: admin_root_path,
+      organizations_path: organizations_path,
+      admin_users_path: admin_users_path,
+      admin_teams_path: admin_teams_path,
+      admin_scenarios_path: admin_scenarios_path,
+      admin_tags_path: admin_tags_path
     }
   end
 end

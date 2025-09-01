@@ -52,7 +52,19 @@ class Navigation::BreadcrumbComponent < ApplicationComponent
   def template_context
     {
       breadcrumbs: breadcrumbs,
-      breadcrumb_classes: breadcrumb_classes
+      breadcrumb_classes: breadcrumb_classes,
+      controller_name: @controller_name,
+      action_name: action_name,
+      params: params,
+      current_user: current_user,
+      RootPath: RootPath,
+      dashboard_index_path: dashboard_index_path,
+      documents_path: documents_path,
+      folders_path: folders_path,
+      organizations_path: organizations_path,
+      tags_path: tags_path,
+      user_activities_path: method(:user_activities_path),
+      build_breadcrumbs_from_params: method(:build_breadcrumbs_from_params)
     }
   end
 end

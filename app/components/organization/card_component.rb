@@ -39,7 +39,12 @@ class Organization::CardComponent < Layout::CardComponent
       organization_name: organization_name,
       admin_context?: admin_context?,
       organization: organization,
-      admin_context: admin_context
+      admin_context: admin_context,
+      admin_organization_path: method(:admin_organization_path),
+      edit_admin_organization_path: method(:edit_admin_organization_path),
+      organization_path: method(:organization_path),
+      edit_organization_path: method(:edit_organization_path),
+      link_to: method(:link_to)
     }
   end
 end

@@ -30,7 +30,8 @@ class Ui::TagItemComponent < ApplicationComponent
       can_remove_tag?: can_remove_tag?,
       tag: tag,
       removable: removable,
-      document: document
+      document: document,
+      remove_tag_document_path: method(:remove_tag_document_path)
     }
   end
 end
