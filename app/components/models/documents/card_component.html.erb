@@ -20,6 +20,10 @@
         <% end %>
       </div>
     </div>
+    
+    <% if show_actions %>
+      <%= render(Collection::ActionsMenuComponent.new(resource: document, resource_type: 'document')) %>
+    <% end %>
   </div>
 
   <div class="Box-body">
@@ -51,55 +55,4 @@
       </div>
     </div>
   </div>
-
-  <% if show_actions %>
-    <div class="Box-footer">
-      <div class="d-flex flex-items-center flex-justify-between">
-        <div class="d-flex flex-items-center" style="gap: 8px;">
-          <%= link_to document_path(document), class: "btn btn-sm btn-outline" do %>
-            <svg class="octicon octicon-eye mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-              <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.33 2.992 6.019 2 8 2ZM1.679 7.932a.12.12 0 0 0 0 .136c.411.622 1.241 1.75 2.366 2.717C5.176 11.758 6.527 12.5 8 12.5c1.473 0 2.825-.742 3.955-1.715 1.124-.967 1.954-2.096 2.366-2.717a.12.12 0 0 0 0-.136C13.91 7.310 13.08 6.182 11.955 5.215 10.825 4.242 9.473 3.5 8 3.5c-1.473 0-2.825.742-3.955 1.715C2.92 6.182 2.09 7.31 1.679 7.932ZM8 10a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 10Z"></path>
-            </svg>
-            View
-          <% end %>
-          <%= link_to edit_document_path(document), class: "btn btn-sm btn-outline" do %>
-            <svg class="octicon octicon-pencil mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-              <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.08-.283.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-1.238L13.19 6.25l1.439-1.44a.25.25 0 0 0 0-.354l-1.086-1.086a.25.25 0 0 0-.354 0Z"></path>
-            </svg>
-            Edit
-          <% end %>
-          <% if document.url.present? %>
-            <%= link_to document.url, target: "_blank", class: "btn btn-sm btn-outline", title: "Open external link" do %>
-              <svg class="octicon octicon-link-external mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                <path d="M3.75 2A1.75 1.75 0 0 0 2 3.75v8.5A1.75 1.75 0 0 0 3.75 14h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5Zm10.5-1h-3.5a.75.75 0 0 0 0 1.5h2.69l-5.97 5.97a.75.75 0 1 0 1.06 1.06l5.97-5.97v2.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75Z"></path>
-              </svg>
-              External
-            <% end %>
-          <% end %>
-          <% if has_file? && document.file.present? && document.file.respond_to?(:signed_id) %>
-            <%= link_to rails_blob_path(document.file, disposition: "attachment"), class: "btn btn-sm btn-outline", title: "Download attachment" do %>
-              <svg class="octicon octicon-download mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14H2.75Zm7-10.25v7.5a.75.75 0 0 1-1.5 0v-7.5L5.22 9.22a.75.75 0 1 1-1.06-1.06l3.5-3.5a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 1 1-1.06 1.06L9.75 3.75Z"></path>
-              </svg>
-              Download
-            <% end %>
-          <% end %>
-        </div>
-        <%= button_to document_path(document),
-            method: :delete,
-            class: "btn btn-sm btn-danger",
-            form: { style: "display: inline;" },
-            data: {
-              confirm: "Are you sure you want to delete '#{document.title}'?",
-              turbo_method: :delete
-            },
-            title: "Delete document" do %>
-          <svg class="octicon octicon-trash mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-            <path d="M11 1.75V3h2.25a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75ZM4.496 6.675l.66 6.6a.25.25 0 0 0 .249.225h5.19a.25.25 0 0 0 .249-.225l.66-6.6a.75.75 0 0 1 1.492.149l-.66 6.6A1.748 1.748 0 0 1 10.595 15h-5.19a1.748 1.748 0 0 1-1.741-1.575l-.66-6.6a.75.75 0 1 1 1.492-.15ZM6.5 1.75V3h3V1.75a.25.25 0 0 0-.25-.25h-2.5a.25.25 0 0 0-.25.25Z"></path>
-          </svg>
-          Delete
-        <% end %>
-      </div>
-    </div>
-  <% end %>
 </div>

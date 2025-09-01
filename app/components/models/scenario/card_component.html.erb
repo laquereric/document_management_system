@@ -6,6 +6,10 @@
       </svg>
       <strong><%= scenario.name %></strong>
     </div>
+    
+    <% if has_actions? %>
+      <%= render(Collection::ActionsMenuComponent.new(resource: scenario, resource_type: 'scenario')) %>
+    <% end %>
   </div>
   
   <p class="text-gray text-small mb-2"><%= scenario.description %></p>
