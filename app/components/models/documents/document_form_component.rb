@@ -1,4 +1,4 @@
-class Forms::DocumentFormComponent < ApplicationComponent
+class Models::Documents::DocumentFormComponent < ApplicationComponent
   def initialize(document:, submit_text: "Save Document", cancel_url: nil, **system_arguments)
     @document = document
     @submit_text = submit_text

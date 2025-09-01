@@ -1,6 +1,6 @@
-class Forms::FolderFormComponent < ApplicationComponent
-  def initialize(folder:, submit_text: "Save Folder", cancel_url: nil, **system_arguments)
-    @folder = folder
+class Models::Organization::OrganizationFormComponent < ApplicationComponent
+  def initialize(organization:, submit_text: "Save Organization", cancel_url: nil, **system_arguments)
+    @organization = organization
     @submit_text = submit_text
     @cancel_url = cancel_url
     @system_arguments = merge_system_arguments(system_arguments)
@@ -8,7 +8,7 @@ class Forms::FolderFormComponent < ApplicationComponent
 
   private
 
-  attr_reader :folder, :submit_text, :cancel_url, :system_arguments
+  attr_reader :organization, :submit_text, :cancel_url, :system_arguments
 
   def form_classes
     "form #{system_arguments[:class]}"
@@ -22,10 +22,6 @@ class Forms::FolderFormComponent < ApplicationComponent
     "form-control"
   end
 
-  def select_classes
-    "form-select"
-  end
-
   def submit_button_classes
     "btn btn-primary"
   end
@@ -34,33 +30,16 @@ class Forms::FolderFormComponent < ApplicationComponent
     "btn"
   end
 
-  def teams
-    if current_user.admin?
-      Team.all
-    else
-      current_user.teams
-    end
-  end
-
-  def parent_folders
-    if current_user.admin?
-      Folder.all
-    else
-      team_ids = current_user.teams.pluck(:id)
-      Folder.where(team_id: team_ids)
-    end
-  end
-
   def form_url
-    if folder.persisted?
-      folder_path(folder)
+    if organization.persisted?
+      organization_path(organization)
     else
-      folders_path
+      organizations_path
     end
   end
 
   def form_method
-    folder.persisted? ? :patch : :post
+    organization.persisted? ? :patch : :post
   end
 
   # Context methods for the template
@@ -69,21 +48,15 @@ class Forms::FolderFormComponent < ApplicationComponent
       form_classes: form_classes,
       name_field_classes: name_field_classes,
       description_field_classes: description_field_classes,
-      select_classes: select_classes,
       submit_button_classes: submit_button_classes,
       cancel_button_classes: cancel_button_classes,
-      teams: teams,
-      parent_folders: parent_folders,
       form_url: form_url,
       form_method: form_method,
       submit_text: submit_text,
       cancel_url: cancel_url,
-      folder: folder,
-      current_user: current_user,
-      folder_path: method(:folder_path),
-      folders_path: folders_path,
-      Team: Team,
-      Folder: Folder
+      organization: organization,
+      organization_path: method(:organization_path),
+      organizations_path: organizations_path
     }
   end
 end
