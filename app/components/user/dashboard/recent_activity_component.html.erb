@@ -3,7 +3,7 @@
     <h3 class="Box-title mb-0">
       <i class="octicon octicon-pulse mr-2"></i> Recent Activity
     </h3>
-    <%= link_to "View All", user_activities_path(current_user), class: "btn btn-sm btn-outline ml-auto" %>
+    <a href="/activities" class="btn btn-sm btn-outline ml-auto">View All</a>
   </div>
   <div class="Box-body">
     <% if has_activities? %>
@@ -17,7 +17,7 @@
               <strong><%= activity.user.name %></strong>
               <%= activity.action_description %>
               <% if activity.document %>
-                <strong><%= link_to activity.document.title, activity.document, class: "Link--primary" %></strong>
+                <strong><a href="/documents/<%= activity.document.id %>" class="Link--primary"><%= activity.document.title %></a></strong>
               <% end %>
             </p>
             <span class="color-fg-muted f6">

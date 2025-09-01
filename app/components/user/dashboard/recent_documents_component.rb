@@ -6,7 +6,7 @@ class User::Dashboard::RecentDocumentsComponent < ApplicationComponent
 
   private
 
-  attr_reader :documents, :system_arguments
+  attr_reader :documents, :system_arguments, :documents_path, :new_document_path
 
   def card_classes
     "Box #{system_arguments[:class]}"
@@ -15,4 +15,6 @@ class User::Dashboard::RecentDocumentsComponent < ApplicationComponent
   def has_documents?
     documents.any?
   end
+
+
 end

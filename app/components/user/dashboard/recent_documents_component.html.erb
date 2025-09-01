@@ -6,7 +6,7 @@
       </svg>
       Recent Documents
     </h3>
-    <%= link_to "View All", documents_path, class: "btn btn-sm" %>
+    <a href="/documents" class="btn btn-sm">View All</a>
   </div>
   <div class="Box-body p-0">
     <% if has_documents? %>
@@ -14,7 +14,7 @@
         <div class="d-flex flex-items-center p-3 <%= 'border-bottom' unless index == documents.size - 1 %>">
           <div class="flex-auto">
             <div class="f5 text-semibold mb-1">
-              <%= link_to document.title, document, class: "Link--primary text-decoration-none" %>
+              <a href="/documents/<%= document.id %>" class="Link--primary text-decoration-none"><%= document.title %></a>
             </div>
             <div class="d-flex flex-items-center flex-wrap">
               <span class="f6 color-fg-muted d-flex flex-items-center mr-3">
@@ -40,7 +40,7 @@
         icon: "file-text",
         action: {
           text: "Create Document",
-          url: new_document_path
+          url: "/documents/new"
         }
       )) %>
     <% end %>
