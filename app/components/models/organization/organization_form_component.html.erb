@@ -1,16 +1,16 @@
 <%= form_with model: organization, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
   <div class="Box p-4">
-    <div class="FormControl mb-3">
-      <%= form.label :name, class: "FormControl-label" %>
-      <%= form.text_field :name, class: "FormControl-input FormControl-large" %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:name) %>
+      <%= form_control.input(:name, type: :text, size: :large) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :description, class: "FormControl-label" %>
-      <%= form.text_area :description, class: "FormControl-textarea", rows: 3 %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:description) %>
+      <%= form_control.text_area(:description, rows: 3) %>
+    <% end %>
 
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-2 mt-4">
       <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
         <%= submit_text %>
       <% end %>

@@ -1,50 +1,47 @@
 <%= form_with model: document, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
   <div class="Box p-4">
-    <div class="FormControl mb-3">
-      <%= form.label :title, class: "FormControl-label" %>
-      <%= form.text_field :title, class: "FormControl-input FormControl-large" %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:title) %>
+      <%= form_control.input(:title, type: :text, size: :large) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :content, class: "FormControl-label" %>
-      <%= form.text_area :content, class: "FormControl-textarea", rows: 5 %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:content) %>
+      <%= form_control.text_area(:content, rows: 5) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :url, class: "FormControl-label" %>
-      <%= form.url_field :url, class: "FormControl-input" %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:url) %>
+      <%= form_control.input(:url, type: :url) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :status_id, class: "FormControl-label" %>
-      <%= form.select :status_id, 
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:status_id) %>
+      <%= form_control.select(:status_id, 
           options_from_collection_for_select(statuses, :id, :name, document.status_id),
-          { prompt: "Select status" },
-          { class: "FormControl-select" } %>
-    </div>
+          prompt: "Select status") %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :scenario_id, class: "FormControl-label" %>
-      <%= form.select :scenario_id, 
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:scenario_id) %>
+      <%= form_control.select(:scenario_id, 
           options_from_collection_for_select(scenarios, :id, :name, document.scenario_id),
-          { prompt: "Select scenario" },
-          { class: "FormControl-select" } %>
-    </div>
+          prompt: "Select scenario") %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :folder_id, class: "FormControl-label" %>
-      <%= form.select :folder_id, 
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:folder_id) %>
+      <%= form_control.select(:folder_id, 
           options_from_collection_for_select(folders, :id, :name, document.folder_id),
-          { prompt: "Select folder" },
-          { class: "FormControl-select" } %>
-    </div>
+          prompt: "Select folder") %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :file, class: "FormControl-label" %>
-      <%= form.file_field :file, class: "FormControl-input" %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:file) %>
+      <%= form_control.input(:file, type: :file) %>
+    <% end %>
 
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-2 mt-4">
       <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
         <%= submit_text %>
       <% end %>

@@ -1,32 +1,30 @@
 <%= form_with model: folder, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
   <div class="Box p-4">
-    <div class="FormControl mb-3">
-      <%= form.label :name, class: "FormControl-label" %>
-      <%= form.text_field :name, class: "FormControl-input FormControl-large" %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:name) %>
+      <%= form_control.input(:name, type: :text, size: :large) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :description, class: "FormControl-label" %>
-      <%= form.text_area :description, class: "FormControl-textarea", rows: 3 %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:description) %>
+      <%= form_control.text_area(:description, rows: 3) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :team_id, class: "FormControl-label" %>
-      <%= form.select :team_id, 
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:team_id) %>
+      <%= form_control.select(:team_id, 
           options_from_collection_for_select(teams, :id, :name, folder.team_id),
-          { prompt: "Select team" },
-          { class: "FormControl-select" } %>
-    </div>
+          prompt: "Select team") %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :parent_id, class: "FormControl-label" %>
-      <%= form.select :parent_id, 
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:parent_id) %>
+      <%= form_control.select(:parent_id, 
           options_from_collection_for_select(parent_folders, :id, :name, folder.parent_id),
-          { prompt: "Select parent folder (optional)" },
-          { class: "FormControl-select" } %>
-    </div>
+          prompt: "Select parent folder (optional)") %>
+    <% end %>
 
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-2 mt-4">
       <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
         <%= submit_text %>
       <% end %>

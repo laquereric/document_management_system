@@ -1,19 +1,18 @@
 <%= form_with model: tag, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
   <div class="Box p-4">
-    <div class="FormControl mb-3">
-      <%= form.label :name, class: "FormControl-label" %>
-      <%= form.text_field :name, class: "FormControl-input FormControl-large" %>
-    </div>
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:name) %>
+      <%= form_control.input(:name, type: :text, size: :large) %>
+    <% end %>
 
-    <div class="FormControl mb-3">
-      <%= form.label :color, class: "FormControl-label" %>
-      <%= form.select :color, 
+    <%= render Primer::Alpha::FormControl.new do |form_control| %>
+      <%= form_control.label(:color) %>
+      <%= form_control.select(:color, 
           options_for_select(color_options, tag.color),
-          { prompt: "Select color" },
-          { class: "FormControl-select" } %>
-    </div>
+          prompt: "Select color") %>
+    <% end %>
 
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-2 mt-4">
       <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
         <%= submit_text %>
       <% end %>
