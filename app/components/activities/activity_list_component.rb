@@ -17,4 +17,15 @@ class Activities::ActivityListComponent < ApplicationComponent
   def has_activities?
     activities.any?
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      has_activities?: has_activities?,
+      activities: activities,
+      title: title,
+      show_pagination: show_pagination
+    }
+  end
 end

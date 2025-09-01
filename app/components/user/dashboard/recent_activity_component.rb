@@ -15,4 +15,13 @@ class User::Dashboard::RecentActivityComponent < ApplicationComponent
   def has_activities?
     activities.any?
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      has_activities?: has_activities?,
+      activities: activities
+    }
+  end
 end

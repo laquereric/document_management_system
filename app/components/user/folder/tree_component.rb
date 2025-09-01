@@ -48,4 +48,20 @@ class User::Folder::TreeComponent < ApplicationComponent
     return "" if count.zero?
     "(#{count})"
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      tree_classes: tree_classes,
+      root_folders: root_folders,
+      folder_expanded?: method(:folder_expanded?),
+      folder_selected?: method(:folder_selected?),
+      folder_item_classes: method(:folder_item_classes),
+      document_count_text: method(:document_count_text),
+      folders: folders,
+      current_folder: current_folder,
+      expanded_folders: expanded_folders,
+      show_actions: show_actions
+    }
+  end
 end

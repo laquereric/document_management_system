@@ -82,4 +82,17 @@ class User::Dashboard::StatsCardComponent < ApplicationComponent
       '<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>'.html_safe
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      value_color_class: value_color_class,
+      icon_color_class: icon_color_class,
+      title: title,
+      value: value,
+      icon: icon,
+      render_icon_svg: method(:render_icon_svg)
+    }
+  end
 end

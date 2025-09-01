@@ -36,4 +36,14 @@ class User::DocumentComponents::FilterPanelComponent < ApplicationComponent
       }
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      status_options: status_options,
+      tag_options: tag_options,
+      folder_options: folder_options,
+      search: search
+    }
+  end
 end

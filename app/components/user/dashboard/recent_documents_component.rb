@@ -16,5 +16,12 @@ class User::Dashboard::RecentDocumentsComponent < ApplicationComponent
     documents.any?
   end
 
-
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      has_documents?: has_documents?,
+      documents: documents
+    }
+  end
 end

@@ -54,4 +54,19 @@ class User::DocumentComponents::ListComponent < ApplicationComponent
       { icon: :table, value: :table, active: layout == :table, label: "Table" }
     ]
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      container_classes: container_classes,
+      sort_options: sort_options,
+      layout_options: layout_options,
+      documents: documents,
+      layout: layout,
+      show_filters: show_filters,
+      show_sorting: show_sorting,
+      current_sort: current_sort,
+      search: search
+    }
+  end
 end

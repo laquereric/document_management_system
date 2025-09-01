@@ -69,4 +69,12 @@ class User::DocumentComponents::ActionsMenuComponent < ApplicationComponent
 
     items
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      menu_items: menu_items,
+      document: document
+    }
+  end
 end

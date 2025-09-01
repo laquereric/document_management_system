@@ -37,4 +37,13 @@ class Activities::TimelineComponent < ApplicationComponent
       'muted'
     end
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      action_icon: method(:action_icon),
+      action_color: method(:action_color),
+      activities: activities
+    }
+  end
 end

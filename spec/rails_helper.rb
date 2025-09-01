@@ -10,6 +10,10 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# ViewComponent testing
+require 'view_component/test_helpers'
+require 'capybara/rspec'
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -52,7 +56,7 @@ RSpec.configure do |config|
   # for example enabling you to call `get` and `post` in request specs. e.g.:
   #
   #     RSpec.describe UsersController, type: :request do
-  #       # ...
+  #     # ...
   #     end
   #
   # The different available types are documented in the features, such as in
@@ -69,4 +73,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # ViewComponent testing configuration
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
 end

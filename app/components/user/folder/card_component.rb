@@ -40,4 +40,19 @@ class User::Folder::CardComponent < Layout::CardComponent
   def subfolder_count
     safe_count(folder.subfolders)
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      card_classes: card_classes,
+      truncated_description: truncated_description,
+      formatted_date: formatted_date,
+      team_name: team_name,
+      organization_name: organization_name,
+      parent_folder_name: parent_folder_name,
+      document_count: document_count,
+      subfolder_count: subfolder_count,
+      folder: folder
+    }
+  end
 end
