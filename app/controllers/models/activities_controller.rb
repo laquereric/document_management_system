@@ -1,5 +1,5 @@
 class Models::ActivitiesController < Models::ModelsController
-  before_action :set_user, only: [:index, :show]
+  before_action :set_user, only: [:user_activities]
   before_action :set_activity, only: [:show]
   
   def index
@@ -16,6 +16,16 @@ class Models::ActivitiesController < Models::ModelsController
         current_user.id
       ).joins(:document)
     end
+  end
+
+  def user_activities
+    @q = Activity.ransack(params[:q])
+    @activities = @q.result.includes(:document, :user, :old_status, :new_status)
+                    .where(user: @user)
+                    .page(params[:page])
+                    .per(20)
+    
+    render :user_activities
   end
 
   def show

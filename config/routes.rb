@@ -105,13 +105,13 @@ Rails.application.routes.draw do
   
 
   
-  # User management and nested resources
+  # User management and nested resources - now using models controllers
   resources :user, only: [] do
     get "dashboard", to: "dashboard/user#index"
-    resources :activities, only: [:index, :show]
-    resources :teams, only: [:index, :show]
-    resources :tags, only: [:index, :show]
-    resources :organizations, only: [:index, :show]
+    get "activities", to: "models/activities#user_activities"
+    get "teams", to: "models/teams#user_teams"
+    get "tags", to: "models/tags#user_tags"
+    get "organizations", to: "models/organizations#user_organizations"
     resources :documents do
       member do
         patch :change_status

@@ -1,9 +1,21 @@
 class Models::OrganizationsController < Models::ModelsController
 
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:user_organizations]
 
   def index
     @organizations = Organization.includes(:users, :teams).order(created_at: :desc)
+  end
+
+  def user_organizations
+    @organizations = @user.teams.joins(:organization)
+                          .includes(:users, :teams)
+                          .distinct
+                          .order(created_at: :desc)
+                          .page(params[:page])
+                          .per(20)
+    
+    render :user_organizations
   end
 
   def show
@@ -43,6 +55,10 @@ class Models::OrganizationsController < Models::ModelsController
 
   def set_organization
     @organization = Organization.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id])
   end
 
   def organization_params

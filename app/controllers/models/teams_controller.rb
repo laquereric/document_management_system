@@ -1,6 +1,7 @@
 class Models::TeamsController < Models::ModelsController
 
   before_action :set_team, only: [:show, :edit, :update, :destroy, :add_member, :remove_member]
+  before_action :set_user, only: [:user_teams]
 
   def index
     @q = Team.ransack(params[:q])
@@ -9,6 +10,15 @@ class Models::TeamsController < Models::ModelsController
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
+  end
+
+  def user_teams
+    @teams = @user.teams.includes(:organization, :leader, :users)
+                  .order(created_at: :desc)
+                  .page(params[:page])
+                  .per(20)
+    
+    render :user_teams
   end
 
   def show
@@ -81,6 +91,10 @@ class Models::TeamsController < Models::ModelsController
 
   def set_team
     @team = Team.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id])
   end
 
   def team_params

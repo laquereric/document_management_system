@@ -1,6 +1,7 @@
 class Models::TagsController < Models::ModelsController
 
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:user_tags]
 
   def index
     @q = Tag.ransack(params[:q])
@@ -9,6 +10,19 @@ class Models::TagsController < Models::ModelsController
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
+  end
+
+  def user_tags
+    @q = Tag.ransack(params[:q])
+    @tags = @q.result(distinct: true)
+               .joins(:documents)
+               .where(documents: { author: @user })
+               .includes(:documents)
+               .order(created_at: :desc)
+               .page(params[:page])
+               .per(20)
+    
+    render :user_tags
   end
 
   def show
@@ -55,6 +69,10 @@ class Models::TagsController < Models::ModelsController
 
   def set_tag
     @tag = Tag.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id])
   end
 
   def tag_params
