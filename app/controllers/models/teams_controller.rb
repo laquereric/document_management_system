@@ -1,7 +1,6 @@
 class Models::TeamsController < Models::ModelsController
 
   before_action :set_team, only: [:show, :edit, :update, :destroy, :add_member, :remove_member]
-  before_action :set_user, only: [:user_teams]
 
   def index
     @q = Team.ransack(params[:q])
@@ -10,16 +9,27 @@ class Models::TeamsController < Models::ModelsController
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
+    
+    # Filter teams based on user permissions
+    if current_user.admin?
+      # Admin sees all teams
+      @teams = @teams
+    elsif params[:user_id].present?
+      # If viewing specific user's teams, check permissions
+      user = User.find(params[:user_id])
+      if current_user == user || current_user.admin?
+        @teams = @teams.where(id: user.teams.pluck(:id))
+      else
+        # Regular users can only see teams they belong to
+        @teams = @teams.where(id: current_user.teams.pluck(:id))
+      end
+    else
+      # Regular users see only teams they belong to
+      @teams = @teams.where(id: current_user.teams.pluck(:id))
+    end
   end
 
-  def user_teams
-    @teams = @user.teams.includes(:organization, :leader, :users)
-                  .order(created_at: :desc)
-                  .page(params[:page])
-                  .per(20)
-    
-    render :user_teams
-  end
+
 
   def show
   end
@@ -91,10 +101,6 @@ class Models::TeamsController < Models::ModelsController
 
   def set_team
     @team = Team.find(params[:id])
-  end
-
-  def set_user
-    @user = User.find(params[:user_id])
   end
 
   def team_params

@@ -94,7 +94,7 @@
     <%= render(Layout::Dashboard::RecentActivityComponent.new(
       activities: recent_activity,
       title: "Recent Activity",
-      view_all_path: user_activities_path(current_user),
+              view_all_path: models_activities_path,
       view_all_text: "View All Activity"
     )) %>
   </div>

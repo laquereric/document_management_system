@@ -91,6 +91,8 @@ Rails.application.routes.draw do
     patch "users/:id", to: "users#update"
     patch "users/:id/toggle_role", to: "users#toggle_role"
     delete "users/:id", to: "users#destroy"
+    
+
   end
   
   # Main application routes
@@ -105,11 +107,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  # User-specific routes
-  get "user/:user_id/activities", to: "activities#user_activities", as: :user_activities
-  get "user/:user_id/teams", to: "teams#user_teams", as: :user_teams
-  get "user/:user_id/tags", to: "tags#user_tags", as: :user_tags
   
   resources :organizations do
     resources :tags do
