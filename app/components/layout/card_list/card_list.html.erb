@@ -78,7 +78,7 @@
   <% if cards.any? %>
     <div class="<%= container_classes %>">
       <%= content %>
-      <%= render(Layout::CardListPaginationComponent.new(collection: cards)) %>
+      <%= render(Layout::CardList::PaginationComponent.new(collection: cards)) %>
     </div>
   <% else %>
     <!-- Empty State -->

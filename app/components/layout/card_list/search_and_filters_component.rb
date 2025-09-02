@@ -1,4 +1,4 @@
-class Layout::CardListSearchAndFilters < ApplicationComponent
+class Layout::CardList::SearchAndFiltersComponent < ApplicationComponent
 
   def initialize(
     search_object:,
@@ -63,6 +63,7 @@ class Layout::CardListSearchAndFilters < ApplicationComponent
   end
 
   def has_search_params?
-    search_object&.conditions&.any? { |condition| condition.values.any?(&:present?) }
+    return false if search_object.nil?
+    search_object.conditions&.any? { |condition| condition.values.any?(&:present?) } || false
   end
 end

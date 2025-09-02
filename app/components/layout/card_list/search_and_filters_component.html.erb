@@ -3,13 +3,13 @@
     <h2 class="<%= title_classes %>"><%= title %></h2>
     <div class="<%= box_classes %>">
       <div class="<%= box_body_classes %>">
-        <%= search_form_for search_object, url: url, method: :get, class: form_classes do |f| %>
+        <%= helpers.search_form_for search_object, url: url, method: :get, class: form_classes do |f| %>
           <% fields.each do |field| %>
             <div class="<%= field_container_classes %>">
               <%= f.label field[:name], field[:label], class: label_classes %>
               <% if field[:type] == :select %>
                 <%= f.select field[:name], 
-                    options_for_select(field[:options], params.dig(:q, field[:name])), 
+                    helpers.options_for_select(field[:options], params.dig(:q, field[:name])), 
                     {}, 
                     class: input_classes %>
               <% else %>
@@ -21,7 +21,7 @@
             <%= f.submit "Search", class: search_button_classes %>
           </div>
           <div>
-            <%= link_to "Clear", url, class: clear_button_classes %>
+            <%= helpers.link_to "Clear", url, class: clear_button_classes %>
           </div>
         <% end %>
       </div>

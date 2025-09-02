@@ -73,7 +73,7 @@
 
       <!-- Pagination -->
       <% if @activities.respond_to?(:current_page) %>
-        <%= render(Layout::CardListPaginationComponent.new(collection: @activities)) %>
+        <%= render(Layout::CardList::PaginationComponent.new(collection: @activities)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(

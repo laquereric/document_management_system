@@ -59,7 +59,7 @@
 
       <!-- Pagination -->
       <% if @teams.respond_to?(:current_page) %>
-        <%= render(Layout::CardListPaginationComponent.new(collection: @teams)) %>
+        <%= render(Layout::CardList::PaginationComponent.new(collection: @teams)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(

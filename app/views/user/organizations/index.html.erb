@@ -58,7 +58,7 @@
 
       <!-- Pagination -->
       <% if @organizations.respond_to?(:current_page) %>
-        <%= render(Layout::CardListPaginationComponent.new(collection: @organizations)) %>
+        <%= render(Layout::CardList::PaginationComponent.new(collection: @organizations)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(
