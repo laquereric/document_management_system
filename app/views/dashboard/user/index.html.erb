@@ -1,6 +1,6 @@
 <% content_for :title, "Dashboard" %>
 
-<%= render(User::Dashboard::DashboardComponent.new(
+<%= render(Layout::Dashboard::User::DashboardComponent.new(
   stats: @stats,
   recent_documents: @recent_documents,
   recent_activity: @recent_activity

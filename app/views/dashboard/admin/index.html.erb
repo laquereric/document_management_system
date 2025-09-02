@@ -1,0 +1,11 @@
+<% content_for :title, "Admin Dashboard" %>
+
+<%= render(Layout::Dashboard::Admin::DashboardComponent.new(
+  total_users: @stats[:total_users],
+  total_organizations: @stats[:total_organizations],
+  total_documents: @stats[:total_documents],
+  total_folders: @stats[:total_folders],
+  users_by_role: @users_by_role,
+  documents_by_status: @documents_by_status,
+  recent_activity: @recent_activity
+)) %>
