@@ -1,6 +1,5 @@
-class Models::UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin!
+class Models::UsersController < Models::ModelsController
+
   before_action :set_user, only: [:show, :edit, :update, :destroy, :toggle_role]
 
   def index
@@ -68,9 +67,5 @@ class Models::UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :role, :organization_id, :password, :password_confirmation)
   end
 
-  def require_admin!
-    unless current_user&.admin?
-      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
-    end
-  end
+
 end

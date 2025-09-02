@@ -1,6 +1,5 @@
-class Models::TeamsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin!
+class Models::TeamsController < Models::ModelsController
+
   before_action :set_team, only: [:show, :edit, :update, :destroy, :add_member, :remove_member]
 
   def index

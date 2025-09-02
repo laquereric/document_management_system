@@ -1,4 +1,4 @@
-class Models::FoldersController < ApplicationController
+class Models::FoldersController < Models::ModelsController
   before_action :set_folder, only: [:show, :edit, :update, :destroy, :contents]
   before_action :ensure_user_can_access_folder, only: [:show, :edit, :update, :destroy, :contents]
   

@@ -1,6 +1,5 @@
-class Models::ScenariosController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin!
+class Models::ScenariosController < Models::ModelsController
+
   before_action :set_scenario, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -62,9 +61,5 @@ class Models::ScenariosController < ApplicationController
     params.require(:scenario).permit(:name, :description)
   end
 
-  def require_admin!
-    unless current_user&.admin?
-      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
-    end
-  end
+
 end

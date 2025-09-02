@@ -1,4 +1,4 @@
-class Models::ActivitiesController < ApplicationController
+class Models::ActivitiesController < Models::ModelsController
   before_action :set_user, only: [:index, :show]
   before_action :set_activity, only: [:show]
   

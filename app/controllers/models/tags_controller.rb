@@ -1,6 +1,5 @@
-class Models::TagsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :require_admin!
+class Models::TagsController < Models::ModelsController
+
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   def index

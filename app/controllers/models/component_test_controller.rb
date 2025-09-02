@@ -1,7 +1,7 @@
 # Simple test controller to demonstrate components
 require 'ostruct'
 
-class Models::ComponentTestController < ApplicationController
+class Models::ComponentTestController < Models::ModelsController
   skip_before_action :authenticate_user!, only: [:index] if Rails.env.development?
   
   def index
