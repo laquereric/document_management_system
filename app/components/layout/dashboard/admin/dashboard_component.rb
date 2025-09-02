@@ -10,6 +10,18 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
+  def before_render
+    @template_context = {
+      dashboard_classes: dashboard_classes,
+      statistics_data: statistics_data,
+      header_data: header_data,
+      users_by_role_data: users_by_role_data,
+      documents_by_status_data: documents_by_status_data,
+      recent_activity_data: recent_activity_data,
+      quick_actions_data: quick_actions_data
+    }
+  end
+
   private
 
   attr_reader :total_users, :total_organizations, :total_documents, :total_folders, :users_by_role, :documents_by_status, :recent_activity, :system_arguments
@@ -24,25 +36,29 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
         title: "Total Users",
         value: total_users,
         icon: "people",
-        color: "accent"
+        color: "accent",
+        subtitle: "Registered users in the system"
       },
       {
         title: "Organizations",
         value: total_organizations,
         icon: "organization",
-        color: "success"
+        color: "success",
+        subtitle: "Active organizations"
       },
       {
         title: "Total Documents",
         value: total_documents,
         icon: "file-text",
-        color: "attention"
+        color: "attention",
+        subtitle: "Documents across all organizations"
       },
       {
         title: "Total Folders",
         value: total_folders,
         icon: "file-directory",
-        color: "done"
+        color: "done",
+        subtitle: "Organized document storage"
       }
     ]
   end
@@ -60,15 +76,74 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
     }
   end
 
+  def users_by_role_data
+    {
+      title: "Users by Role",
+      data: users_by_role,
+      manage_path: :admin_users_path,
+      manage_text: "Manage Users",
+      empty_state: {
+        title: "No user data",
+        description: "User role statistics will appear here",
+        icon: "people"
+      }
+    }
+  end
+
+  def documents_by_status_data
+    {
+      title: "Documents by Status",
+      data: documents_by_status,
+      manage_path: :documents_path,
+      manage_text: "View Documents",
+      empty_state: {
+        title: "No document data",
+        description: "Document status statistics will appear here",
+        icon: "file-text"
+      }
+    }
+  end
+
+  def recent_activity_data
+    {
+      activities: recent_activity,
+      title: "Recent Activity",
+      view_all_path: :user_activities_path,
+      view_all_text: "View All Activity"
+    }
+  end
+
+  def quick_actions_data
+    [
+      {
+        path: :admin_users_path,
+        text: "Manage Users",
+        icon: "people",
+        description: "User management and role assignments"
+      },
+      {
+        path: :organizations_path,
+        text: "Manage Organizations",
+        icon: "organization",
+        description: "Organization settings and structure"
+      },
+      {
+        path: :documents_path,
+        text: "View All Documents",
+        icon: "file-text",
+        description: "Browse and manage all documents"
+      },
+      {
+        path: :admin_teams_path,
+        text: "Manage Teams",
+        icon: "people",
+        description: "Team creation and member management"
+      }
+    ]
+  end
+
   # Context methods for the template
   def template_context
-    {
-      dashboard_classes: dashboard_classes,
-      statistics_data: statistics_data,
-      header_data: header_data,
-      users_by_role: users_by_role,
-      documents_by_status: documents_by_status,
-      recent_activity: recent_activity
-    }
+    @template_context
   end
 end
