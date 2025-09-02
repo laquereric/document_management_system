@@ -1,0 +1,63 @@
+<div class="<%= card_classes %>">
+  <div class="Box-header d-flex flex-items-center flex-justify-between">
+    <h3 class="f4 text-semibold"><%= title %></h3>
+    <% if show_view_all_link? %>
+      <%= link_to view_all_path, class: "btn btn-sm btn-outline" do %>
+        <%= view_all_text %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="Box-body">
+    <% if has_activities? %>
+      <div class="Timeline">
+        <% activities.each do |activity| %>
+          <div class="TimelineItem">
+            <div class="TimelineItem-badge">
+              <% case activity.action %>
+              <% when 'created' %>
+                <svg class="octicon octicon-plus color-fg-success" width="16" height="16" viewBox="0 0 16 16">
+                  <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
+                </svg>
+              <% when 'updated' %>
+                <svg class="octicon octicon-pencil color-fg-accent" width="16" height="16" viewBox="0 0 16 16">
+                  <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086Z"></path>
+                </svg>
+              <% else %>
+                <svg class="octicon octicon-pulse color-fg-muted" width="16" height="16" viewBox="0 0 16 16">
+                  <path d="M6 2c.306 0 .582.187.696.471L10 10.731l1.304-3.26A.751.751 0 0 1 12 7h3.25a.75.75 0 0 1 0 1.5H12.58l-1.855 4.64a.751.751 0 0 1-1.393-.011L6 5.069 4.696 8.329A.751.751 0 0 1 4 8.5H.75a.75.75 0 0 1 0-1.5h2.68l1.85-4.629A.751.751 0 0 1 6 2Z"></path>
+                </svg>
+              <% end %>
+            </div>
+            <div class="TimelineItem-body">
+              <div class="d-flex flex-items-center flex-justify-between">
+                <div class="flex-1">
+                  <div class="d-flex flex-items-center gap-2 mb-1">
+                    <span class="f6 text-semibold"><%= activity.user&.name || 'Unknown User' %></span>
+                    <span class="f6 color-fg-muted"><%= activity.action.humanize.downcase %></span>
+                    <% if activity.document %>
+                      <%= link_to activity.document.title, document_path(activity.document), class: "Link--primary f6" %>
+                    <% end %>
+                  </div>
+                  <% if activity.notes.present? %>
+                    <div class="f6 color-fg-muted">
+                      <%= activity.notes %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="f6 color-fg-muted">
+                  <%= time_ago_in_words(activity.created_at) %> ago
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%= render(Ui::EmptyStateComponent.new(
+        title: "No recent activity",
+        description: "Activity will appear here as users interact with documents",
+        icon: "pulse"
+      )) %>
+    <% end %>
+  </div>
+</div>
