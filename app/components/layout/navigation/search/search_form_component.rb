@@ -25,7 +25,7 @@ class Layout::Navigation::Search::SearchFormComponent < ApplicationComponent
       helpers: helpers,
       search_form_for: method(:search_form_for),
       search_path: search_path,
-      documents_path: documents_path,
+      documents_path: models_documents_path,
       options_from_collection_for_select: method(:options_from_collection_for_select),
       Status: defined?(Status) ? Status : nil,
       User: defined?(User) ? User : nil,

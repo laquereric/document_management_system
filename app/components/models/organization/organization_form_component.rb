@@ -38,7 +38,7 @@ class Models::Organization::OrganizationFormComponent < ApplicationComponent
       cancel_url: cancel_url,
       organization: organization,
       organization_path: method(:organization_path),
-      organizations_path: organizations_path
+      organizations_path: models_organizations_path
     }
   end
 end

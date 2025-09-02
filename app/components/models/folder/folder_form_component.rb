@@ -58,7 +58,7 @@ class Models::Folder::FolderFormComponent < ApplicationComponent
       folder: folder,
       current_user: current_user,
       folder_path: method(:folder_path),
-      folders_path: folders_path,
+      folders_path: models_folders_path,
       Team: Team,
       Folder: Folder
     }

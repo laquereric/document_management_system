@@ -24,23 +24,23 @@ class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
     when "dashboard"
       crumbs << { label: "Dashboard", path: dashboard_index_path }
     when "documents"
-      crumbs << { label: "Documents", path: documents_path }
+      crumbs << { label: "Documents", path: models_documents_path }
       if action_name == "show" && params[:id]
         crumbs << { label: "Document Details", path: nil }
       elsif action_name == "new"
         crumbs << { label: "New Document", path: nil }
       end
     when "folders"
-      crumbs << { label: "Folders", path: folders_path }
+      crumbs << { label: "Folders", path: models_folders_path }
       if action_name == "show" && params[:id]
         crumbs << { label: "Folder Details", path: nil }
       end
     when "organizations"
-      crumbs << { label: "Organizations", path: organizations_path }
+      crumbs << { label: "Organizations", path: models_organizations_path }
     when "teams"
-      crumbs << { label: "Teams", path: organizations_path }
+      crumbs << { label: "Teams", path: models_teams_path }
     when "tags"
-      crumbs << { label: "Tags", path: tags_path }
+      crumbs << { label: "Tags", path: models_tags_path }
     when "activities"
       crumbs << { label: "Activity", path: user_activities_path(current_user) }
     end
@@ -59,10 +59,10 @@ class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
       current_user: current_user,
       RootPath: RootPath,
       dashboard_index_path: dashboard_index_path,
-      documents_path: documents_path,
-      folders_path: folders_path,
-      organizations_path: organizations_path,
-      tags_path: tags_path,
+      documents_path: models_documents_path,
+      folders_path: models_folders_path,
+      organizations_path: models_organizations_path,
+      tags_path: models_tags_path,
       user_activities_path: method(:user_activities_path),
       build_breadcrumbs_from_params: method(:build_breadcrumbs_from_params)
     }

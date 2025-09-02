@@ -53,7 +53,7 @@ class Models::Documents::DocumentFormComponent < ApplicationComponent
       cancel_url: cancel_url,
       document: document,
       document_path: method(:document_path),
-      documents_path: documents_path,
+      documents_path: models_documents_path,
       Status: defined?(Status) ? Status : nil,
       Scenario: defined?(Scenario) ? Scenario : nil,
       Folder: defined?(Folder) ? Folder : nil

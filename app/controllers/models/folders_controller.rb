@@ -50,7 +50,7 @@ class Models::FoldersController < Models::ModelsController
   def destroy
     folder_name = @folder.name
     if @folder.destroy
-      redirect_to folders_url, notice: 'Folder was successfully deleted.'
+      redirect_to models_folders_path, notice: 'Folder was successfully deleted.'
     else
       redirect_to @folder, alert: 'Failed to delete folder.'
     end
@@ -71,7 +71,7 @@ class Models::FoldersController < Models::ModelsController
 
   def ensure_user_can_access_folder
     unless current_user.admin? || @folder.team.members.include?(current_user)
-      redirect_to folders_path, alert: 'You do not have permission to access this folder.'
+      redirect_to models_folders_path, alert: 'You do not have permission to access this folder.'
     end
   end
 

@@ -30,19 +30,19 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Documents",
         icon: "file-text",
-        path: documents_path,
+        path: models_documents_path,
         active: @controller_name == "documents"
       },
       {
         label: "Folders",
         icon: "file-directory",
-        path: folders_path,
+        path: models_folders_path,
         active: @controller_name == "folders"
       },
       {
         label: "Tags",
         icon: "tag",
-        path: tags_path,
+        path: models_tags_path,
         active: @controller_name == "tags"
       },
       {
@@ -161,9 +161,9 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       current_page?: method(:current_page?),
       action_name: action_name,
       dashboard_index_path: dashboard_index_path,
-      documents_path: documents_path,
-      folders_path: folders_path,
-      tags_path: tags_path,
+      documents_path: models_documents_path,
+      folders_path: models_folders_path,
+      tags_path: models_tags_path,
       user_activities_path: method(:user_activities_path),
       user_teams_path: method(:user_teams_path),
       user_tags_path: method(:user_tags_path),

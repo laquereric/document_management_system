@@ -31,7 +31,7 @@ class Models::ActivitiesController < Models::ModelsController
   def show
     # Ensure user can access this activity
     unless current_user.admin? || @activity.user == current_user || @activity.document.author == current_user
-      redirect_to activities_path, alert: 'You do not have permission to view this activity.'
+      redirect_to models_activities_path, alert: 'You do not have permission to view this activity.'
     end
   end
 

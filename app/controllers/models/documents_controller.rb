@@ -158,7 +158,7 @@ class Models::DocumentsController < Models::ModelsController
 
   def ensure_user_can_access_document
     unless current_user.admin? || @document.team.members.include?(current_user)
-      redirect_to documents_path, alert: 'You do not have permission to access this document.'
+      redirect_to models_documents_path, alert: 'You do not have permission to access this document.'
     end
   end
 

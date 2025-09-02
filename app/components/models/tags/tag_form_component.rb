@@ -52,7 +52,7 @@ class Models::Tags::TagFormComponent < ApplicationComponent
       cancel_url: cancel_url,
       tag: tag,
       tag_path: method(:tag_path),
-      tags_path: tags_path
+      tags_path: models_tags_path
     }
   end
 end

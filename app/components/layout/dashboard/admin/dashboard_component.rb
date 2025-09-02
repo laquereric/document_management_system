@@ -94,7 +94,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
     {
       title: "Documents by Status",
       data: documents_by_status,
-      manage_path: :documents_path,
+      manage_path: :models_documents_path,
       manage_text: "View Documents",
       empty_state: {
         title: "No document data",
@@ -122,13 +122,13 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
         description: "User management and role assignments"
       },
       {
-        path: :organizations_path,
+        path: :models_organizations_path,
         text: "Manage Organizations",
         icon: "organization",
         description: "Organization settings and structure"
       },
       {
-        path: :documents_path,
+        path: :models_documents_path,
         text: "View All Documents",
         icon: "file-text",
         description: "Browse and manage all documents"
