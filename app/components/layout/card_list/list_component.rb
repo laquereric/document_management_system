@@ -1,6 +1,6 @@
 # Document list component for displaying multiple documents
 
-class Collection::ListComponent < ApplicationComponent
+class Layout::CardList::ListComponent < ApplicationComponent
   LAYOUT_VARIANTS = %i[list grid table].freeze
   SORT_OPTIONS = %i[title created_at updated_at author status].freeze
 

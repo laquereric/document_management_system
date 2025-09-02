@@ -14,7 +14,7 @@
     </div>
     
     <% if show_actions %>
-      <%= render(Collection::ActionsMenuComponent.new(resource: folder, resource_type: 'folder')) %>
+              <%= render(Layout::Card::ActionsMenuComponent.new(resource: folder, resource_type: 'folder')) %>
     <% end %>
   </div>
 

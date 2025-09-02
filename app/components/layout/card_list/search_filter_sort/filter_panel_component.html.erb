@@ -4,13 +4,13 @@
   <% end %>
   
   <div class="p-3">
-    <%= form_with url: documents_path, method: :get, local: true, class: "d-flex flex-column gap-3" do |form| %>
+    <%= helpers.form_with url: helpers.documents_path, method: :get, local: true, class: "d-flex flex-column gap-3" do |form| %>
       <!-- Search Input -->
       <%= render Primer::Alpha::FormControl.new do |form_control| %>
         <%= form_control.label(:q, "Search documents") %>
         <%= form_control.input(:q, 
             type: :text,
-            value: params[:q], 
+            value: helpers.params[:q], 
             placeholder: "Search by title, content, or tags...") %>
       <% end %>
 
@@ -18,7 +18,7 @@
       <%= render Primer::Alpha::FormControl.new do |form_control| %>
         <%= form_control.label(:status_eq, "Status") %>
         <%= form_control.select(:status_eq, 
-            options_for_select([["All", ""]] + status_options.map { |opt| [opt[:label], opt[:value]] }, params[:status_eq])) %>
+            helpers.options_for_select([["All", ""]] + status_options.map { |opt| [opt[:label], opt[:value]] }, helpers.params[:status_eq])) %>
       <% end %>
 
       <!-- Folder Filter -->
@@ -26,7 +26,7 @@
         <%= render Primer::Alpha::FormControl.new do |form_control| %>
           <%= form_control.label(:folder_id_eq, "Folder") %>
           <%= form_control.select(:folder_id_eq, 
-              options_for_select([["All Folders", ""]] + folder_options.map { |opt| [opt[:label], opt[:value]] }, params[:folder_id_eq])) %>
+              helpers.options_for_select([["All Folders", ""]] + folder_options.map { |opt| [opt[:label], opt[:value]] }, helpers.params[:folder_id_eq])) %>
         <% end %>
       <% end %>
 
@@ -57,7 +57,7 @@
       <!-- Action Buttons -->
       <div class="d-flex gap-2">
         <%= render(Primer::Beta::Button.new(type: :submit, scheme: :primary)) { "Apply Filters" } %>
-        <%= render(Primer::Beta::Button.new(href: documents_path, scheme: :secondary)) { "Clear" } %>
+        <%= render(Primer::Beta::Button.new(href: helpers.documents_path, scheme: :secondary)) { "Clear" } %>
       </div>
     <% end %>
   </div>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ui::UserMenuComponent, type: :component do
+RSpec.describe Models::Users::UserMenuComponent, type: :component do
   let(:user) { build(:user, email: 'john.doe@example.com') }
   let(:component) { described_class.new(user: user) }
 

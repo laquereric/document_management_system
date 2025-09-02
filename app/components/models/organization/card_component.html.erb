@@ -18,7 +18,7 @@
     </div>
     
     <% if show_actions %>
-      <%= render(Collection::ActionsMenuComponent.new(resource: organization, resource_type: 'organization')) %>
+              <%= render(Layout::Card::ActionsMenuComponent.new(resource: organization, resource_type: 'organization')) %>
     <% end %>
   </div>
 

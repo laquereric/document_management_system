@@ -22,7 +22,7 @@
     </div>
     
     <% if show_actions %>
-      <%= render(Collection::ActionsMenuComponent.new(resource: document, resource_type: 'document')) %>
+              <%= render(Layout::Card::ActionsMenuComponent.new(resource: document, resource_type: 'document')) %>
     <% end %>
   </div>
 

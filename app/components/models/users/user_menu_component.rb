@@ -1,16 +1,25 @@
 # User menu component for the header
 
-class Ui::UserMenuComponent < ApplicationComponent
+class Models::Users::UserMenuComponent < ApplicationComponent
   def initialize(user:, **system_arguments)
     @user = user
     @system_arguments = merge_system_arguments(system_arguments)
+  end
+
+  def before_render
+    @menu_items = build_menu_items
+  end
+
+  # Public method for testing
+  def menu_items
+    @menu_items || build_menu_items
   end
 
   private
 
   attr_reader :user, :system_arguments
 
-  def menu_items
+  def build_menu_items
     [
       {
         label: "Profile",
@@ -31,7 +40,7 @@ class Ui::UserMenuComponent < ApplicationComponent
       {
         label: "Sign Out",
         icon: :sign_out,
-        href: destroy_user_session_path,
+        href: "#", # Will be set in template
         method: :delete,
         classes: "color-fg-danger"
       }
@@ -39,6 +48,7 @@ class Ui::UserMenuComponent < ApplicationComponent
   end
 
   def user_initials
+    return "" if user.nil? || user.email.blank?
     names = user.email.split('@').first.split('.')
     names.map(&:first).join.upcase[0..1]
   end
@@ -49,9 +59,9 @@ class Ui::UserMenuComponent < ApplicationComponent
       menu_items: menu_items,
       user_initials: user_initials,
       user: user,
-      destroy_user_session_path: destroy_user_session_path,
-      user_path: method(:user_path),
-      edit_user_path: method(:edit_user_path)
+      destroy_user_session_path: helpers.destroy_user_session_path,
+      user_path: helpers.user_path,
+      edit_user_path: helpers.edit_user_path
     }
   end
 end

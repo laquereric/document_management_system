@@ -1,4 +1,4 @@
-class Collection::TableComponent < ApplicationComponent
+class Layout::CardList::TableComponent < ApplicationComponent
   def initialize(documents:, **system_arguments)
     @documents = documents
     @system_arguments = merge_system_arguments(system_arguments)

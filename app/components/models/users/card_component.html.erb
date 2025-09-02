@@ -19,7 +19,7 @@
     </div>
     
     <% if show_admin_panel_actions? %>
-      <%= render(Collection::ActionsMenuComponent.new(resource: user, resource_type: 'user')) %>
+              <%= render(Layout::Card::ActionsMenuComponent.new(resource: user, resource_type: 'user')) %>
     <% end %>
   </div>
 

@@ -1,6 +1,14 @@
 <!-- Generic actions menu using Primer components -->
 <%= render Primer::Alpha::ActionMenu.new do |menu| %>
-  <% menu.with_trigger_button(icon: :"kebab-horizontal", "aria-label": "#{resource_type.humanize} actions") %>
+  <% menu.with_show_button do %>
+    <%= render Primer::Beta::Button.new(
+      scheme: :default,
+      size: :small,
+      "aria-label": "#{resource_type.humanize} actions"
+    ) do %>
+      <%= render Primer::Beta::Octicon.new(icon: :"kebab-horizontal") %>
+    <% end %>
+  <% end %>
   
   <% menu_items.each do |item| %>
     <% if item[:href] == "#" %>

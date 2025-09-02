@@ -1,6 +1,4 @@
-class Collection::FilterPanelComponent < ApplicationComponent
-  include ViewComponent::Form::Helpers
-
+class Layout::CardList::SearchFilterSort::FilterPanelComponent < ApplicationComponent
   def initialize(search: nil, **system_arguments)
     @search = search
     super(**system_arguments)

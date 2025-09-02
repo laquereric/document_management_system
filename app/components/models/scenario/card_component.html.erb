@@ -8,7 +8,7 @@
     </div>
     
     <% if has_actions? %>
-      <%= render(Collection::ActionsMenuComponent.new(resource: scenario, resource_type: 'scenario')) %>
+              <%= render(Layout::Card::ActionsMenuComponent.new(resource: scenario, resource_type: 'scenario')) %>
     <% end %>
   </div>
   

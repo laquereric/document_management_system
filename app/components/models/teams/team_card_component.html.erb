@@ -24,7 +24,7 @@
     </div>
     
     <% if can_manage_team? %>
-      <%= render(Collection::ActionsMenuComponent.new(resource: team, resource_type: 'team')) %>
+              <%= render(Layout::Card::ActionsMenuComponent.new(resource: team, resource_type: 'team')) %>
     <% end %>
   </div>
 

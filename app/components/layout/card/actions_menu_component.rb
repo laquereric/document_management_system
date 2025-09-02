@@ -1,6 +1,6 @@
 # Generic actions menu component for various resources
 
-class Collection::ActionsMenuComponent < ApplicationComponent
+class Layout::Card::ActionsMenuComponent < ApplicationComponent
   def initialize(resource:, resource_type: nil, **system_arguments)
     @resource = resource
     @resource_type = resource_type || resource.class.name.downcase
@@ -45,7 +45,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: document_path(resource)
+        href: helpers.document_path(resource)
       }
     ]
 
@@ -54,7 +54,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
         {
           label: "Edit",
           icon: :pencil,
-          href: edit_document_path(resource)
+          href: helpers.edit_document_path(resource)
         },
         {
           label: "Move",
@@ -95,7 +95,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: user_path(resource)
+        href: helpers.user_path(resource)
       }
     ]
 
@@ -103,7 +103,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: edit_user_path(resource)
+        href: helpers.edit_user_path(resource)
       }
     end
 
@@ -128,7 +128,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: organization_path(resource)
+        href: helpers.organization_path(resource)
       }
     ]
 
@@ -136,7 +136,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: edit_organization_path(resource)
+        href: helpers.edit_organization_path(resource)
       }
     end
 
@@ -161,7 +161,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: folder_path(resource)
+        href: helpers.folder_path(resource)
       }
     ]
 
@@ -169,7 +169,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: edit_folder_path(resource)
+        href: helpers.edit_folder_path(resource)
       }
     end
 
@@ -194,7 +194,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: team_path(resource)
+        href: helpers.team_path(resource)
       }
     ]
 
@@ -202,7 +202,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: edit_team_path(resource)
+        href: helpers.edit_team_path(resource)
       }
     end
 
@@ -227,7 +227,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: scenario_path(resource)
+        href: helpers.scenario_path(resource)
       }
     ]
 
@@ -235,7 +235,7 @@ class Collection::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: edit_scenario_path(resource)
+        href: helpers.edit_scenario_path(resource)
       }
     end
 

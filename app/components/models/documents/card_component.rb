@@ -1,42 +1,53 @@
 # Document card component for displaying documents in lists
 
-class Models::Documents::CardComponent < Layout::CardComponent
+class Models::Documents::CardComponent < ApplicationComponent
 
   def initialize(document:, show_actions: true, **system_arguments)
     @document = document
-    initialize_card_base(show_actions: show_actions, **system_arguments)
+    @show_actions = show_actions
+    @system_arguments = merge_system_arguments(system_arguments)
   end
 
   private
 
-  attr_reader :document
+  attr_reader :document, :show_actions, :system_arguments
 
   def card_classes
     "#{condensed_card_classes} document-card #{system_arguments[:class]}".strip
   end
 
+  def condensed_card_classes
+    "Box p-3"
+  end
+
   def truncated_content
-    super(document.content)
+    return "" unless document.content.present?
+    document.content.length > 100 ? "#{document.content[0..100]}..." : document.content
   end
 
   def formatted_date
-    super(document.created_at)
+    return "" unless document.created_at.present?
+    document.created_at.strftime("%B %d, %Y")
   end
 
   def author_name
-    super(document.author)
+    return "" unless document.author.present?
+    document.author.respond_to?(:name) ? document.author.name : document.author.to_s
   end
 
   def folder_name
-    super(document.folder)
+    return "" unless document.folder.present?
+    document.folder.respond_to?(:name) ? document.folder.name : document.folder.to_s
   end
 
   def team_name
-    super(document.team)
+    return "" unless document.team.present?
+    document.team.respond_to?(:name) ? document.team.name : document.team.to_s
   end
 
   def organization_name
-    super(document.organization)
+    return "" unless document.organization.present?
+    document.organization.respond_to?(:name) ? document.organization.name : document.organization.to_s
   end
 
   def has_file?
