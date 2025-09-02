@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_31_184016) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_02_190205) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -117,6 +117,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_31_184016) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "organization_id"
+    t.integer "team_id"
+    t.integer "folder_id"
+    t.index ["folder_id"], name: "index_tags_on_folder_id"
+    t.index ["organization_id"], name: "index_tags_on_organization_id"
+    t.index ["team_id"], name: "index_tags_on_team_id"
   end
 
   create_table "team_memberships", force: :cascade do |t|
@@ -170,6 +176,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_31_184016) do
   add_foreign_key "documents", "users", column: "author_id"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
   add_foreign_key "folders", "teams"
+  add_foreign_key "tags", "folders"
+  add_foreign_key "tags", "organizations"
+  add_foreign_key "tags", "teams"
   add_foreign_key "team_memberships", "teams"
   add_foreign_key "team_memberships", "users"
   add_foreign_key "teams", "organizations"

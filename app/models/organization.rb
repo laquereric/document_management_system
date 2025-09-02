@@ -2,6 +2,7 @@ class Organization < ApplicationRecord
   # Associations
   has_many :users, dependent: :destroy
   has_many :teams, dependent: :destroy
+  has_many :tags, dependent: :destroy
 
   # Validations
   validates :name, presence: true, uniqueness: true
@@ -21,6 +22,6 @@ class Organization < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["teams", "users"]
+    ["teams", "users", "tags"]
   end
 end

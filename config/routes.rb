@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   # Component test route (development only)
   get "component_test", to: "models/component_test#index" if Rails.env.development?
   
+  # Dashboard namespace for dashboard-related functionality
+  namespace :dashboard do
+    get "admin", to: "admin#index"
+    get "user", to: "user#index"
+  end
+  
   # Models namespace for all model-related functionality
   namespace :models do
     # Activities routes
@@ -87,47 +93,6 @@ Rails.application.routes.draw do
     delete "users/:id", to: "users#destroy"
   end
   
-  # Admin routes
-  namespace :admin do
-    get "dashboard/index", to: "dashboard/admin#index"
-    root "dashboard/admin#index"
-    
-    # Admin-specific routes now point to models controllers
-    get "users", to: "models/users#index"
-    get "users/:id", to: "models/users#show", as: :user
-    get "users/:id/edit", to: "models/users#edit", as: :edit_user
-    patch "users/:id", to: "models/users#update"
-    patch "users/:id/toggle_role", to: "models/users#toggle_role", as: :toggle_role_user
-    delete "users/:id", to: "models/users#destroy"
-    
-    get "organizations", to: "models/organizations#index"
-    get "organizations/:id", to: "models/organizations#show", as: :organization
-    get "organizations/:id/edit", to: "models/organizations#edit", as: :edit_organization
-    patch "organizations/:id", to: "models/organizations#update"
-    delete "organizations/:id", to: "models/organizations#destroy"
-    
-    get "teams", to: "models/teams#index"
-    get "teams/:id", to: "models/teams#show", as: :team
-    get "teams/:id/edit", to: "models/teams#edit", as: :edit_team
-    patch "teams/:id", to: "models/teams#update"
-    delete "teams/:id", to: "models/teams#destroy"
-    
-    get "tags", to: "models/tags#index"
-    get "tags/:id", to: "models/tags#show", as: :tag
-    get "tags/:id/edit", to: "models/tags#edit", as: :edit_tag
-    patch "tags/:id", to: "models/tags#update"
-    delete "tags/:id", to: "models/tags#destroy"
-    
-    get "scenarios", to: "models/scenarios#index"
-    get "scenarios/:id", to: "models/scenarios#show", as: :scenario
-    get "scenarios/:id/edit", to: "models/scenarios#edit", as: :edit_scenario
-    patch "scenarios/:id", to: "models/scenarios#update"
-    delete "scenarios/:id", to: "models/scenarios#destroy"
-    
-    get "infrastructure", to: "infrastructure#index"
-    get "financial", to: "financial#index"
-  end
-  
   # Main application routes
   resources :organizations do
     resources :teams do
@@ -140,38 +105,52 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # User-specific routes
+  get "user/:user_id/activities", to: "activities#user_activities", as: :user_activities
+  get "user/:user_id/teams", to: "teams#user_teams", as: :user_teams
+  get "user/:user_id/tags", to: "tags#user_tags", as: :user_tags
   
-  # User management and nested resources - now using models controllers
-  resources :user, only: [] do
-    get "dashboard", to: "dashboard/user#index"
-    get "activities", to: "models/activities#user_activities"
-    get "teams", to: "models/teams#user_teams"
-    get "tags", to: "models/tags#user_tags"
-    get "organizations", to: "models/organizations#user_organizations"
-    resources :documents do
-      member do
-        patch :change_status
-        post :add_tag
-        delete :remove_tag
-      end
-      collection do
-        get :search
-      end
-    end
-    resources :folders do
-      resources :documents
+  resources :organizations do
+    resources :tags do
       member do
         get :contents
       end
     end
   end
-  
-  # Legacy routes for backward compatibility
-  resources :tags
-  resources :users
-  
+
+  resources :teams do
+    resources :tags do
+      member do
+        get :contents
+      end
+    end
+  end
+
+  resources :folders do
+    resources :tags
+    member do
+      get :contents
+    end
+  end
+
+  resources :documents do
+    resources :tags
+    member do
+      get :contents
+    end
+  end
+
   # Search
   get "search", to: "search#index"
+  
+  # Infrastructure and financial routes
+  get "infrastructure", to: "infrastructure#index"
+  get "financial", to: "financial#index"
+  
+  # Convention routes
+  get "admin", to: redirect('/dashboard/admin')
+  get "user", to: redirect('/dashboard/user')
   
   # API routes for AJAX requests
   namespace :api do

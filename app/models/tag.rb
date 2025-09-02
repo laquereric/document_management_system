@@ -1,5 +1,8 @@
 class Tag < ApplicationRecord
   # Associations
+  belongs_to :organization, optional: true
+  belongs_to :team, optional: true
+  belongs_to :folder, optional: true
   has_many :document_tags, dependent: :destroy
   has_many :documents, through: :document_tags
 
@@ -20,6 +23,6 @@ class Tag < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["document_tags", "documents"]
+    ["document_tags", "documents", "organization", "team", "folder"]
   end
 end
