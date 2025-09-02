@@ -1,0 +1,5 @@
+<% if render? %>
+  <div class="d-flex flex-justify-center mt-4">
+    <%= helpers.paginate collection, theme: 'bootstrap', window: 2, left: 1, right: 1 %>
+  </div>
+<% end %>

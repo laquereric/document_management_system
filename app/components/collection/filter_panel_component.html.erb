@@ -6,38 +6,34 @@
   <div class="p-3">
     <%= form_with url: documents_path, method: :get, local: true, class: "d-flex flex-column gap-3" do |form| %>
       <!-- Search Input -->
-      <div class="form-group">
-        <%= form.label :q, "Search documents", class: "form-label" %>
-        <%= form.text_field :q, 
+      <%= render Primer::Alpha::FormControl.new do |form_control| %>
+        <%= form_control.label(:q, "Search documents") %>
+        <%= form_control.input(:q, 
+            type: :text,
             value: params[:q], 
-            placeholder: "Search by title, content, or tags...", 
-            class: "form-control" %>
-      </div>
+            placeholder: "Search by title, content, or tags...") %>
+      <% end %>
 
       <!-- Status Filter -->
-      <div class="form-group">
-        <%= form.label :status_eq, "Status", class: "form-label" %>
-        <%= form.select :status_eq, 
-            options_for_select([["All", ""]] + status_options.map { |opt| [opt[:label], opt[:value]] }, params[:status_eq]),
-            {}, 
-            { class: "form-select" } %>
-      </div>
+      <%= render Primer::Alpha::FormControl.new do |form_control| %>
+        <%= form_control.label(:status_eq, "Status") %>
+        <%= form_control.select(:status_eq, 
+            options_for_select([["All", ""]] + status_options.map { |opt| [opt[:label], opt[:value]] }, params[:status_eq])) %>
+      <% end %>
 
       <!-- Folder Filter -->
       <% if folder_options.any? %>
-        <div class="form-group">
-          <%= form.label :folder_id_eq, "Folder", class: "form-label" %>
-          <%= form.select :folder_id_eq, 
-              options_for_select([["All Folders", ""]] + folder_options.map { |opt| [opt[:label], opt[:value]] }, params[:folder_id_eq]),
-              {}, 
-              { class: "form-select" } %>
-        </div>
+        <%= render Primer::Alpha::FormControl.new do |form_control| %>
+          <%= form_control.label(:folder_id_eq, "Folder") %>
+          <%= form_control.select(:folder_id_eq, 
+              options_for_select([["All Folders", ""]] + folder_options.map { |opt| [opt[:label], opt[:value]] }, params[:folder_id_eq])) %>
+        <% end %>
       <% end %>
 
       <!-- Tags Filter -->
       <% if tag_options.any? %>
-        <div class="form-group">
-          <%= form.label :tags_id_in, "Tags", class: "form-label" %>
+        <%= render Primer::Alpha::FormControl.new do |form_control| %>
+          <%= form_control.label(:tags_id_in, "Tags") %>
           <div class="d-flex flex-wrap gap-2">
             <% tag_options.each do |tag| %>
               <label class="cursor-pointer">
@@ -55,15 +51,13 @@
               </label>
             <% end %>
           </div>
-        </div>
+        <% end %>
       <% end %>
 
       <!-- Action Buttons -->
       <div class="d-flex gap-2">
         <%= render(Primer::Beta::Button.new(type: :submit, scheme: :primary)) { "Apply Filters" } %>
-        <%= link_to "Clear", documents_path, 
-            class: "btn btn-secondary",
-            data: { turbo_method: :get } %>
+        <%= render(Primer::Beta::Button.new(href: documents_path, scheme: :secondary)) { "Clear" } %>
       </div>
     <% end %>
   </div>

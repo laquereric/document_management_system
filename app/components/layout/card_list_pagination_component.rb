@@ -1,6 +1,4 @@
-class Layout::CardListPagination < ApplicationComponent
-  include ViewComponent::Pagination::Helpers
-
+class Layout::CardListPaginationComponent < ApplicationComponent
   def initialize(collection:, **system_arguments)
     @collection = collection
     super(**system_arguments)
@@ -16,8 +14,7 @@ class Layout::CardListPagination < ApplicationComponent
 
   def pagination_options
     {
-      theme: :bootstrap,
-      size: :sm,
+      theme: 'bootstrap',
       window: 2,
       left: 1,
       right: 1,

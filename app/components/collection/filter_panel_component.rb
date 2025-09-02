@@ -1,4 +1,6 @@
 class Collection::FilterPanelComponent < ApplicationComponent
+  include ViewComponent::Form::Helpers
+
   def initialize(search: nil, **system_arguments)
     @search = search
     super(**system_arguments)
@@ -43,16 +45,7 @@ class Collection::FilterPanelComponent < ApplicationComponent
       status_options: status_options,
       tag_options: tag_options,
       folder_options: folder_options,
-      search: search,
-      render: method(:render),
-      form_with: method(:form_with),
-      documents_path: documents_path,
-      options_for_select: method(:options_for_select),
-      link_to: method(:link_to),
-      params: params,
-      Tag: Tag,
-      Folder: Folder,
-      Primer: Primer
+      search: search
     }
   end
 end

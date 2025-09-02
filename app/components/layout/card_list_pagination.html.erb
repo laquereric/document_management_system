@@ -1,29 +1,5 @@
 <% if render? %>
-  <div class="<%= pagination_classes %>">
-    <nav class="<%= nav_classes %>" aria-label="Pagination">
-      <div class="<%= pagination_container_classes %>">
-        <% if prev_page %>
-          <%= link_to "Previous", url_for(page: prev_page), class: previous_link_classes, rel: "prev" %>
-        <% else %>
-          <span class="<%= previous_link_classes %> disabled">Previous</span>
-        <% end %>
-        
-        <% page_numbers.each do |page_info| %>
-          <% if page_info[:gap] %>
-            <span class="<%= gap_classes %>">…</span>
-          <% elsif page_info[:current] %>
-            <em class="<%= current_page_classes %>"><%= page_info[:number] %></em>
-          <% else %>
-            <%= link_to page_info[:number], url_for(page: page_info[:number]) %>
-          <% end %>
-        <% end %>
-        
-        <% if next_page %>
-          <%= link_to "Next", url_for(page: next_page), class: next_link_classes, rel: "next" %>
-        <% else %>
-          <span class="<%= next_link_classes %> disabled">Next</span>
-        <% end %>
-      </div>
-    </nav>
+  <div class="d-flex flex-justify-center mt-4">
+    <%= paginate collection, **pagination_options %>
   </div>
 <% end %>
