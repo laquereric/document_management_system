@@ -45,15 +45,15 @@ Rails.application.routes.draw do
   devise_for :users
   
   # Root route - point directly to user dashboard
-  root "user/dashboard#index"
+  root "dashboard/user#index"
   
   # Component test route (development only)
   get "component_test", to: "models/component_test#index" if Rails.env.development?
   
   # Admin routes
   namespace :admin do
-    get "dashboard/index"
-    root "dashboard#index"
+    get "dashboard/index", to: "dashboard/admin#index"
+    root "dashboard/admin#index"
     # Admin-specific routes now point to models controllers
     get "users", to: "models/users#index"
     get "users/:id", to: "models/users#show", as: :user
@@ -107,7 +107,7 @@ Rails.application.routes.draw do
   
   # User management and nested resources
   resources :user, only: [] do
-    get "dashboard", to: "dashboard#index"
+    get "dashboard", to: "dashboard/user#index"
     resources :activities, only: [:index, :show]
     resources :teams, only: [:index, :show]
     resources :tags, only: [:index, :show]
