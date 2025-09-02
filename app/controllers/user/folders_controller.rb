@@ -1,68 +1,81 @@
-class User::FoldersController < ApplicationController
-  before_action :set_user
+class FoldersController < ApplicationController
   before_action :set_folder, only: [:show, :edit, :update, :destroy, :contents]
+  before_action :ensure_user_can_access_folder, only: [:show, :edit, :update, :destroy, :contents]
   
   def index
-    @folders = @user.owned_folders.includes(:parent, :documents)
-                   .page(params[:page])
-                   .per(20)
+    @q = Folder.ransack(params[:q])
+    @folders = @q.result.includes(:team, :parent_folder, :documents)
+                  .page(params[:page])
+                  .per(20)
+    
+    # Filter by user's accessible folders
+    unless current_user.admin?
+      team_ids = current_user.teams.pluck(:id)
+      @folders = @folders.where(team_id: team_ids)
+    end
   end
 
   def show
-    # Folder is already loaded via set_folder
+    @documents = @folder.documents.includes(:author, :status, :tags)
+                       .page(params[:page])
+                       .per(20)
+    @subfolders = @folder.subfolders.includes(:documents)
   end
 
   def new
-    @folder = @user.owned_folders.build
+    @folder = Folder.new
   end
 
   def create
-    @folder = @user.owned_folders.build(folder_params)
+    @folder = Folder.new(folder_params)
     
     if @folder.save
-      redirect_to user_folder_path(@user, @folder), notice: 'Folder was successfully created.'
+      redirect_to @folder, notice: 'Folder was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    # Folder is already loaded via set_folder
   end
 
   def update
     if @folder.update(folder_params)
-      redirect_to user_folder_path(@user, @folder), notice: 'Folder was successfully updated.'
+      redirect_to @folder, notice: 'Folder was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @folder.destroy
-    redirect_to user_folders_path(@user), notice: 'Folder was successfully deleted.'
+    folder_name = @folder.name
+    if @folder.destroy
+      redirect_to folders_url, notice: 'Folder was successfully deleted.'
+    else
+      redirect_to @folder, alert: 'Failed to delete folder.'
+    end
   end
 
   def contents
-    @documents = @folder.documents.includes(:tags, :status)
+    @documents = @folder.documents.includes(:author, :status, :tags)
                        .page(params[:page])
                        .per(20)
-    @subfolders = @folder.children.includes(:documents)
-    
-    render :show
+    @subfolders = @folder.subfolders.includes(:documents)
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def set_folder
+    @folder = Folder.find(params[:id])
   end
 
-  def set_folder
-    @folder = @user.owned_folders.find(params[:id])
+  def ensure_user_can_access_folder
+    unless current_user.admin? || @folder.team.members.include?(current_user)
+      redirect_to folders_path, alert: 'You do not have permission to access this folder.'
+    end
   end
 
   def folder_params
-    params.require(:folder).permit(:name, :description, :parent_id)
+    params.require(:folder).permit(:name, :description, :team_id, :parent_folder_id)
   end
 end

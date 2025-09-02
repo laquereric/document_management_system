@@ -1,0 +1,21 @@
+<%= render(Layout::PageContent.new(padding: :none)) do %>
+  <!-- Page Header -->
+  <%= render(Layout::Dashboard::HeaderComponent.new(**header_data)) %>
+
+  <!-- Statistics Cards -->
+  <%= render(Layout::Dashboard::StatisticsGridComponent.new(
+    title: "Overview",
+    statistics: statistics_data
+  )) %>
+
+  <!-- Content Sections -->
+  <div class="mt-5">
+    <%= render(Layout::TwoColumnLayout.new) do %>
+      <%= render(User::Dashboard::RecentDocumentsComponent.new(documents: recent_documents)) %>
+    <% end %>
+    
+    <% content_for :right_column do %>
+      <%= render(User::Dashboard::RecentActivityComponent.new(activities: recent_activity)) %>
+    <% end %>
+  </div>
+<% end %>

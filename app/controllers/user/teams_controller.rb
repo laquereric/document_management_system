@@ -1,19 +1,28 @@
-class User::TeamsController < ApplicationController
-  before_action :set_user
-  
+class TeamsController < ApplicationController
   def index
-    @teams = @user.teams.includes(:organization)
-                   .page(params[:page])
-                   .per(20)
   end
 
   def show
-    @team = @user.teams.find(params[:id])
   end
 
-  private
+  def new
+  end
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def create
+  end
+
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
+  def join
+  end
+
+  def leave
   end
 end
