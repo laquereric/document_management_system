@@ -1,52 +1,7 @@
 <% content_for :title, "Dashboard" %>
 
-<%= render(Layout::PageContent.new(padding: :none)) do %>
-  <!-- Page Header -->
-  <%= render(Layout::PageHeader.new(
-    title: "Dashboard",
-    description: "Welcome back, #{current_user.name}",
-    icon: "home"
-  )) %>
-
-  <!-- Statistics Cards -->
-      <%= render(Layout::CardList::Statistics::StatisticsGridComponent.new(
-    title: "Overview",
-    statistics: [
-      {
-        title: "My Documents",
-        value: @stats[:total_documents],
-        icon: "file-text",
-        color: "accent"
-      },
-      {
-        title: "My Teams",
-        value: @stats[:total_teams],
-        icon: "people",
-        color: "success"
-      },
-      {
-        title: "Teams I Lead",
-        value: @stats[:led_teams],
-        icon: "person-badge",
-        color: "attention"
-      },
-      {
-        title: "Pending Documents",
-        value: @stats[:pending_documents],
-        icon: "clock",
-        color: "severe"
-      }
-    ]
-  )) %>
-
-  <!-- Content Sections -->
-  <div class="mt-5">
-    <%= render(Layout::TwoColumnLayout.new) do %>
-      <%= render(User::Dashboard::RecentDocumentsComponent.new(documents: @recent_documents)) %>
-    <% end %>
-    
-    <% content_for :right_column do %>
-      <%= render(User::Dashboard::RecentActivityComponent.new(activities: @recent_activity)) %>
-    <% end %>
-  </div>
-<% end %>
+<%= render(User::Dashboard::DashboardComponent.new(
+  stats: @stats,
+  recent_documents: @recent_documents,
+  recent_activity: @recent_activity
+)) %>

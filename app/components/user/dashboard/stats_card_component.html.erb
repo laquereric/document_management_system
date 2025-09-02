@@ -1,20 +1,7 @@
-<div class="<%= card_classes %>">
-  <div class="Box-header d-flex flex-items-center flex-justify-between">
-    <div class="d-flex flex-items-center">
-      <div class="mr-3">
-        <svg class="octicon octicon-<%= icon %> <%= icon_color_class %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
-          <%= render_icon_svg(icon) %>
-        </svg>
-      </div>
-      <div class="flex-1">
-        <h4 class="f4 text-semibold mb-0"><%= title %></h4>
-      </div>
-    </div>
-  </div>
-
-  <div class="Box-body">
-    <div class="d-flex flex-items-center flex-justify-center p-3">
-      <div class="f1 lh-condensed text-semibold <%= value_color_class %>"><%= value %></div>
-    </div>
-  </div>
-</div>
+<%= render(Layout::Dashboard::StatsCardComponent.new(
+  title: title,
+  value: value,
+  icon: icon,
+  color: color,
+  **system_arguments
+)) %>

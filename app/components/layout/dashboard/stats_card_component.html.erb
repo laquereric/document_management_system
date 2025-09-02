@@ -1,0 +1,13 @@
+<div class="<%= card_classes %> p-3">
+  <div class="d-flex flex-items-center">
+    <div class="mr-3">
+      <svg class="octicon <%= icon_color_class %>" width="24" height="24" viewBox="0 0 16 16">
+        <%= render_icon_svg(icon) %>
+      </svg>
+    </div>
+    <div>
+      <div class="f1 lh-condensed text-semibold <%= value_color_class %>"><%= value %></div>
+      <div class="f6 color-fg-muted"><%= title %></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="<%= header_classes %>">
+  <div class="d-flex flex-items-center">
+    <% if icon %>
+      <svg class="octicon octicon-<%= icon %> mr-2 color-fg-accent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
+        <%= render_icon_svg(icon) %>
+      </svg>
+    <% end %>
+    <div>
+      <h1 class="<%= title_classes %>"><%= title %></h1>
+      <% if description %>
+        <p class="<%= description_classes %>"><%= description %></p>
+      <% end %>
+    </div>
+  </div>
+  <% if badge %>
+    <div class="d-flex flex-items-center gap-2">
+      <span class="<%= badge_classes %>">
+        <% if badge[:icon] %>
+          <svg class="octicon octicon-<%= badge[:icon] %> mr-1" width="16" height="16" viewBox="0 0 16 16">
+            <%= render_icon_svg(badge[:icon]) %>
+          </svg>
+        <% end %>
+        <%= badge[:text] %>
+      </span>
+    </div>
+  <% end %>
+</div>
