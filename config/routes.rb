@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get "search/index", to: "models/search#index"
+  get "search/index", to: "search#index"
   get "activities/index", to: "models/activities#index"
   get "activities/show", to: "models/activities#show"
   get "tags/index", to: "models/tags#index"
