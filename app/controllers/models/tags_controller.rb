@@ -1,10 +1,13 @@
 class Models::TagsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_admin!
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_user_can_manage_tags, only: [:new, :create, :edit, :update, :destroy]
-  
+
   def index
     @q = Tag.ransack(params[:q])
-    @tags = @q.result.includes(:documents)
+    @tags = @q.result(distinct: true)
+               .includes(:documents)
+               .order(created_at: :desc)
                .page(params[:page])
                .per(20)
   end
@@ -23,7 +26,7 @@ class Models::TagsController < ApplicationController
     @tag = Tag.new(tag_params)
     
     if @tag.save
-      redirect_to @tag, notice: 'Tag was successfully created.'
+      redirect_to admin_tag_path(@tag), notice: 'Tag was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +37,7 @@ class Models::TagsController < ApplicationController
 
   def update
     if @tag.update(tag_params)
-      redirect_to @tag, notice: 'Tag was successfully updated.'
+      redirect_to admin_tag_path(@tag), notice: 'Tag was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,9 +46,9 @@ class Models::TagsController < ApplicationController
   def destroy
     tag_name = @tag.name
     if @tag.destroy
-      redirect_to tags_url, notice: 'Tag was successfully deleted.'
+      redirect_to admin_tags_path, notice: 'Tag was successfully deleted.'
     else
-      redirect_to @tag, alert: 'Failed to delete tag.'
+      redirect_to admin_tag_path(@tag), alert: 'Failed to delete tag.'
     end
   end
 
@@ -55,13 +58,13 @@ class Models::TagsController < ApplicationController
     @tag = Tag.find(params[:id])
   end
 
-  def ensure_user_can_manage_tags
-    unless current_user.admin?
-      redirect_to tags_path, alert: 'You do not have permission to manage tags.'
-    end
-  end
-
   def tag_params
     params.require(:tag).permit(:name, :color)
+  end
+
+  def require_admin!
+    unless current_user&.admin?
+      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
+    end
   end
 end

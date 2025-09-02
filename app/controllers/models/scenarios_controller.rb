@@ -1,4 +1,4 @@
-class Admin::ScenariosController < ApplicationController
+class Models::ScenariosController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin!
   before_action :set_scenario, only: [:show, :edit, :update, :destroy]
