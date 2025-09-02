@@ -1,5 +1,4 @@
-class Dashboard::UserController < ApplicationController
-  before_action :authenticate_user!
+class Dashboard::UserController < Dashboard::DashboardController
   before_action :set_user, only: [:index]
   
   def index
@@ -14,12 +13,7 @@ class Dashboard::UserController < ApplicationController
                               .includes(:document, :user, :old_status, :new_status)
     
     # Statistics
-    @stats = {
-      total_documents: @user.authored_documents.count,
-      total_teams: @my_teams.count,
-      led_teams: @led_teams.count,
-      pending_documents: @user.authored_documents.joins(:status).where(statuses: { name: 'Pending' }).count
-    }
+    @stats = set_user_stats(@user)
   end
 
   private
