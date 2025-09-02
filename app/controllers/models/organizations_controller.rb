@@ -1,4 +1,4 @@
-class OrganizationsController < ApplicationController
+class Models::OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
   before_action :ensure_user_can_access_organization, only: [:show, :edit, :update, :destroy]
   

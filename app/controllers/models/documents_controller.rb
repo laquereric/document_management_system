@@ -1,4 +1,4 @@
-class DocumentsController < ApplicationController
+class Models::DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy, :change_status, :add_tag, :remove_tag]
   before_action :set_folder, only: [:new, :create]
   before_action :ensure_user_can_access_document, only: [:show, :edit, :update, :destroy]

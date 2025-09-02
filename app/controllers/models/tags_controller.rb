@@ -1,4 +1,4 @@
-class TagsController < ApplicationController
+class Models::TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
   before_action :ensure_user_can_manage_tags, only: [:new, :create, :edit, :update, :destroy]
   

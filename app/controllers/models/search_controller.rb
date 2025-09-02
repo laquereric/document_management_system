@@ -1,4 +1,4 @@
-class SearchController < ApplicationController
+class Models::SearchController < ApplicationController
   before_action :authenticate_user!
   
   def index
