@@ -58,7 +58,7 @@
 
       <!-- Pagination -->
       <% if @tags.respond_to?(:current_page) %>
-        <%= render(Layout::CardListPagination.new(collection: @tags)) %>
+        <%= render(Layout::CardListPaginationComponent.new(collection: @tags)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(
