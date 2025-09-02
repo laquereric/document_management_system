@@ -1,4 +1,4 @@
-class TagLabelComponent < ApplicationComponent
+class Layout::Card::Tags::TagDisplayComponent < ApplicationComponent
   def initialize(tag:, removable: false, document: nil, **system_arguments)
     @tag = tag
     @removable = removable

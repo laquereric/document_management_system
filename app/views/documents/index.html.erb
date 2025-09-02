@@ -47,7 +47,7 @@
           <%= render(Layout::CardList::SearchFilterSort::SearchSectionComponent.new) do %>
     <% if defined?(Document) %>
       <% q = Document.ransack(params[:q]) %>
-      <%= render(Search::SearchFormComponent.new(q: q)) %>
+      <%= render(Layout::Navigation::Search::SearchFormComponent.new(q: q)) %>
     <% end %>
   <% end %>
 

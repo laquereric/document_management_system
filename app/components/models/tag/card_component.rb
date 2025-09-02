@@ -1,4 +1,4 @@
-class Tag::CardComponent < Layout::CardComponent
+class Models::Tag::CardComponent < Layout::CardComponent
 
   def initialize(tag:, show_actions: true, admin_context: false, **system_arguments)
     @tag = tag

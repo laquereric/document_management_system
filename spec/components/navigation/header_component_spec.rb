@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Navigation::HeaderComponent, type: :component do
+RSpec.describe Layout::Navigation::HeaderComponent, type: :component do
   let(:current_user) { build(:user) }
   let(:title) { 'Document Management System' }
   let(:component) { described_class.new(current_user: current_user, title: title) }

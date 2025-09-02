@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Activities::ActivityItemComponent, type: :component do
+RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
   let(:activity) { build(:activity, action: 'created', trackable_type: 'Document', trackable_id: 1) }
   let(:component) { described_class.new(activity: activity) }
 

@@ -15,7 +15,7 @@
       <h3 class="Box-title">Search Components</h3>
     </div>
     <div class="Box-body">
-      <%= render(Search::SearchFormComponent.new(q: @q)) %>
+      <%= render(Layout::Navigation::Search::SearchFormComponent.new(q: @q)) %>
     </div>
   </div>
       
@@ -131,7 +131,7 @@
       <div class="row mb-4">
         <div class="col-12">
           <% if @sample_activities&.any? %>
-                          <%= render(Activities::ActivityListComponent.new(
+                          <%= render(Models::Activities::ActivityListComponent.new(
               activities: @sample_activities,
               title: "Sample Activity Log",
               show_pagination: false

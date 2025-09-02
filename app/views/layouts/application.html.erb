@@ -24,14 +24,14 @@
 
   <body>
     <!-- Header Navigation -->
-    <%= render(Navigation::HeaderComponent.new(title: content_for(:title))) %>
+    <%= render(Layout::Navigation::HeaderComponent.new(title: content_for(:title))) %>
 
     <!-- Page Layout Container -->
     <div class="Layout Layout--sidebarPosition-start">
       <!-- Sidebar Navigation (Left Pane Region) -->
       <% if user_signed_in? %>
         <div class="Layout-sidebar">
-          <%= render(Navigation::SidebarComponent.new(
+          <%= render(Layout::Navigation::SidebarComponent.new(
             controller_name: controller_name,
             current_user: current_user
           )) %>

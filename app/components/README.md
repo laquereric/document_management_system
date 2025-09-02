@@ -180,7 +180,7 @@ Status display with proper color contrast.
 Tag display with optional removal functionality.
 
 ```erb
-<%= render(Tags::TagDisplayComponent.new(
+<%= render(Layout::Card::Tags::TagDisplayComponent.new(
   tag: @tag,
   removable: true,
   document: @document
@@ -206,7 +206,7 @@ Consistent empty state displays with optional actions.
 Advanced search form with multiple filters.
 
 ```erb
-<%= render(Search::SearchFormComponent.new(q: @q)) %>
+<%= render(Layout::Navigation::Search::SearchFormComponent.new(q: @q)) %>
 ```
 
 ## Design System

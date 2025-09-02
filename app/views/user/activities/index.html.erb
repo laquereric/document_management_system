@@ -69,7 +69,7 @@
     count: @activities.respond_to?(:total_count) ? @activities.total_count : @activities.count
   )) do %>
     <% if @activities.any? %>
-      <%= render(Activities::TimelineComponent.new(activities: @activities)) %>
+      <%= render(Models::Activities::TimelineComponent.new(activities: @activities)) %>
 
       <!-- Pagination -->
       <% if @activities.respond_to?(:current_page) %>

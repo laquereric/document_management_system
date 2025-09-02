@@ -27,7 +27,7 @@
           <div class="<%= cards_container_classes %>">
             <% tags.each do |tag| %>
               <div class="<%= card_container_classes %>" style="<%= card_styles %>">
-                <%= render(Tag::CardComponent.new(tag: tag, admin_context: false)) %>
+                <%= render(Models::Tag::CardComponent.new(tag: tag, admin_context: false)) %>
               </div>
             <% end %>
           </div>

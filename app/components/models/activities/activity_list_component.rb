@@ -1,4 +1,4 @@
-class Activities::ActivityListComponent < ApplicationComponent
+class Models::Activities::ActivityListComponent < ApplicationComponent
   def initialize(activities:, title: "Activity Log", show_pagination: true, **system_arguments)
     @activities = activities
     @title = title

@@ -1,6 +1,6 @@
 # Sidebar navigation component
 
-class Navigation::SidebarComponent < ApplicationComponent
+class Layout::Navigation::SidebarComponent < ApplicationComponent
   VARIANT_OPTIONS = %i[default collapsed].freeze
 
   def initialize(controller_name: nil, current_user: nil, variant: :default, **system_arguments)

@@ -1,29 +1,29 @@
 # Component preview for Navigation components
 
-class Navigation::ComponentPreview < ViewComponent::Preview
+class Layout::Navigation::ComponentPreview < ViewComponent::Preview
   def header_default
-    render(Navigation::HeaderComponent.new(
+    render(Layout::Navigation::HeaderComponent.new(
       current_user: sample_user,
       title: "Document Library"
     ))
   end
 
   def header_no_user
-    render(Navigation::HeaderComponent.new(
+    render(Layout::Navigation::HeaderComponent.new(
       current_user: nil,
       title: "Welcome"
     ))
   end
 
   def sidebar_default
-    render(Navigation::SidebarComponent.new(
+    render(Layout::Navigation::SidebarComponent.new(
       current_user: sample_user,
       variant: :default
     ))
   end
 
   def sidebar_collapsed
-    render(Navigation::SidebarComponent.new(
+    render(Layout::Navigation::SidebarComponent.new(
       current_user: sample_user,
       variant: :collapsed
     ))
@@ -38,7 +38,7 @@ class Navigation::ComponentPreview < ViewComponent::Preview
       { label: "Current Document", path: nil }
     ]
     
-    render(Navigation::BreadcrumbComponent.new(breadcrumbs: breadcrumbs))
+    render(Layout::Navigation::BreadcrumbComponent.new(breadcrumbs: breadcrumbs))
   end
 
   private

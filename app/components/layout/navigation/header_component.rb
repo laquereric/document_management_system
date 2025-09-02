@@ -1,6 +1,6 @@
 # Header navigation component following Primer design patterns
 
-class Navigation::HeaderComponent < ApplicationComponent
+class Layout::Navigation::HeaderComponent < ApplicationComponent
   def initialize(current_user: nil, title: nil, **system_arguments)
     @current_user = current_user
     @title = title

@@ -48,7 +48,7 @@
       <div class="d-flex flex-wrap gap-3">
         <% @tags.each do |tag| %>
           <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
-            <%= render(Tag::CardComponent.new(
+            <%= render(Models::Tag::CardComponent.new(
               tag: tag,
               show_actions: false
             )) %>

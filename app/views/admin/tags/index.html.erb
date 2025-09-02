@@ -39,7 +39,7 @@
     }
   )) do %>
     <% @tags.each do |tag| %>
-      <%= render(Tag::CardComponent.new(tag: tag, admin_context: true)) %>
+      <%= render(Models::Tag::CardComponent.new(tag: tag, admin_context: true)) %>
     <% end %>
   <% end %>
 <% end %>

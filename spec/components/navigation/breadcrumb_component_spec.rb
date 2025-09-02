@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Navigation::BreadcrumbComponent, type: :component do
+RSpec.describe Layout::Navigation::BreadcrumbComponent, type: :component do
   let(:current_user) { build(:user) }
   let(:breadcrumbs) { nil }
   let(:component) { described_class.new(breadcrumbs: breadcrumbs) }

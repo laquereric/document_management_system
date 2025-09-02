@@ -1,6 +1,6 @@
 # Breadcrumb navigation component
 
-class Navigation::BreadcrumbComponent < ApplicationComponent
+class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
   def initialize(breadcrumbs: nil, **system_arguments)
     @breadcrumbs = breadcrumbs || build_breadcrumbs_from_params
     @system_arguments = merge_system_arguments(system_arguments)

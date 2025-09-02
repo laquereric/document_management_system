@@ -1,6 +1,6 @@
 # Quick search component for the header
 
-class Search::QuickSearchComponent < ApplicationComponent
+class Layout::Navigation::Search::QuickSearchComponent < ApplicationComponent
   def initialize(
     placeholder: "Search...",
     value: nil,

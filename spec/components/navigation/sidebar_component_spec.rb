@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Navigation::SidebarComponent, type: :component do
+RSpec.describe Layout::Navigation::SidebarComponent, type: :component do
   let(:current_user) { build(:user, role: 'member') }
   let(:admin_user) { build(:user, role: 'admin') }
   let(:controller_name) { 'dashboard' }

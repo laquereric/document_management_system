@@ -4,16 +4,16 @@
   <div class="row">
     <!-- Sidebar -->
     <div class="col-md-3">
-      <%= render(Navigation::SidebarComponent.new(controller_name: @controller_name,current_user: current_user)) %>
+      <%= render(Layout::Navigation::SidebarComponent.new(controller_name: @controller_name,current_user: current_user)) %>
     </div>
     
     <!-- Main Content -->
     <div class="col-md-9">
       <!-- Header -->
-      <%= render(Navigation::HeaderComponent.new(current_user: current_user)) %>
+      <%= render(Layout::Navigation::HeaderComponent.new(current_user: current_user)) %>
       
       <!-- Breadcrumbs -->
-      <%= render(Navigation::BreadcrumbComponent.new(
+      <%= render(Layout::Navigation::BreadcrumbComponent.new(
         items: [
           { text: "Home", url: root_path },
           { text: @document.folder.team.organization.name, url: organization_path(@document.folder.team.organization) },
@@ -95,7 +95,7 @@
             <div class="card-body">
                       <% if @activities.any? %>
           <% @activities.each do |activity| %>
-                                      <%= render(Activities::ActivityItemComponent.new(activity: activity)) %>
+                                      <%= render(Models::Activities::ActivityItemComponent.new(activity: activity)) %>
                 <% end %>
               <% else %>
                 <%= render(Ui::EmptyStateComponent.new(

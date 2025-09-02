@@ -5,7 +5,7 @@
   <div class="card-body">
     <% if has_activities? %>
       <% activities.each do |activity| %>
-        <%= render(Activities::ActivityItemComponent.new(activity: activity)) %>
+        <%= render(Models::Activities::ActivityItemComponent.new(activity: activity)) %>
       <% end %>
       
       <% if show_pagination && activities.respond_to?(:current_page) %>

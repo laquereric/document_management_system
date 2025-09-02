@@ -1,4 +1,4 @@
-class Activities::TimelineComponent < ApplicationComponent
+class Models::Activities::TimelineComponent < ApplicationComponent
   def initialize(activities:, **system_arguments)
     @activities = activities
     super(**system_arguments)

@@ -1,4 +1,4 @@
-class Activities::ActivityItemComponent < ApplicationComponent
+class Models::Activities::ActivityItemComponent < ApplicationComponent
   def initialize(activity:, **system_arguments)
     @activity = activity
     @system_arguments = merge_system_arguments(system_arguments)

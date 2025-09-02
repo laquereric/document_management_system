@@ -1,4 +1,4 @@
-class Search::SearchFormComponent < ApplicationComponent
+class Layout::Navigation::Search::SearchFormComponent < ApplicationComponent
   def initialize(q: nil, **system_arguments)
     @q = q
     @system_arguments = merge_system_arguments(system_arguments)

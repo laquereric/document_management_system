@@ -18,7 +18,7 @@
 
   <!-- Search Section -->
   <div class="Header-item flex-auto d-none d-md-flex mx-3">
-    <%= render(Search::QuickSearchComponent.new(placeholder: "Search documents...")) %>
+    <%= render(Layout::Navigation::Search::QuickSearchComponent.new(placeholder: "Search documents...")) %>
   </div>
 
   <!-- Navigation Actions -->
@@ -41,7 +41,7 @@
 
     <!-- User Menu -->
     <% if current_user %>
-              <%= render(Models::Users::UserMenuComponent.new(user: current_user)) %>
+      <%= render(Models::Users::UserMenuComponent.new(user: current_user)) %>
     <% else %>
       <%= link_to "Sign In", new_user_session_path, class: "btn btn-primary" %>
     <% end %>
