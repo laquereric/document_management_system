@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class User::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :ensure_user_can_access_user, only: [:show, :edit, :update, :destroy]
   before_action :ensure_user_can_manage_users, only: [:new, :create, :destroy]

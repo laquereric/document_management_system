@@ -12,7 +12,7 @@ class Admin::DashboardController < ApplicationController
     
     @recent_users = User.order(created_at: :desc).limit(5)
     @recent_documents = Document.includes(:author, :team).order(created_at: :desc).limit(5)
-    @recent_activity = ActivityLog.includes(:user, :document).order(created_at: :desc).limit(10)
+    @recent_activity = Activity.includes(:user, :document).order(created_at: :desc).limit(10)
     
     @users_by_role = User.group(:role).count
     @documents_by_status = Document.joins(:status).group('statuses.name').count

@@ -41,7 +41,7 @@ class DocumentsController < ApplicationController
     @document.author = current_user
     
     if @document.save
-      ActivityLog.create!(
+      Activity.create!(
         document: @document,
         user: current_user,
         action: 'created',
@@ -62,7 +62,7 @@ class DocumentsController < ApplicationController
 
   def update
     if @document.update(document_params)
-      ActivityLog.create!(
+      Activity.create!(
         document: @document,
         user: current_user,
         action: 'updated',
@@ -79,7 +79,7 @@ class DocumentsController < ApplicationController
   def destroy
     document_title = @document.title
     if @document.destroy
-      ActivityLog.create!(
+      Activity.create!(
         user: current_user,
         action: 'deleted',
         notes: "Deleted document: #{document_title}"
@@ -95,7 +95,7 @@ class DocumentsController < ApplicationController
     old_status = @document.status
     
     if @document.update(status: new_status)
-      ActivityLog.create!(
+      Activity.create!(
         document: @document,
         user: current_user,
         action: 'status_change',
@@ -113,7 +113,7 @@ class DocumentsController < ApplicationController
     tag = Tag.find(params[:tag_id])
     unless @document.tags.include?(tag)
       @document.tags << tag
-      ActivityLog.create!(
+      Activity.create!(
         document: @document,
         user: current_user,
         action: 'tag_added',
@@ -126,7 +126,7 @@ class DocumentsController < ApplicationController
   def remove_tag
     tag = Tag.find(params[:tag_id])
     @document.tags.delete(tag)
-    ActivityLog.create!(
+    Activity.create!(
       document: @document,
       user: current_user,
       action: 'tag_removed',

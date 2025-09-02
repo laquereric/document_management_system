@@ -44,8 +44,8 @@ Rails.application.routes.draw do
   get "dashboard/index"
   devise_for :users
   
-  # Root route
-  root "dashboard#index"
+  # Root route - point directly to user dashboard
+  root "user/dashboard#index"
   
   # Component test route (development only)
   get "component_test", to: "component_test#index" if Rails.env.development?

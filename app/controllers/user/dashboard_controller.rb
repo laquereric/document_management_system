@@ -1,4 +1,4 @@
-class DashboardController < ApplicationController
+class User::DashboardController < ApplicationController
   before_action :set_user, only: [:index]
   
   def index
