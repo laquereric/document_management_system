@@ -13,7 +13,7 @@
   )) %>
 
   <!-- Search and Filters -->
-  <%= render(Layout::CardList::SearchAndFiltersComponent.new(
+  <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
     search_object: @q,
     url: admin_tags_path,
     title: "Search & Filters",

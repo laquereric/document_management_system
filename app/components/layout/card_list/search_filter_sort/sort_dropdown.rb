@@ -1,4 +1,4 @@
-class Layout::SortDropdown < ApplicationComponent
+class Layout::CardList::SearchFilterSort::SortDropdownComponent < ApplicationComponent
   def initialize(
     current_sort: nil,
     sort_options: [],

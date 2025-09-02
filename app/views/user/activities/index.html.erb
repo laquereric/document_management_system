@@ -9,7 +9,7 @@
   )) %>
 
   <!-- Statistics Cards -->
-  <%= render(Layout::StatisticsGrid.new(
+      <%= render(Layout::CardList::Statistics::StatisticsGridComponent.new(
     title: "Activity Overview",
     statistics: [
       {
@@ -40,7 +40,7 @@
   )) %>
 
   <!-- Search and Filters -->
-  <%= render(Layout::SearchSection.new) do %>
+          <%= render(Layout::CardList::SearchFilterSort::SearchSectionComponent.new) do %>
     <%= search_form_for @q, url: user_activities_path(@user), method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
       <div class="flex-1">
         <%= f.label :action_cont, "Action", class: "form-label sr-only" %>
@@ -73,7 +73,7 @@
 
       <!-- Pagination -->
       <% if @activities.respond_to?(:current_page) %>
-        <%= render(Layout::CardList::PaginationComponent.new(collection: @activities)) %>
+        <%= render(Layout::CardList::Pagination::PaginationComponent.new(collection: @activities)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(

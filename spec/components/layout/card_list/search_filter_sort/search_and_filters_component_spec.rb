@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Layout::CardList::SearchAndFiltersComponent, type: :component do
+RSpec.describe Layout::CardList::SearchFilterSort::SearchAndFiltersComponent, type: :component do
   let(:search_object) { double('search_object') }
   let(:url) { '/test' }
   let(:title) { "Search & Filters" }

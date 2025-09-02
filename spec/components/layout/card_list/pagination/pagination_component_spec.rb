@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Layout::CardList::PaginationComponent, type: :component do
+RSpec.describe Layout::CardList::Pagination::PaginationComponent, type: :component do
   let(:collection) { double('collection') }
   let(:component) { described_class.new(collection: collection) }
 

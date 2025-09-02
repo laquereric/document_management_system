@@ -1,4 +1,4 @@
-class Layout::SearchSection < ApplicationComponent
+class Layout::CardList::SearchFilterSort::SearchSectionComponent < ApplicationComponent
   def initialize(
     title: "Search & Filters",
     search_object: nil,

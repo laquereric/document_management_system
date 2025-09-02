@@ -1,4 +1,4 @@
-class Layout::CardStatisticsList < ApplicationComponent
+class Layout::CardList::Statistics::CardStatisticsListComponent < ApplicationComponent
 
   def initialize(
     title: "Overview",

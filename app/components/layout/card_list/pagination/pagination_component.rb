@@ -1,4 +1,4 @@
-class Layout::CardList::PaginationComponent < ApplicationComponent
+class Layout::CardList::Pagination::PaginationComponent < ApplicationComponent
   def initialize(collection:, **system_arguments)
     @collection = collection
     super(**system_arguments)

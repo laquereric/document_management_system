@@ -13,7 +13,7 @@
   )) %>
 
   <!-- Statistics Cards -->
-  <%= render(Layout::StatisticsGrid.new(
+      <%= render(Layout::CardList::Statistics::StatisticsGridComponent.new(
     title: "Document Overview",
     statistics: [
       {
@@ -44,7 +44,7 @@
   )) %>
 
   <!-- Search and Filters -->
-  <%= render(Layout::SearchSection.new) do %>
+          <%= render(Layout::CardList::SearchFilterSort::SearchSectionComponent.new) do %>
     <% if defined?(Document) %>
       <% q = Document.ransack(params[:q]) %>
       <%= render(Search::SearchFormComponent.new(q: q)) %>
@@ -55,7 +55,7 @@
   <%= render(Layout::ContentSection.new(
     title: "All Documents",
     count: @documents.respond_to?(:total_count) ? @documents.total_count : nil,
-    controls: render(Layout::SortDropdown.new(
+              controls: render(Layout::CardList::SearchFilterSort::SortDropdownComponent.new(
       current_sort: params[:sort],
       sort_options: [
         { label: "Sort by Date", value: nil },
@@ -70,7 +70,7 @@
 
       <!-- Pagination -->
       <% if @documents.respond_to?(:current_page) %>
-        <%= render(Layout::CardList::PaginationComponent.new(collection: @documents)) %>
+        <%= render(Layout::CardList::Pagination::PaginationComponent.new(collection: @documents)) %>
       <% end %>
     <% else %>
       <%= render(Ui::EmptyStateComponent.new(

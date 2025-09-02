@@ -1,4 +1,4 @@
-class Layout::StatisticsGrid < ApplicationComponent
+class Layout::CardList::Statistics::StatisticsGridComponent < ApplicationComponent
   def initialize(
     title: "Overview",
     statistics: [],
