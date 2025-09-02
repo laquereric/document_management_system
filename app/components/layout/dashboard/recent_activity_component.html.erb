@@ -1,13 +1,22 @@
-<div class="<%= card_classes %>">
-  <div class="Box-header d-flex flex-items-center flex-justify-between">
-    <h3 class="f4 text-semibold"><%= title %></h3>
-    <% if show_view_all_link? %>
-      <%= link_to view_all_path, class: "btn btn-sm btn-outline" do %>
-        <%= view_all_text %>
+<%= render(Primer::Beta::BorderBox.new) do %>
+  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+    <div class="d-flex flex-items-center flex-justify-between">
+      <%= render(Primer::Beta::Heading.new(tag: :h3, size: 400)) do %>
+        <%= title %>
       <% end %>
-    <% end %>
-  </div>
-  <div class="Box-body">
+      <% if show_view_all_link? %>
+        <%= render(Primer::Beta::Button.new(
+          href: view_all_path,
+          variant: :outline,
+          size: :small
+        )) do %>
+          <%= view_all_text %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <%= render(Primer::Beta::BorderBox::Body.new) do %>
     <% if has_activities? %>
       <div class="Timeline">
         <% activities.each do |activity| %>
@@ -15,17 +24,11 @@
             <div class="TimelineItem-badge">
               <% case activity.action %>
               <% when 'created' %>
-                <svg class="octicon octicon-plus color-fg-success" width="16" height="16" viewBox="0 0 16 16">
-                  <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"></path>
-                </svg>
+                <%= render(Primer::Beta::Octicon.new(icon: "plus", size: :small, color: "success")) %>
               <% when 'updated' %>
-                <svg class="octicon octicon-pencil color-fg-accent" width="16" height="16" viewBox="0 0 16 16">
-                  <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086Z"></path>
-                </svg>
+                <%= render(Primer::Beta::Octicon.new(icon: "pencil", size: :small, color: "accent")) %>
               <% else %>
-                <svg class="octicon octicon-pulse color-fg-muted" width="16" height="16" viewBox="0 0 16 16">
-                  <path d="M6 2c.306 0 .582.187.696.471L10 10.731l1.304-3.26A.751.751 0 0 1 12 7h3.25a.75.75 0 0 1 0 1.5H12.58l-1.855 4.64a.751.751 0 0 1-1.393-.011L6 5.069 4.696 8.329A.751.751 0 0 1 4 8.5H.75a.75.75 0 0 1 0-1.5h2.68l1.85-4.629A.751.751 0 0 1 6 2Z"></path>
-                </svg>
+                <%= render(Primer::Beta::Octicon.new(icon: "pulse", size: :small, color: "muted")) %>
               <% end %>
             </div>
             <div class="TimelineItem-body">
@@ -35,7 +38,9 @@
                     <span class="f6 text-semibold"><%= activity.user&.name || 'Unknown User' %></span>
                     <span class="f6 color-fg-muted"><%= activity.action.humanize.downcase %></span>
                     <% if activity.document %>
-                      <%= link_to activity.document.title, document_path(activity.document), class: "Link--primary f6" %>
+                      <%= render(Primer::Beta::Link.new(href: document_path(activity.document))) do %>
+                        <%= activity.document.title %>
+                      <% end %>
                     <% end %>
                   </div>
                   <% if activity.notes.present? %>
@@ -59,5 +64,5 @@
         icon: "pulse"
       )) %>
     <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>
