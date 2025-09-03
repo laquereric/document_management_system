@@ -533,6 +533,9 @@ The components have been reconciled to match the actual file structure and usage
 - **Method Calls**: Fixed incorrect method calls in sidebar component template (`render_icon_path.call` → `render_icon_path`)
 - **Admin Routes**: Fixed non-existent admin route helpers to use correct models namespace routes
 - **File Naming**: Fixed component file names to match Rails autoloading conventions (e.g., `statistics_grid.rb` → `statistics_grid_component.rb`)
+- **Template Naming**: Fixed component template files to match Rails autoloading conventions (e.g., `search_section.html.erb` → `search_section_component.html.erb`, `sort_dropdown.html.erb` → `sort_dropdown_component.html.erb`)
+- **ContentSection Replacement**: Replaced problematic `Layout::ContentSection` usage with direct HTML structure in documents index view
+- **Autoloading Fixes**: Created missing module definition files (`layout.rb`, `card_list.rb`) and fixed component namespaces to match directory structure
 - **Route Helpers**: Fixed incorrect route helper methods in views (e.g., `new_folder_path` → `models_new_folder_path`, `folders_path` → `models_folders_path`)
 - **View Cleanup**: Removed redundant hardcoded statistics cards from folders index view, now properly using `StatisticsGridComponent`
 - **Primer Components**: Simplified StatsCardComponent to use direct HTML/CSS instead of external Primer components, avoiding autoloading issues

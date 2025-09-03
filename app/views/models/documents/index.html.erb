@@ -52,36 +52,48 @@
   <% end %>
 
   <!-- Documents Section -->
-  <%= render(Layout::ContentSection.new(
-    title: "All Documents",
-    count: @documents.respond_to?(:total_count) ? @documents.total_count : nil,
-              controls: render(Layout::CardList::SearchFilterSort::SortDropdownComponent.new(
-      current_sort: params[:sort],
-      sort_options: [
-        { label: "Sort by Date", value: nil },
-        { label: "Sort by Title", value: "title" },
-        { label: "Sort by Status", value: "status" }
-      ],
-      base_url: documents_path
-    ))
-  )) do %>
-    <% if @documents&.any? %>
-      <%= render(Layout::DocumentGrid.new(documents: @documents)) %>
+  <div class="mt-5">
+    <div class="d-flex flex-items-center flex-justify-between mb-3">
+      <h2 class="f4 text-semibold">
+        All Documents
+        <% if @documents.respond_to?(:total_count) && @documents.total_count %>
+          <span class="Counter"><%= @documents.total_count %></span>
+        <% end %>
+      </h2>
+      <div class="d-flex flex-items-center gap-2">
+        <%= render(Layout::CardList::SearchFilterSort::SortDropdownComponent.new(
+          current_sort: params[:sort],
+          sort_options: [
+            { label: "Sort by Date", value: nil },
+            { label: "Sort by Title", value: "title" },
+            { label: "Sort by Status", value: "status" }
+          ],
+          base_url: models_documents_path
+        )) %>
+      </div>
+    </div>
 
-      <!-- Pagination -->
-      <% if @documents.respond_to?(:current_page) %>
-        <%= render(Layout::CardList::Pagination::PaginationComponent.new(collection: @documents)) %>
-      <% end %>
-    <% else %>
-      <%= render(Ui::EmptyStateComponent.new(
-        title: "No Documents Found",
-        description: "Get started by creating your first document.",
-        icon: "file-text",
-                    action: {
+    <div class="Box">
+      <div class="Box-body">
+        <% if @documents&.any? %>
+          <%= render(Layout::CardList::DocumentGrid.new(documents: @documents)) %>
+
+          <!-- Pagination -->
+          <% if @documents.respond_to?(:current_page) %>
+            <%= render(Layout::CardList::Pagination::PaginationComponent.new(collection: @documents)) %>
+          <% end %>
+        <% else %>
+          <%= render(Ui::EmptyStateComponent.new(
+            title: "No Documents Found",
+            description: "Get started by creating your first document.",
+            icon: "file-text",
+            action: {
               text: "Create Document",
               url: models_new_document_path
             }
-      )) %>
-    <% end %>
-  <% end %>
+          )) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>

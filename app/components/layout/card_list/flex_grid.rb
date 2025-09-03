@@ -1,4 +1,4 @@
-class Layout::FlexGrid < ApplicationComponent
+class Layout::CardList::FlexGrid < ApplicationComponent
   def initialize(
     gap: "16px",
     min_width: "240px",

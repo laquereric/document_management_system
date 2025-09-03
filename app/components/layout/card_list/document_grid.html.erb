@@ -1,7 +1,7 @@
 <div class="<%= container_classes %>">
   <% documents.each do |document| %>
     <div class="<%= item_classes %>" style="<%= item_styles %>">
-      <%= render(User::DocumentComponents::CardComponent.new(document: document)) %>
+      <%= render(Models::Documents::CardComponent.new(document: document)) %>
     </div>
   <% end %>
 </div>

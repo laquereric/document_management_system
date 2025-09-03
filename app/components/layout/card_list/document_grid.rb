@@ -1,4 +1,4 @@
-class Layout::DocumentGrid < ApplicationComponent
+class Layout::CardList::DocumentGrid < ApplicationComponent
   def initialize(documents:, **system_arguments)
     @documents = documents
     super(**system_arguments)

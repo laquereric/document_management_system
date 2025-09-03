@@ -1,4 +1,4 @@
-class Layout::TwoColumnLayout < ApplicationComponent
+class Layout::CardList::TwoColumnLayout < ApplicationComponent
   def initialize(
     gap: "24px",
     left_column_class: "flex-1 mb-4 mb-lg-0",
