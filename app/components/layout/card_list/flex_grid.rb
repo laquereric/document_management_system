@@ -18,7 +18,7 @@ class Layout::CardList::FlexGrid < ApplicationComponent
   attr_reader :gap, :min_width, :max_width, :wrap
 
   def container_classes
-    classes = ["d-flex"]
+    classes = [ "d-flex" ]
     classes << "flex-wrap" if wrap
     classes.join(" ")
   end
@@ -32,7 +32,7 @@ class Layout::CardList::FlexGrid < ApplicationComponent
   end
 
   def item_styles
-    styles = ["min-width: #{min_width};"]
+    styles = [ "min-width: #{min_width};" ]
     styles << "max-width: #{max_width};" if max_width
     styles.join(" ")
   end

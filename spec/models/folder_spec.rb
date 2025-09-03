@@ -14,7 +14,7 @@ RSpec.describe Folder, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
-    it { should validate_uniqueness_of(:name).scoped_to([:parent_folder_id, :team_id]).with_message('has already been taken') }
+    it { should validate_uniqueness_of(:name).scoped_to([ :parent_folder_id, :team_id ]).with_message('has already been taken') }
   end
 
   describe 'scopes' do
@@ -33,7 +33,7 @@ RSpec.describe Folder, type: :model do
       it 'returns folders for a specific team' do
         other_team = create(:team)
         other_folder = create(:folder, team: other_team)
-        
+
         expect(Folder.by_team(team)).to include(root_folder, subfolder)
         expect(Folder.by_team(team)).not_to include(other_folder)
       end
@@ -150,7 +150,7 @@ RSpec.describe Folder, type: :model do
         it 'returns array of tag names' do
           root_folder.add_tag(tag1)
           root_folder.add_tag(tag2)
-          expect(root_folder.tag_name_array).to eq(['Project', 'Development'])
+          expect(root_folder.tag_name_array).to eq([ 'Project', 'Development' ])
         end
 
         it 'returns empty array when no tags' do
@@ -163,7 +163,7 @@ RSpec.describe Folder, type: :model do
           root_folder.add_tag(tag1)
           root_folder.add_tag(tag2)
           root_folder.add_tag(tag3)
-          
+
           result = root_folder.tags_by_name('Project', 'Development')
           expect(result).to include(tag1, tag2)
           expect(result).not_to include(tag3)
@@ -174,7 +174,7 @@ RSpec.describe Folder, type: :model do
         it 'returns tags matching the given color' do
           root_folder.add_tag(tag1)
           root_folder.add_tag(tag2)
-          
+
           result = root_folder.tags_by_color(tag1.color)
           expect(result).to include(tag1)
           expect(result).not_to include(tag2)

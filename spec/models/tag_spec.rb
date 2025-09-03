@@ -14,7 +14,7 @@ RSpec.describe Tag, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:color) }
-    it { should validate_uniqueness_of(:name).scoped_to([:organization_id, :team_id, :folder_id]) }
+    it { should validate_uniqueness_of(:name).scoped_to([ :organization_id, :team_id, :folder_id ]) }
   end
 
   describe 'scopes' do

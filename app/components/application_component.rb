@@ -11,7 +11,7 @@ class ApplicationComponent < ViewComponent::Base
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::DateHelper
   include ActionView::Helpers::TextHelper
-  
+
   # Define common system arguments
   DEFAULT_SYSTEM_ARGUMENTS = {
     border: false,
@@ -23,12 +23,12 @@ class ApplicationComponent < ViewComponent::Base
   def merge_system_arguments(args)
     DEFAULT_SYSTEM_ARGUMENTS.merge(args)
   end
-  
+
   # Helper method to validate and fallback for enum-like values
   def fetch_or_fallback(allowed_values, value, fallback)
     allowed_values.include?(value) ? value : fallback
   end
-  
+
   # Helper method for consistent spacing
   def spacing_classes(size = :medium)
     case size
@@ -38,7 +38,7 @@ class ApplicationComponent < ViewComponent::Base
     else "p-3"
     end
   end
-  
+
   # Helper method for consistent text sizing
   def text_size_classes(size = :medium)
     case size
@@ -56,22 +56,22 @@ class ApplicationComponent < ViewComponent::Base
     if defined?(ActiveRecord::Base) && ActiveRecord::Base.connection_pool
       ActiveRecord::Base.connection_pool.flush!
     end
-    
+
     # Flush any cached data
     if defined?(Rails.cache)
       Rails.cache.clear
     end
-    
+
     # Clear any instance variables that might hold large objects
     instance_variables.each do |var|
       instance_variable_set(var, nil)
     end
-    
+
     # Force garbage collection if available
     if GC.respond_to?(:start)
       GC.start
     end
-    
+
     # Log resource cleanup
     if defined?(Rails.logger)
       Rails.logger.info "#{self.class.name} resources flushed"
@@ -87,12 +87,12 @@ class ApplicationComponent < ViewComponent::Base
           Rails.application.assets.cache.clear
         end
       end
-      
+
       # Clear Sprockets cache if available (for legacy support)
       if defined?(Sprockets)
         Sprockets.cache.clear if Sprockets.respond_to?(:cache)
       end
-      
+
       # Log asset cleanup
       if defined?(Rails.logger)
         Rails.logger.info "#{self.class.name} assets flushed"

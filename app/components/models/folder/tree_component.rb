@@ -28,7 +28,7 @@ class Models::Folder::TreeComponent < ApplicationComponent
   end
 
   def folder_expanded?(folder)
-    expanded_folders.include?(folder.id) || 
+    expanded_folders.include?(folder.id) ||
     (current_folder && current_folder.path.include?(folder.name))
   end
 
@@ -37,7 +37,7 @@ class Models::Folder::TreeComponent < ApplicationComponent
   end
 
   def folder_item_classes(folder)
-    classes = ["TreeView-item"]
+    classes = [ "TreeView-item" ]
     classes << "TreeView-item--expanded" if folder_expanded?(folder)
     classes << "TreeView-item--selected" if folder_selected?(folder)
     classes.join(" ")

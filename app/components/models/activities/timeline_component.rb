@@ -10,31 +10,31 @@ class Models::Activities::TimelineComponent < ApplicationComponent
 
   def action_icon(action)
     case action
-    when 'created'
-      'plus'
-    when 'updated'
-      'pencil'
-    when 'status_change'
-      'arrow-switch'
-    when 'deleted'
-      'trash'
+    when "created"
+      "plus"
+    when "updated"
+      "pencil"
+    when "status_change"
+      "arrow-switch"
+    when "deleted"
+      "trash"
     else
-      'dot'
+      "dot"
     end
   end
 
   def action_color(action)
     case action
-    when 'created'
-      'success'
-    when 'updated'
-      'accent'
-    when 'status_change'
-      'attention'
-    when 'deleted'
-      'danger'
+    when "created"
+      "success"
+    when "updated"
+      "accent"
+    when "status_change"
+      "attention"
+    when "deleted"
+      "danger"
     else
-      'muted'
+      "muted"
     end
   end
 

@@ -1,5 +1,4 @@
 class Layout::CardComponent < ApplicationComponent
-
   def initialize(user:, show_admin_actions: false, context: :general)
     @user = user
     @show_admin_actions = show_admin_actions
@@ -28,7 +27,7 @@ class Layout::CardComponent < ApplicationComponent
   end
 
   def organization_name
-    safe_name(user.organization, 'None')
+    safe_name(user.organization, "None")
   end
 
   def role_label_class

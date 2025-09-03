@@ -74,7 +74,7 @@ RSpec.describe Forms::DocumentFormComponent, type: :component do
 
     describe '#statuses' do
       it 'returns statuses when Status model is defined' do
-        allow(Status).to receive(:all).and_return([build(:status)])
+        allow(Status).to receive(:all).and_return([ build(:status) ])
         statuses = component.send(:statuses)
         expect(statuses).to be_an(Array)
       end
@@ -88,7 +88,7 @@ RSpec.describe Forms::DocumentFormComponent, type: :component do
 
     describe '#scenarios' do
       it 'returns scenarios when Scenario model is defined' do
-        allow(Scenario).to receive(:all).and_return([build(:scenario)])
+        allow(Scenario).to receive(:all).and_return([ build(:scenario) ])
         scenarios = component.send(:scenarios)
         expect(scenarios).to be_an(Array)
       end
@@ -102,7 +102,7 @@ RSpec.describe Forms::DocumentFormComponent, type: :component do
 
     describe '#folders' do
       it 'returns folders when Folder model is defined' do
-        allow(Folder).to receive(:all).and_return([build(:folder)])
+        allow(Folder).to receive(:all).and_return([ build(:folder) ])
         folders = component.send(:folders)
         expect(folders).to be_an(Array)
       end
@@ -255,7 +255,7 @@ RSpec.describe Forms::DocumentFormComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:form_classes] }.not_to raise_error
       expect { context[:title_field_classes] }.not_to raise_error
@@ -266,7 +266,7 @@ RSpec.describe Forms::DocumentFormComponent, type: :component do
 
     it 'integrates with Rails path helpers' do
       context = component.send(:template_context)
-      
+
       # Test that path helpers are available and callable
       expect(context[:documents_path]).to be_present
       expect(context[:document_path]).to respond_to(:call)
@@ -339,19 +339,19 @@ RSpec.describe Forms::DocumentFormComponent, type: :component do
   # Model Integration Tests
   describe 'Model integration' do
     it 'handles Status model availability' do
-      allow(Status).to receive(:all).and_return([build(:status)])
+      allow(Status).to receive(:all).and_return([ build(:status) ])
       statuses = component.send(:statuses)
       expect(statuses).to be_an(Array)
     end
 
     it 'handles Scenario model availability' do
-      allow(Scenario).to receive(:all).and_return([build(:scenario)])
+      allow(Scenario).to receive(:all).and_return([ build(:scenario) ])
       scenarios = component.send(:scenarios)
       expect(scenarios).to be_an(Array)
     end
 
     it 'handles Folder model availability' do
-      allow(Folder).to receive(:all).and_return([build(:folder)])
+      allow(Folder).to receive(:all).and_return([ build(:folder) ])
       folders = component.send(:folders)
       expect(folders).to be_an(Array)
     end

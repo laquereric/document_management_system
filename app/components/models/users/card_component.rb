@@ -1,7 +1,7 @@
 class Models::Users::CardComponent < Layout::Card::CardComponent
-
-  def initialize(user:, show_admin_actions: false, context: :general)
+  def initialize(user:, current_user: nil, show_admin_actions: false, context: :general)
     @user = user
+    @current_user = current_user
     @show_admin_actions = show_admin_actions
     @context = context
     super(show_actions: true)
@@ -24,23 +24,30 @@ class Models::Users::CardComponent < Layout::Card::CardComponent
   end
 
   def organization_name
-    safe_name(user.organization, 'None')
+    safe_name(user.organization, "None")
   end
 
-  def role_label_class
-    super(user.role)
+  def role_label_scheme
+    case user.role
+    when "admin"
+      :danger
+    when "team_leader"
+      :warning
+    else
+      :secondary
+    end
   end
 
   def can_edit_user?
-    return false unless helpers.current_user
+    return false unless current_user
 
-    helpers.current_user.admin? || helpers.current_user == user
+    current_user.admin? || current_user == user
   end
 
   def can_manage_user?
-    return false unless helpers.current_user
+    return false unless current_user
 
-    helpers.current_user.admin?
+    current_user.admin?
   end
 
   def show_profile_actions?
@@ -53,5 +60,5 @@ class Models::Users::CardComponent < Layout::Card::CardComponent
 
   private
 
-  attr_reader :user, :show_admin_actions, :context
+  attr_reader :user, :current_user, :show_admin_actions, :context
 end

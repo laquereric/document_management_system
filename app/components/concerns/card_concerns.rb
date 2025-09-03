@@ -22,7 +22,7 @@ module CardConcerns
   end
 
   def card_classes
-    classes = [base_card_classes, system_arguments[:class]].compact.join(" ")
+    classes = [ base_card_classes, system_arguments[:class] ].compact.join(" ")
     classes.strip
   end
 
@@ -98,7 +98,7 @@ module CardConcerns
   # Common count helpers with error handling
   def safe_count(relation)
     return 0 if relation.nil?
-    
+
     if relation.respond_to?(:count) && !relation.is_a?(Array)
       relation.count
     else
@@ -136,16 +136,16 @@ module CardConcerns
   # Role-based label classes
   def role_label_class(role)
     case role.to_s.downcase
-    when 'admin'
-      'danger'
-    when 'team_leader', 'leader'
-      'attention'
-    when 'active'
-      'success'
-    when 'inactive', 'archived'
-      'secondary'
+    when "admin"
+      "danger"
+    when "team_leader", "leader"
+      "attention"
+    when "active"
+      "success"
+    when "inactive", "archived"
+      "secondary"
     else
-      'secondary'
+      "secondary"
     end
   end
 

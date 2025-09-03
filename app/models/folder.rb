@@ -1,14 +1,14 @@
 class Folder < ApplicationRecord
   # Associations
-  belongs_to :parent_folder, class_name: 'Folder', optional: true
+  belongs_to :parent_folder, class_name: "Folder", optional: true
   belongs_to :team
-  has_many :subfolders, class_name: 'Folder', foreign_key: 'parent_folder_id', dependent: :destroy
+  has_many :subfolders, class_name: "Folder", foreign_key: "parent_folder_id", dependent: :destroy
   has_many :documents, dependent: :destroy
   include Taggable
 
   # Validations
   validates :name, presence: true
-  validates :name, uniqueness: { scope: [:parent_folder_id, :team_id] }
+  validates :name, uniqueness: { scope: [ :parent_folder_id, :team_id ] }
 
   # Scopes
   scope :root_folders, -> { where(parent_folder_id: nil) }

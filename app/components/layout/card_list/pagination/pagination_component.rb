@@ -14,7 +14,7 @@ class Layout::CardList::Pagination::PaginationComponent < ApplicationComponent
 
   def pagination_options
     {
-      theme: 'bootstrap',
+      theme: "bootstrap",
       window: 2,
       left: 1,
       right: 1,

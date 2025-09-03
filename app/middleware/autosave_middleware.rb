@@ -5,7 +5,7 @@ class AutosaveMiddleware
   def initialize(app)
     @app = app
     @last_save = Time.current
-    @backup_dir = Rails.root.join('tmp', 'autosave')
+    @backup_dir = Rails.root.join("tmp", "autosave")
     setup_backup_directory
   end
 
@@ -32,10 +32,10 @@ class AutosaveMiddleware
 
   def perform_autosave
     Rails.logger.info "🔄 Performing autosave at #{Time.current}" if Rails.application.config.autosave_debug
-    
+
     # Create backup of important directories
     backup_important_files
-    
+
     # Clean up old backups
     cleanup_old_backups
   end
@@ -46,20 +46,20 @@ class AutosaveMiddleware
 
   def backup_important_files
     autosave_paths = [
-      Rails.root.join('app'),
-      Rails.root.join('config'),
-      Rails.root.join('db'),
-      Rails.root.join('lib')
+      Rails.root.join("app"),
+      Rails.root.join("config"),
+      Rails.root.join("db"),
+      Rails.root.join("lib")
     ]
 
-    timestamp = Time.current.strftime('%Y%m%d_%H%M%S')
-    
+    timestamp = Time.current.strftime("%Y%m%d_%H%M%S")
+
     autosave_paths.each do |path|
       next unless path.exist?
-      
+
       backup_path = @backup_dir.join("#{path.basename}_#{timestamp}")
       FileUtils.cp_r(path, backup_path)
-      
+
       if Rails.application.config.autosave_debug
         Rails.logger.info "   📁 Backed up: #{path.basename} → #{backup_path.basename}"
       end
@@ -68,17 +68,17 @@ class AutosaveMiddleware
 
   def cleanup_old_backups
     max_backups = Rails.application.config.autosave_backup_count
-    
+
     # Get all backup directories
-    backup_dirs = Dir.glob(@backup_dir.join('*')).select { |f| File.directory?(f) }
-    
+    backup_dirs = Dir.glob(@backup_dir.join("*")).select { |f| File.directory?(f) }
+
     # Sort by creation time (oldest first)
     backup_dirs.sort_by! { |dir| File.ctime(dir) }
-    
+
     # Remove old backups if we have too many
     if backup_dirs.length > max_backups
       backups_to_remove = backup_dirs[0...-max_backups]
-      
+
       backups_to_remove.each do |backup|
         FileUtils.rm_rf(backup)
         Rails.logger.info "   🗑️  Removed old backup: #{backup.basename}" if Rails.application.config.autosave_debug

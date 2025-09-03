@@ -1,25 +1,25 @@
 Rails.application.routes.draw do
   get "search/index", to: "search#index"
   devise_for :users
-  
+
   # Root route - point directly to user dashboard
   root "dashboard/user#index"
-  
+
   # Component test route (development only)
   get "component_test", to: "models/component_test#index" if Rails.env.development?
-  
+
   # Dashboard namespace for dashboard-related functionality
   namespace :dashboard do
     get "admin", to: "admin#index"
     get "user", to: "user#index"
   end
-  
+
   # Models namespace for all model-related functionality
   namespace :models do
     # Activities routes
     get "activities", to: "activities#index"
     get "activities/:id", to: "activities#show", as: :activity
-    
+
     # Tags routes
     get "tags", to: "tags#index"
     get "tags/:id", to: "tags#show", as: :tag
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     post "tags", to: "tags#create"
     patch "tags/:id", to: "tags#update"
     delete "tags/:id", to: "tags#destroy"
-    
+
     # Folders routes
     get "folders", to: "folders#index"
     get "folders/:id", to: "folders#show", as: :folder
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     patch "folders/:id", to: "folders#update"
     delete "folders/:id", to: "folders#destroy"
     get "folders/:id/contents", to: "folders#contents"
-    
+
     # Documents routes
     get "documents", to: "documents#index"
     get "documents/:id", to: "documents#show", as: :document
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     post "documents/:id/add_tag", to: "documents#add_tag"
     delete "documents/:id/remove_tag", to: "documents#remove_tag"
     get "documents/search", to: "documents#search"
-    
+
     # Teams routes
     get "teams", to: "teams#index"
     get "teams/:id", to: "teams#show", as: :team
@@ -64,7 +64,7 @@ Rails.application.routes.draw do
     delete "teams/:id/leave", to: "teams#leave"
     post "teams/:id/add_member", to: "teams#add_member"
     delete "teams/:id/remove_member", to: "teams#remove_member"
-    
+
     # Organizations routes
     get "organizations", to: "organizations#index"
     get "organizations/:id", to: "organizations#show", as: :organization
@@ -73,7 +73,7 @@ Rails.application.routes.draw do
     post "organizations", to: "organizations#create"
     patch "organizations/:id", to: "organizations#update"
     delete "organizations/:id", to: "organizations#destroy"
-    
+
     # Scenarios routes
     get "scenarios", to: "scenarios#index"
     get "scenarios/:id", to: "scenarios#show", as: :scenario
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
     post "scenarios", to: "scenarios#create"
     patch "scenarios/:id", to: "scenarios#update"
     delete "scenarios/:id", to: "scenarios#destroy"
-    
+
     # Users routes
     get "users", to: "users#index"
     get "users/:id", to: "users#show", as: :user
@@ -92,10 +92,8 @@ Rails.application.routes.draw do
     patch "users/:id", to: "users#update"
     patch "users/:id/toggle_role", to: "users#toggle_role", as: :toggle_role_user
     delete "users/:id", to: "users#destroy"
-    
-
   end
-  
+
   # Main application routes
   resources :organizations do
     resources :teams do
@@ -108,7 +106,7 @@ Rails.application.routes.draw do
       end
     end
   end
-  
+
   resources :organizations do
     resources :tags do
       member do
@@ -141,24 +139,24 @@ Rails.application.routes.draw do
 
   # Search
   get "search", to: "search#index"
-  
+
   # Infrastructure and financial routes
   get "infrastructure", to: "infrastructure#index"
   get "financial", to: "financial#index"
-  
+
   # Convention routes
-  get "admin", to: redirect('/dashboard/admin')
-  get "user", to: redirect('/dashboard/user')
-  
+  get "admin", to: redirect("/dashboard/admin")
+  get "user", to: redirect("/dashboard/user")
+
   # API routes for AJAX requests
   namespace :api do
     namespace :v1 do
-      resources :documents, only: [:index, :show, :update]
-      resources :folders, only: [:index, :show]
-      resources :tags, only: [:index]
+      resources :documents, only: [ :index, :show, :update ]
+      resources :folders, only: [ :index, :show ]
+      resources :tags, only: [ :index ]
     end
   end
-  
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 end

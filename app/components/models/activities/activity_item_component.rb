@@ -14,32 +14,32 @@ class Models::Activities::ActivityItemComponent < ApplicationComponent
 
   def action_icon
     case activity.action
-    when 'created'
-      'bi-plus-circle-fill text-success'
-    when 'updated'
-      'bi-pencil-fill text-primary'
-    when 'status_change'
-      'bi-arrow-repeat text-warning'
-    when 'tag_added'
-      'bi-tag-fill text-info'
-    when 'tag_removed'
-      'bi-tag text-secondary'
+    when "created"
+      "bi-plus-circle-fill text-success"
+    when "updated"
+      "bi-pencil-fill text-primary"
+    when "status_change"
+      "bi-arrow-repeat text-warning"
+    when "tag_added"
+      "bi-tag-fill text-info"
+    when "tag_removed"
+      "bi-tag text-secondary"
     else
-      'bi-circle-fill text-primary'
+      "bi-circle-fill text-primary"
     end
   end
 
   def action_description
     case activity.action
-    when 'created'
-      'created'
-    when 'updated'
-      'updated'
-    when 'status_change'
+    when "created"
+      "created"
+    when "updated"
+      "updated"
+    when "status_change"
       "changed status from #{activity.old_status&.name} to #{activity.new_status&.name}"
-    when 'tag_added'
+    when "tag_added"
       "added tag: #{activity.notes&.gsub('Added tag: ', '')}"
-    when 'tag_removed'
+    when "tag_removed"
       "removed tag: #{activity.notes&.gsub('Removed tag: ', '')}"
     else
       activity.action

@@ -1,5 +1,4 @@
 class Layout::Page::PageHeader < ApplicationComponent
-
   def initialize(
     title:,
     description: nil,

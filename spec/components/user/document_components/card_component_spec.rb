@@ -292,7 +292,7 @@ RSpec.describe User::DocumentComponents::CardComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:card_classes] }.not_to raise_error
       expect { context[:title_classes] }.not_to raise_error
@@ -304,7 +304,7 @@ RSpec.describe User::DocumentComponents::CardComponent, type: :component do
 
     it 'integrates with Rails path helpers' do
       context = component.send(:template_context)
-      
+
       # Test that path helpers are available and callable
       expect(context[:document_path]).to respond_to(:call)
       expect(context[:edit_document_path]).to respond_to(:call)

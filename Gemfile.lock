@@ -95,6 +95,11 @@ GEM
     brakeman (7.1.0)
       racc
     builder (3.3.0)
+    bundle-audit (0.1.0)
+      bundler-audit
+    bundler-audit (0.9.2)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     cancancan (3.6.1)
     capybara (3.40.0)
       addressable
@@ -500,6 +505,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman
+  bundle-audit
   cancancan
   cucumber-rails
   database_cleaner-active_record

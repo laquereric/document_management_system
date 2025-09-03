@@ -18,12 +18,12 @@ class Layout::Page::UserRecentActivityComponent < ApplicationComponent
 
   def activity_icon(activity)
     case activity.action
-    when 'created'
-      'plus'
-    when 'updated'
-      'pencil'
+    when "created"
+      "plus"
+    when "updated"
+      "pencil"
     else
-      'trash'
+      "trash"
     end
   end
 

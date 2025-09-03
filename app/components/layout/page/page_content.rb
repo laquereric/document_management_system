@@ -1,5 +1,4 @@
 class Layout::Page::PageContent < ApplicationComponent
-
   def initialize(
     padding: :default,
     **system_arguments
@@ -14,7 +13,7 @@ class Layout::Page::PageContent < ApplicationComponent
 
   def container_classes
     base_classes = "container-lg px-3"
-    
+
     case padding
     when :none
       base_classes

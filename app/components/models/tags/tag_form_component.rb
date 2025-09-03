@@ -1,5 +1,4 @@
 class Models::Tags::TagFormComponent < ApplicationComponent
-
   def initialize(tag:, submit_text: "Save Tag", cancel_url: nil, **system_arguments)
     @tag = tag
     @submit_text = submit_text
@@ -29,14 +28,14 @@ class Models::Tags::TagFormComponent < ApplicationComponent
 
   def color_options
     [
-      ['Blue', '#0366d6'],
-      ['Green', '#28a745'],
-      ['Yellow', '#ffd33d'],
-      ['Red', '#d73a49'],
-      ['Purple', '#6f42c1'],
-      ['Orange', '#f66a0a'],
-      ['Pink', '#ea4aaa'],
-      ['Gray', '#6a737d']
+      [ "Blue", "#0366d6" ],
+      [ "Green", "#28a745" ],
+      [ "Yellow", "#ffd33d" ],
+      [ "Red", "#d73a49" ],
+      [ "Purple", "#6f42c1" ],
+      [ "Orange", "#f66a0a" ],
+      [ "Pink", "#ea4aaa" ],
+      [ "Gray", "#6a737d" ]
     ]
   end
 

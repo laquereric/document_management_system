@@ -1,8 +1,7 @@
 class Models::OrganizationsController < Models::ModelsController
-
-  before_action :set_organization, only: [:show, :edit, :update, :destroy]
-  before_action :set_user, only: [:user_organizations]
-  before_action :require_admin!, except: [:index, :show]
+  before_action :set_organization, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_user, only: [ :user_organizations ]
+  before_action :require_admin!, except: [ :index, :show ]
 
   def index
     @q = Organization.ransack(params[:q])
@@ -20,7 +19,7 @@ class Models::OrganizationsController < Models::ModelsController
                           .order(created_at: :desc)
                           .page(params[:page])
                           .per(20)
-    
+
     render :user_organizations
   end
 
@@ -33,9 +32,9 @@ class Models::OrganizationsController < Models::ModelsController
 
   def create
     @organization = Organization.new(organization_params)
-    
+
     if @organization.save
-      redirect_to models_organization_path(@organization), notice: 'Organization was successfully created.'
+      redirect_to models_organization_path(@organization), notice: "Organization was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -46,7 +45,7 @@ class Models::OrganizationsController < Models::ModelsController
 
   def update
     if @organization.update(organization_params)
-      redirect_to models_organization_path(@organization), notice: 'Organization was successfully updated.'
+      redirect_to models_organization_path(@organization), notice: "Organization was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -54,9 +53,9 @@ class Models::OrganizationsController < Models::ModelsController
 
   def destroy
     if @organization.destroy
-      redirect_to models_organizations_path, notice: 'Organization was successfully deleted.'
+      redirect_to models_organizations_path, notice: "Organization was successfully deleted."
     else
-      redirect_to models_organization_path(@organization), alert: 'Failed to delete organization.'
+      redirect_to models_organization_path(@organization), alert: "Failed to delete organization."
     end
   end
 
@@ -76,7 +75,7 @@ class Models::OrganizationsController < Models::ModelsController
 
   def require_admin!
     unless current_user&.admin?
-      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
+      redirect_to root_path, alert: "Access denied. Admin privileges required."
     end
   end
 end

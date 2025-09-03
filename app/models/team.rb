@@ -1,7 +1,7 @@
 class Team < ApplicationRecord
   # Associations
   belongs_to :organization
-  belongs_to :leader, class_name: 'User'
+  belongs_to :leader, class_name: "User"
   has_many :team_memberships, dependent: :destroy
   has_many :users, through: :team_memberships
   has_many :folders, dependent: :destroy

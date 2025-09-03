@@ -20,7 +20,7 @@ RSpec.describe Scenario, type: :model do
 
     describe '.recent' do
       it 'returns scenarios ordered by creation date descending' do
-        expect(Scenario.recent.to_a).to eq([scenario3, scenario2, scenario1])
+        expect(Scenario.recent.to_a).to eq([ scenario3, scenario2, scenario1 ])
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe Scenario, type: :model do
       it 'returns array of tag names' do
         scenario.add_tag(tag1)
         scenario.add_tag(tag2)
-        expect(scenario.tag_name_array).to eq(['Business', 'Technical'])
+        expect(scenario.tag_name_array).to eq([ 'Business', 'Technical' ])
       end
 
       it 'returns empty array when no tags' do
@@ -128,7 +128,7 @@ RSpec.describe Scenario, type: :model do
         scenario.add_tag(tag1)
         scenario.add_tag(tag2)
         scenario.add_tag(tag3)
-        
+
         result = scenario.tags_by_name('Business', 'Technical')
         expect(result).to include(tag1, tag2)
         expect(result).not_to include(tag3)
@@ -139,7 +139,7 @@ RSpec.describe Scenario, type: :model do
       it 'returns tags matching the given color' do
         scenario.add_tag(tag1)
         scenario.add_tag(tag2)
-        
+
         result = scenario.tags_by_color(tag1.color)
         expect(result).to include(tag1)
         expect(result).not_to include(tag2)

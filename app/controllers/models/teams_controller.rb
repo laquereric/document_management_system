@@ -1,6 +1,5 @@
 class Models::TeamsController < Models::ModelsController
-
-  before_action :set_team, only: [:show, :edit, :update, :destroy, :add_member, :remove_member]
+  before_action :set_team, only: [ :show, :edit, :update, :destroy, :add_member, :remove_member ]
 
   def index
     @q = Team.ransack(params[:q])
@@ -9,7 +8,7 @@ class Models::TeamsController < Models::ModelsController
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
-    
+
     # Filter teams based on user permissions
     if current_user.admin?
       # Admin sees all teams
@@ -40,9 +39,9 @@ class Models::TeamsController < Models::ModelsController
 
   def create
     @team = Team.new(team_params)
-    
+
     if @team.save
-      redirect_to models_team_path(@team), notice: 'Team was successfully created.'
+      redirect_to models_team_path(@team), notice: "Team was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -53,7 +52,7 @@ class Models::TeamsController < Models::ModelsController
 
   def update
     if @team.update(team_params)
-      redirect_to models_team_path(@team), notice: 'Team was successfully updated.'
+      redirect_to models_team_path(@team), notice: "Team was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -61,18 +60,18 @@ class Models::TeamsController < Models::ModelsController
 
   def destroy
     if @team.destroy
-      redirect_to models_teams_path, notice: 'Team was successfully deleted.'
+      redirect_to models_teams_path, notice: "Team was successfully deleted."
     else
-      redirect_to models_team_path(@team), alert: 'Failed to delete team.'
+      redirect_to models_team_path(@team), alert: "Failed to delete team."
     end
   end
 
   def add_member
     user = User.find(params[:user_id])
-    
+
     unless @team.users.include?(user)
       @team.users << user
-      
+
       # Redirect based on where the request came from
       if params[:redirect_to_user_profile]
         redirect_to user_path(user), notice: "#{user.name} was added to #{@team.name}."
@@ -91,7 +90,7 @@ class Models::TeamsController < Models::ModelsController
 
   def remove_member
     user = User.find(params[:user_id])
-    
+
     if @team.users.include?(user)
       @team.users.delete(user)
       redirect_to models_team_path(@team), notice: "#{user.name} was removed from the team."
@@ -102,7 +101,7 @@ class Models::TeamsController < Models::ModelsController
 
   def join
     user = User.find(params[:user_id])
-    
+
     if @team.members.include?(user)
       redirect_to models_team_path(@team), alert: "#{user.name} is already a member of this team."
     else
@@ -113,7 +112,7 @@ class Models::TeamsController < Models::ModelsController
 
   def leave
     user = User.find(params[:user_id])
-    
+
     if @team.members.include?(user)
       @team.members.delete(user)
       redirect_to models_team_path(@team), notice: "#{user.name} was removed from the team."
@@ -134,7 +133,7 @@ class Models::TeamsController < Models::ModelsController
 
   def require_admin!
     unless current_user&.admin?
-      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
+      redirect_to root_path, alert: "Access denied. Admin privileges required."
     end
   end
 end

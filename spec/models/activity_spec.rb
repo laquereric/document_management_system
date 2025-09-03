@@ -24,7 +24,7 @@ RSpec.describe Activity, type: :model do
 
     describe '.recent' do
       it 'returns activities ordered by creation date descending' do
-        expect(Activity.recent.to_a).to eq([activity3, activity2, activity1])
+        expect(Activity.recent.to_a).to eq([ activity3, activity2, activity1 ])
       end
     end
 

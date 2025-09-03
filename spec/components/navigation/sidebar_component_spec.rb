@@ -54,7 +54,7 @@ RSpec.describe Layout::Navigation::SidebarComponent, type: :component do
       end
 
       it 'handles various icon types' do
-        icons = ['home', 'file-text', 'file-directory', 'tag', 'pulse', 'people', 'organization', 'person', 'gear', 'group', 'list-unordered']
+        icons = [ 'home', 'file-text', 'file-directory', 'tag', 'pulse', 'people', 'organization', 'person', 'gear', 'group', 'list-unordered' ]
         icons.each do |icon|
           path = component.send(:render_icon_path, icon)
           expect(path).to include('<path')
@@ -138,7 +138,7 @@ RSpec.describe Layout::Navigation::SidebarComponent, type: :component do
     let(:component) { described_class.new(current_user: current_user, controller_name: controller_name) }
 
     it 'renders all navigation icons correctly' do
-      navigation_icons = ['home', 'file-text', 'file-directory', 'tag', 'pulse', 'people', 'organization', 'person']
+      navigation_icons = [ 'home', 'file-text', 'file-directory', 'tag', 'pulse', 'people', 'organization', 'person' ]
       navigation_icons.each do |icon|
         path = component.send(:render_icon_path, icon)
         expect(path).to be_a(String)
@@ -148,7 +148,7 @@ RSpec.describe Layout::Navigation::SidebarComponent, type: :component do
     end
 
     it 'renders admin icons correctly' do
-      admin_icons = ['gear', 'organization', 'people', 'group', 'list-unordered', 'tag']
+      admin_icons = [ 'gear', 'organization', 'people', 'group', 'list-unordered', 'tag' ]
       admin_icons.each do |icon|
         path = component.send(:render_icon_path, icon)
         expect(path).to be_a(String)
@@ -158,7 +158,7 @@ RSpec.describe Layout::Navigation::SidebarComponent, type: :component do
     end
 
     it 'handles unknown icons gracefully' do
-      unknown_icons = ['unknown', 'invalid', 'missing']
+      unknown_icons = [ 'unknown', 'invalid', 'missing' ]
       unknown_icons.each do |icon|
         path = component.send(:render_icon_path, icon)
         expect(path).to be_a(String)

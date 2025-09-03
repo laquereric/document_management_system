@@ -1,7 +1,6 @@
 # Document card component for displaying documents in lists
 
 class Models::Documents::CardComponent < Layout::Card::CardComponent
-
   def initialize(document:, show_actions: true, **system_arguments)
     @document = document
     @system_arguments = merge_system_arguments(system_arguments)
@@ -53,12 +52,12 @@ class Models::Documents::CardComponent < Layout::Card::CardComponent
   def file_extension
     return nil unless has_file?
     filename = document.file.filename.to_s
-    filename.split('.').last&.upcase
+    filename.split(".").last&.upcase
   end
 
   def file_icon
     return "file" unless has_file?
-    
+
     extension = file_extension&.downcase
     case extension
     when "pdf"

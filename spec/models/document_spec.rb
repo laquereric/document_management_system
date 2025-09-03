@@ -24,7 +24,7 @@ RSpec.describe Document, type: :model do
 
     describe '.recent' do
       it 'returns documents ordered by creation date descending' do
-        expect(Document.recent.to_a).to eq([document3, document2, document1])
+        expect(Document.recent.to_a).to eq([ document3, document2, document1 ])
       end
     end
 
@@ -191,7 +191,7 @@ RSpec.describe Document, type: :model do
         it 'returns array of tag names' do
           document.add_tag(tag1)
           document.add_tag(tag2)
-          expect(document.tag_name_array).to eq(['Important', 'Draft'])
+          expect(document.tag_name_array).to eq([ 'Important', 'Draft' ])
         end
 
         it 'returns empty array when no tags' do
@@ -204,7 +204,7 @@ RSpec.describe Document, type: :model do
           document.add_tag(tag1)
           document.add_tag(tag2)
           document.add_tag(tag3)
-          
+
           result = document.tags_by_name('Important', 'Draft')
           expect(result).to include(tag1, tag2)
           expect(result).not_to include(tag3)
@@ -215,7 +215,7 @@ RSpec.describe Document, type: :model do
         it 'returns tags matching the given color' do
           document.add_tag(tag1)
           document.add_tag(tag2)
-          
+
           result = document.tags_by_color(tag1.color)
           expect(result).to include(tag1)
           expect(result).not_to include(tag2)
@@ -264,7 +264,7 @@ RSpec.describe Document, type: :model do
       it 'creates an activity when status changes' do
         old_status_id = document.status_id
         document.update(status: new_status)
-        
+
         activity = Activity.last
         expect(activity).to be_present
         expect(activity.document).to eq(document)

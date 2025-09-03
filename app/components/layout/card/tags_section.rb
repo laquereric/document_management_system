@@ -1,5 +1,4 @@
 class Layout::TagsSection < ApplicationComponent
-
   def initialize(
     tags:,
     title: "All Tags",

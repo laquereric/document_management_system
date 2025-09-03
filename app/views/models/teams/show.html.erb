@@ -160,13 +160,14 @@
               <% @team.users.each do |user| %>
                 <div class="position-relative">
                   <%= render Models::Users::CardComponent.new(
-                    user: user, 
-                    show_admin_actions: false, 
+                    user: user,
+                    current_user: current_user,
+                    show_admin_actions: false,
                     context: :admin
                   ) %>
                   <div class="position-absolute" style="top: 8px; right: 8px;">
-                    <%= link_to remove_member_models_team_path(@team, user_id: user.id), 
-                        method: :delete, 
+                    <%= link_to remove_member_models_team_path(@team, user_id: user.id),
+                        method: :delete,
                         class: "btn btn-sm btn-outline-danger",
                         data: { confirm: "Remove #{user.name} from this team?" } do %>
                       <svg class="octicon octicon-x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
@@ -235,8 +236,8 @@
                   <div class="color-fg-muted f6"><%= user.email %></div>
                 </div>
                 <div class="flex-shrink-0">
-                  <%= link_to add_member_models_team_path(@team, user_id: user.id), 
-                      method: :post, 
+                  <%= link_to add_member_models_team_path(@team, user_id: user.id),
+                      method: :post,
                       class: "btn btn-sm btn-outline",
                       data: { confirm: "Add #{user.name} to this team?" } do %>
                     <svg class="octicon octicon-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">

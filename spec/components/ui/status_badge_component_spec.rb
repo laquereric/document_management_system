@@ -149,7 +149,7 @@ RSpec.describe Ui::StatusBadgeComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:badge_classes] }.not_to raise_error
       expect { context[:badge_style] }.not_to raise_error

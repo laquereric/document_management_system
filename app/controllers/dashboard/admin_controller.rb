@@ -6,16 +6,16 @@ class Dashboard::AdminController < Dashboard::DashboardController
     @recent_users = User.order(created_at: :desc).limit(5)
     @recent_documents = Document.includes(:author, :team).order(created_at: :desc).limit(5)
     @recent_activity = set_recent_activity
-    
+
     @users_by_role = User.group(:role).count
-    @documents_by_status = Document.joins(:status).group('statuses.name').count
+    @documents_by_status = Document.joins(:status).group("statuses.name").count
   end
 
   private
 
   def require_admin!
     unless current_user&.admin?
-      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
+      redirect_to root_path, alert: "Access denied. Admin privileges required."
     end
   end
 end

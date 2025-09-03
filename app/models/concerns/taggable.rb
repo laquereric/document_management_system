@@ -23,7 +23,7 @@ module Taggable
 
   # Get tag names as a comma-separated string
   def tag_names
-    tags.pluck(:name).join(', ')
+    tags.pluck(:name).join(", ")
   end
 
   # Get tag names as an array
@@ -54,28 +54,28 @@ module Taggable
   # Get tags in a specific context (organization, team, folder, or global)
   def tags_in_context(context)
     case context
-    when 'organization'
+    when "organization"
       if respond_to?(:organization) && organization
         # Get tags that are scoped to this organization
         Tag.where(organization_id: organization.id)
       else
         Tag.none
       end
-    when 'team'
+    when "team"
       if respond_to?(:team) && team
         # Get tags that are scoped to this team
         Tag.where(team_id: team.id)
       else
         Tag.none
       end
-    when 'folder'
+    when "folder"
       if respond_to?(:folder) && folder
         # Get tags that are scoped to this folder
         Tag.where(folder_id: folder.id)
       else
         Tag.none
       end
-    when 'global'
+    when "global"
       # Get tags that are not scoped to any specific context
       Tag.where(organization_id: nil, team_id: nil, folder_id: nil)
     else

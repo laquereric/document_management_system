@@ -3,22 +3,22 @@ require 'rails_helper'
 RSpec.describe Layout::CardList::TableComponent, type: :component do
   let(:documents) do
     [
-      double('document1', 
-        title: 'Document 1', 
+      double('document1',
+        title: 'Document 1',
         author: double('author1', name: 'Author 1', email: 'author1@example.com'),
         folder: double('folder1', name: 'Folder 1'),
         status: double('status1', name: 'active'),
         content: 'Content 1',
-        created_at: 1.day.ago, 
+        created_at: 1.day.ago,
         updated_at: 1.hour.ago
       ),
-      double('document2', 
-        title: 'Document 2', 
+      double('document2',
+        title: 'Document 2',
         author: double('author2', name: 'Author 2', email: 'author2@example.com'),
         folder: double('folder2', name: 'Folder 2'),
         status: double('status2', name: 'draft'),
         content: 'Content 2',
-        created_at: 2.days.ago, 
+        created_at: 2.days.ago,
         updated_at: 2.hours.ago
       )
     ]
@@ -30,7 +30,7 @@ RSpec.describe Layout::CardList::TableComponent, type: :component do
     allow(component.helpers).to receive(:truncate)
     allow(component.helpers).to receive(:time_ago_in_words)
     allow(component.helpers).to receive(:render)
-    
+
     # Mock the actions menu component to avoid rendering issues
     allow(component).to receive(:render).and_return('')
   end

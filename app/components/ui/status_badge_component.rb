@@ -18,10 +18,10 @@ class Ui::StatusBadgeComponent < ApplicationComponent
 
   def contrast_color(hex_color)
     # Simple contrast calculation - for production, consider using a more sophisticated algorithm
-    hex_color = hex_color.gsub('#', '')
+    hex_color = hex_color.gsub("#", "")
     r, g, b = hex_color.scan(/../).map { |c| c.to_i(16) }
     luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-    luminance > 0.5 ? '#000000' : '#ffffff'
+    luminance > 0.5 ? "#000000" : "#ffffff"
   end
 
   # Context methods for the template

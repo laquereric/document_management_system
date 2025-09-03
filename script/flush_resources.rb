@@ -25,14 +25,14 @@ begin
   # Flush assets and precompiled assets
   if defined?(Rails.application)
     puts "Flushing assets..."
-    
+
     # Clear asset cache (Propshaft doesn't have cache.clear like Sprockets)
     if defined?(Rails.application.assets)
       puts "Clearing asset cache..."
       # Propshaft doesn't have a cache.clear method, so we'll just log this
       puts "ℹ️  Asset pipeline detected (Propshaft)"
     end
-    
+
     # Remove precompiled assets
     if defined?(Rails.application.config.assets)
       public_assets_dir = Rails.root.join('public', 'assets')
@@ -41,7 +41,7 @@ begin
         FileUtils.rm_rf(public_assets_dir)
         puts "✓ Precompiled assets removed"
       end
-      
+
       # Clear asset manifest
       manifest_file = Rails.root.join('public', 'assets', 'manifest.json')
       if manifest_file.exist?
@@ -49,7 +49,7 @@ begin
         puts "✓ Asset manifest removed"
       end
     end
-    
+
     # Clear Sprockets cache if available (for legacy support)
     if defined?(Sprockets)
       Sprockets.cache.clear if Sprockets.respond_to?(:cache)

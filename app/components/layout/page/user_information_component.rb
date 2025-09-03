@@ -11,9 +11,9 @@ class Layout::Page::UserInformationComponent < ApplicationComponent
 
   def role_label_scheme
     case user.role
-    when 'admin'
+    when "admin"
       :danger
-    when 'team_leader'
+    when "team_leader"
       :warning
     else
       :secondary

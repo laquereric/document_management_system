@@ -1,5 +1,4 @@
 class Models::Folder::FolderFormComponent < ApplicationComponent
-
   def initialize(folder:, submit_text: "Save Folder", cancel_url: nil, **system_arguments)
     @folder = folder
     @submit_text = submit_text

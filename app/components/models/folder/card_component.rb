@@ -1,5 +1,4 @@
 class Models::Folder::CardComponent < Layout::Card::CardComponent
-
   def initialize(folder:, show_actions: true, **system_arguments)
     @folder = folder
     initialize_card_base(show_actions: show_actions, **system_arguments)

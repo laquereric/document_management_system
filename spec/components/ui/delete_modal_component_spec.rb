@@ -193,7 +193,7 @@ RSpec.describe Ui::DeleteModalComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:modal_id] }.not_to raise_error
       expect { context[:modal_classes] }.not_to raise_error

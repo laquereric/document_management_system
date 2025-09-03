@@ -1,6 +1,5 @@
 class Models::TagsController < Models::ModelsController
-
-  before_action :set_tag, only: [:show, :edit, :update, :destroy]
+  before_action :set_tag, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @q = Tag.ransack(params[:q])
@@ -9,7 +8,7 @@ class Models::TagsController < Models::ModelsController
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
-    
+
     # Filter tags based on user permissions
     if current_user.admin?
       # Admin sees all tags
@@ -18,14 +17,14 @@ class Models::TagsController < Models::ModelsController
       # If viewing specific user's tags, check permissions
       user = User.find(params[:user_id])
       if current_user == user || current_user.admin?
-        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: 'Document' }, documents: { author: user }).distinct
+        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: "Document" }, documents: { author: user }).distinct
       else
         # Regular users can only see tags on their own documents
-        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: 'Document' }, documents: { author: current_user }).distinct
+        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: "Document" }, documents: { author: current_user }).distinct
       end
     else
       # Regular users see only tags on their own documents
-      @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: 'Document' }, documents: { author: current_user }).distinct
+      @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: "Document" }, documents: { author: current_user }).distinct
     end
   end
 
@@ -43,9 +42,9 @@ class Models::TagsController < Models::ModelsController
 
   def create
     @tag = Tag.new(tag_params)
-    
+
     if @tag.save
-      redirect_to models_tag_path(@tag), notice: 'Tag was successfully created.'
+      redirect_to models_tag_path(@tag), notice: "Tag was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -56,7 +55,7 @@ class Models::TagsController < Models::ModelsController
 
   def update
     if @tag.update(tag_params)
-      redirect_to models_tag_path(@tag), notice: 'Tag was successfully updated.'
+      redirect_to models_tag_path(@tag), notice: "Tag was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -65,9 +64,9 @@ class Models::TagsController < Models::ModelsController
   def destroy
     tag_name = @tag.name
     if @tag.destroy
-      redirect_to models_tags_path, notice: 'Tag was successfully deleted.'
+      redirect_to models_tags_path, notice: "Tag was successfully deleted."
     else
-      redirect_to models_tag_path(@tag), alert: 'Failed to delete tag.'
+      redirect_to models_tag_path(@tag), alert: "Failed to delete tag."
     end
   end
 
@@ -83,7 +82,7 @@ class Models::TagsController < Models::ModelsController
 
   def require_admin!
     unless current_user&.admin?
-      redirect_to root_path, alert: 'Access denied. Admin privileges required.'
+      redirect_to root_path, alert: "Access denied. Admin privileges required."
     end
   end
 end

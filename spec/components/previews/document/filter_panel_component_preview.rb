@@ -8,9 +8,9 @@ class User::DocumentComponents::FilterPanelComponentPreview < ViewComponent::Pre
     search = OpenStruct.new(
       status_eq: "active",
       folder_id_eq: "1",
-      tags_id_in: ["1", "2"]
+      tags_id_in: [ "1", "2" ]
     )
-    
+
     render(User::DocumentComponents::FilterPanelComponent.new(search: search))
   end
 end

@@ -49,7 +49,7 @@ class Models::Users::UserMenuComponent < ApplicationComponent
 
   def user_initials
     return "" if user.nil? || user.email.blank?
-    names = user.email.split('@').first.split('.')
+    names = user.email.split("@").first.split(".")
     names.map(&:first).join.upcase[0..1]
   end
 

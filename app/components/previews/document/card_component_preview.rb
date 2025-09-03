@@ -35,7 +35,7 @@ class Models::Documents::CardComponentPreview < ViewComponent::Preview
       OpenStruct.new(name: "Draft"),
       OpenStruct.new(name: "Review")
     ]
-    
+
     render(Models::Documents::CardComponent.new(
       document: document,
       layout: :list

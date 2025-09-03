@@ -72,7 +72,7 @@ RSpec.configure do |config|
   # ViewComponent testing configuration
   config.include ViewComponent::TestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
-  
+
   # Include FactoryBot methods
   config.include FactoryBot::Syntax::Methods
 end

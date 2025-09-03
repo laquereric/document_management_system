@@ -1,5 +1,4 @@
 class Models::Tag::CardComponent < Layout::Card::CardComponent
-
   def initialize(tag:, show_actions: true, admin_context: false, **system_arguments)
     @tag = tag
     @admin_context = admin_context
@@ -22,7 +21,7 @@ class Models::Tag::CardComponent < Layout::Card::CardComponent
   def contrast_color
     return "#000" unless tag.color.present?
     # Simple contrast calculation - if color is dark, use white text
-    hex = tag.color.gsub('#', '')
+    hex = tag.color.gsub("#", "")
     rgb = hex.scan(/../).map { |color| color.to_i(16) }
     brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
     brightness > 128 ? "#000" : "#fff"

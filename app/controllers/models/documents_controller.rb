@@ -1,24 +1,24 @@
 class Models::DocumentsController < Models::ModelsController
-  before_action :set_document, only: [:show, :edit, :update, :destroy, :change_status, :add_tag, :remove_tag]
-  before_action :set_folder, only: [:new, :create]
-  before_action :ensure_user_can_access_document, only: [:show, :edit, :update, :destroy]
-  
+  before_action :set_document, only: [ :show, :edit, :update, :destroy, :change_status, :add_tag, :remove_tag ]
+  before_action :set_folder, only: [ :new, :create ]
+  before_action :ensure_user_can_access_document, only: [ :show, :edit, :update, :destroy ]
+
   def index
     @q = Document.ransack(params[:q])
     @documents = @q.result.includes(:author, :folder, :status, :tags, :scenario)
                    .page(params[:page])
                    .per(20)
-    
+
     # Apply sorting
     case params[:sort]
-    when 'title'
+    when "title"
       @documents = @documents.order(:title)
-    when 'status'
-      @documents = @documents.joins(:status).order('statuses.name')
+    when "status"
+      @documents = @documents.joins(:status).order("statuses.name")
     else
       @documents = @documents.order(created_at: :desc)
     end
-    
+
     # Filter by user's accessible documents
     unless current_user.admin?
       team_ids = current_user.teams.pluck(:id)
@@ -39,15 +39,15 @@ class Models::DocumentsController < Models::ModelsController
   def create
     @document = @folder ? @folder.documents.build(document_params) : Document.new(document_params)
     @document.author = current_user
-    
+
     if @document.save
       Activity.create!(
         document: @document,
         user: current_user,
-        action: 'created',
-        notes: 'Document created'
+        action: "created",
+        notes: "Document created"
       )
-      redirect_to @document, notice: 'Document was successfully created.'
+      redirect_to @document, notice: "Document was successfully created."
     else
       @statuses = Status.all
       @scenarios = Scenario.all
@@ -65,10 +65,10 @@ class Models::DocumentsController < Models::ModelsController
       Activity.create!(
         document: @document,
         user: current_user,
-        action: 'updated',
-        notes: 'Document updated'
+        action: "updated",
+        notes: "Document updated"
       )
-      redirect_to @document, notice: 'Document was successfully updated.'
+      redirect_to @document, notice: "Document was successfully updated."
     else
       @statuses = Status.all
       @scenarios = Scenario.all
@@ -81,31 +81,31 @@ class Models::DocumentsController < Models::ModelsController
     if @document.destroy
       Activity.create!(
         user: current_user,
-        action: 'deleted',
+        action: "deleted",
         notes: "Deleted document: #{document_title}"
       )
-      redirect_to documents_url, notice: 'Document was successfully deleted.'
+      redirect_to documents_url, notice: "Document was successfully deleted."
     else
-      redirect_to @document, alert: 'Failed to delete document.'
+      redirect_to @document, alert: "Failed to delete document."
     end
   end
 
   def change_status
     new_status = Status.find(params[:status_id])
     old_status = @document.status
-    
+
     if @document.update(status: new_status)
       Activity.create!(
         document: @document,
         user: current_user,
-        action: 'status_change',
+        action: "status_change",
         old_status: old_status,
         new_status: new_status,
         notes: params[:notes]
       )
-      redirect_to @document, notice: 'Status updated successfully.'
+      redirect_to @document, notice: "Status updated successfully."
     else
-      redirect_to @document, alert: 'Failed to update status.'
+      redirect_to @document, alert: "Failed to update status."
     end
   end
 
@@ -116,7 +116,7 @@ class Models::DocumentsController < Models::ModelsController
       Activity.create!(
         document: @document,
         user: current_user,
-        action: 'tag_added',
+        action: "tag_added",
         notes: "Added tag: #{tag.name}"
       )
     end
@@ -129,7 +129,7 @@ class Models::DocumentsController < Models::ModelsController
     Activity.create!(
       document: @document,
       user: current_user,
-      action: 'tag_removed',
+      action: "tag_removed",
       notes: "Removed tag: #{tag.name}"
     )
     redirect_to @document
@@ -138,7 +138,7 @@ class Models::DocumentsController < Models::ModelsController
   def search
     @q = Document.ransack(params[:q])
     @documents = @q.result.includes(:author, :folder, :status, :tags)
-    
+
     # Filter by user's accessible documents
     unless current_user.admin?
       team_ids = current_user.teams.pluck(:id)
@@ -158,7 +158,7 @@ class Models::DocumentsController < Models::ModelsController
 
   def ensure_user_can_access_document
     unless current_user.admin? || @document.team.members.include?(current_user)
-      redirect_to models_documents_path, alert: 'You do not have permission to access this document.'
+      redirect_to models_documents_path, alert: "You do not have permission to access this document."
     end
   end
 

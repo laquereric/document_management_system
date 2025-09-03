@@ -36,7 +36,7 @@ class Layout::CardList::ListComponent < ApplicationComponent
 
   private
 
-  attr_reader :cards, :layout, :title, :show_filters, :show_sorting, :current_sort, :search, 
+  attr_reader :cards, :layout, :title, :show_filters, :show_sorting, :current_sort, :search,
               :sort_options, :empty_state_title, :empty_state_description, :empty_state_action, :card_component
 
   def container_classes

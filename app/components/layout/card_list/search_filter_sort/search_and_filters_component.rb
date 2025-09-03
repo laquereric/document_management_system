@@ -1,5 +1,4 @@
 class Layout::CardList::SearchFilterSort::SearchAndFiltersComponent < ApplicationComponent
-
   def initialize(
     search_object:,
     url:,

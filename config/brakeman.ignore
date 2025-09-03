@@ -1,0 +1,74 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "a01f4bc95be88eec5c4fabe81cf371e05c04541a3cc5440303f4a8ffc759cb0d",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/models/users/index.html.erb",
+      "line": 42,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Layout::CardList.new(:cards => User.ransack(params[:q]).result(:distinct => true).includes(:organization, :teams).order(:created_at => :desc).page(params[:page]).per(20), :layout => :grid, :title => \"Users\", :empty_state_title => \"No users found\", :empty_state_description => (if params[:q].present? then\n  \"No users match your search criteria. Try adjusting your filters.\"\nelse\n  \"Get started by creating your first user.\"\nend), :empty_state_action => ({ :text => \"Create User\", :url => models_new_user_path })), { :locals => ({ :\"layout::cardlist\" => Layout::CardList.new(:cards => User.ransack(params[:q]).result(:distinct => true).includes(:organization, :teams).order(:created_at => :desc).page(params[:page]).per(20), :layout => :grid, :title => \"Users\", :empty_state_title => \"No users found\", :empty_state_description => (if params[:q].present? then\n  \"No users match your search criteria. Try adjusting your filters.\"\nelse\n  \"Get started by creating your first user.\"\nend), :empty_state_action => ({ :text => \"Create User\", :url => models_new_user_path })) }) })",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Models::UsersController",
+          "method": "index",
+          "line": 7,
+          "file": "app/controllers/models/users_controller.rb",
+          "rendered": {
+            "name": "models/users/index",
+            "file": "app/views/models/users/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "models/users/index"
+      },
+      "user_input": "params[:page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": "False positive - this is a safe component render, not a dynamic template path"
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "b5edff760c9cf5d7c79950084bee64a1340108dc2977c0f4e79ed658967b517e",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/models/scenarios/index.html.erb",
+      "line": 36,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Layout::CardList.new(:cards => Scenario.ransack(params[:q]).result(:distinct => true).includes(:documents).order(:created_at => :desc).page(params[:page]).per(20), :layout => :grid, :title => \"Scenarios\", :empty_state_title => \"No scenarios found\", :empty_state_description => \"Get started by creating your first scenario.\", :empty_state_action => ({ :text => \"Create Scenario\", :url => models_new_scenario_path })), { :locals => ({ :\"layout::cardlist\" => Layout::CardList.new(:cards => Scenario.ransack(params[:q]).result(:distinct => true).includes(:documents).order(:created_at => :desc).page(params[:page]).per(20), :layout => :grid, :title => \"Scenarios\", :empty_state_title => \"No scenarios found\", :empty_state_description => \"Get started by creating your first scenario.\", :empty_state_action => ({ :text => \"Create Scenario\", :url => models_new_scenario_path })) }) })",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Models::ScenariosController",
+          "method": "index",
+          "line": 7,
+          "file": "app/controllers/models/scenarios_controller.rb",
+          "rendered": {
+            "name": "models/scenarios/index",
+            "file": "app/views/models/scenarios/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "models/scenarios/index"
+      },
+      "user_input": "params[:page]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": "False positive - this is a safe component render, not a dynamic template path"
+    }
+  ],
+  "updated": "2025-09-03 10:27:56 -0400",
+  "brakeman_version": "7.1.0"
+}

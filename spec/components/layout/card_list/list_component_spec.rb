@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Layout::CardList::ListComponent, type: :component do
-  let(:documents) { [double('document1'), double('document2')] }
+  let(:documents) { [ double('document1'), double('document2') ] }
   let(:component) { described_class.new(documents: documents, layout: :list, show_filters: true, show_sorting: true) }
 
   before do
@@ -10,7 +10,7 @@ RSpec.describe Layout::CardList::ListComponent, type: :component do
     allow(component.helpers).to receive(:documents_path).and_return('/documents')
     allow(component.helpers).to receive(:params).and_return({})
     allow(component.helpers).to receive(:options_for_select)
-    
+
     # Mock the filter panel component to avoid rendering issues
     allow(component).to receive(:render).and_return('')
   end
@@ -45,7 +45,7 @@ RSpec.describe Layout::CardList::ListComponent, type: :component do
     it 'returns sort options with current sort marked as selected' do
       component = described_class.new(documents: documents, current_sort: :created_at)
       options = component.send(:sort_options)
-      
+
       expect(options).to be_an(Array)
       expect(options.find { |opt| opt[:value] == :created_at }[:selected]).to be true
     end
@@ -55,7 +55,7 @@ RSpec.describe Layout::CardList::ListComponent, type: :component do
     it 'returns layout options with current layout marked as active' do
       component = described_class.new(documents: documents, layout: :grid)
       options = component.send(:layout_options)
-      
+
       expect(options).to be_an(Array)
       expect(options.find { |opt| opt[:value] == :grid }[:active]).to be true
     end

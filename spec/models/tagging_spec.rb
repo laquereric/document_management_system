@@ -17,7 +17,7 @@ RSpec.describe Tagging, type: :model do
   describe 'validations' do
     subject { create(:tagging) }
 
-    it { should validate_uniqueness_of(:tag_id).scoped_to([:taggable_type, :taggable_id]) }
+    it { should validate_uniqueness_of(:tag_id).scoped_to([ :taggable_type, :taggable_id ]) }
   end
 
   describe 'delegations' do
@@ -159,7 +159,7 @@ RSpec.describe Tagging, type: :model do
   describe 'uniqueness constraint' do
     it 'prevents duplicate tags on the same taggable' do
       create(:tagging, taggable: document, tag: tag)
-      
+
       expect {
         create(:tagging, taggable: document, tag: tag)
       }.to raise_error(ActiveRecord::RecordInvalid)
@@ -167,7 +167,7 @@ RSpec.describe Tagging, type: :model do
 
     it 'allows the same tag on different taggables' do
       create(:tagging, taggable: document, tag: tag)
-      
+
       expect {
         create(:tagging, taggable: folder, tag: tag)
       }.not_to raise_error
@@ -176,7 +176,7 @@ RSpec.describe Tagging, type: :model do
     it 'allows different tags on the same taggable' do
       tag2 = create(:tag)
       create(:tagging, taggable: document, tag: tag)
-      
+
       expect {
         create(:tagging, taggable: document, tag: tag2)
       }.not_to raise_error

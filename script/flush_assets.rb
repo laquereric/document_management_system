@@ -9,7 +9,7 @@ require_relative '../config/environment'
 
 begin
   puts "🧹 Flushing assets and clearing caches..."
-  
+
   # Clear asset cache
   if defined?(Rails.application.assets)
     puts "Clearing asset cache..."
@@ -23,7 +23,7 @@ begin
   else
     puts "⚠️  Asset pipeline not available"
   end
-  
+
   # Remove precompiled assets
   if defined?(Rails.application.config.assets)
     public_assets_dir = Rails.root.join('public', 'assets')
@@ -34,7 +34,7 @@ begin
     else
       puts "ℹ️  No precompiled assets found"
     end
-    
+
     # Clear asset manifest
     manifest_file = Rails.root.join('public', 'assets', 'manifest.json')
     if manifest_file.exist?
@@ -42,7 +42,7 @@ begin
       puts "✓ Asset manifest removed"
     end
   end
-  
+
   # Clear Sprockets cache if available (for legacy support)
   if defined?(Sprockets)
     if Sprockets.respond_to?(:cache)
@@ -53,14 +53,14 @@ begin
       puts "ℹ️  Sprockets cache not available"
     end
   end
-  
+
   # Clear importmap cache if using importmaps
   if defined?(Importmap)
     puts "Clearing importmap cache..."
     Importmap.cache.clear if Importmap.respond_to?(:cache)
     puts "✓ Importmap cache cleared"
   end
-  
+
   # Clear any temporary asset files
   tmp_assets_dir = Rails.root.join('tmp', 'assets')
   if tmp_assets_dir.exist?
@@ -68,7 +68,7 @@ begin
     FileUtils.rm_rf(tmp_assets_dir)
     puts "✓ Temporary asset files cleaned"
   end
-  
+
   # Clear cache directory
   cache_dir = Rails.root.join('tmp', 'cache')
   if cache_dir.exist?
@@ -76,12 +76,12 @@ begin
     FileUtils.rm_rf(cache_dir)
     puts "✓ Cache directory cleaned"
   end
-  
+
   # Log the cleanup
   if defined?(Rails.logger)
     Rails.logger.info "Asset cleanup script completed successfully"
   end
-  
+
   puts "\n🎨 Asset cleanup completed successfully!"
   puts "All asset caches, precompiled assets, and temporary files have been flushed."
   puts "\n💡 Tip: You may want to run 'rails assets:precompile' to rebuild assets."

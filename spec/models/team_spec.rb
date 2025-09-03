@@ -117,7 +117,7 @@ RSpec.describe Team, type: :model do
       it 'returns array of tag names' do
         team.add_tag(tag1)
         team.add_tag(tag2)
-        expect(team.tag_name_array).to eq(['Development', 'Frontend'])
+        expect(team.tag_name_array).to eq([ 'Development', 'Frontend' ])
       end
 
       it 'returns empty array when no tags' do
@@ -130,7 +130,7 @@ RSpec.describe Team, type: :model do
         team.add_tag(tag1)
         team.add_tag(tag2)
         team.add_tag(tag3)
-        
+
         result = team.tags_by_name('Development', 'Frontend')
         expect(result).to include(tag1, tag2)
         expect(result).not_to include(tag3)
@@ -141,7 +141,7 @@ RSpec.describe Team, type: :model do
       it 'returns tags matching the given color' do
         team.add_tag(tag1)
         team.add_tag(tag2)
-        
+
         result = team.tags_by_color(tag1.color)
         expect(result).to include(tag1)
         expect(result).not_to include(tag2)

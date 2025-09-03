@@ -30,7 +30,7 @@ gem "cancancan"
 gem "image_processing", "~> 1.2"
 
 # UI Components
-gem 'kramdown'
+gem "kramdown"
 gem "view_component"
 gem "primer_view_components"
 gem "erb_lint", require: false
@@ -68,6 +68,9 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  # Security audit for dependencies [https://github.com/rubysec/bundle-audit]
+  gem "bundle-audit", require: false
+
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
@@ -75,7 +78,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
-  
+
   # Cucumber for BDD testing
   gem "cucumber-rails", require: false
   gem "database_cleaner-active_record"

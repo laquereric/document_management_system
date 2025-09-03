@@ -40,7 +40,7 @@ RSpec.describe TeamMembership, type: :model do
         other_org = create(:organization)
         other_team = create(:team, organization: other_org)
         other_membership = create(:team_membership, user: user, team: other_team)
-        
+
         expect(TeamMembership.by_organization(organization)).to include(membership1, membership2)
         expect(TeamMembership.by_organization(organization)).not_to include(other_membership)
       end

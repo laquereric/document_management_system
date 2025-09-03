@@ -83,7 +83,7 @@ if Document.count == 0
     status: Status.find_by(name: 'Draft'),
     scenario: Scenario.find_by(name: 'Standard Document')
   )
-  
+
   # Add tags to document
   doc.tags << Tag.find_by(name: 'Important')
   doc.tags << Tag.find_by(name: 'Public')

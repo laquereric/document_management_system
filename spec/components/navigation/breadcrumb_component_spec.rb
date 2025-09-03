@@ -203,7 +203,7 @@ RSpec.describe Layout::Navigation::BreadcrumbComponent, type: :component do
       allow(component).to receive(:action_name).and_return('show')
       allow(component).to receive(:params).and_return({ id: '123' })
       allow(component).to receive(:documents_path).and_return('/documents')
-      
+
       breadcrumbs = component.send(:build_breadcrumbs_from_params)
       expect(breadcrumbs.length).to eq(3)
       expect(breadcrumbs[1][:label]).to eq('Documents')
@@ -212,7 +212,7 @@ RSpec.describe Layout::Navigation::BreadcrumbComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:breadcrumbs] }.not_to raise_error
       expect { context[:breadcrumb_classes] }.not_to raise_error
@@ -221,7 +221,7 @@ RSpec.describe Layout::Navigation::BreadcrumbComponent, type: :component do
 
     it 'integrates with Rails path helpers' do
       context = component.send(:template_context)
-      
+
       # Test that path helpers are available
       expect(context[:dashboard_index_path]).to be_present
       expect(context[:documents_path]).to be_present
@@ -264,15 +264,15 @@ RSpec.describe Layout::Navigation::BreadcrumbComponent, type: :component do
       allow(component).to receive(:action_name).and_return('show')
       allow(component).to receive(:params).and_return({ id: '123' })
       allow(component).to receive(:documents_path).and_return('/documents')
-      
+
       breadcrumbs = component.send(:build_breadcrumbs_from_params)
-      
+
       expect(breadcrumbs[0][:label]).to eq('Home')
       expect(breadcrumbs[0][:path]).to eq('/')
-      
+
       expect(breadcrumbs[1][:label]).to eq('Documents')
       expect(breadcrumbs[1][:path]).to eq('/documents')
-      
+
       expect(breadcrumbs[2][:label]).to eq('Document Details')
       expect(breadcrumbs[2][:path]).to be_nil
     end
@@ -282,7 +282,7 @@ RSpec.describe Layout::Navigation::BreadcrumbComponent, type: :component do
         { label: 'Home', path: '/' },
         { label: 'Current Page', path: nil }
       ]
-      
+
       custom_component = described_class.new(breadcrumbs: breadcrumbs_without_paths)
       expect { custom_component.send(:breadcrumb_classes) }.not_to raise_error
     end

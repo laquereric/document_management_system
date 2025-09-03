@@ -256,7 +256,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
       icon = different_component.send(:action_icon)
       color = different_component.send(:action_color)
       description = different_component.send(:action_description)
-      
+
       expect(icon).to eq('pencil')
       expect(color).to eq('color-bg-attention')
       expect(description).to include('updated')
@@ -265,7 +265,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:item_classes] }.not_to raise_error
       expect { context[:avatar_classes] }.not_to raise_error
@@ -278,7 +278,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
 
     it 'integrates with Rails helpers' do
       context = component.send(:template_context)
-      
+
       # Test that Rails helpers are available and callable
       expect(context[:link_to]).to respond_to(:call)
       expect(context[:time_ago_in_words]).to respond_to(:call)
@@ -329,7 +329,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
       it 'maps created action correctly' do
         created_activity = build(:activity, action: 'created')
         created_component = described_class.new(activity: created_activity)
-        
+
         expect(created_component.send(:action_icon)).to eq('plus')
         expect(created_component.send(:action_color)).to eq('color-bg-success')
       end
@@ -337,7 +337,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
       it 'maps updated action correctly' do
         updated_activity = build(:activity, action: 'updated')
         updated_component = described_class.new(activity: updated_activity)
-        
+
         expect(updated_component.send(:action_icon)).to eq('pencil')
         expect(updated_component.send(:action_color)).to eq('color-bg-attention')
       end
@@ -345,7 +345,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
       it 'maps deleted action correctly' do
         deleted_activity = build(:activity, action: 'deleted')
         deleted_component = described_class.new(activity: deleted_activity)
-        
+
         expect(deleted_component.send(:action_icon)).to eq('trash')
         expect(deleted_component.send(:action_color)).to eq('color-bg-danger')
       end
@@ -353,7 +353,7 @@ RSpec.describe Models::Activities::ActivityItemComponent, type: :component do
       it 'maps unknown action correctly' do
         unknown_activity = build(:activity, action: 'unknown')
         unknown_component = described_class.new(activity: unknown_activity)
-        
+
         expect(unknown_component.send(:action_icon)).to eq('circle')
         expect(unknown_component.send(:action_color)).to eq('color-bg-muted')
       end

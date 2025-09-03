@@ -37,7 +37,7 @@ class Layout::Navigation::ComponentPreview < ViewComponent::Preview
       { label: "Web Development", path: "/folders/2" },
       { label: "Current Document", path: nil }
     ]
-    
+
     render(Layout::Navigation::BreadcrumbComponent.new(breadcrumbs: breadcrumbs))
   end
 

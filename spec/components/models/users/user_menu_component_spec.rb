@@ -180,7 +180,7 @@ RSpec.describe Models::Users::UserMenuComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:menu_items] }.not_to raise_error
       expect { context[:user_initials] }.not_to raise_error
@@ -189,7 +189,7 @@ RSpec.describe Models::Users::UserMenuComponent, type: :component do
 
     it 'integrates with Rails path helpers' do
       context = component.send(:template_context)
-      
+
       # Test that path helpers are available and callable
       expect(context[:destroy_user_session_path]).to be_present
       expect(context[:user_path]).to respond_to(:call)
@@ -232,7 +232,7 @@ RSpec.describe Models::Users::UserMenuComponent, type: :component do
   describe 'Menu structure' do
     it 'maintains correct menu hierarchy' do
       items = component.send(:menu_items)
-      
+
       # Check that items are in correct order
       expect(items[0][:label]).to eq('Profile')
       expect(items[1][:label]).to eq('Settings')
@@ -244,14 +244,14 @@ RSpec.describe Models::Users::UserMenuComponent, type: :component do
     it 'includes all required menu item attributes' do
       items = component.send(:menu_items)
       profile_item = items.find { |item| item[:label] == 'Profile' }
-      
+
       expect(profile_item).to include(:label, :icon, :href)
     end
 
     it 'handles sign out item with correct attributes' do
       items = component.send(:menu_items)
       sign_out_item = items.find { |item| item[:label] == 'Sign Out' }
-      
+
       expect(sign_out_item).to include(:label, :icon, :href, :method, :classes)
       expect(sign_out_item[:method]).to eq(:delete)
       expect(sign_out_item[:classes]).to eq('color-fg-danger')

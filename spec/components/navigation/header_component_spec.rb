@@ -131,7 +131,7 @@ RSpec.describe Layout::Navigation::HeaderComponent, type: :component do
 
     it 'provides all necessary context for template rendering' do
       context = component.send(:template_context)
-      
+
       # Test that all required methods are callable
       expect { context[:header_classes] }.not_to raise_error
       expect { context[:brand_classes] }.not_to raise_error
@@ -142,7 +142,7 @@ RSpec.describe Layout::Navigation::HeaderComponent, type: :component do
 
     it 'integrates with Rails path helpers' do
       context = component.send(:template_context)
-      
+
       # Test that path helpers are available and callable
       expect(context[:root_path_helper]).to respond_to(:call)
       expect(context[:new_user_session_path_helper]).to respond_to(:call)

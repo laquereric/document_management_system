@@ -13,11 +13,9 @@
   <!-- User Card Component -->
   <%= render(Models::Users::CardComponent.new(
     user: @user,
+    current_user: current_user,
     context: :profile,
     show_admin_actions: current_user.admin?
   )) %>
   
-  <hr>
-  
-
 </div>

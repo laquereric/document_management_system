@@ -98,7 +98,7 @@ RSpec.describe Organization, type: :model do
       it 'returns array of tag names' do
         organization.add_tag(tag1)
         organization.add_tag(tag2)
-        expect(organization.tag_name_array).to eq(['Enterprise', 'Technology'])
+        expect(organization.tag_name_array).to eq([ 'Enterprise', 'Technology' ])
       end
 
       it 'returns empty array when no tags' do
@@ -111,7 +111,7 @@ RSpec.describe Organization, type: :model do
         organization.add_tag(tag1)
         organization.add_tag(tag2)
         organization.add_tag(tag3)
-        
+
         result = organization.tags_by_name('Enterprise', 'Technology')
         expect(result).to include(tag1, tag2)
         expect(result).not_to include(tag3)
@@ -122,7 +122,7 @@ RSpec.describe Organization, type: :model do
       it 'returns tags matching the given color' do
         organization.add_tag(tag1)
         organization.add_tag(tag2)
-        
+
         result = organization.tags_by_color(tag1.color)
         expect(result).to include(tag1)
         expect(result).not_to include(tag2)

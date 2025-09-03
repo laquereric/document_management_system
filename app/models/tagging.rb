@@ -4,7 +4,7 @@ class Tagging < ApplicationRecord
   belongs_to :tag
 
   # Validations
-  validates :tag_id, uniqueness: { scope: [:taggable_type, :taggable_id] }
+  validates :tag_id, uniqueness: { scope: [ :taggable_type, :taggable_id ] }
 
   # Ransack configuration
   def self.ransackable_attributes(auth_object = nil)
@@ -34,7 +34,7 @@ class Tagging < ApplicationRecord
     when User
       taggable.name
     else
-      taggable&.name || taggable&.title || 'Unknown'
+      taggable&.name || taggable&.title || "Unknown"
     end
   end
 

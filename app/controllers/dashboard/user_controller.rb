@@ -1,6 +1,6 @@
 class Dashboard::UserController < Dashboard::DashboardController
-  before_action :set_user, only: [:index]
-  
+  before_action :set_user, only: [ :index ]
+
   def index
     @recent_documents = @user.authored_documents.recent.limit(5)
     @my_teams = @user.teams.includes(:organization)
@@ -11,7 +11,7 @@ class Dashboard::UserController < Dashboard::DashboardController
                               .recent
                               .limit(10)
                               .includes(:document, :user, :old_status, :new_status)
-    
+
     # Statistics
     @stats = set_user_stats(@user)
   end

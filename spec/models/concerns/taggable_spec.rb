@@ -72,7 +72,7 @@ RSpec.describe Taggable, type: :model do
       tag2 = create(:tag, name: 'Tag2')
       organization.add_tag(tag1)
       organization.add_tag(tag2)
-      expect(organization.tag_name_array).to eq(['Tag1', 'Tag2'])
+      expect(organization.tag_name_array).to eq([ 'Tag1', 'Tag2' ])
     end
 
     it 'returns empty array when no tags' do
@@ -88,7 +88,7 @@ RSpec.describe Taggable, type: :model do
       organization.add_tag(tag1)
       organization.add_tag(tag2)
       organization.add_tag(tag3)
-      
+
       result = organization.tags_by_name('Tag1', 'Tag2')
       expect(result).to include(tag1, tag2)
       expect(result).not_to include(tag3)
@@ -101,7 +101,7 @@ RSpec.describe Taggable, type: :model do
       tag2 = create(:tag, color: '#00FF00')
       organization.add_tag(tag1)
       organization.add_tag(tag2)
-      
+
       result = organization.tags_by_color('#FF0000')
       expect(result).to include(tag1)
       expect(result).not_to include(tag2)

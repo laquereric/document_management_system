@@ -4,7 +4,7 @@ RSpec.describe Layout::CardList::SearchFilterSort::SearchAndFiltersComponent, ty
   let(:search_object) { double('search_object') }
   let(:url) { '/test' }
   let(:title) { "Search & Filters" }
-  let(:fields) { [{ name: :name_cont, label: "Name" }] }
+  let(:fields) { [ { name: :name_cont, label: "Name" } ] }
   let(:component) { described_class.new(search_object: search_object, url: url, title: title, fields: fields) }
 
   before do
@@ -34,7 +34,7 @@ RSpec.describe Layout::CardList::SearchFilterSort::SearchAndFiltersComponent, ty
     context 'when search object has conditions with values' do
       before do
         allow(search_object).to receive(:conditions).and_return([
-          { values: ['test'] }
+          { values: [ 'test' ] }
         ])
       end
 

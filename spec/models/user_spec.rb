@@ -148,7 +148,7 @@ RSpec.describe User, type: :model do
       it 'returns array of tag names' do
         user.add_tag(tag1)
         user.add_tag(tag2)
-        expect(user.tag_name_array).to eq(['Developer', 'Senior'])
+        expect(user.tag_name_array).to eq([ 'Developer', 'Senior' ])
       end
 
       it 'returns empty array when no tags' do
@@ -161,7 +161,7 @@ RSpec.describe User, type: :model do
         user.add_tag(tag1)
         user.add_tag(tag2)
         user.add_tag(tag3)
-        
+
         result = user.tags_by_name('Developer', 'Senior')
         expect(result).to include(tag1, tag2)
         expect(result).not_to include(tag3)
@@ -172,7 +172,7 @@ RSpec.describe User, type: :model do
       it 'returns tags matching the given color' do
         user.add_tag(tag1)
         user.add_tag(tag2)
-        
+
         result = user.tags_by_color(tag1.color)
         expect(result).to include(tag1)
         expect(result).not_to include(tag2)

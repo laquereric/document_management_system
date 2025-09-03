@@ -1,6 +1,5 @@
 class Models::ScenariosController < Models::ModelsController
-
-  before_action :set_scenario, only: [:show, :edit, :update, :destroy]
+  before_action :set_scenario, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @q = Scenario.ransack(params[:q])
@@ -23,9 +22,9 @@ class Models::ScenariosController < Models::ModelsController
 
   def create
     @scenario = Scenario.new(scenario_params)
-    
+
     if @scenario.save
-      redirect_to models_scenario_path(@scenario), notice: 'Scenario was successfully created.'
+      redirect_to models_scenario_path(@scenario), notice: "Scenario was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +35,7 @@ class Models::ScenariosController < Models::ModelsController
 
   def update
     if @scenario.update(scenario_params)
-      redirect_to models_scenario_path(@scenario), notice: 'Scenario was successfully updated.'
+      redirect_to models_scenario_path(@scenario), notice: "Scenario was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,9 +43,9 @@ class Models::ScenariosController < Models::ModelsController
 
   def destroy
     if @scenario.destroy
-      redirect_to models_scenarios_path, notice: 'Scenario was successfully deleted.'
+      redirect_to models_scenarios_path, notice: "Scenario was successfully deleted."
     else
-      redirect_to models_scenario_path(@scenario), alert: 'Failed to delete scenario. It may be in use by documents.'
+      redirect_to models_scenario_path(@scenario), alert: "Failed to delete scenario. It may be in use by documents."
     end
   end
 
@@ -59,6 +58,4 @@ class Models::ScenariosController < Models::ModelsController
   def scenario_params
     params.require(:scenario).permit(:name, :description)
   end
-
-
 end

@@ -1,7 +1,7 @@
 class Document < ApplicationRecord
   # Associations
   belongs_to :folder
-  belongs_to :author, class_name: 'User'
+  belongs_to :author, class_name: "User"
   belongs_to :status
   belongs_to :scenario
   include Taggable
@@ -49,23 +49,23 @@ class Document < ApplicationRecord
 
   def file_extension
     return nil unless has_file?
-    file.filename.to_s.split('.').last&.upcase
+    file.filename.to_s.split(".").last&.upcase
   end
 
   def file_icon
     case file_extension
-    when 'PDF'
-      'file-pdf'
-    when 'DOCX', 'DOC'
-      'file-word'
-    when 'XLSX', 'XLS'
-      'file-spreadsheet'
-    when 'PPTX', 'PPT'
-      'file-presentation'
-    when 'TXT'
-      'file-text'
+    when "PDF"
+      "file-pdf"
+    when "DOCX", "DOC"
+      "file-word"
+    when "XLSX", "XLS"
+      "file-spreadsheet"
+    when "PPTX", "PPT"
+      "file-presentation"
+    when "TXT"
+      "file-text"
     else
-      'file'
+      "file"
     end
   end
 
@@ -75,7 +75,7 @@ class Document < ApplicationRecord
     Activity.create!(
       document: self,
       user: Current.user || author,
-      action: 'status_change',
+      action: "status_change",
       old_status_id: status_id_before_last_save,
       new_status_id: status_id
     )

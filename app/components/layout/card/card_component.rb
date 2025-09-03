@@ -1,6 +1,6 @@
 class Layout::Card::CardComponent < ApplicationComponent
   include CardConcerns
-  
+
   def initialize(show_actions: true, **system_arguments)
     @show_actions = show_actions
     @system_arguments = merge_system_arguments(system_arguments)

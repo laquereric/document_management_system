@@ -9,15 +9,15 @@ class Scenario < ApplicationRecord
 
   # Scopes
   scope :recent, -> { order(created_at: :desc) }
-  scope :by_name, ->(name) { where('name LIKE ?', "%#{name}%") }
+  scope :by_name, ->(name) { where("name LIKE ?", "%#{name}%") }
 
   # Ransack configuration
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "description", "id", "id_value", "name", "updated_at"]
+    [ "created_at", "description", "id", "id_value", "name", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["documents", "tags", "taggings"]
+    [ "documents", "tags", "taggings" ]
   end
 
   def document_count
