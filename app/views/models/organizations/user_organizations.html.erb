@@ -48,7 +48,7 @@
       <div class="d-flex flex-wrap gap-3">
         <% @organizations.each do |organization| %>
           <div class="flex-auto" style="min-width: 300px; max-width: 400px;">
-            <%= render(Organization::CardComponent.new(
+            <%= render(Models::Organization::CardComponent.new(
               organization: organization,
               show_actions: false
             )) %>

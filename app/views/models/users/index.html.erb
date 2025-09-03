@@ -52,7 +52,7 @@
     <% @users.each do |user| %>
       <div class="flex-1" style="min-width: 320px; max-width: 400px;">
         <div class="mb-4 mb-lg-0">
-          <%= render Layout::UserCardComponent.new(
+          <%= render Models::Users::CardComponent.new(
             user: user, 
             show_admin_actions: true, 
             context: :admin

@@ -94,7 +94,7 @@ Access component previews at `/rails/view_components` in development mode to see
 User-specific dashboard layout.
 
 ```erb
-<%= render(Dashboard::User::DashboardComponent.new(
+<%= render(Layout::Dashboard::User::DashboardComponent.new(
   current_user: current_user
 )) %>
 ```
@@ -103,7 +103,7 @@ User-specific dashboard layout.
 Admin-specific dashboard layout.
 
 ```erb
-<%= render(Dashboard::Admin::DashboardComponent.new(
+<%= render(Layout::Dashboard::Admin::DashboardComponent.new(
   current_user: current_user
 )) %>
 ```
@@ -146,20 +146,13 @@ Displays recent activity logs with user actions.
 Complete form for creating and editing documents.
 
 ```erb
-<%= render(Models::Documents::DocumentFormComponent.new(
+<%= render(Forms::DocumentFormComponent.new(
   document: @document,
   folder: @folder
 )) %>
 ```
 
-#### FolderFormComponent
-Complete form for creating and editing folders.
 
-```erb
-<%= render(Models::Folder::FolderFormComponent.new(
-  folder: @folder
-)) %>
-```
 
 #### DocumentCardComponent
 Individual document display with metadata and actions.
@@ -168,12 +161,7 @@ Individual document display with metadata and actions.
 <%= render(Models::Documents::CardComponent.new(document: @document)) %>
 ```
 
-#### UserDocumentCardComponent
-User-specific document display card.
 
-```erb
-<%= render(User::DocumentComponents::CardComponent.new(document: @document)) %>
-```
 
 #### DocumentActionsMenuComponent
 Generic actions menu for documents and other resources.
@@ -247,15 +235,7 @@ Team information display with member counts and management options.
 )) %>
 ```
 
-#### TeamsTeamCardComponent
-Alternative team card component.
 
-```erb
-<%= render(Teams::TeamCardComponent.new(
-  team: @team,
-  current_user: current_user
-)) %>
-```
 
 ### UI Components
 
@@ -266,14 +246,7 @@ User account menu with profile, settings, and sign out options.
 <%= render(Models::Users::UserMenuComponent.new(user: current_user)) %>
 ```
 
-#### UserCardComponent
-User information display card.
 
-```erb
-<%= render(Layout::UserCardComponent.new(
-  user: @user
-)) %>
-```
 
 #### StatusBadgeComponent
 Status display with proper color contrast.
@@ -377,20 +350,13 @@ Hierarchical folder navigation tree.
 )) %>
 ```
 
-#### UserFolderCardComponent
-User-specific folder display card.
 
-```erb
-<%= render(User::Folder::CardComponent.new(
-  folder: @folder
-)) %>
-```
 
 #### OrganizationCardComponent
 Organization information display.
 
 ```erb
-<%= render(Organization::CardComponent.new(
+<%= render(Models::Organization::CardComponent.new(
   organization: @organization
 )) %>
 ```
@@ -399,7 +365,7 @@ Organization information display.
 Scenario information display.
 
 ```erb
-<%= render(Scenario::CardComponent.new(
+<%= render(Models::Scenario::CardComponent.new(
   scenario: @scenario
 )) %>
 ```
@@ -528,6 +494,12 @@ The components have been reconciled to match the actual file structure and usage
 - **Missing Components**: Added documentation for components that exist but weren't documented
 - **Template Context**: Ensured all components have the `template_context` method for consistent data access
 - **View Updates**: Fixed views to use correct component namespaces
+- **Dashboard Components**: Fixed `Dashboard::User::DashboardComponent` → `Layout::Dashboard::User::DashboardComponent`
+- **Team Components**: Fixed `Teams::TeamCardComponent` → `Models::Teams::TeamCardComponent`
+- **Scenario Components**: Fixed `Scenario::CardComponent` → `Models::Scenario::CardComponent`
+- **Organization Components**: Fixed `Organization::CardComponent` → `Models::Organization::CardComponent`
+- **User Components**: Fixed `Layout::UserCardComponent` → `Models::Users::CardComponent`
+- **Form Components**: Fixed `Forms::FolderFormComponent` → `Models::Folder::FolderFormComponent`
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu
@@ -539,8 +511,9 @@ The components have been reconciled to match the actual file structure and usage
 - `Models::Tags::TagItemComponent` - Tag display item
 - `Models::Tags::TagFormComponent` - Tag creation/editing form
 - `Models::Folder::FolderFormComponent` - Folder creation/editing form
-- `Dashboard::User::DashboardComponent` - User dashboard
-- `Dashboard::Admin::DashboardComponent` - Admin dashboard
+- `Layout::Dashboard::User::DashboardComponent` - User dashboard
+- `Layout::Dashboard::Admin::DashboardComponent` - Admin dashboard
+- `Models::Users::CardComponent` - User information display card
 - `Layout::CardList::SearchFilterSort::SearchAndFiltersComponent` - Search and filters
 - `Layout::CardList::Pagination::PaginationComponent` - Pagination controls
 - `Layout::Dashboard::StatisticsGridComponent` - Statistics grid layout

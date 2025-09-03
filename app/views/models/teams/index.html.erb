@@ -49,7 +49,7 @@
     }
   )) do %>
     <% @teams.each do |team| %>
-      <%= render Teams::TeamCardComponent.new(team: team, current_user: current_user, admin_context: true) %>
+      <%= render Models::Teams::TeamCardComponent.new(team: team, current_user: current_user, admin_context: true) %>
     <% end %>
   <% end %>
 <% end %>

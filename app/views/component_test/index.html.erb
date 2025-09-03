@@ -65,7 +65,7 @@
         <div class="flex-auto" style="min-width: 300px;">
           <h5>Document Card</h5>
           <% if @sample_document %>
-            <%= render(User::DocumentComponents::CardComponent.new(document: @sample_document)) %>
+            <%= render(Models::Documents::CardComponent.new(document: @sample_document)) %>
           <% else %>
             <%= render(Ui::EmptyStateComponent.new(
               title: "No Sample Document",
@@ -82,7 +82,7 @@
         <div class="col-md-6">
           <h5>Document List</h5>
           <% if @sample_documents&.any? %>
-            <%= render(User::DocumentComponents::ListComponent.new(
+            <%= render(Layout::CardList::ListComponent.new(
               documents: @sample_documents,
               search: @sample_search
             )) %>
@@ -107,7 +107,7 @@
         <% if @sample_teams&.any? %>
           <% @sample_teams.each do |team| %>
             <div class="col-md-4 mb-3">
-              <%= render(Teams::TeamCardComponent.new(team: team, current_user: current_user)) %>
+              <%= render(Models::Teams::TeamCardComponent.new(team: team, current_user: current_user)) %>
             </div>
           <% end %>
         <% else %>
