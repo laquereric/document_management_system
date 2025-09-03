@@ -16,9 +16,9 @@
       <%= render(Layout::Navigation::BreadcrumbComponent.new(
         items: [
           { text: "Home", url: root_path },
-          { text: @document.folder.team.organization.name, url: organization_path(@document.folder.team.organization) },
-          { text: @document.folder.team.name, url: organization_team_path(@document.folder.team.organization, @document.folder.team) },
-          { text: @document.folder.name, url: folder_path(@document.folder) },
+          { text: @document.folder.team.organization.name, url: models_organization_path(@document.folder.team.organization) },
+                      { text: @document.folder.team.name, url: models_team_path(@document.folder.team) },
+                      { text: @document.folder.name, url: models_folder_path(@document.folder) },
           { text: @document.title, url: "#" }
         ]
       )) %>
@@ -43,7 +43,7 @@
             </div>
             <div class="d-flex gap-2">
               <%= render(Ui::StatusBadgeComponent.new(status: @document.status)) %>
-              <%= link_to "Edit", edit_document_path(@document), class: "btn btn-primary" %>
+              <%= link_to "Edit", models_edit_document_path(@document), class: "btn btn-primary" %>
             </div>
           </div>
         </div>
@@ -198,7 +198,7 @@
         <h5 class="modal-title">Add Tag</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <%= form_with url: add_tag_document_path(@document), method: :post, local: true do |form| %>
+              <%= form_with url: add_tag_models_document_path(@document), method: :post, local: true do |form| %>
         <div class="modal-body">
           <div class="mb-3">
             <%= form.label :tag_id, "Select Tag", class: "form-label" %>

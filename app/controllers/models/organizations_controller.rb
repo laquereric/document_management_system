@@ -2,9 +2,15 @@ class Models::OrganizationsController < Models::ModelsController
 
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:user_organizations]
+  before_action :require_admin!, except: [:index, :show]
 
   def index
-    @organizations = Organization.includes(:users, :teams).order(created_at: :desc)
+    @q = Organization.ransack(params[:q])
+    @organizations = @q.result(distinct: true)
+                      .includes(:users, :teams)
+                      .order(created_at: :desc)
+                      .page(params[:page])
+                      .per(20)
   end
 
   def user_organizations

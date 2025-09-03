@@ -35,7 +35,7 @@ class Models::Organization::CardComponent < Layout::Card::CardComponent
   end
 
   def edit_admin_organization_path
-    models_edit_organization_path(organization)
+    edit_models_organization_path(organization)
   end
 
   # Context methods for the template
@@ -50,8 +50,8 @@ class Models::Organization::CardComponent < Layout::Card::CardComponent
       admin_context: admin_context,
       admin_organization_path: method(:admin_organization_path),
       edit_admin_organization_path: method(:edit_admin_organization_path),
-      organization_path: method(:organization_path),
-      edit_organization_path: method(:edit_organization_path),
+      models_organization_path: method(:models_organization_path),
+      edit_models_organization_path: method(:edit_models_organization_path),
       link_to: method(:link_to)
     }
   end

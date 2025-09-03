@@ -5,18 +5,46 @@
   <%= render(Layout::Page::PageHeader.new(
     title: "Manage Organizations",
     description: "Manage and organize organizations across the system",
-    icon: "building",
+    icon: "organization",
     action: {
       text: "New Organization",
       url: models_new_organization_path
     }
   )) %>
 
-  <!-- Content Section -->
-  <%= render(Ui::EmptyStateComponent.new(
-    title: "Organizations Management",
-    description: "Organization management features are being developed. This page will allow administrators to manage organizations, settings, and member assignments.",
-    icon: "organization"
+  <!-- Search and Filters -->
+  <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
+    search_object: @q,
+    url: models_organizations_path,
+    title: "Search & Filters",
+    fields: [
+      {
+        name: :name_cont,
+        label: "Organization Name",
+        placeholder: "Search by organization name..."
+      },
+      {
+        name: :description_cont,
+        label: "Description",
+        placeholder: "Search by description..."
+      }
+    ]
   )) %>
 
+  <!-- Organizations Grid -->
+  <%= render(Layout::CardList::CardListComponent.new(
+    cards: @organizations,
+    layout: :grid,
+    title: "Organizations",
+    empty_state_title: "No organizations found",
+    empty_state_description: params[:q].present? ? "No organizations match your search criteria. Try adjusting your filters." : "Get started by creating your first organization.",
+    empty_state_action: {
+      text: "Create Organization",
+      url: models_new_organization_path
+    }
+  )) do %>
+    <% @organizations.each do |organization| %>
+      <%= render Models::Organization::CardComponent.new(organization: organization, admin_context: true) %>
+    <% end %>
+  <% end %>
 <% end %>
