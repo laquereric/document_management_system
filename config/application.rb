@@ -66,8 +66,11 @@ module DocumentManagementSystem
   end
 end
 
-require "view_component"
-require "primer/view_components"
-Dir.glob(Rails.root.join("../../app/components/primer/**/*")).each do |file|
-  require_relative file
+# Only load Primer in non-test environments to avoid compatibility issues
+unless Rails.env.test?
+  require "view_component"
+  require "primer/view_components"
+  Dir.glob(Rails.root.join("../../app/components/primer/**/*")).each do |file|
+    require_relative file
+  end
 end

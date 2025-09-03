@@ -1,51 +1,60 @@
 require 'spec_helper'
 
-# Simple test for Document model file structure
-RSpec.describe "Document Model File" do
-  describe "file structure" do
-    it "exists in the correct location" do
-      expect(File.exist?('app/models/document.rb')).to be true
+# Load Rails environment for model testing
+begin
+  require_relative '../../config/environment'
+rescue => e
+  puts "Could not load Rails environment: #{e.message}"
+  exit 1
+end
+
+RSpec.describe Document, type: :model do
+  # Include FactoryBot methods
+  include FactoryBot::Syntax::Methods
+
+  describe "basic functionality" do
+    it "is a valid model" do
+      expect(Document).to be_a(Class)
+      expect(Document.ancestors).to include(ApplicationRecord)
     end
 
-    it "has the correct file content structure" do
-      content = File.read('app/models/document.rb')
-
-      # Check for class definition
-      expect(content).to include('class Document < ApplicationRecord')
-
-      # Check for associations
-      expect(content).to include('belongs_to :folder')
-      expect(content).to include('belongs_to :author')
-      expect(content).to include('belongs_to :status')
-      expect(content).to include('belongs_to :scenario')
-
-      # Check for validations
-      expect(content).to include('validates :title, presence: true')
-      expect(content).to include('validates :content, presence: true')
-
-      # Check for scopes
-      expect(content).to include('scope :by_status')
-      expect(content).to include('scope :by_author')
-      expect(content).to include('scope :by_folder')
-      expect(content).to include('scope :recent')
-
-      # Check for methods
-      expect(content).to include('def total_tags')
-      expect(content).to include('def team')
-      expect(content).to include('def organization')
-      expect(content).to include('def has_file?')
-      expect(content).to include('def file_extension')
-      expect(content).to include('def file_icon')
-
-      # Check for ransackable configuration
-      expect(content).to include('def self.ransackable_attributes')
-      expect(content).to include('def self.ransackable_associations')
+    it "has the correct associations" do
+      expect(Document.reflect_on_association(:folder)).to be_present
+      expect(Document.reflect_on_association(:author)).to be_present
+      expect(Document.reflect_on_association(:status)).to be_present
+      expect(Document.reflect_on_association(:scenario)).to be_present
+      expect(Document.reflect_on_association(:activities)).to be_present
     end
 
-    it "has proper Ruby syntax" do
-      # Skip syntax check since it requires Rails environment
-      # The file structure tests above verify the content is correct
-      expect(true).to be true
+    it "has the correct validations" do
+      expect(Document.validators_on(:title)).to be_present
+      expect(Document.validators_on(:content)).to be_present
+    end
+
+    it "has the correct scopes" do
+      expect(Document).to respond_to(:by_status)
+      expect(Document).to respond_to(:by_author)
+      expect(Document).to respond_to(:by_folder)
+      expect(Document).to respond_to(:recent)
+    end
+
+    it "has the correct methods" do
+      expect(Document.instance_methods).to include(:total_tags, :team, :organization, :has_file?, :file_extension, :file_icon)
+    end
+
+    it "has ransackable configuration" do
+      expect(Document.ransackable_attributes).to include("title", "content", "author_id")
+      expect(Document.ransackable_associations).to include("author", "folder", "status")
+    end
+  end
+
+  describe "instance methods" do
+    let(:document) { build(:document) }
+
+    it "responds to file handling methods" do
+      expect(document).to respond_to(:has_file?)
+      expect(document).to respond_to(:file_extension)
+      expect(document).to respond_to(:file_icon)
     end
   end
 end
