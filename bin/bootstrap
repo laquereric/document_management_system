@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "fileutils"
+
+APP_ROOT = File.expand_path("..", __dir__)
+
+def system!(*args)
+  system(*args, exception: true)
+end
+
+skip_bundler = ARGV.include?("--skip-bundler")
+skip_cicd = ARGV.include?("--skip-cicd")
+skip_db = ARGV.include?("--skip-db")
+skip_seed = ARGV.include?("--skip-seed")
+skip_server = ARGV.include?("--skip-server")
+
+unless skip_bundler
+  FileUtils.chdir APP_ROOT do
+    puts "== Installing Ruby gems =="
+    system("bundle check") || system!("bundle install")
+  end
+end
+
+unless skip_cicd
+  puts "\n== Running CI/CD setup =="
+  system! "bin/cicd_setup"
+end
+
+unless skip_db
+  puts "\n== Preparing database =="
+  system! "bin/rails db:prepare"
+end
+
+unless skip_seed
+  puts "\n== Seeding database =="
+  system! "bin/rails db:seed"
+end
+
+unless skip_server
+  puts "\n== Starting development server =="
+  STDOUT.flush
+  port = ENV.fetch("PORT", "3000")
+  exec "bin/rails", "server", "-p", port, "-b", "0.0.0.0"
+end
+

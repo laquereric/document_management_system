@@ -23,7 +23,7 @@
       <h3 class="Box-title">Document Details</h3>
     </div>
     <div class="Box-body">
-      <%= render(Forms::DocumentFormComponent.new(
+      <%= render(Models::Documents::DocumentFormComponent.new(
         document: @document,
         submit_text: "Update Document",
         cancel_url: @document

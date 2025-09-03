@@ -94,6 +94,9 @@ Rails.application.routes.draw do
     delete "users/:id", to: "users#destroy"
   end
 
+  # Components catalog
+  get "components", to: "components#index"
+
   # Main application routes
   resources :organizations do
     resources :teams do

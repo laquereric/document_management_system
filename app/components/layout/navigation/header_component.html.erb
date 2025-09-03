@@ -39,6 +39,9 @@
       <span class="notification-indicator"></span>
     </button>
 
+    <!-- Components Catalog link -->
+    <%= link_to "Components", components_path, class: "btn mr-2" %>
+
     <!-- User Menu -->
     <% if current_user %>
       <%= render(Models::Users::UserMenuComponent.new(user: current_user)) %>

@@ -31,6 +31,10 @@ class Layout::Navigation::HeaderComponent < ApplicationComponent
     helpers.new_user_session_path
   end
 
+  def components_path
+    helpers.components_path
+  end
+
   # Context methods for the template
   def template_context
     {
@@ -39,6 +43,7 @@ class Layout::Navigation::HeaderComponent < ApplicationComponent
       nav_classes: nav_classes,
       root_path: root_path,
       new_user_session_path: new_user_session_path,
+      components_path: components_path,
       current_user: current_user,
       title: title,
       Rails: Rails,

@@ -203,7 +203,7 @@
                 <% begin %>
                   <% sample_folder = Folder.first || Folder.new(name: "Sample Folder") %>
                   <% sample_document = Document.new(folder: sample_folder) %>
-                  <%= render(Forms::DocumentFormComponent.new(document: sample_document)) %>
+                  <%= render(Models::Documents::DocumentFormComponent.new(document: sample_document)) %>
                 <% rescue => e %>
                   <%= render(Ui::EmptyStateComponent.new(
                     title: "Form Unavailable",
