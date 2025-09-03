@@ -1,5 +1,5 @@
 class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
-  def initialize(total_users:, total_organizations:, total_documents:, total_folders:, users_by_role:, documents_by_status:, recent_activity:, **system_arguments)
+  def initialize(total_users:, total_organizations:, total_documents:, total_folders:, users_by_role:, documents_by_status:, recent_activity:, current_user:, **system_arguments)
     @total_users = total_users
     @total_organizations = total_organizations
     @total_documents = total_documents
@@ -7,6 +7,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
     @users_by_role = users_by_role
     @documents_by_status = documents_by_status
     @recent_activity = recent_activity
+    @current_user = current_user
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
@@ -24,7 +25,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
 
   private
 
-  attr_reader :total_users, :total_organizations, :total_documents, :total_folders, :users_by_role, :documents_by_status, :recent_activity, :system_arguments
+  attr_reader :total_users, :total_organizations, :total_documents, :total_folders, :users_by_role, :documents_by_status, :recent_activity, :current_user, :system_arguments
 
   def dashboard_classes
     "container-lg px-3 #{system_arguments[:class]}"
