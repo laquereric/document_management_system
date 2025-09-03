@@ -536,6 +536,7 @@ The components have been reconciled to match the actual file structure and usage
 - **Template Naming**: Fixed component template files to match Rails autoloading conventions (e.g., `search_section.html.erb` → `search_section_component.html.erb`, `sort_dropdown.html.erb` → `sort_dropdown_component.html.erb`)
 - **ContentSection Replacement**: Replaced problematic `Layout::ContentSection` usage with direct HTML structure in documents index view
 - **Autoloading Fixes**: Created missing module definition files (`layout.rb`, `card_list.rb`) and fixed component namespaces to match directory structure
+- **ActionsMenuComponent**: Replaced Primer component usage with simplified HTML and added icon rendering method
 - **Route Helpers**: Fixed incorrect route helper methods in views (e.g., `new_folder_path` → `models_new_folder_path`, `folders_path` → `models_folders_path`)
 - **View Cleanup**: Removed redundant hardcoded statistics cards from folders index view, now properly using `StatisticsGridComponent`
 - **Primer Components**: Simplified StatsCardComponent to use direct HTML/CSS instead of external Primer components, avoiding autoloading issues

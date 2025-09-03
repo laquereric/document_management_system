@@ -1,36 +1,26 @@
-<!-- Generic actions menu using Primer components -->
-<%= render Primer::Alpha::ActionMenu.new do |menu| %>
-  <% menu.with_show_button do %>
-    <%= render Primer::Beta::Button.new(
-      scheme: :default,
-      size: :small,
-      "aria-label": "#{resource_type.humanize} actions"
-    ) do %>
-      <%= render Primer::Beta::Octicon.new(icon: :"kebab-horizontal") %>
-    <% end %>
-  <% end %>
+<!-- Generic actions menu using simplified HTML -->
+<div class="ActionMenu">
+  <div class="ActionMenuButton">
+    <button class="btn btn-sm" aria-label="<%= resource_type.humanize %> actions">
+      <svg class="octicon octicon-kebab-horizontal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+      </svg>
+    </button>
+  </div>
   
-  <% menu_items.each do |item| %>
-    <% if item[:href] == "#" %>
-      <%= menu.with_item(
-        href: item[:href],
-        data: item[:data] || {},
-        target: item[:target],
-        classes: item[:classes]
-      ) do %>
-        <%= render Primer::Beta::Octicon.new(icon: item[:icon], mr: 2) %>
-        <%= item[:label] %>
+  <div class="ActionMenuOverlay">
+    <div class="ActionMenuList">
+      <% menu_items.each do |item| %>
+        <a href="<%= item[:href] %>" 
+           class="ActionMenuLink <%= item[:classes] %>"
+           data="<%= item[:data]&.to_json %>"
+           target="<%= item[:target] %>">
+          <svg class="octicon octicon-<%= item[:icon] %> mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <%= render_icon_path(item[:icon]) %>
+          </svg>
+          <%= item[:label] %>
+        </a>
       <% end %>
-    <% else %>
-      <%= menu.with_item(
-        href: item[:href],
-        data: item[:data] || {},
-        target: item[:target],
-        classes: item[:classes]
-      ) do %>
-        <%= render Primer::Beta::Octicon.new(icon: item[:icon], mr: 2) %>
-        <%= item[:label] %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
+    </div>
+  </div>
+</div>
