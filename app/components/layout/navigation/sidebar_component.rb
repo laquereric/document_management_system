@@ -84,38 +84,38 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Dashboard",
         icon: "gear",
-        path: admin_root_path,
+        path: dashboard_admin_path,
         active: @controller_name.starts_with?("admin")
       },
       {
         label: "Organizations",
         icon: "organization",
-        path: organizations_path,
+        path: models_organizations_path,
         active: @controller_name == "organizations"
       },
       {
         label: "Users",
         icon: "people",
-        path: admin_users_path,
-        active: @controller_name == "admin/users"
+        path: models_users_path,
+        active: @controller_name == "users"
       },
       {
         label: "Teams",
         icon: "group",
-        path: admin_teams_path,
-        active: @controller_name == "admin/teams"
+        path: models_teams_path,
+        active: @controller_name == "teams"
       },
       {
         label: "Scenarios",
         icon: "list-unordered",
-        path: admin_scenarios_path,
-        active: @controller_name == "admin/scenarios"
+        path: models_scenarios_path,
+        active: @controller_name == "scenarios"
       },
       {
         label: "Tags",
         icon: "tag",
-        path: admin_tags_path,
-        active: @controller_name == "admin/tags"
+        path: models_tags_path,
+        active: @controller_name == "tags"
       }
     ]
   end
@@ -169,12 +169,8 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       user_tags_path: method(:models_tags_path),
       user_organizations_path: method(:models_organizations_path),
       user_path: method(:user_path),
-      admin_root_path: admin_root_path,
-      organizations_path: organizations_path,
-      admin_users_path: admin_users_path,
-      admin_teams_path: admin_teams_path,
-      admin_scenarios_path: admin_scenarios_path,
-      admin_tags_path: admin_tags_path
+      admin_root_path: dashboard_admin_path,
+      organizations_path: models_organizations_path
     }
   end
 end
