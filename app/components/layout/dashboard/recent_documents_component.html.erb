@@ -45,7 +45,7 @@
                     <% end %>
                     <% if document.status %>
                       <%= render(Primer::Beta::Label.new(
-                        scheme: document.status.color,
+                        scheme: document.status.color.to_sym,
                         size: :large
                       )) do %>
                         <%= document.status.name %>
