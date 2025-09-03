@@ -8,16 +8,14 @@ class Primer::HeaderComponent < ApplicationComponent
     @current_user = current_user
     @title = title
     @full = full
-    @system_arguments = deny_tag_argument(**system_arguments)
+    @system_arguments = system_arguments.dup
     @system_arguments[:tag] = :header
-    @system_arguments[:classes] = class_names(
-      "Header",
-      "Header--full": @full,
-      "border-bottom",
-      "color-bg-default",
-      "px-3 py-2",
-      system_arguments[:classes]
-    )
+    base_classes = ["Header"]
+    base_classes << "Header--full" if @full
+    base_classes += ["border-bottom", "color-bg-default", "px-3 py-2"]
+    base_classes << system_arguments[:classes] if system_arguments[:classes].present?
+    
+    @system_arguments[:classes] = base_classes.compact.join(" ")
   end
 
   private
@@ -35,7 +33,7 @@ class Primer::HeaderComponent < ApplicationComponent
       ) do
         safe_join([
           render(Primer::Beta::Octicon.new(
-            icon: :file_directory,
+            icon: :home,
             mr: 2,
             classes: "color-fg-accent",
             size: :medium

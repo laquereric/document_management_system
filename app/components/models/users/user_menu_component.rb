@@ -39,7 +39,7 @@ class Models::Users::UserMenuComponent < ApplicationComponent
       :divider,
       {
         label: "Sign Out",
-        icon: :sign_out,
+        icon: :x,
         href: "#", # Will be set in template
         method: :delete,
         classes: "color-fg-danger"

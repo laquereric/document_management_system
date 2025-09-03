@@ -1,43 +1,36 @@
 <%= form_with model: document, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
   <div class="Box p-4">
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:title) %>
+    <%= render Primer::Alpha::FormControl.new(label: "Title") do |form_control| %>
       <%= form_control.input(:title, type: :text, size: :large) %>
     <% end %>
 
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:content) %>
+    <%= render Primer::Alpha::FormControl.new(label: "Content") do |form_control| %>
       <%= form_control.text_area(:content, rows: 5) %>
     <% end %>
 
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:url) %>
+    <%= render Primer::Alpha::FormControl.new(label: "URL") do |form_control| %>
       <%= form_control.input(:url, type: :url) %>
     <% end %>
 
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:status_id) %>
+    <%= render Primer::Alpha::FormControl.new(label: "Status") do |form_control| %>
       <%= form_control.select(:status_id, 
           options_from_collection_for_select(statuses, :id, :name, document.status_id),
           prompt: "Select status") %>
     <% end %>
 
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:scenario_id) %>
+    <%= render Primer::Alpha::FormControl.new(label: "Scenario") do |form_control| %>
       <%= form_control.select(:scenario_id, 
           options_from_collection_for_select(scenarios, :id, :name, document.scenario_id),
           prompt: "Select scenario") %>
     <% end %>
 
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:folder_id) %>
+    <%= render Primer::Alpha::FormControl.new(label: "Folder") do |form_control| %>
       <%= form_control.select(:folder_id, 
           options_from_collection_for_select(folders, :id, :name, document.folder_id),
           prompt: "Select folder") %>
     <% end %>
 
-    <%= render Primer::Alpha::FormControl.new do |form_control| %>
-      <%= form_control.label(:file) %>
+    <%= render Primer::Alpha::FormControl.new(label: "File") do |form_control| %>
       <%= form_control.input(:file, type: :file) %>
     <% end %>
 

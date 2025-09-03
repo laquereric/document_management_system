@@ -12,7 +12,7 @@ class Primer::SearchInputComponent < ApplicationComponent
     @url = url || search_path
     @size = size
     @loading = loading
-    @system_arguments = deny_tag_argument(**system_arguments)
+    @system_arguments = system_arguments.dup
     @system_arguments[:tag] = :div
     @system_arguments[:classes] = class_names(
       "position-relative",
@@ -92,15 +92,13 @@ class Primer::SearchInputComponent < ApplicationComponent
   end
 
   def render_results_header
-    render(Primer::BorderBox::Header.new) do
+    render(Primer::CardComponent.new(classes: "Box-header")) do
       content_tag(:h3, "Quick Results", class: "f5 text-semibold")
     end
   end
 
   def render_results_body
-    render(Primer::BorderBox::Body.new(
-      data: { search_target: "resultsContent" }
-    )) do
+    content_tag(:div, class: "Box-body", data: { search_target: "resultsContent" }) do
       render_loading_state
     end
   end
@@ -111,7 +109,7 @@ class Primer::SearchInputComponent < ApplicationComponent
         render(Primer::Beta::Octicon.new(
           icon: :search,
           size: :medium,
-          color: :fg_muted,
+          color: :muted,
           mb: 2
         )),
         content_tag(:p, "Start typing to search...", class: "color-fg-muted f6")
@@ -120,7 +118,7 @@ class Primer::SearchInputComponent < ApplicationComponent
   end
 
   def render_results_footer
-    render(Primer::BorderBox::Footer.new) do
+    render(Primer::CardComponent.new(classes: "Box-footer")) do
       render(Primer::ButtonComponent.new(
         href: url,
         size: :small,

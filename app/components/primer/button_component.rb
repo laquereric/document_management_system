@@ -1,5 +1,4 @@
 class Primer::ButtonComponent < ApplicationComponent
-  include Primer::ViewComponents::Concerns::TestSelectorArgument
 
   SCHEME_MAPPINGS = {
     default: "",
@@ -34,19 +33,17 @@ class Primer::ButtonComponent < ApplicationComponent
     @disabled = disabled
     @loading = loading
     @href = href
-    @system_arguments = deny_tag_argument(**system_arguments)
+    @system_arguments = system_arguments.dup
     @system_arguments[:tag] = @href ? :a : :button
     @system_arguments[:href] = @href if @href
     @system_arguments[:disabled] = @disabled if @disabled && !@href
     @system_arguments[:type] ||= "button" unless @href
-    @system_arguments[:classes] = class_names(
-      "btn",
-      SCHEME_MAPPINGS[@scheme],
-      SIZE_MAPPINGS[@size],
-      "btn-block": @block,
-      "disabled": @disabled && @href,
-      system_arguments[:classes]
-    )
+    base_classes = ["btn", SCHEME_MAPPINGS[@scheme], SIZE_MAPPINGS[@size]]
+    base_classes << "btn-block" if @block
+    base_classes << "disabled" if @disabled && @href
+    base_classes << system_arguments[:classes] if system_arguments[:classes].present?
+    
+    @system_arguments[:classes] = base_classes.compact.join(" ")
   end
 
   private

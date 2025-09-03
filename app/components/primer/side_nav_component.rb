@@ -6,15 +6,12 @@ class Primer::SideNavComponent < ApplicationComponent
   )
     @controller_name = controller_name
     @current_user = current_user
-    @system_arguments = deny_tag_argument(**system_arguments)
+    @system_arguments = system_arguments.dup
     @system_arguments[:tag] = :nav
-    @system_arguments[:classes] = class_names(
-      "SideNav",
-      "border-right",
-      "color-bg-default",
-      "height-full",
-      system_arguments[:classes]
-    )
+    base_classes = ["SideNav", "border-right", "color-bg-default", "height-full"]
+    base_classes << system_arguments[:classes] if system_arguments[:classes].present?
+    
+    @system_arguments[:classes] = base_classes.compact.join(" ")
     @system_arguments["aria-label"] = "Site navigation"
   end
 
@@ -88,13 +85,13 @@ class Primer::SideNavComponent < ApplicationComponent
       },
       {
         label: "Documents",
-        icon: :file_text,
+        icon: :file,
         path: models_documents_path,
         active: controller_name == "documents"
       },
       {
         label: "Folders",
-        icon: :file_directory,
+        icon: :database,
         path: models_folders_path,
         active: controller_name == "folders"
       },
@@ -106,7 +103,7 @@ class Primer::SideNavComponent < ApplicationComponent
       },
       {
         label: "Activity",
-        icon: :pulse,
+        icon: :clock,
         path: models_activities_path,
         active: controller_name == "activities"
       },
@@ -130,25 +127,25 @@ class Primer::SideNavComponent < ApplicationComponent
       },
       {
         label: "Users",
-        icon: :people,
+        icon: :person,
         path: models_users_path,
         active: controller_name == "users"
       },
       {
         label: "Teams",
-        icon: :organization,
+        icon: :person,
         path: models_teams_path,
         active: controller_name == "teams"
       },
       {
         label: "Organizations",
-        icon: :organization,
+        icon: :home,
         path: models_organizations_path,
         active: controller_name == "organizations"
       },
       {
         label: "Scenarios",
-        icon: :list_unordered,
+        icon: :check,
         path: models_scenarios_path,
         active: controller_name == "scenarios"
       }
@@ -160,11 +157,11 @@ class Primer::SideNavComponent < ApplicationComponent
   end
 
   def dashboard_user_path
-    helpers.dashboard_user_index_path
+    helpers.dashboard_user_path
   end
 
   def dashboard_admin_path
-    helpers.dashboard_admin_index_path
+    helpers.dashboard_admin_path
   end
 
   def models_documents_path
