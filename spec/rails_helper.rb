@@ -6,13 +6,19 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 
+# Require all helpers to ensure they're loaded
+Dir[Rails.root.join('app', 'helpers', '**', '*.rb')].each { |f| require f }
+
+# Require test helpers
+require_relative 'support/controller_test_helpers'
+
 # Configure RSpec
 RSpec.configure do |config|
   # Include FactoryBot methods
   config.include FactoryBot::Syntax::Methods
   
-  # Include authentication test helpers (Devise removed)
-  # config.include Devise::Test::IntegrationHelpers, type: :request
+  # Include custom test helpers for authentication-free environment
+  config.include ControllerTestHelpers, type: :controller
   
   # Remove fixture paths since we're using FactoryBot
   # config.fixture_paths = [
