@@ -1,0 +1,26 @@
+<%= render(Primer::Beta::BorderBox.new) do %>
+  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+    <h3 class="Box-title">Teams</h3>
+  <% end %>
+  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+    <% if has_teams? %>
+      <div class="list-style-none">
+        <% user.teams.each do |team| %>
+          <div class="d-flex flex-items-center py-2">
+            <div class="flex-shrink-0">
+              <div class="CircleBadge CircleBadge--small bg-blue">
+                <%= render(Primer::Beta::Octicon.new(icon: "people", size: :small)) %>
+              </div>
+            </div>
+            <div class="flex-auto ml-3">
+              <%= link_to team.name, models_team_path(team), class: "Link--primary" %>
+              <div class="color-fg-muted f6"><%= team.organization&.name %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="color-fg-muted">No teams assigned</p>
+    <% end %>
+  <% end %>
+<% end %>

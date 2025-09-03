@@ -1,0 +1,36 @@
+<%= render(Primer::Beta::BorderBox.new) do %>
+  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+    <div class="d-flex flex-items-center flex-justify-between">
+      <h3 class="Box-title">Recent Activity</h3>
+      <%= link_to models_activities_path, class: "btn btn-sm btn-outline" do %>
+        View All
+      <% end %>
+    </div>
+  <% end %>
+  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+    <% if has_activity? %>
+      <div class="list-style-none">
+        <% recent_activity.each do |activity| %>
+          <div class="py-2">
+            <div class="d-flex flex-items-center">
+              <div class="flex-shrink-0">
+                <%= render(Primer::Beta::Octicon.new(icon: activity_icon.call(activity), size: :small)) %>
+              </div>
+              <div class="flex-auto ml-2">
+                <div class="f6">
+                  <%= activity.action %> 
+                  <% if activity.document %>
+                    <%= link_to activity.document.title, models_document_path(activity.document), class: "Link--primary" %>
+                  <% end %>
+                </div>
+                <div class="color-fg-muted f6"><%= time_ago_in_words(activity.created_at) %> ago</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="color-fg-muted">No recent activity</p>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,61 @@
+<%= render(Primer::Beta::BorderBox.new) do %>
+  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+    <h3 class="Box-title">User Information</h3>
+  <% end %>
+  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+    <div class="d-flex flex-wrap" style="gap: 16px;">
+      <div class="flex-1" style="min-width: 200px;">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <div class="form-control-plaintext"><%= user.name %></div>
+        </div>
+      </div>
+      <div class="flex-1" style="min-width: 200px;">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="form-control-plaintext"><%= user.email %></div>
+        </div>
+      </div>
+      <div class="flex-1" style="min-width: 200px;">
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <div class="form-control-plaintext">
+            <%= render(Primer::Beta::Label.new(scheme: role_label_scheme, size: :large)) do %>
+              <%= user.role.titleize %>
+            <% end %>
+            <% if can_toggle_role? %>
+              <%= link_to "Toggle Role", models_toggle_role_user_path(user), 
+                  method: :patch, 
+                  class: "btn btn-sm btn-outline ml-2",
+                  data: { confirm: "Are you sure you want to change this user's role?" } %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1" style="min-width: 200px;">
+        <div class="form-group">
+          <label class="form-label">Organization</label>
+          <div class="form-control-plaintext">
+            <% if user.organization %>
+              <%= link_to user.organization.name, models_organization_path(user.organization) %>
+            <% else %>
+              <span class="color-fg-muted">None</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1" style="min-width: 200px;">
+        <div class="form-group">
+          <label class="form-label">Account Created</label>
+          <div class="form-control-plaintext"><%= user.created_at.strftime("%B %d, %Y at %I:%M %p") %></div>
+        </div>
+      </div>
+      <div class="flex-1" style="min-width: 200px;">
+        <div class="form-group">
+          <label class="form-label">Last Updated</label>
+          <div class="form-control-plaintext"><%= user.updated_at.strftime("%B %d, %Y at %I:%M %p") %></div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
