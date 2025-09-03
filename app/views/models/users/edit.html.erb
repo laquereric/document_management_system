@@ -1,17 +1,23 @@
 <div class="container-lg px-3 py-6">
   <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-6">
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
     <div>
-      <div class="d-flex flex-items-center mb-2">
-        <%= link_to admin_user_path(@user), class: "btn btn-sm btn-outline mr-3" do %>
-          <svg class="octicon octicon-arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-            <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
-          </svg>
-          Back to User
-        <% end %>
-        <h1 class="h2 mb-0">Edit User</h1>
-      </div>
-      <p class="color-fg-muted">Update user information and settings</p>
+      <h1 class="h2 mb-1">Edit User</h1>
+      <p class="text-gray">Update user information and settings</p>
+    </div>
+    <div class="d-flex gap-2">
+      <%= link_to models_user_path(@user), class: "btn btn-sm btn-outline mr-3" do %>
+        <svg class="octicon octicon-eye mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1.679 7.932c.412-.621 1.242-1.75 2.366-2.717C5.175 4.242 6.527 3.5 8 3.5c1.473 0 2.824.742 3.955 1.715 1.124.967 1.954 2.096 2.366 2.717a.119.119 0 010 .136c-.412.621-1.242 1.75-2.366 2.717C10.825 11.758 9.473 12.5 8 12.5c-1.473 0-2.824-.742-3.955-1.715C2.868 9.687 2.038 8.558 1.626 7.937a.119.119 0 010-.136zM8 2c-1.981 0-3.67.992-4.933 2.078C1.797 5.169.88 6.423.43 7.1a1.619 1.619 0 000 1.798c.45.678 1.367 1.932 2.637 3.024C4.329 13.008 6.019 14 8 14c1.981 0 3.67-.992 4.933-2.078 1.27-1.091 2.187-2.345 2.637-3.023a1.619 1.619 0 000-1.798c-.45-.678-1.367-1.932-2.637-3.023C11.671 2.992 9.981 2 8 2zm0 8a2 2 0 100-4 2 2 0 000 4z"/>
+        </svg>
+        View User
+      <% end %>
+      <%= link_to models_users_path, class: "btn btn-outline" do %>
+        <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
+        </svg>
+        Back to Users
+      <% end %>
     </div>
   </div>
 
@@ -113,7 +119,7 @@
 
             <div class="d-flex flex-items-center gap-3 mt-4">
               <%= form.submit "Update User", class: "btn btn-primary" %>
-              <%= link_to "Cancel", admin_user_path(@user), class: "btn btn-outline" %>
+              <%= link_to "Cancel", models_user_path(@user), class: "btn btn-outline" %>
             </div>
           <% end %>
         </div>
@@ -165,7 +171,7 @@
         <div class="Box-body">
           <div class="d-flex flex-column gap-2">
             <% unless @user == current_user %>
-              <%= link_to toggle_role_admin_user_path(@user), 
+              <%= link_to models_toggle_role_user_path(@user), 
                   method: :patch, 
                   class: "btn btn-outline btn-sm",
                   data: { confirm: "Are you sure you want to change this user's role?" } do %>
@@ -175,7 +181,7 @@
                 Toggle Role
               <% end %>
             <% end %>
-            <%= link_to admin_user_path(@user), class: "btn btn-outline btn-sm" do %>
+            <%= link_to models_user_path(@user), class: "btn btn-outline btn-sm" do %>
               <svg class="octicon octicon-eye mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
                 <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.671 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.889.88 9.635.43 8.957a1.62 1.62 0 0 1 0-1.798c.45-.678 1.367-1.932 2.637-3.023C4.329 2.992 6.019 2 8 2ZM8 1c-2.2 0-4.2.9-5.657 2.343 1.515 1.4 2.796 2.88 3.561 3.566A7.5 7.5 0 0 0 8 6.5a7.5 7.5 0 0 0 2.096.409c.765-.686 2.046-2.166 3.561-3.566C12.2 1.9 10.2 1 8 1Zm0 5.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"></path>
               </svg>

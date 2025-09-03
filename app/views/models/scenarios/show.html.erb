@@ -3,23 +3,18 @@
 <div class="container-lg px-3 py-4">
   <!-- Header -->
   <div class="d-flex flex-items-center flex-justify-between mb-4">
-    <div class="d-flex flex-items-center">
-      <svg class="octicon octicon-file-code mr-3" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"/>
-      </svg>
-      <div>
-        <h1 class="h2 mb-1"><%= @scenario.name %></h1>
-        <p class="text-gray mb-0">Manage scenario information and view associated documents</p>
-      </div>
+    <div>
+      <h1 class="h2 mb-1"><%= @scenario.name %></h1>
+      <p class="text-gray">Scenario details and associated documents</p>
     </div>
-    <div class="d-flex flex-items-center gap-2">
-      <%= link_to edit_admin_scenario_path(@scenario), class: "btn btn-outline" do %>
+    <div class="d-flex gap-2">
+      <%= link_to edit_models_scenario_path(@scenario), class: "btn btn-outline" do %>
         <svg class="octicon octicon-pencil mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.249.249 0 00.108-.064l6.286-6.286z"/>
         </svg>
         Edit Scenario
       <% end %>
-      <%= link_to admin_scenario_path(@scenario), method: :delete, data: { confirm: "Are you sure you want to delete this scenario? This action cannot be undone." }, class: "btn btn-danger" do %>
+      <%= link_to models_scenario_path(@scenario), method: :delete, data: { confirm: "Are you sure you want to delete this scenario? This action cannot be undone." }, class: "btn btn-danger" do %>
         <svg class="octicon octicon-trash mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M10.5 4.5a.75.75 0 00-1.5 0v1h-3v-1a.75.75 0 00-1.5 0v1h-2.25a.75.75 0 000 1.5H2v8.25c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 15.25V7h.75a.75.75 0 000-1.5H12.5v-1zM11 7v8.25a.25.25 0 01-.25.25h-8.5A.25.25 0 013 15.25V7h8z"/>
         </svg>
@@ -87,7 +82,7 @@
               <span class="Counter"><%= @documents.total_count %></span>
             <% end %>
           </h3>
-          <%= link_to admin_scenarios_path, class: "btn btn-sm btn-outline" do %>
+          <%= link_to models_scenarios_path, class: "btn btn-sm btn-outline" do %>
             <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
             </svg>

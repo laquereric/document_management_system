@@ -4,18 +4,18 @@
   <!-- Page Header -->
   <%= render(Layout::Page::PageHeader.new(
     title: "Manage Teams",
-    description: "Admin team management and member control",
+    description: "Manage and organize teams across the system",
     icon: "people",
     action: {
       text: "New Team",
-      url: new_admin_team_path
+      url: models_new_team_path
     }
   )) %>
 
   <!-- Search and Filters -->
   <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
     search_object: @q,
-    url: admin_teams_path,
+    url: models_teams_path,
     title: "Search & Filters",
     fields: [
       {
@@ -27,11 +27,6 @@
         name: :organization_name_cont,
         label: "Organization",
         placeholder: "Search by organization..."
-      },
-      {
-        name: :leader_name_cont,
-        label: "Team Leader",
-        placeholder: "Search by leader name..."
       }
     ]
   )) %>
@@ -45,7 +40,7 @@
     empty_state_description: params[:q].present? ? "No teams match your search criteria. Try adjusting your filters." : "Get started by creating your first team.",
     empty_state_action: {
       text: "Create Team",
-      url: new_admin_team_path
+      url: models_new_team_path
     }
   )) do %>
     <% @teams.each do |team| %>

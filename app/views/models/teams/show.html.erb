@@ -1,31 +1,29 @@
 <div class="container-lg px-3 py-6">
   <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-6">
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
     <div>
-      <div class="d-flex flex-items-center mb-2">
-        <%= link_to admin_teams_path, class: "btn btn-sm btn-outline mr-3" do %>
-          <svg class="octicon octicon-arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-            <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
-          </svg>
-          Back to Teams
-        <% end %>
-        <h1 class="h2 mb-0"><%= @team.name %></h1>
-      </div>
-      <p class="color-fg-muted">Team details and member management</p>
+      <h1 class="h2 mb-1"><%= @team.name %></h1>
+      <p class="text-gray">Team details and member management</p>
     </div>
-    <div class="d-flex flex-items-center gap-2">
-      <%= link_to edit_admin_team_path(@team), class: "btn btn-outline" do %>
-        <svg class="octicon octicon-pencil mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-.897.897a.75.75 0 0 1-.53.22H13.25a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75H9.5a.75.75 0 0 1-.53-.22l-.897-.897a1.75 1.75 0 0 1 0-2.474l1.086-1.086ZM6.463 1.076a.25.25 0 0 1 .354 0l1.086 1.086a.25.25 0 0 1 0 .354L6.463 4.463a.25.25 0 0 1-.354 0L4.987 3.377a.25.25 0 0 1 0-.354L6.463 1.076ZM2.853.439a1.75 1.75 0 0 1 2.474 0L6.177 2.853A.25.25 0 0 1 6.5 3.207v1.5a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 0 .75-.75v-1.5a.25.25 0 0 1 .323-.354L9.673 3.439a1.75 1.75 0 0 1 2.474 0l.897.897a.75.75 0 0 1 .22.53v1.25a.75.75 0 0 1-.75.75H12.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75H8.5a.75.75 0 0 1-.75-.75V4.866a.75.75 0 0 1 .22-.53l.897-.897ZM2.22 7.47a.75.75 0 0 1 .22.53v1.25a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75H2.5a.75.75 0 0 1-.75-.75V8.866a.75.75 0 0 1 .22-.53l.897-.897a1.75 1.75 0 0 1 2.474 0l.897.897ZM.439 9.147a.25.25 0 0 1 .354 0L2.853 10.56a.25.25 0 0 1 0 .354L.439 12.853a.25.25 0 0 1-.354 0L.147 12.147a.25.25 0 0 1 0-.354L.439 9.147ZM.439 12.853a1.75 1.75 0 0 1 2.474 0l.897.897a.75.75 0 0 1 .22.53v1.25a.75.75 0 0 0 .75.75h1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-1.5a.75.75 0 0 0-.75-.75H2.5a.75.75 0 0 1-.75-.75v-1.25a.75.75 0 0 1 .22-.53l.897-.897a1.75 1.75 0 0 1 2.474 0l.897.897ZM.439 15.147a.25.25 0 0 1 .354 0L2.853 16.56a.25.25 0 0 1 0 .354L.439 18.853a.25.25 0 0 1-.354 0L.147 18.147a.25.25 0 0 1 0-.354L.439 15.147Z"></path>
+    <div class="d-flex gap-2">
+      <%= link_to models_teams_path, class: "btn btn-sm btn-outline mr-3" do %>
+        <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
+        </svg>
+        Back to Teams
+      <% end %>
+      <%= link_to edit_models_team_path(@team), class: "btn btn-outline" do %>
+        <svg class="octicon octicon-pencil mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.249.249 0 00.108-.064l6.286-6.286z"/>
         </svg>
         Edit Team
       <% end %>
-      <%= link_to admin_team_path(@team), 
-          method: :delete, 
-          class: "btn btn-danger",
-          data: { confirm: "Are you sure you want to delete this team? This action cannot be undone." } do %>
-        <svg class="octicon octicon-trash mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M6.5 1.75a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-1.5ZM2 1.75C2 .784 2.784 0 3.75 0h1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-1.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 .75.75v1.5A1.75 1.75 0 0 1 13.25 13h-8.5A1.75 1.75 0 0 1 3 11.25v-8.5C3 1.784 3.784 1 4.75 1h1.5ZM1 11.25a2.75 2.75 0 0 0 2.75 2.75h8.5A2.75 2.75 0 0 0 15 11.25v-8.5A2.75 2.75 0 0 0 12.25 0h-8.5A2.75 2.75 0 0 0 1 2.75v8.5ZM11 2a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 11 2ZM5.75 2a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 5.75 2ZM5 5.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 5.75ZM5.75 7a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5ZM5 10.75a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5A.75.75 0 0 1 5 10.75Z"></path>
+      <%= link_to models_team_path(@team),
+          method: :delete,
+          data: { confirm: "Are you sure you want to delete this team? This action cannot be undone." },
+          class: "btn btn-danger" do %>
+        <svg class="octicon octicon-trash mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M10.5 4.5a.75.75 0 00-1.5 0v1h-3v-1a.75.75 0 00-1.5 0v1h-2.25a.75.75 0 000 1.5H2v8.25c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 15.25V7h.75a.75.75 0 000-1.5H12.5v-1zM11 7v8.25a.25.25 0 01-.25.25h-8.5A.25.25 0 013 15.25V7h8z"/>
         </svg>
         Delete Team
       <% end %>
@@ -64,7 +62,7 @@
                 <label class="form-label">Team Leader</label>
                 <div class="form-control-plaintext">
                   <% if @team.leader %>
-                    <%= link_to @team.leader.name, admin_user_path(@team.leader) %>
+                    <%= link_to @team.leader.name, models_user_path(@team.leader) %>
                   <% else %>
                     <span class="color-fg-muted">None</span>
                   <% end %>
@@ -167,8 +165,8 @@
                     context: :admin
                   ) %>
                   <div class="position-absolute" style="top: 8px; right: 8px;">
-                    <%= link_to remove_member_admin_team_path(@team, user_id: user.id), 
-                        method: :patch, 
+                    <%= link_to remove_member_models_team_path(@team, user_id: user.id), 
+                        method: :delete, 
                         class: "btn btn-sm btn-outline-danger",
                         data: { confirm: "Remove #{user.name} from this team?" } do %>
                       <svg class="octicon octicon-x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
@@ -237,8 +235,8 @@
                   <div class="color-fg-muted f6"><%= user.email %></div>
                 </div>
                 <div class="flex-shrink-0">
-                  <%= link_to add_member_admin_team_path(@team, user_id: user.id), 
-                      method: :patch, 
+                  <%= link_to add_member_models_team_path(@team, user_id: user.id), 
+                      method: :post, 
                       class: "btn btn-sm btn-outline",
                       data: { confirm: "Add #{user.name} to this team?" } do %>
                     <svg class="octicon octicon-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">

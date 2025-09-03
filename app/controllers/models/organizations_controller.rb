@@ -29,7 +29,7 @@ class Models::OrganizationsController < Models::ModelsController
     @organization = Organization.new(organization_params)
     
     if @organization.save
-      redirect_to admin_organization_path(@organization), notice: 'Organization was successfully created.'
+      redirect_to models_organization_path(@organization), notice: 'Organization was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,15 +40,18 @@ class Models::OrganizationsController < Models::ModelsController
 
   def update
     if @organization.update(organization_params)
-      redirect_to admin_organization_path(@organization), notice: 'Organization was successfully updated.'
+      redirect_to models_organization_path(@organization), notice: 'Organization was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @organization.destroy
-    redirect_to admin_organizations_path, notice: 'Organization was successfully deleted.'
+    if @organization.destroy
+      redirect_to models_organizations_path, notice: 'Organization was successfully deleted.'
+    else
+      redirect_to models_organization_path(@organization), alert: 'Failed to delete organization.'
+    end
   end
 
   private

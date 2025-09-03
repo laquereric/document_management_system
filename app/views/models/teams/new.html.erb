@@ -1,18 +1,16 @@
 <div class="container-lg px-3 py-6">
   <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-6">
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
     <div>
-      <div class="d-flex flex-items-center mb-2">
-        <%= link_to admin_teams_path, class: "btn btn-sm btn-outline mr-3" do %>
-          <svg class="octicon octicon-arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-            <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
-          </svg>
-          Back to Teams
-        <% end %>
-        <h1 class="h2 mb-0">Create New Team</h1>
-      </div>
-      <p class="color-fg-muted">Add a new team to the system</p>
+      <h1 class="h2 mb-1">Create New Team</h1>
+      <p class="text-gray">Add a new team to organize users and resources</p>
     </div>
+    <%= link_to models_teams_path, class: "btn btn-sm btn-outline mr-3" do %>
+      <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
+      </svg>
+      Back to Teams
+    <% end %>
   </div>
 
   <div class="row g-4">
@@ -92,7 +90,7 @@
 
             <div class="d-flex flex-items-center gap-3 mt-4">
               <%= form.submit "Create Team", class: "btn btn-primary" %>
-              <%= link_to "Cancel", admin_teams_path, class: "btn btn-outline" %>
+              <%= link_to "Cancel", models_teams_path, class: "btn btn-outline" %>
             </div>
           <% end %>
         </div>

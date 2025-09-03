@@ -44,6 +44,14 @@ class Models::Teams::TeamCardComponent < Layout::CardComponent
     admin_context
   end
 
+  def admin_team_path
+    models_team_path(team)
+  end
+
+  def edit_admin_team_path
+    models_edit_team_path(team)
+  end
+
   # Context methods for the template
   def template_context
     {

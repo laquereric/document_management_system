@@ -22,7 +22,7 @@ class Models::UsersController < Models::ModelsController
     @user = User.new(user_params)
     
     if @user.save
-      redirect_to admin_user_path(@user), notice: 'User was successfully created.'
+      redirect_to models_user_path(@user), notice: 'User was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Models::UsersController < Models::ModelsController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_user_path(@user), notice: 'User was successfully updated.'
+      redirect_to models_user_path(@user), notice: 'User was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -41,19 +41,20 @@ class Models::UsersController < Models::ModelsController
 
   def destroy
     if @user == current_user
-      redirect_to admin_users_path, alert: 'You cannot delete your own account.'
+      redirect_to models_users_path, alert: 'You cannot delete your own account.'
+    elsif @user.destroy
+      redirect_to models_users_path, notice: 'User was successfully deleted.'
     else
-      @user.destroy
-      redirect_to admin_users_path, notice: 'User was successfully deleted.'
+      redirect_to models_user_path(@user), alert: 'Failed to delete user.'
     end
   end
 
   def toggle_role
-    new_role = @user.role == 'admin' ? 'member' : 'admin'
+    new_role = @user.admin? ? 'user' : 'admin'
     if @user.update(role: new_role)
-      redirect_to admin_user_path(@user), notice: "User role changed to #{new_role}."
+      redirect_to models_user_path(@user), notice: "User role changed to #{new_role}."
     else
-      redirect_to admin_user_path(@user), alert: 'Failed to change user role.'
+      redirect_to models_user_path(@user), alert: 'Failed to change user role.'
     end
   end
 

@@ -25,7 +25,7 @@ class Models::ScenariosController < Models::ModelsController
     @scenario = Scenario.new(scenario_params)
     
     if @scenario.save
-      redirect_to admin_scenario_path(@scenario), notice: 'Scenario was successfully created.'
+      redirect_to models_scenario_path(@scenario), notice: 'Scenario was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,18 +36,17 @@ class Models::ScenariosController < Models::ModelsController
 
   def update
     if @scenario.update(scenario_params)
-      redirect_to admin_scenario_path(@scenario), notice: 'Scenario was successfully updated.'
+      redirect_to models_scenario_path(@scenario), notice: 'Scenario was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    scenario_name = @scenario.name
     if @scenario.destroy
-      redirect_to admin_scenarios_path, notice: 'Scenario was successfully deleted.'
+      redirect_to models_scenarios_path, notice: 'Scenario was successfully deleted.'
     else
-      redirect_to admin_scenario_path(@scenario), alert: 'Failed to delete scenario. It may be in use by documents.'
+      redirect_to models_scenario_path(@scenario), alert: 'Failed to delete scenario. It may be in use by documents.'
     end
   end
 

@@ -30,6 +30,14 @@ class Models::Organization::CardComponent < Layout::CardComponent
     admin_context
   end
 
+  def admin_organization_path
+    models_organization_path(organization)
+  end
+
+  def edit_admin_organization_path
+    models_edit_organization_path(organization)
+  end
+
   # Context methods for the template
   def template_context
     {

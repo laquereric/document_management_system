@@ -4,24 +4,24 @@
   <!-- Page Header -->
   <%= render(Layout::Page::PageHeader.new(
     title: "Manage Users",
-    description: "Admin user management and role control",
+    description: "Manage user accounts and permissions across the system",
     icon: "people",
     action: {
       text: "New User",
-      url: new_admin_user_path
+      url: models_new_user_path
     }
   )) %>
 
   <!-- Search and Filters -->
   <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
     search_object: @q,
-    url: admin_users_path,
+    url: models_users_path,
     title: "Search & Filters",
     fields: [
       {
         name: :name_cont,
-        label: "Name",
-        placeholder: "Search by name..."
+        label: "User Name",
+        placeholder: "Search by user name..."
       },
       {
         name: :email_cont,
@@ -32,7 +32,7 @@
         name: :role_eq,
         label: "Role",
         type: :select,
-        options: [['All Roles', ''], ['Admin', 'admin'], ['Team Leader', 'team_leader'], ['Member', 'member']]
+        options: [['Admin', 'admin'], ['User', 'user']]
       }
     ]
   )) %>
@@ -46,7 +46,7 @@
     empty_state_description: params[:q].present? ? "No users match your search criteria. Try adjusting your filters." : "Get started by creating your first user.",
     empty_state_action: {
       text: "Create User",
-      url: new_admin_user_path
+      url: models_new_user_path
     }
   )) do %>
     <% @users.each do |user| %>

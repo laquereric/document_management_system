@@ -26,6 +26,14 @@ class Models::Scenario::CardComponent < ApplicationComponent
     time_ago_in_words(scenario.created_at)
   end
 
+  def admin_scenario_path
+    models_scenario_path(scenario)
+  end
+
+  def edit_admin_scenario_path
+    models_edit_scenario_path(scenario)
+  end
+
   # Context methods for the template
   def template_context
     {

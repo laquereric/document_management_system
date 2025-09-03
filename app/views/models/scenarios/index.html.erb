@@ -4,24 +4,29 @@
   <!-- Page Header -->
   <%= render(Layout::Page::PageHeader.new(
     title: "Manage Scenarios",
-    description: "Manage and organize document scenarios across the system",
-    icon: "list-ordered",
+    description: "Manage and organize scenarios across the system",
+    icon: "workflow",
     action: {
       text: "New Scenario",
-      url: new_admin_scenario_path
+      url: models_new_scenario_path
     }
   )) %>
 
   <!-- Search and Filters -->
   <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
     search_object: @q,
-    url: admin_scenarios_path,
+    url: models_scenarios_path,
     title: "Search & Filters",
     fields: [
       {
         name: :name_cont,
         label: "Scenario Name",
         placeholder: "Search by scenario name..."
+      },
+      {
+        name: :description_cont,
+        label: "Description",
+        placeholder: "Search by description..."
       }
     ]
   )) %>
@@ -62,7 +67,7 @@
         icon: "list-ordered",
         action: {
           text: "Create Scenario",
-          url: new_admin_scenario_path
+          url: models_new_scenario_path
         }
       )) %>
     <% end %>

@@ -8,14 +8,14 @@
     icon: "tag",
     action: {
       text: "New Tag",
-      url: new_admin_tag_path
+      url: models_new_tag_path
     }
   )) %>
 
   <!-- Search and Filters -->
   <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
     search_object: @q,
-    url: admin_tags_path,
+    url: models_tags_path,
     title: "Search & Filters",
     fields: [
       {
@@ -35,7 +35,7 @@
     empty_state_description: "Get started by creating your first tag.",
     empty_state_action: {
       text: "Create Tag",
-      url: new_admin_tag_path
+      url: models_new_tag_path
     }
   )) do %>
     <% @tags.each do |tag| %>

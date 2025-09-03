@@ -45,7 +45,7 @@ class Models::TagsController < Models::ModelsController
     @tag = Tag.new(tag_params)
     
     if @tag.save
-      redirect_to admin_tag_path(@tag), notice: 'Tag was successfully created.'
+      redirect_to models_tag_path(@tag), notice: 'Tag was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -56,7 +56,7 @@ class Models::TagsController < Models::ModelsController
 
   def update
     if @tag.update(tag_params)
-      redirect_to admin_tag_path(@tag), notice: 'Tag was successfully updated.'
+      redirect_to models_tag_path(@tag), notice: 'Tag was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -65,9 +65,9 @@ class Models::TagsController < Models::ModelsController
   def destroy
     tag_name = @tag.name
     if @tag.destroy
-      redirect_to admin_tags_path, notice: 'Tag was successfully deleted.'
+      redirect_to models_tags_path, notice: 'Tag was successfully deleted.'
     else
-      redirect_to admin_tag_path(@tag), alert: 'Failed to delete tag.'
+      redirect_to models_tag_path(@tag), alert: 'Failed to delete tag.'
     end
   end
 

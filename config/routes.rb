@@ -62,6 +62,8 @@ Rails.application.routes.draw do
     delete "teams/:id", to: "teams#destroy"
     post "teams/:id/join", to: "teams#join"
     delete "teams/:id/leave", to: "teams#leave"
+    post "teams/:id/add_member", to: "teams#add_member"
+    delete "teams/:id/remove_member", to: "teams#remove_member"
     
     # Organizations routes
     get "organizations", to: "organizations#index"
@@ -88,7 +90,7 @@ Rails.application.routes.draw do
     get "users/:id/edit", to: "users#edit", as: :edit_user
     post "users", to: "users#create"
     patch "users/:id", to: "users#update"
-    patch "users/:id/toggle_role", to: "users#toggle_role"
+    patch "users/:id/toggle_role", to: "users#toggle_role", as: :toggle_role_user
     delete "users/:id", to: "users#destroy"
     
 

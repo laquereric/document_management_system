@@ -4,11 +4,11 @@
   <!-- Page Header -->
   <%= render(Layout::Page::PageHeader.new(
     title: "Manage Organizations",
-    description: "Admin organization management and settings",
-    icon: "organization",
+    description: "Manage and organize organizations across the system",
+    icon: "building",
     action: {
       text: "New Organization",
-      url: new_admin_organization_path
+      url: models_new_organization_path
     }
   )) %>
 

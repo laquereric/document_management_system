@@ -40,15 +40,15 @@ class Models::Tag::CardComponent < Layout::CardComponent
     admin_context ? "admin_" : ""
   end
 
-  def tag_path_helper
-    admin_context ? admin_tag_path(tag) : tag_path(tag)
+  def show_path
+    admin_context ? models_tag_path(tag) : tag_path(tag)
   end
 
-  def edit_tag_path_helper
-    admin_context ? edit_admin_tag_path(tag) : edit_tag_path(tag)
+  def edit_path
+    admin_context ? models_edit_tag_path(tag) : edit_tag_path(tag)
   end
 
-  def delete_tag_path_helper
-    admin_context ? admin_tag_path(tag) : tag_path(tag)
+  def delete_path
+    admin_context ? models_tag_path(tag) : tag_path(tag)
   end
 end

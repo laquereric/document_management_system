@@ -42,7 +42,7 @@ class Models::TeamsController < Models::ModelsController
     @team = Team.new(team_params)
     
     if @team.save
-      redirect_to admin_team_path(@team), notice: 'Team was successfully created.'
+      redirect_to models_team_path(@team), notice: 'Team was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -53,15 +53,18 @@ class Models::TeamsController < Models::ModelsController
 
   def update
     if @team.update(team_params)
-      redirect_to admin_team_path(@team), notice: 'Team was successfully updated.'
+      redirect_to models_team_path(@team), notice: 'Team was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @team.destroy
-    redirect_to admin_teams_path, notice: 'Team was successfully deleted.'
+    if @team.destroy
+      redirect_to models_teams_path, notice: 'Team was successfully deleted.'
+    else
+      redirect_to models_team_path(@team), alert: 'Failed to delete team.'
+    end
   end
 
   def add_member
@@ -74,14 +77,14 @@ class Models::TeamsController < Models::ModelsController
       if params[:redirect_to_user_profile]
         redirect_to user_path(user), notice: "#{user.name} was added to #{@team.name}."
       else
-        redirect_to admin_team_path(@team), notice: "#{user.name} was added to the team."
+        redirect_to models_team_path(@team), notice: "#{user.name} was added to the team."
       end
     else
       # Redirect based on where the request came from
       if params[:redirect_to_user_profile]
         redirect_to user_path(user), alert: "#{user.name} is already a member of #{@team.name}."
       else
-        redirect_to admin_team_path(@team), alert: "#{user.name} is already a member of this team."
+        redirect_to models_team_path(@team), alert: "#{user.name} is already a member of this team."
       end
     end
   end
@@ -91,9 +94,31 @@ class Models::TeamsController < Models::ModelsController
     
     if @team.users.include?(user)
       @team.users.delete(user)
-      redirect_to admin_team_path(@team), notice: "#{user.name} was removed from the team."
+      redirect_to models_team_path(@team), notice: "#{user.name} was removed from the team."
     else
-      redirect_to admin_team_path(@team), alert: "#{user.name} is not a member of this team."
+              redirect_to models_team_path(@team), alert: "#{user.name} is not a member of this team."
+    end
+  end
+
+  def join
+    user = User.find(params[:user_id])
+    
+    if @team.members.include?(user)
+      redirect_to models_team_path(@team), alert: "#{user.name} is already a member of this team."
+    else
+      @team.members << user
+      redirect_to models_team_path(@team), notice: "#{user.name} was added to the team."
+    end
+  end
+
+  def leave
+    user = User.find(params[:user_id])
+    
+    if @team.members.include?(user)
+      @team.members.delete(user)
+      redirect_to models_team_path(@team), notice: "#{user.name} was removed from the team."
+    else
+      redirect_to models_team_path(@team), alert: "#{user.name} is not a member of this team."
     end
   end
 

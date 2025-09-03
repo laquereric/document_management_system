@@ -7,7 +7,7 @@
       <h1 class="h2 mb-1">Create New Tag</h1>
       <p class="text-gray">Add a new tag to organize documents</p>
     </div>
-    <%= link_to admin_tags_path, class: "btn btn-outline" do %>
+    <%= link_to models_tags_path, class: "btn btn-outline" do %>
       <svg class="octicon octicon-arrow-left mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
         <path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/>
       </svg>
@@ -22,7 +22,7 @@
           <h3 class="Box-title">Tag Information</h3>
         </div>
         <div class="Box-body">
-          <%= form_with model: [:admin, @tag], local: true, class: "form" do |form| %>
+          <%= form_with model: @tag, local: true, class: "form" do |form| %>
             <% if @tag.errors.any? %>
               <div class="flash flash-error mb-3">
                 <h4 class="flash-heading">Please correct the following errors:</h4>
@@ -58,7 +58,7 @@
 
             <div class="form-actions">
               <%= form.submit "Create Tag", class: "btn btn-primary" %>
-              <%= link_to "Cancel", admin_tags_path, class: "btn" %>
+              <%= link_to "Cancel", models_tags_path, class: "btn" %>
             </div>
           <% end %>
         </div>
@@ -100,7 +100,7 @@
         </div>
         <div class="Box-body">
           <div class="d-flex flex-column gap-2">
-            <%= link_to admin_tags_path, class: "btn btn-outline btn-sm" do %>
+            <%= link_to models_tags_path, class: "btn btn-outline btn-sm" do %>
               <svg class="octicon octicon-list mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 3a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM2 7a1 1 0 11-2 0 1 1 0 012 0zm-1 3a1 1 0 100 2 1 1 0 000-2zm3.75.75a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"/>
               </svg>

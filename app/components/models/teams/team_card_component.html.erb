@@ -9,7 +9,7 @@
       <div class="flex-1">
         <h4 class="f4 text-semibold mb-1">
           <% if admin_context? %>
-            <%= link_to team.name, admin_team_path(team), class: "Link--primary" %>
+            <%= link_to team.name, models_team_path(team), class: "Link--primary" %>
           <% else %>
             <%= link_to team.name, organization_team_path(team.organization, team), class: "Link--primary" %>
           <% end %>
