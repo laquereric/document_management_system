@@ -16,6 +16,10 @@ class Organization < ApplicationRecord
     teams.count
   end
 
+  def total_tags
+    tags.count
+  end
+
   # Ransack configuration
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "description", "id", "id_value", "name", "updated_at"]

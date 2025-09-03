@@ -44,16 +44,41 @@ class Document < ApplicationRecord
     team&.organization
   end
 
+  def has_file?
+    file.attached? && file.present?
+  end
+
+  def file_extension
+    return nil unless has_file?
+    file.filename.to_s.split('.').last&.upcase
+  end
+
+  def file_icon
+    case file_extension
+    when 'PDF'
+      'file-pdf'
+    when 'DOCX', 'DOC'
+      'file-word'
+    when 'XLSX', 'XLS'
+      'file-spreadsheet'
+    when 'PPTX', 'PPT'
+      'file-presentation'
+    when 'TXT'
+      'file-text'
+    else
+      'file'
+    end
+  end
+
   private
 
   def log_status_change
-    ActivityLog.create!(
+    Activity.create!(
       document: self,
       user: Current.user || author,
       action: 'status_change',
       old_status_id: status_id_before_last_save,
-      new_status_id: status_id,
-      notes: "Status changed from #{Status.find(status_id_before_last_save).name} to #{status.name}"
+      new_status_id: status_id
     )
   end
 end

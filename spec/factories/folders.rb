@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :folder do
-    name { "MyString" }
-    description { "MyText" }
+    sequence(:name) { |n| "Folder #{n}" }
+    sequence(:description) { |n| "Description for Folder #{n}" }
     parent_folder { nil }
-    team { nil }
+    team
   end
 end

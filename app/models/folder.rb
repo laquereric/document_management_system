@@ -36,6 +36,10 @@ class Folder < ApplicationRecord
     documents.count + subfolders.sum(&:total_documents)
   end
 
+  def total_tags
+    tags.count
+  end
+
   def organization
     team&.organization
   end

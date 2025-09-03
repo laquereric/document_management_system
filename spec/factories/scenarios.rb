@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :scenario do
-    name { "MyString" }
-    description { "MyText" }
+    sequence(:name) { |n| "Scenario #{n}" }
+    sequence(:description) { |n| "Description for Scenario #{n}" }
   end
 end

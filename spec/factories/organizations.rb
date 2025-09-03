@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :organization do
-    name { "MyString" }
-    description { "MyText" }
+    sequence(:name) { |n| "Organization #{n}" }
+    sequence(:description) { |n| "Description for Organization #{n}" }
   end
 end

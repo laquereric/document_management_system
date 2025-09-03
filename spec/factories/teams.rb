@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :team do
-    name { "MyString" }
-    description { "MyText" }
-    organization { nil }
-    leader { nil }
+    sequence(:name) { |n| "Team #{n}" }
+    sequence(:description) { |n| "Description for Team #{n}" }
+    organization
+    leader { create(:user, organization: organization) }
   end
 end

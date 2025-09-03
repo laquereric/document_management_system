@@ -409,6 +409,8 @@ GEM
       ffi (~> 1.12)
       logger
     securerandom (0.4.1)
+    shoulda-matchers (6.5.0)
+      activesupport (>= 5.2.0)
     smart_properties (1.17.0)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
@@ -518,6 +520,7 @@ DEPENDENCIES
   ransack
   rspec-rails
   rubocop-rails-omakase
+  shoulda-matchers
   solid_cable
   solid_cache
   solid_queue

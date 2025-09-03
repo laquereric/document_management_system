@@ -74,6 +74,7 @@ group :development, :test do
   # RSpec for testing
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "shoulda-matchers"
   
   # Cucumber for BDD testing
   gem "cucumber-rails", require: false

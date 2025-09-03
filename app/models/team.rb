@@ -31,4 +31,8 @@ class Team < ApplicationRecord
   def total_documents
     folders.joins(:documents).count
   end
+
+  def total_tags
+    tags.count
+  end
 end

@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :document do
-    title { "MyString" }
-    url { "MyString" }
-    content { "MyText" }
-    folder { nil }
-    author { nil }
-    status { nil }
-    scenario { nil }
+    sequence(:title) { |n| "Document #{n}" }
+    url { "https://example.com/document" }
+    sequence(:content) { |n| "Content for Document #{n}" }
+    folder
+    author { create(:user, organization: folder.team.organization) }
+    status
+    scenario
   end
 end
