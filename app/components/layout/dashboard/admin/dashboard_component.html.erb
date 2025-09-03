@@ -3,10 +3,22 @@
   <%= render(Layout::Dashboard::HeaderComponent.new(**header_data)) %>
 
   <!-- Statistics Cards -->
-  <%= render(Layout::Dashboard::StatisticsGridComponent.new(
-    title: "System Overview",
-    statistics: statistics_data
-  )) %>
+  <div class="mt-4">
+    <h2 class="f4 text-semibold mb-3">System Overview</h2>
+    <div class="d-flex flex-wrap" style="gap: 16px;">
+      <% statistics_data.each do |stat| %>
+        <div class="flex-1" style="min-width: 240px;">
+          <%= render(Layout::Dashboard::StatsCardComponent.new(
+            title: stat[:title],
+            value: stat[:value],
+            icon: stat[:icon],
+            color: stat[:color],
+            subtitle: stat[:subtitle]
+          )) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
   <!-- Content Sections -->
   <div class="mt-5">

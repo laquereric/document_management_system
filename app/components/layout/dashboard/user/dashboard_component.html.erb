@@ -1,9 +1,6 @@
 <div class="<%= dashboard_classes %>">
   <!-- Page Header -->
-  <%= render(Layout::Dashboard::DashboardHeaderComponent.new(
-    title: header_data[:title],
-    description: header_data[:description]
-  )) %>
+  <%= render(Layout::Dashboard::HeaderComponent.new(**header_data)) %>
 
   <!-- Statistics Cards -->
   <%= render(Layout::Dashboard::StatisticsGridComponent.new(
