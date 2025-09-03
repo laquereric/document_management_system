@@ -51,10 +51,6 @@ class Layout::Card::CardComponent < ApplicationComponent
     helpers.models_edit_folder_path(folder)
   end
 
-  def link_to(text, url, **options)
-    helpers.link_to(text, url, **options)
-  end
-
   def pluralize(count, singular, plural = nil)
     helpers.pluralize(count, singular, plural)
   end
