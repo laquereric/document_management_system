@@ -1,4 +1,4 @@
-class Models::Organization::CardComponent < Layout::CardComponent
+class Models::Organization::CardComponent < Layout::Card::CardComponent
 
   def initialize(organization:, show_actions: true, admin_context: false, **system_arguments)
     @organization = organization

@@ -5,7 +5,7 @@ class Models::TagsController < Models::ModelsController
   def index
     @q = Tag.ransack(params[:q])
     @tags = @q.result(distinct: true)
-               .includes(:documents)
+               .includes(:taggings, :organization, :team, :folder)
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
@@ -18,14 +18,14 @@ class Models::TagsController < Models::ModelsController
       # If viewing specific user's tags, check permissions
       user = User.find(params[:user_id])
       if current_user == user || current_user.admin?
-        @tags = @tags.joins(:documents).where(documents: { author: user }).distinct
+        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: 'Document' }, documents: { author: user }).distinct
       else
         # Regular users can only see tags on their own documents
-        @tags = @tags.joins(:documents).where(documents: { author: current_user }).distinct
+        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: 'Document' }, documents: { author: current_user }).distinct
       end
     else
       # Regular users see only tags on their own documents
-      @tags = @tags.joins(:documents).where(documents: { author: current_user }).distinct
+      @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: 'Document' }, documents: { author: current_user }).distinct
     end
   end
 

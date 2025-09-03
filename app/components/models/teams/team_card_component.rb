@@ -1,4 +1,4 @@
-class Models::Teams::TeamCardComponent < Layout::CardComponent
+class Models::Teams::TeamCardComponent < Layout::Card::CardComponent
 
   def initialize(team:, current_user: nil, admin_context: false, **system_arguments)
     @team = team
