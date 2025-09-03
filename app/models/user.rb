@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # Associations
-  belongs_to :organization, optional: true
+  belongs_to :organization
   has_many :team_memberships, dependent: :destroy
   has_many :teams, through: :team_memberships
   has_many :led_teams, class_name: "Team", foreign_key: "leader_id", dependent: :nullify

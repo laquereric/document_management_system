@@ -4,10 +4,19 @@ FactoryBot.define do
     password { "password123" }
     password_confirmation { "password123" }
     name { "Test User" }
-    role { "user" }
+    role { "member" }
+    association :organization
 
     trait :admin do
       role { "admin" }
+    end
+
+    trait :team_leader do
+      role { "team_leader" }
+    end
+
+    trait :member do
+      role { "member" }
     end
   end
 end
