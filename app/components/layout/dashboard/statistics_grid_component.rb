@@ -1,39 +1,26 @@
 class Layout::Dashboard::StatisticsGridComponent < ApplicationComponent
-  def initialize(title:, statistics:, **system_arguments)
-    @title = title
+  def initialize(statistics:, **system_arguments)
     @statistics = statistics
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
   private
 
-  attr_reader :title, :statistics, :system_arguments
-
-  def title_classes
-    "f4 text-semibold mb-3"
-  end
+  attr_reader :statistics, :system_arguments
 
   def grid_classes
-    "d-flex flex-wrap #{system_arguments[:class]}"
+    "d-flex flex-wrap gap-3 mb-5 #{system_arguments[:class]}"
   end
 
-  def card_container_classes
-    "flex-1"
+  def has_statistics?
+    statistics.any?
   end
 
-  def card_styles
-    "min-width: 240px;"
-  end
-
-  # Context methods for the template
   def template_context
     {
-      title_classes: title_classes,
+      statistics: statistics,
       grid_classes: grid_classes,
-      card_container_classes: card_container_classes,
-      card_styles: card_styles,
-      title: title,
-      statistics: statistics
+      has_statistics?: has_statistics?
     }
   end
 end

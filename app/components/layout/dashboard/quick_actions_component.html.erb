@@ -1,0 +1,26 @@
+<%= render(Primer::Beta::BorderBox.new) do %>
+  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+    <%= render(Primer::Beta::Heading.new(tag: :h3, size: 400)) do %>
+      Quick Actions
+    <% end %>
+  <% end %>
+  
+  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+    <% if has_actions? %>
+      <div class="d-flex flex-wrap" style="gap: 12px;">
+        <% actions.each do |action| %>
+          <%= render(Primer::Beta::Button.new(
+            href: send(action[:path]),
+            scheme: :secondary,
+            title: action[:description]
+          )) do %>
+            <%= render(Primer::Beta::Octicon.new(icon: action[:icon], size: :small)) %>
+            <span class="ml-2"><%= action[:text] %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="color-fg-muted">No quick actions available</p>
+    <% end %>
+  <% end %>
+<% end %>

@@ -13,101 +13,26 @@
     <div class="d-lg-flex" style="gap: 24px;">
       <!-- Users by Role -->
       <div class="flex-1 mb-4 mb-lg-0">
-        <%= render(Primer::Beta::BorderBox.new) do %>
-          <%= render(Primer::Beta::BorderBox::Header.new) do %>
-            <div class="d-flex flex-items-center flex-justify-between">
-              <%= render(Primer::Beta::Heading.new(tag: :h3, size: 400)) do %>
-                <%= users_by_role_data[:title] %>
-              <% end %>
-              <%= render(Primer::Beta::Button.new(
-                href: send(users_by_role_data[:manage_path]),
-                scheme: :secondary,
-                size: :small
-              )) do %>
-                <%= users_by_role_data[:manage_text] %>
-              <% end %>
-            </div>
-          <% end %>
-          
-          <%= render(Primer::Beta::BorderBox::Body.new) do %>
-            <% if users_by_role_data[:data].any? %>
-              <div class="d-flex flex-column" style="gap: 12px;">
-                <% users_by_role_data[:data].each do |role, count| %>
-                  <%= render(Primer::Beta::BorderBox::Row.new) do %>
-                    <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-                      <div class="d-flex flex-items-center">
-                        <div class="mr-3">
-                          <%= render(Primer::Beta::Octicon.new(icon: "person", size: :small, color: :muted)) %>
-                        </div>
-                        <%= render(Primer::Beta::Label.new(
-                          scheme: role == 'admin' ? :danger : :secondary,
-                          size: :large
-                        )) do %>
-                          <%= role.titleize %>
-                        <% end %>
-                      </div>
-                      <span class="f3 text-semibold"><%= count %></span>
-                    </div>
-                  <% end %>
-                <% end %>
-              </div>
-            <% else %>
-              <%= render(Ui::EmptyStateComponent.new(
-                title: users_by_role_data[:empty_state][:title],
-                description: users_by_role_data[:empty_state][:description],
-                icon: users_by_role_data[:empty_state][:icon]
-              )) %>
-            <% end %>
-          <% end %>
-        <% end %>
+        <%= render(Layout::Dashboard::DataGridComponent.new(
+          title: users_by_role_data[:title],
+          data: users_by_role_data[:data],
+          manage_path: users_by_role_data[:manage_path],
+          manage_text: users_by_role_data[:manage_text],
+          empty_state: users_by_role_data[:empty_state],
+          icon: "person"
+        )) %>
       </div>
 
       <!-- Documents by Status -->
       <div class="flex-1">
-        <%= render(Primer::Beta::BorderBox.new) do %>
-          <%= render(Primer::Beta::BorderBox::Header.new) do %>
-            <div class="d-flex flex-items-center flex-justify-between">
-              <%= render(Primer::Beta::Heading.new(tag: :h3, size: 400)) do %>
-                <%= documents_by_status_data[:title] %>
-              <% end %>
-              <%= render(Primer::Beta::Button.new(
-                href: send(documents_by_status_data[:manage_path]),
-                scheme: :secondary,
-                size: :small
-              )) do %>
-                <%= documents_by_status_data[:manage_text] %>
-              <% end %>
-            </div>
-          <% end %>
-          
-          <%= render(Primer::Beta::BorderBox::Body.new) do %>
-            <% if documents_by_status_data[:data].any? %>
-              <div class="d-flex flex-column" style="gap: 12px;">
-                <% documents_by_status_data[:data].each do |status, count| %>
-                  <%= render(Primer::Beta::BorderBox::Row.new) do %>
-                    <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-                      <div class="d-flex flex-items-center">
-                        <div class="mr-3">
-                          <%= render(Primer::Beta::Octicon.new(icon: "file", size: :small, color: :muted)) %>
-                        </div>
-                        <%= render(Primer::Beta::Label.new(scheme: :secondary, size: :large)) do %>
-                          <%= status %>
-                        <% end %>
-                      </div>
-                      <span class="f3 text-semibold"><%= count %></span>
-                    </div>
-                  <% end %>
-                <% end %>
-              </div>
-            <% else %>
-              <%= render(Ui::EmptyStateComponent.new(
-                title: documents_by_status_data[:empty_state][:title],
-                description: documents_by_status_data[:empty_state][:description],
-                icon: documents_by_status_data[:empty_state][:icon]
-              )) %>
-            <% end %>
-          <% end %>
-        <% end %>
+        <%= render(Layout::Dashboard::DataGridComponent.new(
+          title: documents_by_status_data[:title],
+          data: documents_by_status_data[:data],
+          manage_path: documents_by_status_data[:manage_path],
+          manage_text: documents_by_status_data[:manage_text],
+          empty_state: documents_by_status_data[:empty_state],
+          icon: "file"
+        )) %>
       </div>
     </div>
   </div>
@@ -121,27 +46,8 @@
 
   <!-- Quick Actions Section -->
   <div class="mt-5">
-    <%= render(Primer::Beta::BorderBox.new) do %>
-      <%= render(Primer::Beta::BorderBox::Header.new) do %>
-        <%= render(Primer::Beta::Heading.new(tag: :h3, size: 400)) do %>
-          Quick Actions
-        <% end %>
-      <% end %>
-      
-      <%= render(Primer::Beta::BorderBox::Body.new) do %>
-        <div class="d-flex flex-wrap" style="gap: 12px;">
-          <% quick_actions_data.each do |action| %>
-            <%= render(Primer::Beta::Button.new(
-              href: send(action[:path]),
-              scheme: :secondary,
-              title: action[:description]
-            )) do %>
-              <%= render(Primer::Beta::Octicon.new(icon: action[:icon], size: :small)) %>
-              <span class="ml-2"><%= action[:text] %></span>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
+    <%= render(Layout::Dashboard::QuickActionsComponent.new(
+      actions: quick_actions_data
+    )) %>
   </div>
 </div>

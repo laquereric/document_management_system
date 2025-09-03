@@ -1,0 +1,35 @@
+<div class="Box">
+  <div class="Box-header">
+    <h3 class="Box-title"><%= title %></h3>
+    <% if has_view_all_link? %>
+      <a href="<%= view_all_path %>" class="btn btn-sm"><%= view_all_text %></a>
+    <% end %>
+  </div>
+  <div class="Box-body">
+    <% if has_data? %>
+      <% data.limit(5).each do |item| %>
+        <div class="d-flex flex-items-center py-2 border-bottom">
+          <div class="flex-1">
+            <% if item.respond_to?(:title) %>
+              <div class="f5 text-semibold">
+                <a href="<%= polymorphic_path(item) %>"><%= item.title %></a>
+              </div>
+              <div class="f6 color-fg-muted">
+                <%= item.created_at.strftime("%B %d, %Y") %>
+              </div>
+            <% elsif item.respond_to?(:action) %>
+              <div class="f5 text-semibold"><%= item.action %></div>
+              <div class="f6 color-fg-muted">
+                <%= item.created_at.strftime("%B %d, %Y") %>
+              </div>
+            <% else %>
+              <div class="f5 text-semibold"><%= item.to_s %></div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="color-fg-muted"><%= empty_message %></p>
+    <% end %>
+  </div>
+</div>

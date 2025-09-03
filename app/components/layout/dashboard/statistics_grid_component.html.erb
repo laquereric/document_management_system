@@ -1,15 +1,10 @@
-<div class="mt-4">
-  <h2 class="<%= title_classes %>"><%= title %></h2>
-  <div class="<%= grid_classes %>" style="gap: 16px;">
+<% if has_statistics? %>
+  <div class="<%= grid_classes %>">
     <% statistics.each do |stat| %>
-      <div class="<%= card_container_classes %>" style="<%= card_styles %>">
-        <%= render(Layout::Dashboard::StatsCardComponent.new(
-          title: stat[:title],
-          value: stat[:value],
-          icon: stat[:icon],
-          color: stat[:color]
-        )) %>
-      </div>
+      <%= render(Layout::Dashboard::StatisticCardComponent.new(
+        title: stat[:title],
+        value: stat[:value]
+      )) %>
     <% end %>
   </div>
-</div>
+<% end %>
