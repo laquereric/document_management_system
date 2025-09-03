@@ -81,26 +81,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <%= form.label :password, class: "form-label" %>
-                  <%= form.password_field :password, class: "form-control #{'is-invalid' if @user.errors[:password].any?}", placeholder: "Enter password" %>
-                  <% if @user.errors[:password].any? %>
-                    <div class="invalid-feedback"><%= @user.errors[:password].first %></div>
-                  <% end %>
-                  <div class="form-text">Minimum 6 characters</div>
-                </div>
-              </div>
 
-              <div class="col-12 col-md-6">
-                <div class="form-group">
-                  <%= form.label :password_confirmation, "Confirm Password", class: "form-label" %>
-                  <%= form.password_field :password_confirmation, class: "form-control #{'is-invalid' if @user.errors[:password_confirmation].any?}", placeholder: "Confirm password" %>
-                  <% if @user.errors[:password_confirmation].any? %>
-                    <div class="invalid-feedback"><%= @user.errors[:password_confirmation].first %></div>
-                  <% end %>
-                </div>
-              </div>
             </div>
 
             <div class="d-flex flex-items-center gap-3 mt-4">
@@ -142,12 +123,7 @@
         </div>
         <div class="Box-body">
           <ul class="list-style-none">
-            <li class="mb-2">
-              <svg class="octicon octicon-info mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25V7.75A1.75 1.75 0 0 0 8.25 6h-1A1.75 1.75 0 0 0 5.5 7.75v1a.75.75 0 0 1-1.5 0v-1ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
-              </svg>
-              Users can change their password after first login
-            </li>
+
             <li class="mb-2">
               <svg class="octicon octicon-info mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
                 <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25V7.75A1.75 1.75 0 0 0 8.25 6h-1A1.75 1.75 0 0 0 5.5 7.75v1a.75.75 0 0 1-1.5 0v-1ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>

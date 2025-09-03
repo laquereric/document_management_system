@@ -21,7 +21,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 
 # Authentication
-gem "devise"
+# gem "devise" # Removed - using custom authentication
 
 # Authorization
 gem "cancancan"

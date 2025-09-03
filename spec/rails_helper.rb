@@ -11,8 +11,8 @@ RSpec.configure do |config|
   # Include FactoryBot methods
   config.include FactoryBot::Syntax::Methods
   
-  # Include Devise test helpers
-  config.include Devise::Test::IntegrationHelpers, type: :request
+  # Include authentication test helpers (Devise removed)
+  # config.include Devise::Test::IntegrationHelpers, type: :request
   
   # Remove fixture paths since we're using FactoryBot
   # config.fixture_paths = [
