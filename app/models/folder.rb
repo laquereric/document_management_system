@@ -4,7 +4,7 @@ class Folder < ApplicationRecord
   belongs_to :team
   has_many :subfolders, class_name: 'Folder', foreign_key: 'parent_folder_id', dependent: :destroy
   has_many :documents, dependent: :destroy
-  has_many :tags, dependent: :destroy
+  include Taggable
 
   # Validations
   validates :name, presence: true
@@ -20,7 +20,7 @@ class Folder < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[team parent_folder subfolders documents tags]
+    %w[team parent_folder subfolders documents tags taggings]
   end
 
   def root?

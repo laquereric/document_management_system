@@ -3,8 +3,8 @@ class Tag < ApplicationRecord
   belongs_to :organization, optional: true
   belongs_to :team, optional: true
   belongs_to :folder, optional: true
-  has_many :document_tags, dependent: :destroy
-  has_many :documents, through: :document_tags
+  has_many :taggings, dependent: :destroy
+  has_many :taggables, through: :taggings, source: :taggable, source_type: 'Document'
 
   # Validations
   validates :name, presence: true, uniqueness: { scope: [:organization_id, :team_id, :folder_id] }
@@ -23,7 +23,42 @@ class Tag < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["document_tags", "documents", "organization", "team", "folder"]
+    ["taggings", "taggables", "organization", "team", "folder"]
+  end
+
+  # Get all taggable objects of a specific type
+  def taggables_of_type(type)
+    taggings.where(taggable_type: type).map(&:taggable)
+  end
+
+  # Get all documents with this tag
+  def documents
+    taggables_of_type('Document')
+  end
+
+  # Get all folders with this tag
+  def folders
+    taggables_of_type('Folder')
+  end
+
+  # Get all organizations with this tag
+  def organizations
+    taggables_of_type('Organization')
+  end
+
+  # Get all scenarios with this tag
+  def scenarios
+    taggables_of_type('Scenario')
+  end
+
+  # Get all teams with this tag
+  def teams
+    taggables_of_type('Team')
+  end
+
+  # Get all users with this tag
+  def users
+    taggables_of_type('User')
   end
 
   def document_count

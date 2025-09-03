@@ -7,8 +7,8 @@ RSpec.describe Tag, type: :model do
     it { should belong_to(:organization).optional }
     it { should belong_to(:team).optional }
     it { should belong_to(:folder).optional }
-    it { should have_many(:document_tags).dependent(:destroy) }
-    it { should have_many(:documents).through(:document_tags) }
+    it { should have_many(:taggings).dependent(:destroy) }
+    it { should have_many(:taggables).through(:taggings) }
   end
 
   describe 'validations' do
@@ -61,8 +61,8 @@ RSpec.describe Tag, type: :model do
     let!(:document2) { create(:document) }
 
     before do
-      tag.documents << document1
-      tag.documents << document2
+      document1.add_tag(tag)
+      document2.add_tag(tag)
     end
 
     describe '#document_count' do
@@ -134,7 +134,7 @@ RSpec.describe Tag, type: :model do
 
   describe 'ransackable associations' do
     it 'includes the correct associations' do
-      expect(Tag.ransackable_associations).to match_array(%w[organization team folder documents document_tags])
+      expect(Tag.ransackable_associations).to match_array(%w[organization team folder taggings taggables])
     end
   end
 end

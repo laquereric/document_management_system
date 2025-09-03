@@ -1,6 +1,7 @@
 class Scenario < ApplicationRecord
   # Associations
   has_many :documents, dependent: :nullify
+  include Taggable
 
   # Validations
   validates :name, presence: true, uniqueness: true
@@ -16,7 +17,7 @@ class Scenario < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["documents"]
+    ["documents", "tags", "taggings"]
   end
 
   def document_count
@@ -29,5 +30,9 @@ class Scenario < ApplicationRecord
 
   def summary
     description
+  end
+
+  def total_tags
+    tags.count
   end
 end

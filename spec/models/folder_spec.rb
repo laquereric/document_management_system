@@ -8,7 +8,8 @@ RSpec.describe Folder, type: :model do
     it { should belong_to(:team) }
     it { should have_many(:subfolders).class_name('Folder').with_foreign_key('parent_folder_id').dependent(:destroy) }
     it { should have_many(:documents).dependent(:destroy) }
-    it { should have_many(:tags).dependent(:destroy) }
+    it { should have_many(:taggings).dependent(:destroy) }
+    it { should have_many(:tags).through(:taggings) }
   end
 
   describe 'validations' do
@@ -47,8 +48,8 @@ RSpec.describe Folder, type: :model do
     let!(:document1) { create(:document, folder: root_folder) }
     let!(:document2) { create(:document, folder: subfolder) }
     let!(:document3) { create(:document, folder: nested_folder) }
-    let!(:tag1) { create(:tag, folder: root_folder) }
-    let!(:tag2) { create(:tag, folder: subfolder) }
+    let!(:tag1) { create(:tag) }
+    let!(:tag2) { create(:tag) }
 
     describe '#root?' do
       it 'returns true for folders without parent' do
@@ -82,6 +83,8 @@ RSpec.describe Folder, type: :model do
 
     describe '#total_tags' do
       it 'returns the count of tags in this folder' do
+        root_folder.add_tag(tag1)
+        subfolder.add_tag(tag2)
         expect(root_folder.total_tags).to eq(1)
         expect(subfolder.total_tags).to eq(1)
         expect(nested_folder.total_tags).to eq(0)
@@ -91,6 +94,122 @@ RSpec.describe Folder, type: :model do
     describe '#organization' do
       it 'returns the organization through the team' do
         expect(root_folder.organization).to eq(team.organization)
+      end
+    end
+
+    describe 'tagging functionality' do
+      let(:tag1) { create(:tag, name: 'Project') }
+      let(:tag2) { create(:tag, name: 'Development') }
+      let(:tag3) { create(:tag, name: 'Documentation') }
+
+      describe '#add_tag' do
+        it 'adds a tag to the folder' do
+          root_folder.add_tag(tag1)
+          expect(root_folder.tags).to include(tag1)
+        end
+
+        it 'does not add duplicate tags' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag1)
+          expect(root_folder.tags.count).to eq(1)
+        end
+      end
+
+      describe '#remove_tag' do
+        it 'removes a tag from the folder' do
+          root_folder.add_tag(tag1)
+          root_folder.remove_tag(tag1)
+          expect(root_folder.tags).not_to include(tag1)
+        end
+      end
+
+      describe '#has_tag?' do
+        it 'returns true when folder has the tag' do
+          root_folder.add_tag(tag1)
+          expect(root_folder.has_tag?(tag1)).to be true
+        end
+
+        it 'returns false when folder does not have the tag' do
+          expect(root_folder.has_tag?(tag1)).to be false
+        end
+      end
+
+      describe '#tag_names' do
+        it 'returns comma-separated tag names' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag2)
+          expect(root_folder.tag_names).to eq('Project, Development')
+        end
+
+        it 'returns empty string when no tags' do
+          expect(root_folder.tag_names).to eq('')
+        end
+      end
+
+      describe '#tag_name_array' do
+        it 'returns array of tag names' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag2)
+          expect(root_folder.tag_name_array).to eq(['Project', 'Development'])
+        end
+
+        it 'returns empty array when no tags' do
+          expect(root_folder.tag_name_array).to eq([])
+        end
+      end
+
+      describe '#tags_by_name' do
+        it 'returns tags matching the given names' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag2)
+          root_folder.add_tag(tag3)
+          
+          result = root_folder.tags_by_name('Project', 'Development')
+          expect(result).to include(tag1, tag2)
+          expect(result).not_to include(tag3)
+        end
+      end
+
+      describe '#tags_by_color' do
+        it 'returns tags matching the given color' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag2)
+          
+          result = root_folder.tags_by_color(tag1.color)
+          expect(result).to include(tag1)
+          expect(result).not_to include(tag2)
+        end
+      end
+
+      describe '#tag_count' do
+        it 'returns the count of tags' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag2)
+          expect(root_folder.tag_count).to eq(2)
+        end
+
+        it 'returns 0 when no tags' do
+          expect(root_folder.tag_count).to eq(0)
+        end
+      end
+
+      describe '#tagged?' do
+        it 'returns true when folder has tags' do
+          root_folder.add_tag(tag1)
+          expect(root_folder.tagged?).to be true
+        end
+
+        it 'returns false when folder has no tags' do
+          expect(root_folder.tagged?).to be false
+        end
+      end
+
+      describe '#total_tags' do
+        it 'returns the count of tags' do
+          root_folder.add_tag(tag1)
+          root_folder.add_tag(tag2)
+          expect(root_folder.total_tags).to eq(2)
+        end
       end
     end
   end
@@ -103,7 +222,7 @@ RSpec.describe Folder, type: :model do
 
   describe 'ransackable associations' do
     it 'includes the correct associations' do
-      expect(Folder.ransackable_associations).to match_array(%w[team parent_folder subfolders documents tags])
+      expect(Folder.ransackable_associations).to match_array(%w[team parent_folder subfolders documents tags taggings])
     end
   end
 end

@@ -6,8 +6,8 @@ RSpec.describe Document, type: :model do
     it { should belong_to(:author).class_name('User') }
     it { should belong_to(:status) }
     it { should belong_to(:scenario) }
-    it { should have_many(:document_tags).dependent(:destroy) }
-    it { should have_many(:tags).through(:document_tags) }
+    it { should have_many(:taggings).dependent(:destroy) }
+    it { should have_many(:tags).through(:taggings) }
     it { should have_many(:activities).dependent(:destroy) }
     it { should have_one_attached(:file) }
   end
@@ -61,13 +61,10 @@ RSpec.describe Document, type: :model do
     let!(:tag1) { create(:tag, name: 'Important') }
     let!(:tag2) { create(:tag, name: 'Draft') }
 
-    before do
-      document.tags << tag1
-      document.tags << tag2
-    end
-
     describe '#tag_names' do
       it 'returns comma-separated tag names' do
+        document.add_tag(tag1)
+        document.add_tag(tag2)
         expect(document.tag_names).to eq('Important, Draft')
       end
     end
@@ -140,6 +137,122 @@ RSpec.describe Document, type: :model do
         expect(document.file_icon).to eq('file')
       end
     end
+
+    describe 'tagging functionality' do
+      let(:tag1) { create(:tag, name: 'Important') }
+      let(:tag2) { create(:tag, name: 'Draft') }
+      let(:tag3) { create(:tag, name: 'Review') }
+
+      describe '#add_tag' do
+        it 'adds a tag to the document' do
+          document.add_tag(tag1)
+          expect(document.tags).to include(tag1)
+        end
+
+        it 'does not add duplicate tags' do
+          document.add_tag(tag1)
+          document.add_tag(tag1)
+          expect(document.tags.count).to eq(1)
+        end
+      end
+
+      describe '#remove_tag' do
+        it 'removes a tag from the document' do
+          document.add_tag(tag1)
+          document.remove_tag(tag1)
+          expect(document.tags).not_to include(tag1)
+        end
+      end
+
+      describe '#has_tag?' do
+        it 'returns true when document has the tag' do
+          document.add_tag(tag1)
+          expect(document.has_tag?(tag1)).to be true
+        end
+
+        it 'returns false when document does not have the tag' do
+          expect(document.has_tag?(tag1)).to be false
+        end
+      end
+
+      describe '#tag_names' do
+        it 'returns comma-separated tag names' do
+          document.add_tag(tag1)
+          document.add_tag(tag2)
+          expect(document.tag_names).to eq('Important, Draft')
+        end
+
+        it 'returns empty string when no tags' do
+          expect(document.tag_names).to eq('')
+        end
+      end
+
+      describe '#tag_name_array' do
+        it 'returns array of tag names' do
+          document.add_tag(tag1)
+          document.add_tag(tag2)
+          expect(document.tag_name_array).to eq(['Important', 'Draft'])
+        end
+
+        it 'returns empty array when no tags' do
+          expect(document.tag_name_array).to eq([])
+        end
+      end
+
+      describe '#tags_by_name' do
+        it 'returns tags matching the given names' do
+          document.add_tag(tag1)
+          document.add_tag(tag2)
+          document.add_tag(tag3)
+          
+          result = document.tags_by_name('Important', 'Draft')
+          expect(result).to include(tag1, tag2)
+          expect(result).not_to include(tag3)
+        end
+      end
+
+      describe '#tags_by_color' do
+        it 'returns tags matching the given color' do
+          document.add_tag(tag1)
+          document.add_tag(tag2)
+          
+          result = document.tags_by_color(tag1.color)
+          expect(result).to include(tag1)
+          expect(result).not_to include(tag2)
+        end
+      end
+
+      describe '#tag_count' do
+        it 'returns the count of tags' do
+          document.add_tag(tag1)
+          document.add_tag(tag2)
+          expect(document.tag_count).to eq(2)
+        end
+
+        it 'returns 0 when no tags' do
+          expect(document.tag_count).to eq(0)
+        end
+      end
+
+      describe '#tagged?' do
+        it 'returns true when document has tags' do
+          document.add_tag(tag1)
+          expect(document.tagged?).to be true
+        end
+
+        it 'returns false when document has no tags' do
+          expect(document.tagged?).to be false
+        end
+      end
+
+      describe '#total_tags' do
+        it 'returns the count of tags' do
+          document.add_tag(tag1)
+          document.add_tag(tag2)
+          expect(document.total_tags).to eq(2)
+        end
+      end
+    end
   end
 
   describe 'callbacks' do
@@ -176,7 +289,7 @@ RSpec.describe Document, type: :model do
 
   describe 'ransackable associations' do
     it 'includes the correct associations' do
-      expect(Document.ransackable_associations).to match_array(%w[author folder status scenario tags document_tags activities])
+      expect(Document.ransackable_associations).to match_array(%w[author folder status scenario tags taggings activities])
     end
   end
 end

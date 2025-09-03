@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :led_teams, class_name: 'Team', foreign_key: 'leader_id', dependent: :nullify
   has_many :authored_documents, class_name: 'Document', foreign_key: 'author_id', dependent: :destroy
   has_many :activities, dependent: :destroy
+  include Taggable
 
   # Validations
   validates :name, presence: true
@@ -27,7 +28,7 @@ class User < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[organization teams authored_documents activities team_memberships led_teams]
+    %w[organization teams authored_documents activities team_memberships led_teams tags taggings]
   end
 
   def full_name
@@ -44,5 +45,9 @@ class User < ApplicationRecord
 
   def member?
     role == 'member'
+  end
+
+  def total_tags
+    tags.count
   end
 end

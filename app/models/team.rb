@@ -5,7 +5,7 @@ class Team < ApplicationRecord
   has_many :team_memberships, dependent: :destroy
   has_many :users, through: :team_memberships
   has_many :folders, dependent: :destroy
-  has_many :tags, dependent: :destroy
+  include Taggable
 
   # Validations
   validates :name, presence: true
@@ -17,7 +17,7 @@ class Team < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[organization leader users folders team_memberships tags]
+    %w[organization leader users folders team_memberships tags taggings]
   end
 
   def total_members

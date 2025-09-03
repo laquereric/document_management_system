@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_02_190205) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_03_003623) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -52,15 +52,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_190205) do
     t.index ["new_status_id"], name: "index_activities_on_new_status_id"
     t.index ["old_status_id"], name: "index_activities_on_old_status_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
-  end
-
-  create_table "document_tags", force: :cascade do |t|
-    t.bigint "document_id", null: false
-    t.bigint "tag_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["document_id"], name: "index_document_tags_on_document_id"
-    t.index ["tag_id"], name: "index_document_tags_on_tag_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -110,6 +101,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_190205) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "taggable_type", null: false
+    t.bigint "taggable_id", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -168,14 +169,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_190205) do
   add_foreign_key "activities", "statuses", column: "new_status_id"
   add_foreign_key "activities", "statuses", column: "old_status_id"
   add_foreign_key "activities", "users"
-  add_foreign_key "document_tags", "documents"
-  add_foreign_key "document_tags", "tags"
   add_foreign_key "documents", "folders"
   add_foreign_key "documents", "scenarios"
   add_foreign_key "documents", "statuses"
   add_foreign_key "documents", "users", column: "author_id"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
   add_foreign_key "folders", "teams"
+  add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "folders"
   add_foreign_key "tags", "organizations"
   add_foreign_key "tags", "teams"

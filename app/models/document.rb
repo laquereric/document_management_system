@@ -4,8 +4,7 @@ class Document < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :status
   belongs_to :scenario
-  has_many :document_tags, dependent: :destroy
-  has_many :tags, through: :document_tags
+  include Taggable
   has_many :activities, dependent: :destroy
   has_one_attached :file
 
@@ -29,11 +28,11 @@ class Document < ApplicationRecord
 
   # Ransack configuration - define searchable associations
   def self.ransackable_associations(auth_object = nil)
-    %w[author folder status scenario tags document_tags activities]
+    %w[author folder status scenario tags taggings activities]
   end
 
-  def tag_names
-    tags.pluck(:name).join(', ')
+  def total_tags
+    tags.count
   end
 
   def team
