@@ -36,15 +36,15 @@ class Layout::CardComponent < ApplicationComponent
   end
 
   def can_edit_user?
-    return false unless current_user
+    return false unless helpers.current_user
 
-    current_user.admin? || current_user == user
+    helpers.current_user.admin? || helpers.current_user == user
   end
 
   def can_manage_user?
-    return false unless current_user
+    return false unless helpers.current_user
 
-    current_user.admin?
+    helpers.current_user.admin?
   end
 
   def show_profile_actions?

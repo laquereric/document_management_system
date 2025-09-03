@@ -1,5 +1,4 @@
 class Models::Folder::FolderFormComponent < ApplicationComponent
-  include ViewComponent::Form::Helpers
 
   def initialize(folder:, submit_text: "Save Folder", cancel_url: nil, **system_arguments)
     @folder = folder
@@ -17,18 +16,18 @@ class Models::Folder::FolderFormComponent < ApplicationComponent
   end
 
   def teams
-    if current_user.admin?
+    if helpers.current_user.admin?
       Team.all
     else
-      current_user.teams
+      helpers.current_user.teams
     end
   end
 
   def parent_folders
-    if current_user.admin?
+    if helpers.current_user.admin?
       Folder.all
     else
-      team_ids = current_user.teams.pluck(:id)
+      team_ids = helpers.current_user.teams.pluck(:id)
       Folder.where(team_id: team_ids)
     end
   end
@@ -56,7 +55,7 @@ class Models::Folder::FolderFormComponent < ApplicationComponent
       submit_text: submit_text,
       cancel_url: cancel_url,
       folder: folder,
-      current_user: current_user,
+      current_user: helpers.current_user,
       folder_path: method(:folder_path),
       folders_path: models_folders_path,
       Team: Team,

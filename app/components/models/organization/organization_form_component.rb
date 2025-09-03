@@ -1,5 +1,4 @@
 class Models::Organization::OrganizationFormComponent < ApplicationComponent
-  include ViewComponent::Form::Helpers
 
   def initialize(organization:, submit_text: "Save Organization", cancel_url: nil, **system_arguments)
     @organization = organization

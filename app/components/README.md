@@ -526,6 +526,8 @@ The components have been reconciled to match the actual file structure and usage
 - **User Components**: Fixed `Layout::UserCardComponent` → `Models::Users::CardComponent`
 - **Form Components**: Fixed `Forms::FolderFormComponent` → `Models::Folder::FolderFormComponent`
 - **Page Components**: Fixed `Layout::PageContent` → `Layout::Page::PageContent` and `Layout::PageHeader` → `Layout::Page::PageHeader`
+- **Helper Access**: Fixed components to use `helpers.current_user` instead of `current_user` directly
+- **Form Components**: Removed problematic `ViewComponent::Form::Helpers` includes
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu

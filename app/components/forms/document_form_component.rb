@@ -1,7 +1,6 @@
 # Document form component for creating and editing documents
 
 class Forms::DocumentFormComponent < ApplicationComponent
-  include ViewComponent::Form::Helpers
 
   def initialize(document:, submit_text: "Save Document", cancel_url: nil, **system_arguments)
     @document = document

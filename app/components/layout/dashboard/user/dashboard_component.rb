@@ -1,14 +1,15 @@
 class Layout::Dashboard::User::DashboardComponent < ApplicationComponent
-  def initialize(stats:, recent_documents:, recent_activity:, **system_arguments)
+  def initialize(stats:, recent_documents:, recent_activity:, current_user:, **system_arguments)
     @stats = stats
     @recent_documents = recent_documents
     @recent_activity = recent_activity
+    @current_user = current_user
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
   private
 
-  attr_reader :stats, :recent_documents, :recent_activity, :system_arguments
+  attr_reader :stats, :recent_documents, :recent_activity, :current_user, :system_arguments
 
   def dashboard_classes
     "container-lg px-3 #{system_arguments[:class]}"

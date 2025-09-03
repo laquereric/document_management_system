@@ -1,5 +1,4 @@
 class Models::Tags::TagFormComponent < ApplicationComponent
-  include ViewComponent::Form::Helpers
 
   def initialize(tag:, submit_text: "Save Tag", cancel_url: nil, **system_arguments)
     @tag = tag

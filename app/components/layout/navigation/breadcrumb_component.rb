@@ -42,7 +42,7 @@ class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
     when "tags"
       crumbs << { label: "Tags", path: models_tags_path }
     when "activities"
-      crumbs << { label: "Activity", path: user_activities_path(current_user) }
+      crumbs << { label: "Activity", path: user_activities_path(helpers.current_user) }
     end
     
     crumbs
@@ -56,7 +56,7 @@ class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
       controller_name: @controller_name,
       action_name: action_name,
       params: params,
-      current_user: current_user,
+      current_user: helpers.current_user,
       RootPath: RootPath,
       dashboard_index_path: dashboard_index_path,
       documents_path: models_documents_path,

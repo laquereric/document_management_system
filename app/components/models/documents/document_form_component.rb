@@ -1,5 +1,4 @@
 class Models::Documents::DocumentFormComponent < ApplicationComponent
-  include ViewComponent::Form::Helpers
 
   def initialize(document:, submit_text: "Save Document", cancel_url: nil, **system_arguments)
     @document = document
