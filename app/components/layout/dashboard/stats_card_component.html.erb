@@ -1,9 +1,11 @@
-<%= render(Primer::Beta::BorderBox.new(padding: :condensed)) do %>
+<div class="Box p-3">
   <div class="d-flex flex-items-center">
     <div class="mr-3">
-      <%= render(Primer::Beta::CircleBadge.new(variant: color)) do %>
-        <%= render(Primer::Beta::Octicon.new(icon: icon, size: :small)) %>
-      <% end %>
+      <div class="CircleBadge CircleBadge--<%= color %>">
+        <svg class="octicon octicon-<%= icon %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <%= render_icon_path(icon) %>
+        </svg>
+      </div>
     </div>
     <div class="flex-1">
       <div class="f3 text-semibold mb-1"><%= value %></div>
@@ -13,10 +15,12 @@
       <% end %>
       <% if has_trend? %>
         <div class="d-flex flex-items-center gap-1 mt-2">
-          <%= render(Primer::Beta::Octicon.new(icon: trend_icon, size: :small, color: trend_color)) %>
+          <svg class="octicon octicon-<%= trend_icon %> color-fg-<%= trend_color %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+            <%= render_icon_path(trend_icon) %>
+          </svg>
           <span class="f6 color-fg-<%= trend_color %>"><%= trend %></span>
         </div>
       <% end %>
     </div>
   </div>
-<% end %>
+</div>

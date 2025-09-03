@@ -535,7 +535,7 @@ The components have been reconciled to match the actual file structure and usage
 - **File Naming**: Fixed component file names to match Rails autoloading conventions (e.g., `statistics_grid.rb` → `statistics_grid_component.rb`)
 - **Route Helpers**: Fixed incorrect route helper methods in views (e.g., `new_folder_path` → `models_new_folder_path`, `folders_path` → `models_folders_path`)
 - **View Cleanup**: Removed redundant hardcoded statistics cards from folders index view, now properly using `StatisticsGridComponent`
-- **Primer Components**: Created missing Primer::Beta components (`CircleBadge`, `Octicon`, `BorderBox`) to replace non-existent external dependencies
+- **Primer Components**: Simplified StatsCardComponent to use direct HTML/CSS instead of external Primer components, avoiding autoloading issues
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu
