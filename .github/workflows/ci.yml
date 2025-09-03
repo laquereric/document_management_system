@@ -121,6 +121,9 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Install bundle-audit gem
+        run: gem install bundle-audit
+
       - name: Audit Ruby dependencies
-        run: bundle audit check --update
+        run: bundle-audit check --update
 
