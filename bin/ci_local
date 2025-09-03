@@ -59,7 +59,7 @@ fi
 
 # Step 3: Dependency Security Audit
 print_status "Step 3: Checking dependencies for security vulnerabilities..."
-if bundle exec bundle-audit check --update; then
+if bundle audit check --update; then
     print_success "Bundle audit passed - no vulnerable dependencies found"
 else
     print_error "Bundle audit failed - please update vulnerable dependencies before continuing"
