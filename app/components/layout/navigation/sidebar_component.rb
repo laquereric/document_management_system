@@ -70,12 +70,6 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
         active: @controller_name.starts_with?("admin")
       },
       {
-        label: "Organizations",
-        icon: "organization",
-        path: models_organizations_path,
-        active: @controller_name == "organizations"
-      },
-      {
         label: "Users",
         icon: "people",
         path: models_users_path,
@@ -88,16 +82,22 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
         active: @controller_name == "teams"
       },
       {
-        label: "Scenarios",
-        icon: "list-unordered",
-        path: models_scenarios_path,
-        active: @controller_name == "scenarios"
+        label: "Organizations",
+        icon: "organization",
+        path: models_organizations_path,
+        active: @controller_name == "organizations"
       },
       {
         label: "Tags",
         icon: "tag",
         path: models_tags_path,
         active: @controller_name == "tags"
+      },      
+      {
+        label: "Scenarios",
+        icon: "list-unordered",
+        path: models_scenarios_path,
+        active: @controller_name == "scenarios"
       }
     ]
   end
