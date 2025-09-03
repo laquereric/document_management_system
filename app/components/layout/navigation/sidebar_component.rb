@@ -52,24 +52,6 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
         active: @controller_name == "activities"
       },
       {
-        label: "Teams",
-        icon: "people",
-        path: models_teams_path,
-        active: @controller_name == "teams"
-      },
-      {
-        label: "Tags",
-        icon: "tag",
-        path: models_tags_path,
-        active: @controller_name == "tags"
-      },
-      {
-        label: "Organizations",
-        icon: "organization",
-        path: models_organizations_path,
-        active: @controller_name == "organizations"
-      },
-      {
         label: "Profile",
         icon: "person",
         path: models_user_path(current_user),
@@ -167,10 +149,8 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       user_activities_path: method(:models_activities_path),
       user_teams_path: method(:models_teams_path),
       user_tags_path: method(:models_tags_path),
-      user_organizations_path: method(:models_organizations_path),
       user_path: method(:user_path),
-      admin_root_path: dashboard_admin_path,
-      organizations_path: models_organizations_path
+      admin_root_path: dashboard_admin_path
     }
   end
 end

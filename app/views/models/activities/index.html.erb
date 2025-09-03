@@ -1,0 +1,65 @@
+<% content_for :title, "Manage Activities" %>
+
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
+  <!-- Page Header -->
+  <%= render(Layout::Page::PageHeader.new(
+    title: "Manage Activities",
+    description: "View and monitor system activity across documents, users, and status changes",
+    icon: "activity",
+    action: nil
+  )) %>
+
+  <!-- Search and Filters -->
+  <%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
+    search_object: @q,
+    url: models_activities_path,
+    title: "Search & Filters",
+    fields: [
+      {
+        name: :action_eq,
+        label: "Action Type",
+        type: :select,
+        options: [
+          ['All Actions', ''],
+          ['Created', 'created'],
+          ['Updated', 'updated'],
+          ['Deleted', 'deleted'],
+          ['Status Change', 'status_change'],
+          ['Tagged', 'tagged'],
+          ['Untagged', 'untagged']
+        ]
+      },
+      {
+        name: :user_name_cont,
+        label: "User Name",
+        placeholder: "Search by user name..."
+      },
+      {
+        name: :document_title_cont,
+        label: "Document Title",
+        placeholder: "Search by document title..."
+      }
+    ]
+  )) %>
+
+  <!-- Activities List -->
+  <%= render(Layout::CardList.new(
+    cards: @activities,
+    layout: :list,
+    title: "Activities",
+    empty_state_title: "No activities found",
+    empty_state_description: params[:q].present? ? "No activities match your search criteria. Try adjusting your filters." : "No activities have been recorded yet.",
+    empty_state_action: nil
+  )) do %>
+    <% @activities.each do |activity| %>
+      <%= render(Models::Activities::ActivityItemComponent.new(activity: activity)) %>
+    <% end %>
+  <% end %>
+
+  <!-- Pagination -->
+  <% if @activities.respond_to?(:current_page) && @activities.total_pages > 1 %>
+    <div class="mt-4">
+      <%= render(Layout::CardList::Pagination::PaginationComponent.new(collection: @activities)) %>
+    </div>
+  <% end %>
+<% end %>
