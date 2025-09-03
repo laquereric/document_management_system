@@ -1,0 +1,17 @@
+<%= render(Primer::BaseComponent.new(**@system_arguments)) do %>
+  <div class="container-lg px-3 py-2">
+    <div class="d-flex flex-items-center flex-justify-between">
+      <div class="d-flex flex-items-center">
+        <% if render_icon? %>
+          <%= render(Primer::Beta::Octicon.new(icon: icon, mr: 2)) %>
+        <% end %>
+        <span class="f5"><%= content %></span>
+      </div>
+      <% if dismissible? %>
+        <button type="button" class="btn-octicon btn-octicon-danger" onclick="this.closest('.flash').remove()" aria-label="Dismiss">
+          <%= render(Primer::Beta::Octicon.new(icon: :x)) %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+<% end %>

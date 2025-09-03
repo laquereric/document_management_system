@@ -1,0 +1,11 @@
+<% if flash_messages.any? %>
+  <% flash_messages.each do |flash_item| %>
+    <%= render(Primer::FlashComponent.new(
+      scheme: flash_item[:type],
+      dismissible: true,
+      role: "alert"
+    )) do %>
+      <%= flash_item[:message] %>
+    <% end %>
+  <% end %>
+<% end %>

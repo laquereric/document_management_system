@@ -1,0 +1,6 @@
+<%= render(Primer::BaseComponent.new(**@system_arguments)) do %>
+  <%= render_label %>
+  <%= render_input_wrapper %>
+  <%= render_caption %>
+  <%= render_validation_message %>
+<% end %>
