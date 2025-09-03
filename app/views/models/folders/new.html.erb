@@ -19,7 +19,7 @@
       <h3 class="Box-title">Folder Details</h3>
     </div>
     <div class="Box-body">
-      <%= render(Forms::FolderFormComponent.new(
+      <%= render(Models::Folder::FolderFormComponent.new(
         folder: @folder,
         submit_text: "Create Folder",
         cancel_url: folders_path

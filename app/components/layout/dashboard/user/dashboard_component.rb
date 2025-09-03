@@ -1,4 +1,4 @@
-class User::Dashboard::DashboardComponent < ApplicationComponent
+class Layout::Dashboard::User::DashboardComponent < ApplicationComponent
   def initialize(stats:, recent_documents:, recent_activity:, **system_arguments)
     @stats = stats
     @recent_documents = recent_documents

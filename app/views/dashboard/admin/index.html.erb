@@ -1,6 +1,6 @@
 <% content_for :title, "Admin Dashboard" %>
 
-<%= render(Layout::Dashboard::Admin::DashboardComponent.new(
+<%= render(Dashboard::Admin::DashboardComponent.new(
   total_users: @stats[:total_users],
   total_organizations: @stats[:total_organizations],
   total_documents: @stats[:total_documents],

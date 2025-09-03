@@ -32,4 +32,18 @@ class Layout::CardList::Statistics::StatisticsGridComponent < ApplicationCompone
   def card_styles
     "min-width: #{min_width};"
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      title: title,
+      statistics: statistics,
+      gap: gap,
+      min_width: min_width,
+      container_classes: container_classes,
+      container_styles: container_styles,
+      card_classes: card_classes,
+      card_styles: card_styles
+    }
+  end
 end

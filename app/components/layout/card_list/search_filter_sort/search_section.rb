@@ -12,4 +12,12 @@ class Layout::CardList::SearchFilterSort::SearchSectionComponent < ApplicationCo
   private
 
   attr_reader :title, :search_object
+
+  # Context methods for the template
+  def template_context
+    {
+      title: title,
+      search_object: search_object
+    }
+  end
 end

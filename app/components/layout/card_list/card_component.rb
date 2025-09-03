@@ -54,4 +54,23 @@ class Layout::CardComponent < ApplicationComponent
   def show_admin_panel_actions?
     context == :admin && show_admin_actions
   end
+
+  # Context methods for the template
+  def template_context
+    {
+      user: user,
+      show_admin_actions: show_admin_actions,
+      context: context,
+      card_classes: card_classes,
+      document_count: document_count,
+      team_count: team_count,
+      activity_count: activity_count,
+      organization_name: organization_name,
+      role_label_class: role_label_class,
+      can_edit_user?: can_edit_user?,
+      can_manage_user?: can_manage_user?,
+      show_profile_actions?: show_profile_actions?,
+      show_admin_panel_actions?: show_admin_panel_actions?
+    }
+  end
 end

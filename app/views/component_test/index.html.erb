@@ -22,7 +22,7 @@
   <!-- Stats Cards -->
   <div class="d-flex flex-wrap gap-3 mb-4">
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(User::Dashboard::StatsCardComponent.new(
+      <%= render(Layout::Dashboard::StatsCardComponent.new(
         title: "Sample Documents",
         value: 25,
         icon: "file-text",
@@ -30,7 +30,7 @@
       )) %>
     </div>
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(User::Dashboard::StatsCardComponent.new(
+      <%= render(Layout::Dashboard::StatsCardComponent.new(
         title: "Active Teams",
         value: 8,
         icon: "people",
@@ -38,7 +38,7 @@
       )) %>
     </div>
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(User::Dashboard::StatsCardComponent.new(
+      <%= render(Layout::Dashboard::StatsCardComponent.new(
         title: "Pending Reviews",
         value: 12,
         icon: "clock",
@@ -46,7 +46,7 @@
       )) %>
     </div>
     <div class="flex-auto" style="min-width: 200px;">
-      <%= render(User::Dashboard::StatsCardComponent.new(
+      <%= render(Layout::Dashboard::StatsCardComponent.new(
         title: "Total Users",
         value: 45,
         icon: "person-badge",
@@ -174,7 +174,7 @@
           <div class="mb-2">
             <% if @sample_tags&.any? %>
               <% @sample_tags.each do |tag| %>
-                <%= render(Ui::TagItemComponent.new(tag: tag)) %>
+                <%= render(Models::Tags::TagItemComponent.new(tag: tag)) %>
               <% end %>
             <% else %>
               <span class="badge bg-secondary">Sample Tag</span>

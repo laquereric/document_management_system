@@ -75,7 +75,7 @@
             <div class="card-body">
               <% if @document.tags.any? %>
                 <% @document.tags.each do |tag| %>
-                  <%= render(Ui::TagItemComponent.new(
+                  <%= render(Models::Tags::TagItemComponent.new(
                     tag: tag,
                     removable: true,
                     document: @document

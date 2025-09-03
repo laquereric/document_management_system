@@ -36,7 +36,7 @@
     <div class="d-flex flex-items-center flex-wrap mb-3" style="gap: 6px;">
       <%= render(Ui::StatusBadgeComponent.new(status: document.status)) if document.status %>
       <% document.tags.each do |tag| %>
-        <%= render(Ui::TagItemComponent.new(tag: tag)) %>
+        <%= render(Models::Tags::TagItemComponent.new(tag: tag)) %>
       <% end %>
     </div>
 

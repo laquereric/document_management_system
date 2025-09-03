@@ -8,39 +8,60 @@ This directory contains the View Components for the Document Management System, 
 app/components/
 ├── application_component.rb          # Base component class
 ├── ui/                              # General UI components
-│   ├── layout_component.rb         # Main application layout
-│   ├── user_menu_component.rb      # User account menu
-│   ├── status_badge_component.rb   # Status display badges
-│   └── empty_state_component.rb    # Empty state displays
-├── navigation/                      # Navigation components
-│   ├── header_component.rb         # Top navigation bar
-│   ├── sidebar_component.rb        # Primary navigation menu
-│   └── breadcrumb_component.rb     # Breadcrumb navigation
-├── dashboard/                       # Dashboard components
-│   ├── stats_card_component.rb     # Statistics display cards
-│   ├── recent_documents_component.rb # Recent documents list
-│   └── recent_activity_component.rb # Recent activity feed
-├── document/                        # Document-related components
-│   ├── card_component.rb           # Document display card
-│   ├── list_component.rb           # Document collection display
-│   └── actions_menu_component.rb   # Document action menu
-├── forms/                           # Form components
-│   └── document_form_component.rb  # Document creation/editing form
-├── activity_logs/                   # Activity log components
-│   ├── activity_log_item_component.rb # Individual activity log item
-│   └── activity_log_list_component.rb # Activity log list with pagination
-├── teams/                           # Team components
-│   └── team_card_component.rb      # Team information display
-├── tags/                            # Tag components
-│   └── tag_badge_component.rb      # Tag display with optional removal
-├── search/                          # Search components
-│   ├── quick_search_component.rb   # Header search functionality
-│   └── search_form_component.rb    # Advanced search form
-├── folder/                          # Folder-related components
-│   └── tree_component.rb           # Hierarchical folder navigation
+│   ├── delete_modal_component.rb   # Delete confirmation modal
+│   ├── empty_state_component.rb    # Empty state displays
+│   └── status_badge_component.rb   # Status display badges
+├── layout/                          # Layout and structural components
+│   ├── navigation/                  # Navigation components
+│   │   ├── header_component.rb     # Top navigation bar
+│   │   ├── sidebar_component.rb    # Primary navigation menu
+│   │   ├── breadcrumb_component.rb # Breadcrumb navigation
+│   │   └── search/                 # Search components
+│   │       ├── quick_search_component.rb # Header search functionality
+│   │       └── search_form_component.rb  # Advanced search form
+│   ├── dashboard/                   # Dashboard components
+│   │   ├── stats_card_component.rb # Statistics display cards
+│   │   ├── recent_documents_component.rb # Recent documents list
+│   │   ├── recent_activity_component.rb # Recent activity feed
+│   │   ├── header_component.rb     # Dashboard header
+│   │   ├── statistics_grid_component.rb # Statistics grid layout
+│   │   ├── user/                   # User dashboard components
+│   │   └── admin/                  # Admin dashboard components
+│   ├── card/                       # Card components
+│   │   ├── actions_menu_component.rb # Action menu for cards
+│   │   └── tags/                   # Tag display components
+│   │       ├── tag_display_component.rb # Tag display with removal
+│   │       └── tag_label_component.rb   # Tag label display
+│   ├── card_list/                  # Card list components
+│   │   ├── list_component.rb       # List layout for cards
+│   │   ├── table_component.rb      # Table layout for cards
+│   │   ├── pagination/             # Pagination components
+│   │   └── search_filter_sort/     # Search and filter components
+│   └── page/                       # Page layout components
+├── models/                          # Model-specific components
+│   ├── documents/                   # Document components
+│   │   ├── card_component.rb       # Document display card
+│   │   └── document_form_component.rb # Document creation/editing form
+│   ├── activities/                  # Activity components
+│   │   ├── activity_item_component.rb # Individual activity item
+│   │   ├── activity_list_component.rb # Activity list display
+│   │   └── timeline_component.rb   # Activity timeline
+│   ├── teams/                       # Team components
+│   │   └── team_card_component.rb  # Team information display
+│   ├── tags/                        # Tag components
+│   │   ├── tag_form_component.rb   # Tag creation/editing form
+│   │   └── tag_item_component.rb   # Tag display item
+│   ├── folder/                      # Folder components
+│   │   └── tree_component.rb       # Hierarchical folder navigation
+│   ├── users/                       # User components
+│   ├── organization/                # Organization components
+│   └── scenario/                    # Scenario components
+├── concerns/                        # Shared component concerns
 └── previews/                        # Component previews for development
     ├── dashboard/
-    └── forms/
+    ├── forms/
+    ├── navigation/
+    └── document/
 ```
 
 ## Getting Started
@@ -56,12 +77,9 @@ app/components/
 Components can be rendered in views using the `render` helper:
 
 ```erb
-<%= render(Ui::LayoutComponent.new(
-  title: "My Page",
+<%= render(Layout::Navigation::HeaderComponent.new(
   current_user: current_user
-)) do %>
-  <!-- Page content here -->
-<% end %>
+)) %>
 ```
 
 ### Component Previews
@@ -72,11 +90,29 @@ Access component previews at `/rails/view_components` in development mode to see
 
 ### Dashboard Components
 
+#### UserDashboardComponent
+User-specific dashboard layout.
+
+```erb
+<%= render(Dashboard::User::DashboardComponent.new(
+  current_user: current_user
+)) %>
+```
+
+#### AdminDashboardComponent
+Admin-specific dashboard layout.
+
+```erb
+<%= render(Dashboard::Admin::DashboardComponent.new(
+  current_user: current_user
+)) %>
+```
+
 #### StatsCardComponent
 Displays statistics in colored cards with icons.
 
 ```erb
-<%= render(Dashboard::StatsCardComponent.new(
+<%= render(Layout::Dashboard::StatsCardComponent.new(
   title: "Total Documents",
   value: 42,
   icon: "file-text",
@@ -88,7 +124,7 @@ Displays statistics in colored cards with icons.
 Shows a list of recent documents with metadata.
 
 ```erb
-<%= render(Dashboard::RecentDocumentsComponent.new(
+<%= render(Layout::Dashboard::RecentDocumentsComponent.new(
   documents: @recent_documents,
   limit: 5
 )) %>
@@ -98,7 +134,7 @@ Shows a list of recent documents with metadata.
 Displays recent activity logs with user actions.
 
 ```erb
-<%= render(Dashboard::RecentActivityComponent.new(
+<%= render(Layout::Dashboard::RecentActivityComponent.new(
   activities: @recent_activity,
   limit: 10
 )) %>
@@ -110,8 +146,17 @@ Displays recent activity logs with user actions.
 Complete form for creating and editing documents.
 
 ```erb
-<%= render(Forms::DocumentFormComponent.new(
+<%= render(Models::Documents::DocumentFormComponent.new(
   document: @document,
+  folder: @folder
+)) %>
+```
+
+#### FolderFormComponent
+Complete form for creating and editing folders.
+
+```erb
+<%= render(Models::Folder::FolderFormComponent.new(
   folder: @folder
 )) %>
 ```
@@ -120,14 +165,31 @@ Complete form for creating and editing documents.
 Individual document display with metadata and actions.
 
 ```erb
-<%= render(Document::CardComponent.new(document: @document)) %>
+<%= render(Models::Documents::CardComponent.new(document: @document)) %>
+```
+
+#### UserDocumentCardComponent
+User-specific document display card.
+
+```erb
+<%= render(User::DocumentComponents::CardComponent.new(document: @document)) %>
+```
+
+#### DocumentActionsMenuComponent
+Generic actions menu for documents and other resources.
+
+```erb
+<%= render(Layout::Card::ActionsMenuComponent.new(
+  resource: @document,
+  resource_type: 'document'
+)) %>
 ```
 
 #### DocumentListComponent
 List view for multiple documents with pagination.
 
 ```erb
-<%= render(Document::ListComponent.new(
+<%= render(Layout::CardList::ListComponent.new(
   documents: @documents,
   layout: :list
 )) %>
@@ -139,7 +201,7 @@ List view for multiple documents with pagination.
 Individual activity log entry with action icons and descriptions.
 
 ```erb
-<%= render(ActivityLogs::ActivityLogItemComponent.new(
+<%= render(Models::Activities::ActivityItemComponent.new(
   activity_log: @activity_log
 )) %>
 ```
@@ -148,10 +210,28 @@ Individual activity log entry with action icons and descriptions.
 List of activity logs with pagination support.
 
 ```erb
-<%= render(ActivityLogs::ActivityLogListComponent.new(
+<%= render(Models::Activities::ActivityListComponent.new(
   activity_logs: @activity_logs,
   title: "Activity Log",
   show_pagination: true
+)) %>
+```
+
+#### ActivityItemComponent
+Individual activity item display.
+
+```erb
+<%= render(Models::Activities::ActivityItemComponent.new(
+  activity: @activity
+)) %>
+```
+
+#### TimelineComponent
+Activity timeline display.
+
+```erb
+<%= render(Models::Activities::TimelineComponent.new(
+  activities: @activities
 )) %>
 ```
 
@@ -161,6 +241,16 @@ List of activity logs with pagination support.
 Team information display with member counts and management options.
 
 ```erb
+<%= render(Models::Teams::TeamCardComponent.new(
+  team: @team,
+  current_user: current_user
+)) %>
+```
+
+#### TeamsTeamCardComponent
+Alternative team card component.
+
+```erb
 <%= render(Teams::TeamCardComponent.new(
   team: @team,
   current_user: current_user
@@ -168,6 +258,22 @@ Team information display with member counts and management options.
 ```
 
 ### UI Components
+
+#### UserMenuComponent
+User account menu with profile, settings, and sign out options.
+
+```erb
+<%= render(Models::Users::UserMenuComponent.new(user: current_user)) %>
+```
+
+#### UserCardComponent
+User information display card.
+
+```erb
+<%= render(Layout::UserCardComponent.new(
+  user: @user
+)) %>
+```
 
 #### StatusBadgeComponent
 Status display with proper color contrast.
@@ -184,6 +290,26 @@ Tag display with optional removal functionality.
   tag: @tag,
   removable: true,
   document: @document
+)) %>
+```
+
+#### TagItemComponent
+Individual tag display item.
+
+```erb
+<%= render(Models::Tags::TagItemComponent.new(
+  tag: @tag,
+  removable: true,
+  document: @document
+)) %>
+```
+
+#### TagFormComponent
+Tag creation and editing form.
+
+```erb
+<%= render(Models::Tags::TagFormComponent.new(
+  tag: @tag
 )) %>
 ```
 
@@ -207,6 +333,75 @@ Advanced search form with multiple filters.
 
 ```erb
 <%= render(Layout::Navigation::Search::SearchFormComponent.new(q: @q)) %>
+```
+
+### Card List Components
+
+#### SearchAndFiltersComponent
+Search and filter controls for card lists.
+
+```erb
+<%= render(Layout::CardList::SearchFilterSort::SearchAndFiltersComponent.new(
+  search: @search,
+  filters: @filters
+)) %>
+```
+
+#### PaginationComponent
+Pagination controls for card lists.
+
+```erb
+<%= render(Layout::CardList::Pagination::PaginationComponent.new(
+  collection: @documents
+)) %>
+```
+
+#### StatisticsGridComponent
+Grid layout for statistics display.
+
+```erb
+<%= render(Layout::Dashboard::StatisticsGridComponent.new(
+  statistics: @statistics
+)) %>
+```
+
+### Folder Components
+
+#### FolderTreeComponent
+Hierarchical folder navigation tree.
+
+```erb
+<%= render(Models::Folder::TreeComponent.new(
+  folders: @folders,
+  current_folder: @current_folder
+)) %>
+```
+
+#### UserFolderCardComponent
+User-specific folder display card.
+
+```erb
+<%= render(User::Folder::CardComponent.new(
+  folder: @folder
+)) %>
+```
+
+#### OrganizationCardComponent
+Organization information display.
+
+```erb
+<%= render(Organization::CardComponent.new(
+  organization: @organization
+)) %>
+```
+
+#### ScenarioCardComponent
+Scenario information display.
+
+```erb
+<%= render(Scenario::CardComponent.new(
+  scenario: @scenario
+)) %>
 ```
 
 ## Design System
@@ -324,10 +519,43 @@ end
 
 Visit `/component_test` to see all components working together in a realistic application layout.
 
-## Next Steps
+## Component Reconciliation Status
 
-1. **Integration**: Replace existing views with component-based architecture
-2. **Testing**: Add comprehensive component tests
-3. **Documentation**: Complete usage examples and API documentation
-4. **Performance**: Optimize component rendering and caching
-5. **Accessibility**: Enhance ARIA support and keyboard navigation
+The components have been reconciled to match the actual file structure and usage. Here's what was updated:
+
+### ✅ Resolved Inconsistencies
+- **Namespace Alignment**: Updated README to use correct component namespaces (e.g., `Models::Documents::CardComponent` instead of `Document::CardComponent`)
+- **Missing Components**: Added documentation for components that exist but weren't documented
+- **Template Context**: Ensured all components have the `template_context` method for consistent data access
+- **View Updates**: Fixed views to use correct component namespaces
+
+### 🔧 Components Added to Documentation
+- `Models::Users::UserMenuComponent` - User account menu
+- `Layout::CardList::ListComponent` - Document list display
+- `Layout::Card::ActionsMenuComponent` - Generic actions menu
+- `Models::Folder::TreeComponent` - Folder navigation tree
+- `Models::Activities::ActivityItemComponent` - Individual activity display
+- `Models::Activities::TimelineComponent` - Activity timeline
+- `Models::Tags::TagItemComponent` - Tag display item
+- `Models::Tags::TagFormComponent` - Tag creation/editing form
+- `Models::Folder::FolderFormComponent` - Folder creation/editing form
+- `Dashboard::User::DashboardComponent` - User dashboard
+- `Dashboard::Admin::DashboardComponent` - Admin dashboard
+- `Layout::CardList::SearchFilterSort::SearchAndFiltersComponent` - Search and filters
+- `Layout::CardList::Pagination::PaginationComponent` - Pagination controls
+- `Layout::Dashboard::StatisticsGridComponent` - Statistics grid layout
+
+### 📁 Current Component Structure
+The components are organized into logical groups:
+- **UI Components** (`app/components/ui/`) - General UI elements
+- **Layout Components** (`app/components/layout/`) - Structural and navigation components
+- **Model Components** (`app/components/models/`) - Domain-specific components
+- **Form Components** (`app/components/forms/`) - Form-related components
+
+### 🚀 Next Steps
+
+1. **Testing**: Add comprehensive component tests for all components
+2. **Performance**: Optimize component rendering and implement caching strategies
+3. **Accessibility**: Enhance ARIA support and keyboard navigation
+4. **Documentation**: Complete usage examples and API documentation
+5. **Integration**: Continue replacing views with component-based architecture
