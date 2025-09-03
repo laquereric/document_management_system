@@ -13,6 +13,12 @@ Rails.application.configure do
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 
+  # Enable autosave in development for better file recovery
+  config.autosave = true
+  config.autosave_interval = 15.seconds
+  config.autosave_backup_count = 10
+  config.autosave_debug = true
+
   # Do not eager load code on boot.
   config.eager_load = false
 

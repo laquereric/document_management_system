@@ -31,6 +31,11 @@ module DocumentManagementSystem
     # Load ViewComponent configuration
     config.autoload_paths += %W[#{config.root}/app/components]
 
+    # Enable autosave functionality
+    config.autosave = true
+    config.autosave_interval = 30.seconds
+    config.autosave_backup_count = 5
+
     # Mount Primer View Components engine
     config.after_initialize do
       if defined?(Primer::ViewComponents::Engine)
@@ -55,3 +60,6 @@ end
 
 require "view_component"
 require "primer/view_components"
+Dir.glob(Rails.root.join("../../app/components/primer/**/*")).each do |file|
+  require_relative file
+end

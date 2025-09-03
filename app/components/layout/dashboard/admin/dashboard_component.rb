@@ -36,28 +36,28 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
         title: "Total Users",
         value: total_users,
         icon: "people",
-        color: "accent",
+        color: :accent,
         subtitle: "Registered users in the system"
       },
       {
         title: "Organizations",
         value: total_organizations,
         icon: "organization",
-        color: "success",
+        color: :success,
         subtitle: "Active organizations"
       },
       {
         title: "Total Documents",
         value: total_documents,
         icon: "file-text",
-        color: "attention",
+        color: :attention,
         subtitle: "Documents across all organizations"
       },
       {
         title: "Total Folders",
         value: total_folders,
         icon: "file-directory",
-        color: "done",
+        color: :done,
         subtitle: "Organized document storage"
       }
     ]

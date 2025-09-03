@@ -1,5 +1,5 @@
 class Layout::Dashboard::StatsCardComponent < ApplicationComponent
-  def initialize(title:, value:, icon:, color: "accent", subtitle: nil, trend: nil, trend_direction: nil, **system_arguments)
+  def initialize(title:, value:, icon:, color: :accent, subtitle: nil, trend: nil, trend_direction: nil, **system_arguments)
     @title = title
     @value = value
     @icon = icon
@@ -40,11 +40,11 @@ class Layout::Dashboard::StatsCardComponent < ApplicationComponent
   def trend_color
     case trend_direction
     when 'up'
-      'success'
+      :success
     when 'down'
-      'danger'
+      :danger
     else
-      'muted'
+      :muted
     end
   end
 

@@ -13,7 +13,7 @@ app/components/
 │   └── status_badge_component.rb   # Status display badges
 ├── layout/                          # Layout and structural components
 │   ├── navigation/                  # Navigation components
-│   │   ├── header_component.rb     # Top navigation bar
+│   │   ├── header.rb     # Top navigation bar
 │   │   ├── sidebar_component.rb    # Primary navigation menu
 │   │   ├── breadcrumb_component.rb # Breadcrumb navigation
 │   │   └── search/                 # Search components
@@ -23,7 +23,7 @@ app/components/
 │   │   ├── stats_card_component.rb # Statistics display cards
 │   │   ├── recent_documents_component.rb # Recent documents list
 │   │   ├── recent_activity_component.rb # Recent activity feed
-│   │   ├── header_component.rb     # Dashboard header
+│   │   ├── header.rb     # Dashboard header
 │   │   ├── statistics_grid_component.rb # Statistics grid layout
 │   │   ├── user/                   # User dashboard components
 │   │   └── admin/                  # Admin dashboard components

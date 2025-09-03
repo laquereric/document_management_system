@@ -21,25 +21,25 @@ class Layout::Dashboard::User::DashboardComponent < ApplicationComponent
         title: "My Documents",
         value: stats[:total_documents],
         icon: "file-text",
-        color: "accent"
+        color: :accent
       },
       {
         title: "My Teams",
         value: stats[:total_teams],
         icon: "people",
-        color: "success"
+        color: :success
       },
       {
         title: "Teams I Lead",
         value: stats[:led_teams],
         icon: "person-badge",
-        color: "attention"
+        color: :attention
       },
       {
         title: "Pending Documents",
         value: stats[:pending_documents],
         icon: "clock",
-        color: "severe"
+        color: :severe
       }
     ]
   end

@@ -24,11 +24,11 @@
             <div class="TimelineItem-badge">
               <% case activity.action %>
               <% when 'created' %>
-                <%= render(Primer::Beta::Octicon.new(icon: "plus", size: :small, color: "success")) %>
+                <%= render(Primer::Beta::Octicon.new(icon: "plus", size: :small, color: :success)) %>
               <% when 'updated' %>
-                <%= render(Primer::Beta::Octicon.new(icon: "pencil", size: :small, color: "accent")) %>
+                <%= render(Primer::Beta::Octicon.new(icon: "pencil", size: :small, color: :accent)) %>
               <% else %>
-                <%= render(Primer::Beta::Octicon.new(icon: "pulse", size: :small, color: "muted")) %>
+                <%= render(Primer::Beta::Octicon.new(icon: "pulse", size: :small, color: :muted)) %>
               <% end %>
             </div>
             <div class="TimelineItem-body">
