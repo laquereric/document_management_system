@@ -80,7 +80,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
     {
       title: "Users by Role",
       data: users_by_role,
-      manage_path: :admin_users_path,
+      manage_path: :models_users_path,
       manage_text: "Manage Users",
       empty_state: {
         title: "No user data",
@@ -116,7 +116,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
   def quick_actions_data
     [
       {
-        path: :admin_users_path,
+        path: :models_users_path,
         text: "Manage Users",
         icon: "people",
         description: "User management and role assignments"
@@ -134,7 +134,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
         description: "Browse and manage all documents"
       },
       {
-        path: :admin_teams_path,
+        path: :models_teams_path,
         text: "Manage Teams",
         icon: "people",
         description: "Team creation and member management"
