@@ -1,10 +1,10 @@
-<div class="document-list">
+<div class="card-list">
   <!-- List Header with Controls -->
   <div class="d-flex flex-items-center flex-justify-between mb-3 pb-3 border-bottom">
     <!-- Title and Count -->
     <div class="d-flex flex-items-center">
-      <h2 class="h3 mb-0">Documents</h2>
-      <span class="Counter ml-2"><%= documents.count %></span>
+      <h2 class="h3 mb-0"><%= title %></h2>
+      <span class="Counter ml-2"><%= cards.count %></span>
     </div>
 
     <!-- Controls -->
@@ -68,21 +68,28 @@
   <!-- Filter Panel (Hidden by default) -->
   <% if show_filters %>
     <div class="filter-panel d-none mb-4">
-              <%= render(Layout::CardList::SearchFilterSort::FilterPanelComponent.new(search: search)) %>
+      <%= render(Layout::CardList::SearchFilterSort::FilterPanelComponent.new(search: search)) %>
     </div>
   <% end %>
 
-  <!-- Document List/Grid -->
-  <% if documents.any? %>
+  <!-- Card List/Grid -->
+  <% if cards.any? %>
     <% if layout == :table %>
-      <%= render(Models::Documents::TableComponent.new(documents: documents)) %>
+      <!-- Table layout - render cards in table format -->
+      <div class="Box">
+        <div class="Box-body">
+          <div class="<%= container_classes %>">
+            <% cards.each do |card| %>
+              <%= render_card(card) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% else %>
+      <!-- List or Grid layout -->
       <div class="<%= container_classes %>">
-        <% documents.each do |document| %>
-          <%= render(Models::Documents::CardComponent.new(
-            document: document,
-            layout: layout
-          )) %>
+        <% cards.each do |card| %>
+          <%= render_card(card) %>
         <% end %>
       </div>
     <% end %>
@@ -90,15 +97,17 @@
     <!-- Empty State -->
     <div class="blankslate">
       <%= render(Primer::Beta::Octicon.new(icon: :file, size: :large, mb: 3)) %>
-      <h3 class="blankslate-heading">No documents found</h3>
+      <h3 class="blankslate-heading"><%= empty_state_title %></h3>
       <p class="blankslate-body">
-        Get started by creating your first document.
+        <%= empty_state_description %>
       </p>
-      <%= render(Primer::Beta::Button.new(
-        href: new_document_path,
-        scheme: :primary
-      )) do %>
-        Create Document
+      <% if empty_state_action %>
+        <%= render(Primer::Beta::Button.new(
+          href: empty_state_action[:url],
+          scheme: :primary
+        )) do %>
+          <%= empty_state_action[:text] %>
+        <% end %>
       <% end %>
     </div>
   <% end %>

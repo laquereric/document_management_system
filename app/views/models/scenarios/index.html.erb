@@ -32,44 +32,23 @@
   )) %>
 
   <!-- Scenarios Section -->
-  <div class="mt-5">
-    <div class="d-flex flex-items-center flex-justify-between mb-3">
-      <h2 class="f4 text-semibold">
-        Scenarios
-        <% if @scenarios.respond_to?(:total_count) %>
-          <span class="Counter"><%= @scenarios.total_count %></span>
-        <% else %>
-          <span class="Counter"><%= @scenarios.count %></span>
-        <% end %>
-      </h2>
-    </div>
-
-    <% if @scenarios&.any? %>
-      <div class="Box">
-        <div class="Box-body">
-          <div class="row g-3">
-            <% @scenarios.each do |scenario| %>
-              <div class="col-12 col-md-6 col-lg-4">
-                <%= render(Models::Scenario::CardComponent.new(
-                  scenario: scenario,
-                  show_actions: true,
-                  admin_context: true
-                )) %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% else %>
-      <%= render(Ui::EmptyStateComponent.new(
-        title: "No scenarios found",
-        description: "Get started by creating your first scenario.",
-        icon: "list-ordered",
-        action: {
-          text: "Create Scenario",
-          url: models_new_scenario_path
-        }
+  <%= render(Layout::CardList.new(
+    cards: @scenarios,
+    layout: :grid,
+    title: "Scenarios",
+    empty_state_title: "No scenarios found",
+    empty_state_description: "Get started by creating your first scenario.",
+    empty_state_action: {
+      text: "Create Scenario",
+      url: models_new_scenario_path
+    }
+  )) do %>
+    <% @scenarios.each do |scenario| %>
+      <%= render(Models::Scenario::CardComponent.new(
+        scenario: scenario,
+        show_actions: true,
+        admin_context: true
       )) %>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

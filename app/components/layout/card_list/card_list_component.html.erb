@@ -1,0 +1,45 @@
+<div class="card-list">
+  <!-- List Header -->
+  <div class="d-flex flex-items-center flex-justify-between mb-3">
+    <h2 class="f4 text-semibold">
+      <%= title %>
+      <% if cards.respond_to?(:total_count) %>
+        <span class="Counter"><%= cards.total_count %></span>
+      <% else %>
+        <span class="Counter"><%= cards.count %></span>
+      <% end %>
+    </h2>
+  </div>
+
+  <!-- Cards Display -->
+  <% if cards&.any? %>
+    <div class="<%= container_classes %>">
+      <% if layout == :table %>
+        <div class="Box-body">
+      <% end %>
+      
+      <%= content %>
+      
+      <% if layout == :table %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- Empty State -->
+    <div class="blankslate">
+      <%= render(Primer::Beta::Octicon.new(icon: :file, size: :large, mb: 3)) %>
+      <h3 class="blankslate-heading"><%= empty_state_title %></h3>
+      <p class="blankslate-body">
+        <%= empty_state_description %>
+      </p>
+      <% if empty_state_action %>
+        <%= render(Primer::Beta::Button.new(
+          href: empty_state_action[:url],
+          scheme: :primary
+        )) do %>
+          <%= empty_state_action[:text] %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
