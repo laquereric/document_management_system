@@ -56,7 +56,7 @@
           <h3 class="Box-title">Tags</h3>
           <%= render Primer::Beta::Button.new(
             size: :small,
-            variant: :outline,
+            scheme: :secondary,
             "data-action": "click->modal#show",
             "data-target": "add-tag-modal"
           ) do %>
@@ -169,26 +169,26 @@
         <h3 class="Box-title">Add Tag</h3>
         <%= render Primer::Beta::Button.new(
           size: :small,
-          variant: :invisible,
+          scheme: :invisible,
           "data-action": "click->modal#hide",
           classes: "position-absolute top-0 right-0 mt-2 mr-2"
         ) do %>
           <%= render Primer::Beta::Octicon.new(icon: "x") %>
         <% end %>
       </div>
-      <%= form_with url: add_tag_models_document_path(@document), method: :post, local: true do |form| %>
+      <%= form_with url: models_add_tag_path(@document), method: :post, local: true do |form| %>
         <div class="Box-body">
           <%= render Primer::Alpha::FormControl.new(label: "Select Tag") do |fc| %>
             <%= fc.select(
-              name: "tag_id",
-              options: options_from_collection_for_select(Tag.all, :id, :name),
+              :tag_id,
+              options_from_collection_for_select(Tag.all, :id, :name),
               include_blank: "Choose a tag",
               required: true
             ) %>
           <% end %>
         </div>
         <div class="Box-footer d-flex gap-2">
-          <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
+          <%= render Primer::Beta::Button.new(type: :submit, scheme: :primary) do %>
             Add Tag
           <% end %>
           <%= render Primer::Beta::Button.new("data-action": "click->modal#hide") do %>

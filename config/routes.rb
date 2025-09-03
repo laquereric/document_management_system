@@ -48,8 +48,8 @@ Rails.application.routes.draw do
     patch "documents/:id", to: "documents#update"
     delete "documents/:id", to: "documents#destroy"
     patch "documents/:id/change_status", to: "documents#change_status"
-    post "documents/:id/add_tag", to: "documents#add_tag"
-    delete "documents/:id/remove_tag", to: "documents#remove_tag"
+    post "documents/:id/add_tag", to: "documents#add_tag", as: :add_tag
+    delete "documents/:id/remove_tag/:tag_id", to: "documents#remove_tag", as: :remove_tag
     get "documents/search", to: "documents#search"
 
     # Teams routes
