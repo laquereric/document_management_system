@@ -539,6 +539,8 @@ The components have been reconciled to match the actual file structure and usage
 - **ActionsMenuComponent**: Replaced Primer component usage with simplified HTML and added icon rendering method
 - **View Syntax**: Fixed missing `<% end %>` tag in folders index view that was causing syntax errors
 - **CardComponent Inheritance**: Created missing base `Layout::Card::CardComponent` class and fixed inheritance in `Models::Folder::CardComponent`
+- **Routing**: Fixed invalid `dashboard/index` route that was referencing non-existent `DashboardController`
+- **Sidebar Routes**: Fixed `dashboard_index_path` to use correct `dashboard_user_path` in sidebar navigation
 - **Route Helpers**: Fixed incorrect route helper methods in views (e.g., `new_folder_path` → `models_new_folder_path`, `folders_path` → `models_folders_path`)
 - **View Cleanup**: Removed redundant hardcoded statistics cards from folders index view, now properly using `StatisticsGridComponent`
 - **Primer Components**: Simplified StatsCardComponent to use direct HTML/CSS instead of external Primer components, avoiding autoloading issues

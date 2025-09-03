@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get "search/index", to: "search#index"
-  get "dashboard/index"
   devise_for :users
   
   # Root route - point directly to user dashboard

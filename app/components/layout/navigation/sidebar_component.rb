@@ -24,8 +24,8 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Dashboard",
         icon: "home",
-        path: dashboard_index_path,
-        active: current_page?(dashboard_index_path)
+        path: dashboard_user_path,
+        active: @controller_name == "user" && @controller_name.starts_with?("dashboard")
       },
       {
         label: "Documents",
