@@ -1,14 +1,13 @@
-class Models::Users::CardComponent < Layout::Card::CardComponent
+class Models::Users::CardComponent < ApplicationComponent
   def initialize(user:, current_user: nil, show_admin_actions: false, context: :general)
     @user = user
     @current_user = current_user
     @show_admin_actions = show_admin_actions
     @context = context
-    super(show_actions: true)
   end
 
   def card_classes
-    base_card_classes
+    "Box p-3"
   end
 
   def document_count
@@ -61,4 +60,12 @@ class Models::Users::CardComponent < Layout::Card::CardComponent
   private
 
   attr_reader :user, :current_user, :show_admin_actions, :context
+
+  def safe_name(object, default = "Unknown")
+    object&.name || default
+  end
+
+  def safe_count(collection)
+    collection&.count || 0
+  end
 end

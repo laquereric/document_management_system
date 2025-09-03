@@ -1,0 +1,40 @@
+<div class="<%= card_classes %>">
+  <div class="<%= title_classes %>">
+    <%= link_to truncated_title, document_path(document), class: "text-decoration-none" %>
+  </div>
+  
+  <div class="<%= content_classes %>">
+    <%= truncated_content %>
+  </div>
+  
+  <div class="<%= meta_classes %>">
+    <div class="d-flex align-items-center gap-2 mb-2">
+      <% if document.file.attached? %>
+        <span class="octicon octicon-<%= file_icon %>"></span>
+        <span><%= file_extension&.upcase %></span>
+      <% end %>
+      <span class="octicon octicon-calendar"></span>
+      <span><%= formatted_date %></span>
+    </div>
+  </div>
+  
+  <% if show_actions %>
+    <div class="<%= action_classes %>">
+      <div class="d-flex gap-2">
+        <%= link_to "View", document_path(document), class: "btn btn-sm btn-outline" %>
+        <% if can? :edit, document %>
+          <%= link_to "Edit", edit_document_path(document), class: "btn btn-sm btn-outline" %>
+        <% end %>
+      </div>
+      
+      <% if can? :destroy, document %>
+        <div>
+          <%= button_to "Delete", document_path(document), 
+                        method: :delete, 
+                        class: "btn btn-sm btn-danger",
+                        data: { confirm: "Are you sure?" } %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -163,18 +163,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_03_003623) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "activities", "documents"
-  add_foreign_key "activities", "statuses", column: "new_status_id"
-  add_foreign_key "activities", "statuses", column: "old_status_id"
-  add_foreign_key "activities", "users"
-  add_foreign_key "documents", "folders"
-  add_foreign_key "documents", "scenarios"
-  add_foreign_key "documents", "statuses"
-  add_foreign_key "documents", "users", column: "author_id"
-  add_foreign_key "folders", "folders", column: "parent_folder_id"
-  add_foreign_key "folders", "teams"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "folders"
   add_foreign_key "tags", "organizations"

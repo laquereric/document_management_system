@@ -1,21 +1,21 @@
 <% content_for :title, @user.name %>
 
 <div class="container-lg px-3 py-6">
-  <h1>User Profile Test</h1>
-  <p>User: <%= @user.name %></p>
-  <p>Email: <%= @user.email %></p>
-  <p>Role: <%= @user.role %></p>
-  
-  <hr>
-  
-  <h2>User Card Component</h2>
+  <div class="d-flex flex-items-center flex-justify-between mb-4">
+    <h1 class="h1">User Profile</h1>
+    <% if current_user&.admin? %>
+      <%= link_to models_edit_user_path(@user), class: "btn btn-primary" do %>
+        <%= render(Primer::Beta::Octicon.new(icon: "pencil", size: :small)) %>
+        <span class="ml-1">Edit User</span>
+      <% end %>
+    <% end %>
+  </div>
   
   <!-- User Card Component -->
   <%= render(Models::Users::CardComponent.new(
     user: @user,
     current_user: current_user,
     context: :profile,
-    show_admin_actions: current_user.admin?
+    show_admin_actions: current_user&.admin?
   )) %>
-  
 </div>

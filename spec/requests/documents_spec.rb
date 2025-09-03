@@ -1,79 +1,85 @@
 require 'rails_helper'
 
 RSpec.describe "Documents", type: :request do
+  let(:user) { create(:user, :admin) }
+
+  before do
+    sign_in user
+  end
+
   describe "GET /index" do
     it "returns http success" do
-      get "/documents/index"
+      get "/models/documents"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /show" do
     it "returns http success" do
-      get "/documents/show"
+      get "/models/documents/1"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /new" do
     it "returns http success" do
-      get "/documents/new"
+      get "/models/documents/new"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /create" do
     it "returns http success" do
-      get "/documents/create"
+      post "/models/documents"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /edit" do
     it "returns http success" do
-      get "/documents/edit"
+      get "/models/documents/1/edit"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /update" do
     it "returns http success" do
-      get "/documents/update"
+      patch "/models/documents/1"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /destroy" do
     it "returns http success" do
-      get "/documents/destroy"
+      delete "/models/documents/1"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /change_status" do
     it "returns http success" do
-      get "/documents/change_status"
+      patch "/models/documents/1/change_status"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /add_tag" do
     it "returns http success" do
-      get "/documents/add_tag"
+      post "/models/documents/1/add_tag"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /remove_tag" do
     it "returns http success" do
-      get "/documents/remove_tag"
+      delete "/models/documents/1/remove_tag"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /search" do
     it "returns http success" do
-      get "/documents/search"
+      get "/models/documents/search"
       expect(response).to have_http_status(:success)
     end
   end

@@ -4,13 +4,24 @@
     <div class="d-flex flex-items-center flex-justify-between">
       <div class="d-flex flex-items-center">
         <div class="mr-3">
-          <%= render(Primer::Beta::Octicon.new(icon: "person", size: :small, color: :muted)) %>
+          <%= render(Primer::Beta::Octicon.new(icon: "person", size: :medium, color: :muted)) %>
         </div>
         <div class="flex-1">
-          <h4 class="f4 text-semibold mb-1">
-            <%= link_to user.name, models_user_path(user), class: "Link--primary" %>
-          </h4>
-          <span class="f6 color-fg-muted"><%= user.email %></span>
+          <h2 class="h2 text-semibold mb-1">
+            <%= user.name %>
+          </h2>
+          <div class="d-flex flex-items-center flex-wrap" style="gap: 8px;">
+            <span class="f5 color-fg-muted">
+              <%= render(Primer::Beta::Octicon.new(icon: "mail", size: :small)) %>
+              <%= user.email %>
+            </span>
+            <% if user.role.present? %>
+              <span class="f5 color-fg-muted">
+                <%= render(Primer::Beta::Octicon.new(icon: "shield", size: :small)) %>
+                <%= user.role.titleize %>
+              </span>
+            <% end %>
+          </div>
         </div>
       </div>
       
@@ -22,37 +33,80 @@
 
   <!-- Card Body -->
   <%= render(Primer::Beta::BorderBox::Body.new) do %>
-    <div class="d-flex flex-column" style="gap: 12px;">
-      <!-- Role -->
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Role:</span>
+    <div class="d-flex flex-column" style="gap: 16px;">
+      <!-- Role Badge -->
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Role:</span>
         <%= render(Primer::Beta::Label.new(scheme: role_label_scheme, size: :large)) do %>
           <%= user.role.titleize %>
         <% end %>
       </div>
       
       <!-- Organization -->
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Organization:</span>
-        <span class="f6 text-semibold"><%= organization_name %></span>
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Organization:</span>
+        <span class="f5 text-semibold">
+          <% if user.organization %>
+            <%= link_to user.organization.name, models_organization_path(user.organization), class: "Link--primary" %>
+          <% else %>
+            <span class="color-fg-muted">None</span>
+          <% end %>
+        </span>
       </div>
       
       <!-- Teams -->
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Teams:</span>
-        <span class="f6 text-semibold"><%= team_count %></span>
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Teams:</span>
+        <div class="d-flex flex-items-center" style="gap: 8px;">
+          <span class="f5 text-semibold"><%= team_count %></span>
+          <% if user.teams.any? %>
+            <div class="d-flex flex-wrap" style="gap: 4px;">
+              <% user.teams.limit(3).each do |team| %>
+                <%= render(Primer::Beta::Label.new(scheme: :secondary, size: :small)) do %>
+                  <%= link_to team.name, models_team_path(team), class: "Link--primary" %>
+                <% end %>
+              <% end %>
+              <% if user.teams.count > 3 %>
+                <span class="f6 color-fg-muted">+<%= user.teams.count - 3 %> more</span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
       
       <!-- Documents -->
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Documents:</span>
-        <span class="f6 text-semibold"><%= document_count %></span>
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Documents:</span>
+        <div class="d-flex flex-items-center" style="gap: 8px;">
+          <span class="f5 text-semibold"><%= document_count %></span>
+          <% if document_count > 0 %>
+            <%= link_to "View all", models_documents_path(q: { author_id_eq: user.id }), class: "f6 Link--primary" %>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Activity -->
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Recent Activity:</span>
+        <span class="f5 text-semibold"><%= activity_count %></span>
       </div>
       
       <!-- Joined Date -->
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Joined:</span>
-        <span class="f6 text-semibold"><%= user.created_at.strftime("%b %d, %Y") %></span>
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Joined:</span>
+        <span class="f5 text-semibold">
+          <%= render(Primer::Beta::Octicon.new(icon: "calendar", size: :small)) %>
+          <%= user.created_at.strftime("%B %d, %Y") %>
+        </span>
+      </div>
+      
+      <!-- Last Updated -->
+      <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
+        <span class="f5 color-fg-muted">Last Updated:</span>
+        <span class="f5 text-semibold">
+          <%= render(Primer::Beta::Octicon.new(icon: "clock", size: :small)) %>
+          <%= user.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+        </span>
       </div>
     </div>
   <% end %>
@@ -61,32 +115,32 @@
   <% if can_edit_user? || can_manage_user? %>
     <%= render(Primer::Beta::BorderBox::Footer.new) do %>
       <div class="d-flex flex-items-center flex-justify-between">
-        <div class="d-flex flex-items-center" style="gap: 8px;">
+        <div class="d-flex flex-items-center" style="gap: 12px;">
           <% if context == :admin %>
             <!-- Admin Context Actions -->
             <%= link_to models_user_path(user), class: "btn btn-sm btn-outline" do %>
               <%= render(Primer::Beta::Octicon.new(icon: "eye", size: :small)) %>
-              <span class="ml-1">View</span>
+              <span class="ml-1">View Profile</span>
             <% end %>
             
             <% if can_manage_user? %>
               <%= link_to models_edit_user_path(user), class: "btn btn-sm btn-outline" do %>
                 <%= render(Primer::Beta::Octicon.new(icon: "pencil", size: :small)) %>
-                <span class="ml-1">Edit</span>
+                <span class="ml-1">Edit User</span>
               <% end %>
             <% end %>
           <% else %>
-            <!-- General Context Actions -->
-            <%= link_to models_user_path(user), class: "btn btn-sm btn-outline" do %>
-              <%= render(Primer::Beta::Octicon.new(icon: "eye", size: :small)) %>
-              <span class="ml-1">Profile</span>
-            <% end %>
-            
+            <!-- Profile Context Actions -->
             <% if can_edit_user? %>
               <%= link_to models_edit_user_path(user), class: "btn btn-sm btn-outline" do %>
                 <%= render(Primer::Beta::Octicon.new(icon: "pencil", size: :small)) %>
-                <span class="ml-1">Edit</span>
+                <span class="ml-1">Edit Profile</span>
               <% end %>
+            <% end %>
+            
+            <%= link_to models_users_path, class: "btn btn-sm btn-outline" do %>
+              <%= render(Primer::Beta::Octicon.new(icon: "arrow-left", size: :small)) %>
+              <span class="ml-1">Back to Users</span>
             <% end %>
           <% end %>
         </div>

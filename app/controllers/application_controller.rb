@@ -38,11 +38,14 @@ class ApplicationController < ActionController::Base
         Current.user = cicd_user
         # Set current_user for Devise compatibility
         @current_user = cicd_user
+        # Also set the instance variable that Devise expects
+        instance_variable_set(:@current_user, cicd_user)
       else
         # Create admin user if it doesn't exist
         cicd_user = create_cicd_admin_user
         Current.user = cicd_user
         @current_user = cicd_user
+        instance_variable_set(:@current_user, cicd_user)
       end
     else
       Current.user = current_user if user_signed_in?
@@ -50,13 +53,18 @@ class ApplicationController < ActionController::Base
   end
 
   def create_cicd_admin_user
+    # Create organization first if it doesn't exist
+    organization = Organization.find_or_create_by(name: "CI/CD Organization") do |org|
+      org.description = "Organization for CI/CD testing"
+    end
+
     User.create!(
       email: "admin@example.com",
       password: "password123",
       password_confirmation: "password123",
       name: "CI/CD Admin",
       role: "admin",
-      confirmed_at: Time.current
+      organization: organization
     )
   rescue ActiveRecord::RecordInvalid => e
     # If user already exists, find and return it
@@ -64,7 +72,17 @@ class ApplicationController < ActionController::Base
   end
 
   def cicd_security_disabled?
+    # Check if the constant is defined and true
     defined?(CiCdSecurityDisable) && CiCdSecurityDisable == true
+  rescue NameError
+    # If there's an error reading the constant, check the file directly
+    cicd_security_file = Rails.root.join("config", "initializers", "cicd_security.rb")
+    if File.exist?(cicd_security_file)
+      file_content = File.read(cicd_security_file)
+      file_content.include?("CiCdSecurityDisable = true")
+    else
+      false
+    end
   end
 
   def ensure_admin
