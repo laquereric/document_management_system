@@ -533,6 +533,7 @@ The components have been reconciled to match the actual file structure and usage
 - **Method Calls**: Fixed incorrect method calls in sidebar component template (`render_icon_path.call` → `render_icon_path`)
 - **Admin Routes**: Fixed non-existent admin route helpers to use correct models namespace routes
 - **File Naming**: Fixed component file names to match Rails autoloading conventions (e.g., `statistics_grid.rb` → `statistics_grid_component.rb`)
+- **Route Helpers**: Fixed incorrect route helper methods in views (e.g., `new_folder_path` → `models_new_folder_path`, `folders_path` → `models_folders_path`)
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu

@@ -8,7 +8,7 @@
     icon: "file-directory",
     action: {
       text: "New Folder",
-      url: new_folder_path
+      url: models_new_folder_path
     }
   )) %>
 
@@ -125,7 +125,7 @@
     <h2 class="f4 text-semibold mb-3">Search & Filters</h2>
     <div class="Box">
       <div class="Box-body">
-        <%= search_form_for @q, url: folders_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
+        <%= search_form_for @q, url: models_folders_path, method: :get, class: "d-flex flex-items-center gap-3" do |f| %>
           <div class="flex-1">
             <%= f.label :name_cont, "Name", class: "form-label sr-only" %>
             <%= f.text_field :name_cont, class: "form-control", placeholder: "Search folders..." %>
@@ -138,7 +138,7 @@
             <%= f.submit "Search", class: "btn btn-primary" %>
           </div>
           <div>
-            <%= link_to "Clear", folders_path, class: "btn" %>
+            <%= link_to "Clear", models_folders_path, class: "btn" %>
           </div>
         <% end %>
       </div>
@@ -212,7 +212,7 @@
             icon: "file-directory",
             action: {
               text: "Create Folder",
-              url: new_folder_path
+              url: models_new_folder_path
             }
           )) %>
         <% end %>

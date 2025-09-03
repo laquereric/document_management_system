@@ -8,7 +8,7 @@
     icon: "file-text",
     action: {
       text: "New Document",
-      url: new_document_path
+      url: models_new_document_path
     }
   )) %>
 
@@ -77,10 +77,10 @@
         title: "No Documents Found",
         description: "Get started by creating your first document.",
         icon: "file-text",
-        action: {
-          text: "Create Document",
-          url: new_document_path
-        }
+                    action: {
+              text: "Create Document",
+              url: models_new_document_path
+            }
       )) %>
     <% end %>
   <% end %>
