@@ -20,7 +20,7 @@ class Layout::Dashboard::User::DashboardComponent < ApplicationComponent
       {
         title: "My Documents",
         value: stats[:total_documents],
-        icon: "file-text",
+        icon: "file",
         color: :accent
       },
       {

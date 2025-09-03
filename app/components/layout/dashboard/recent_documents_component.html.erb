@@ -36,7 +36,7 @@
             <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
               <div class="d-flex flex-items-center flex-1">
                 <div class="mr-3">
-                  <%= render(Primer::Beta::Octicon.new(icon: "file-text", size: :small, color: :muted)) %>
+                  <%= render(Primer::Beta::Octicon.new(icon: "file", size: :small, color: :muted)) %>
                 </div>
                 <div class="flex-1">
                   <div class="d-flex flex-items-center gap-2 mb-1">
@@ -82,7 +82,7 @@
       <%= render(Ui::EmptyStateComponent.new(
         title: "No documents yet",
         description: "Create your first document to get started",
-        icon: "file-text"
+        icon: "file"
       )) %>
     <% end %>
   <% end %>

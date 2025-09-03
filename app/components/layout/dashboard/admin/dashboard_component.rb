@@ -49,7 +49,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
       {
         title: "Total Documents",
         value: total_documents,
-        icon: "file-text",
+        icon: "file",
         color: :attention,
         subtitle: "Documents across all organizations"
       },
@@ -96,11 +96,11 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
       data: documents_by_status,
       manage_path: :models_documents_path,
       manage_text: "View Documents",
-      empty_state: {
-        title: "No document data",
-        description: "Document status statistics will appear here",
-        icon: "file-text"
-      }
+              empty_state: {
+          title: "No document data",
+          description: "Document status statistics will appear here",
+          icon: "file"
+        }
     }
   end
 
@@ -130,7 +130,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
       {
         path: :models_documents_path,
         text: "View All Documents",
-        icon: "file-text",
+        icon: "file",
         description: "Browse and manage all documents"
       },
       {
