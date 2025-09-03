@@ -1,47 +1,69 @@
-<%= form_with model: document, url: form_url, method: form_method, class: form_classes, local: true do |form| %>
-  <div class="Box p-4">
-    <%= render Primer::Alpha::FormControl.new(label: "Title") do |form_control| %>
-      <%= form_control.input(:title, type: :text, size: :large) %>
-    <% end %>
+<%= form_with model: document, url: form_url, method: form_method, local: true do |form| %>
+  <div class="Box">
+    <!-- Basic Information -->
+    <div class="Box-header">
+      <h3 class="Box-title">Basic Information</h3>
+    </div>
+    <div class="Box-body">
+      <%= render Primer::Alpha::FormControl.new(label: "Title") do |fc| %>
+        <%= fc.input(name: "document[title]", type: :text, value: document.title, size: :large, required: true) %>
+      <% end %>
 
-    <%= render Primer::Alpha::FormControl.new(label: "Content") do |form_control| %>
-      <%= form_control.text_area(:content, rows: 5) %>
-    <% end %>
+      <%= render Primer::Alpha::FormControl.new(label: "Content", description: "Main content or description of the document") do |fc| %>
+        <%= fc.textarea(name: "document[content]", value: document.content, rows: 6) %>
+      <% end %>
 
-    <%= render Primer::Alpha::FormControl.new(label: "URL") do |form_control| %>
-      <%= form_control.input(:url, type: :url) %>
-    <% end %>
+      <%= render Primer::Alpha::FormControl.new(label: "URL", description: "External link or reference URL (optional)") do |fc| %>
+        <%= fc.input(name: "document[url]", type: :url, value: document.url, placeholder: "https://example.com") %>
+      <% end %>
+    </div>
 
-    <%= render Primer::Alpha::FormControl.new(label: "Status") do |form_control| %>
-      <%= form_control.select(:status_id, 
-          options_from_collection_for_select(statuses, :id, :name, document.status_id),
-          prompt: "Select status") %>
-    <% end %>
+    <!-- Organization -->
+    <div class="Box-header border-top">
+      <h3 class="Box-title">Organization</h3>
+    </div>
+    <div class="Box-body">
+      <%= render Primer::Alpha::FormControl.new(label: "Folder", description: "Select the folder to organize this document") do |fc| %>
+        <%= fc.select(name: "document[folder_id]", options: folder_options, include_blank: "Select a folder") %>
+      <% end %>
 
-    <%= render Primer::Alpha::FormControl.new(label: "Scenario") do |form_control| %>
-      <%= form_control.select(:scenario_id, 
-          options_from_collection_for_select(scenarios, :id, :name, document.scenario_id),
-          prompt: "Select scenario") %>
-    <% end %>
+      <%= render Primer::Alpha::FormControl.new(label: "Status", description: "Current status of the document") do |fc| %>
+        <%= fc.select(name: "document[status_id]", options: status_options, include_blank: "Select status") %>
+      <% end %>
 
-    <%= render Primer::Alpha::FormControl.new(label: "Folder") do |form_control| %>
-      <%= form_control.select(:folder_id, 
-          options_from_collection_for_select(folders, :id, :name, document.folder_id),
-          prompt: "Select folder") %>
-    <% end %>
+      <%= render Primer::Alpha::FormControl.new(label: "Scenario", description: "Associated scenario or use case") do |fc| %>
+        <%= fc.select(name: "document[scenario_id]", options: scenario_options, include_blank: "Select scenario") %>
+      <% end %>
+    </div>
 
-    <%= render Primer::Alpha::FormControl.new(label: "File") do |form_control| %>
-      <%= form_control.input(:file, type: :file) %>
-    <% end %>
+    <!-- File Attachment -->
+    <div class="Box-header border-top">
+      <h3 class="Box-title">File Attachment</h3>
+    </div>
+    <div class="Box-body">
+      <%= render Primer::Alpha::FormControl.new(
+        label: "File", 
+        description: "Upload a file to attach to this document (PDF, DOC, TXT, etc.)"
+      ) do |fc| %>
+        <%= fc.input(name: "document[file]", type: :file, accept: ".pdf,.doc,.docx,.txt,.rtf") %>
+      <% end %>
 
-    <div class="d-flex gap-2 mt-4">
-              <%= render Primer::Beta::Button.new(type: :submit, scheme: :primary) do %>
+      <% if document.file.attached? %>
+        <div class="flash flash-success mt-3">
+          <%= render Primer::Beta::Octicon.new(icon: "paperclip", size: :small, classes: "mr-2") %>
+          Current file: <strong><%= document.file.filename %></strong>
+          (<%= number_to_human_size(document.file.byte_size) %>)
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Actions -->
+    <div class="Box-footer d-flex gap-2">
+      <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
         <%= submit_text %>
       <% end %>
-      <% if cancel_url %>
-        <%= render Primer::Beta::Button.new(href: cancel_url, scheme: :secondary) do %>
-          Cancel
-        <% end %>
+      <%= render Primer::Beta::Button.new(tag: :a, href: cancel_url) do %>
+        Cancel
       <% end %>
     </div>
   </div>

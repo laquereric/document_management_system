@@ -1,20 +1,15 @@
 <div class="<%= card_classes %>">
+  <!-- Header -->
   <div class="Box-header d-flex flex-items-center flex-justify-between">
     <div class="d-flex flex-items-center">
-      <div class="mr-3">
-        <svg class="octicon octicon-file color-fg-muted" width="20" height="20" viewBox="0 0 16 16">
-          <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
-        </svg>
-      </div>
-      <div class="flex-1">
+      <%= render Primer::Beta::Octicon.new(icon: document_icon, size: :medium, color: :muted, classes: "mr-3") %>
+      <div>
         <h4 class="f4 text-semibold mb-1">
-          <%= link_to document.title, document_path(document), class: "Link--primary" %>
+          <%= link_to document.title, models_document_path(document), class: "Link--primary" %>
         </h4>
-        <% if has_file? %>
+        <% if document.file.attached? %>
           <span class="Label Label--accent">
-            <svg class="octicon octicon-file mr-1" width="12" height="12" viewBox="0 0 16 16">
-              <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
-            </svg>
+            <%= render Primer::Beta::Octicon.new(icon: "paperclip", size: :small, classes: "mr-1") %>
             <%= file_extension %>
           </span>
         <% end %>
@@ -22,37 +17,37 @@
     </div>
     
     <% if show_actions %>
-              <%= render(Layout::Card::ActionsMenuComponent.new(resource: document, resource_type: 'document')) %>
+      <%= render Layout::Card::ActionsMenuComponent.new(resource: document, resource_type: 'document') %>
     <% end %>
   </div>
 
+  <!-- Content -->
   <div class="Box-body">
+    <!-- Description -->
     <% if truncated_content.present? %>
-      <p class="f5 color-fg-muted mb-3 lh-default">
+      <p class="f5 color-fg-muted mb-3 lh-condensed">
         <%= truncated_content %>
       </p>
     <% end %>
 
+    <!-- Status and Tags -->
     <div class="d-flex flex-items-center flex-wrap mb-3" style="gap: 6px;">
-      <%= render(Ui::StatusBadgeComponent.new(status: document.status)) if document.status %>
-      <% document.tags.each do |tag| %>
-        <%= render(Models::Tags::TagItemComponent.new(tag: tag)) %>
+      <% if document.status %>
+        <%= render Ui::StatusBadgeComponent.new(status: document.status) %>
+      <% end %>
+      <% document.tags.limit(3).each do |tag| %>
+        <%= render Models::Tags::TagItemComponent.new(tag: tag) %>
+      <% end %>
+      <% if document.tags.count > 3 %>
+        <span class="Label Label--secondary">+<%= document.tags.count - 3 %> more</span>
       <% end %>
     </div>
 
-    <div class="d-flex flex-column" style="gap: 12px;">
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Author:</span>
-        <span class="f6 text-semibold"><%= author_name %></span>
-      </div>
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Folder:</span>
-        <span class="f6 text-semibold"><%= folder_name %></span>
-      </div>
-      <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
-        <span class="f6 color-fg-muted">Created:</span>
-        <span class="f6 text-semibold"><%= formatted_date %></span>
-      </div>
-    </div>
+    <!-- Metadata -->
+    <%= render Models::Documents::MetadataComponent.new(
+      document: document,
+      layout: :vertical,
+      class: "mt-3"
+    ) %>
   </div>
 </div>

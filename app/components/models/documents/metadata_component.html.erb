@@ -1,0 +1,27 @@
+<div class="<%= wrapper_classes %>">
+  <% metadata_items.each do |item| %>
+    <div class="<%= item_classes %>">
+      <% if layout == :horizontal %>
+        <%= render Primer::Beta::Octicon.new(icon: item[:icon], size: :small, color: :muted) %>
+        <span class="color-fg-muted"><%= item[:label] %>:</span>
+        <% if item[:url] %>
+          <%= link_to item[:value], item[:url], class: "Link--primary text-semibold" %>
+        <% else %>
+          <span class="text-semibold"><%= item[:value] %></span>
+        <% end %>
+      <% else %>
+        <div class="d-flex flex-items-center gap-2">
+          <%= render Primer::Beta::Octicon.new(icon: item[:icon], size: :small, color: :muted) %>
+          <span class="f6 color-fg-muted"><%= item[:label] %></span>
+        </div>
+        <div>
+          <% if item[:url] %>
+            <%= link_to item[:value], item[:url], class: "Link--primary f6 text-semibold" %>
+          <% else %>
+            <span class="f6 text-semibold"><%= item[:value] %></span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

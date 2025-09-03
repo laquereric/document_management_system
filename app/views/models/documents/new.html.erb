@@ -1,33 +1,29 @@
 <% content_for :title, "New Document" %>
 
-<div class="container-lg px-3 py-4">
-  <!-- Header -->
-  <div class="d-flex flex-items-center flex-justify-between mb-4">
-    <div>
-      <h1 class="h2">New Document</h1>
-      <p class="color-fg-muted">Create a new document in <%= @folder&.name || 'your workspace' %></p>
-    </div>
-    <div class="d-flex flex-items-center gap-2">
-      <%= link_to models_documents_path, class: "btn" do %>
-        <svg class="octicon octicon-arrow-left mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-          <path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path>
-        </svg>
-        Back to Documents
-      <% end %>
-    </div>
-  </div>
+<%= render Layout::Page::PageContent.new do %>
+  <!-- Page Header -->
+  <%= render Layout::Page::PageHeader.new(
+    title: "New Document",
+    description: @folder.present? ? "Create a new document in #{@folder.name}" : "Create a new document",
+    icon: "file-plus",
+    breadcrumb_items: [
+      { text: "Documents", url: models_documents_path },
+      { text: "New Document", url: "#" }
+    ]
+  ) do %>
+    <%= render Primer::Beta::Button.new(
+      tag: :a,
+      href: models_documents_path
+    ) do %>
+      <%= render Primer::Beta::Octicon.new(icon: "arrow-left", size: :small, classes: "mr-1") %>
+      Back to Documents
+    <% end %>
+  <% end %>
 
   <!-- Form -->
-  <div class="Box">
-    <div class="Box-header">
-      <h3 class="Box-title">Document Details</h3>
-    </div>
-    <div class="Box-body">
-      <%= render(Models::Documents::DocumentFormComponent.new(
-        document: @document,
-        submit_text: "Create Document",
-        cancel_url: models_documents_path
-      )) %>
-    </div>
-  </div>
-</div>
+  <%= render Models::Documents::DocumentFormComponent.new(
+    document: @document,
+    submit_text: "Create Document",
+    cancel_url: models_documents_path
+  ) %>
+<% end %>
