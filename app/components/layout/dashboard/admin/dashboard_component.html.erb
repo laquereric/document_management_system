@@ -21,7 +21,7 @@
               <% end %>
               <%= render(Primer::Beta::Button.new(
                 href: send(users_by_role_data[:manage_path]),
-                variant: :outline,
+                scheme: :secondary,
                 size: :small
               )) do %>
                 <%= users_by_role_data[:manage_text] %>
@@ -40,7 +40,7 @@
                           <%= render(Primer::Beta::Octicon.new(icon: "person", size: :small, color: "muted")) %>
                         </div>
                         <%= render(Primer::Beta::Label.new(
-                          variant: role == 'admin' ? 'danger' : (role == 'team_leader' ? 'attention' : 'secondary'),
+                          scheme: role == 'admin' ? 'danger' : 'secondary',
                           size: :large
                         )) do %>
                           <%= role.titleize %>
@@ -72,7 +72,7 @@
               <% end %>
               <%= render(Primer::Beta::Button.new(
                 href: send(documents_by_status_data[:manage_path]),
-                variant: :outline,
+                scheme: :secondary,
                 size: :small
               )) do %>
                 <%= documents_by_status_data[:manage_text] %>
@@ -90,7 +90,7 @@
                         <div class="mr-3">
                           <%= render(Primer::Beta::Octicon.new(icon: "file-text", size: :small, color: "muted")) %>
                         </div>
-                        <%= render(Primer::Beta::Label.new(variant: "secondary", size: :large)) do %>
+                        <%= render(Primer::Beta::Label.new(scheme: "secondary", size: :large)) do %>
                           <%= status %>
                         <% end %>
                       </div>
@@ -133,7 +133,7 @@
           <% quick_actions_data.each do |action| %>
             <%= render(Primer::Beta::Button.new(
               href: send(action[:path]),
-              variant: :outline,
+              scheme: :secondary,
               title: action[:description]
             )) do %>
               <%= render(Primer::Beta::Octicon.new(icon: action[:icon], size: :small)) %>

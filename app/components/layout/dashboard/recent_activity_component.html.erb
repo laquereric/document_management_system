@@ -5,11 +5,11 @@
         <%= title %>
       <% end %>
       <% if show_view_all_link? %>
-        <%= render(Primer::Beta::Button.new(
-          href: view_all_path,
-          variant: :outline,
-          size: :small
-        )) do %>
+            <%= render(Primer::Beta::Button.new(
+      href: view_all_path,
+      scheme: :secondary,
+      size: :small
+    )) do %>
           <%= view_all_text %>
         <% end %>
       <% end %>

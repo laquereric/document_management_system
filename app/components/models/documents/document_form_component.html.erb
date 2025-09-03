@@ -42,11 +42,11 @@
     <% end %>
 
     <div class="d-flex gap-2 mt-4">
-      <%= render Primer::Beta::Button.new(type: :submit, variant: :primary) do %>
+              <%= render Primer::Beta::Button.new(type: :submit, scheme: :primary) do %>
         <%= submit_text %>
       <% end %>
       <% if cancel_url %>
-        <%= render Primer::Beta::Button.new(href: cancel_url, variant: :secondary) do %>
+        <%= render Primer::Beta::Button.new(href: cancel_url, scheme: :secondary) do %>
           Cancel
         <% end %>
       <% end %>

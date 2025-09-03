@@ -8,7 +8,7 @@
         <% if show_new_document_link? %>
           <%= render(Primer::Beta::Button.new(
             href: new_document_path,
-            variant: :primary,
+            scheme: :primary,
             size: :small
           )) do %>
             <%= render(Primer::Beta::Octicon.new(icon: "plus", size: :small)) %>
@@ -18,7 +18,7 @@
         <% if show_view_all_link? %>
           <%= render(Primer::Beta::Button.new(
             href: view_all_path,
-            variant: :outline,
+            scheme: :secondary,
             size: :small
           )) do %>
             <%= view_all_text %>
@@ -45,7 +45,7 @@
                     <% end %>
                     <% if document.status %>
                       <%= render(Primer::Beta::Label.new(
-                        variant: document.status.color,
+                        scheme: document.status.color,
                         size: :large
                       )) do %>
                         <%= document.status.name %>
@@ -62,12 +62,12 @@
                 <% if document.tags.any? %>
                   <div class="d-flex gap-1">
                     <% document.tags.limit(3).each do |tag| %>
-                      <%= render(Primer::Beta::Label.new(variant: "secondary", size: :small)) do %>
+                      <%= render(Primer::Beta::Label.new(scheme: "secondary", size: :small)) do %>
                         <%= tag.name %>
                       <% end %>
                     <% end %>
                     <% if document.tags.count > 3 %>
-                      <%= render(Primer::Beta::Label.new(variant: "secondary", size: :small)) do %>
+                      <%= render(Primer::Beta::Label.new(scheme: "secondary", size: :small)) do %>
                         +<%= document.tags.count - 3 %>
                       <% end %>
                     <% end %>
