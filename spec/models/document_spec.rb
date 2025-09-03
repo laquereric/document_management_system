@@ -9,26 +9,26 @@ RSpec.describe "Document Model File" do
 
     it "has the correct file content structure" do
       content = File.read('app/models/document.rb')
-      
+
       # Check for class definition
       expect(content).to include('class Document < ApplicationRecord')
-      
+
       # Check for associations
       expect(content).to include('belongs_to :folder')
       expect(content).to include('belongs_to :author')
       expect(content).to include('belongs_to :status')
       expect(content).to include('belongs_to :scenario')
-      
+
       # Check for validations
       expect(content).to include('validates :title, presence: true')
       expect(content).to include('validates :content, presence: true')
-      
+
       # Check for scopes
       expect(content).to include('scope :by_status')
       expect(content).to include('scope :by_author')
       expect(content).to include('scope :by_folder')
       expect(content).to include('scope :recent')
-      
+
       # Check for methods
       expect(content).to include('def total_tags')
       expect(content).to include('def team')
@@ -36,7 +36,7 @@ RSpec.describe "Document Model File" do
       expect(content).to include('def has_file?')
       expect(content).to include('def file_extension')
       expect(content).to include('def file_icon')
-      
+
       # Check for ransackable configuration
       expect(content).to include('def self.ransackable_attributes')
       expect(content).to include('def self.ransackable_associations')
