@@ -530,6 +530,7 @@ The components have been reconciled to match the actual file structure and usage
 - **Form Components**: Removed problematic `ViewComponent::Form::Helpers` includes
 - **Endless Loops**: Fixed recursive method calls in `Layout::Navigation::HeaderComponent`
 - **Route Helpers**: Fixed incorrect route helper methods in navigation components
+- **Method Calls**: Fixed incorrect method calls in sidebar component template (`render_icon_path.call` → `render_icon_path`)
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu

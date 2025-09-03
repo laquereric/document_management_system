@@ -11,7 +11,7 @@
             class: "SideNav-item py-2 #{item[:active] ? 'aria-current' : ''}",
             aria: { current: item[:active] ? 'page' : nil } do %>
           <svg class="octicon octicon-<%= item[:icon] %> mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-            <%= render_icon_path.call(item[:icon]) %>
+            <%= render_icon_path(item[:icon]) %>
           </svg>
           <span class="f5"><%= item[:label] %></span>
         <% end %>
@@ -29,7 +29,7 @@
             class: "SideNav-item py-2 #{item[:active] ? 'aria-current' : ''}",
             aria: { current: item[:active] ? 'page' : nil } do %>
           <svg class="octicon octicon-<%= item[:icon] %> mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-            <%= render_icon_path.call(item[:icon]) %>
+            <%= render_icon_path(item[:icon]) %>
           </svg>
           <span class="f5"><%= item[:label] %></span>
         <% end %>
