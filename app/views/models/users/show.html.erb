@@ -1,44 +1,23 @@
 <% content_for :title, @user.name %>
 
-<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
-  <!-- Page Header -->
-  <%= render(Layout::Page::UserProfileHeaderComponent.new(
+<div class="container-lg px-3 py-6">
+  <h1>User Profile Test</h1>
+  <p>User: <%= @user.name %></p>
+  <p>Email: <%= @user.email %></p>
+  <p>Role: <%= @user.role %></p>
+  
+  <hr>
+  
+  <h2>User Card Component</h2>
+  
+  <!-- User Card Component -->
+  <%= render(Models::Users::CardComponent.new(
     user: @user,
-    current_user: current_user
+    context: :profile,
+    show_admin_actions: current_user.admin?
   )) %>
+  
+  <hr>
+  
 
-  <div class="d-lg-flex" style="gap: 24px;">
-    <!-- Main Content -->
-    <div class="flex-1">
-      <!-- User Information -->
-      <%= render(Layout::Page::UserInformationComponent.new(
-        user: @user,
-        current_user: current_user
-      )) %>
-
-      <!-- User Statistics -->
-      <div class="mt-4">
-        <%= render(Layout::Page::UserStatisticsComponent.new(user: @user)) %>
-      </div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="flex-1" style="min-width: 300px;">
-      <!-- Teams -->
-      <div class="mb-4">
-        <%= render(Layout::Page::UserTeamsComponent.new(user: @user)) %>
-      </div>
-
-      <!-- Role Management -->
-      <div class="mb-4">
-        <%= render(Layout::Page::UserRoleManagementComponent.new(
-          user: @user,
-          current_user: current_user
-        )) %>
-      </div>
-
-      <!-- Recent Activity -->
-      <%= render(Layout::Page::UserRecentActivityComponent.new(user: @user)) %>
-    </div>
-  </div>
-<% end %>
+</div>
