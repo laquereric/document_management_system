@@ -54,4 +54,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Disable frozen string literals for test environment to avoid conflicts
+  config.active_support.frozen_string_literal = false
 end

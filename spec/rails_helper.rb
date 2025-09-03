@@ -20,7 +20,9 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+# Load support files safely for Rails 8 compatibility
+support_files = Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort
+support_files.each { |f| require f }
 
 # ViewComponent testing
 require 'view_component/test_helpers'
@@ -40,6 +42,12 @@ RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
+
+  # Fix for Rails 8 frozen array issues
+  config.before(:suite) do
+    # Ensure load paths are not frozen
+    $LOAD_PATH.dup.each { |path| $LOAD_PATH << path unless $LOAD_PATH.frozen? }
+  end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
