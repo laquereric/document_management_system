@@ -108,7 +108,7 @@ class Layout::Dashboard::Admin::DashboardComponent < ApplicationComponent
     {
       activities: recent_activity,
       title: "Recent Activity",
-      view_all_path: :user_activities_path,
+              view_all_path: :models_activities_path,
       view_all_text: "View All Activity"
     }
   end

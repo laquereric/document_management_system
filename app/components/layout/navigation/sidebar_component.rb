@@ -48,31 +48,31 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       {
         label: "Activity",
         icon: "pulse",
-        path: user_activities_path(current_user),
+        path: models_activities_path,
         active: @controller_name == "activities"
       },
       {
         label: "Teams",
         icon: "people",
-        path: user_teams_path(current_user),
+        path: models_teams_path,
         active: @controller_name == "teams"
       },
       {
         label: "Tags",
         icon: "tag",
-        path: user_tags_path(current_user),
+        path: models_tags_path,
         active: @controller_name == "tags"
       },
       {
         label: "Organizations",
         icon: "organization",
-        path: user_organizations_path(current_user),
+        path: models_organizations_path,
         active: @controller_name == "organizations"
       },
       {
         label: "Profile",
         icon: "person",
-        path: user_path(current_user),
+        path: models_user_path(current_user),
         active: @controller_name == "users" && action_name == "show"
       }
     ]
@@ -164,10 +164,10 @@ class Layout::Navigation::SidebarComponent < ApplicationComponent
       documents_path: models_documents_path,
       folders_path: models_folders_path,
       tags_path: models_tags_path,
-      user_activities_path: method(:user_activities_path),
-      user_teams_path: method(:user_teams_path),
-      user_tags_path: method(:user_tags_path),
-      user_organizations_path: method(:user_organizations_path),
+      user_activities_path: method(:models_activities_path),
+      user_teams_path: method(:models_teams_path),
+      user_tags_path: method(:models_tags_path),
+      user_organizations_path: method(:models_organizations_path),
       user_path: method(:user_path),
       admin_root_path: admin_root_path,
       organizations_path: organizations_path,

@@ -528,6 +528,8 @@ The components have been reconciled to match the actual file structure and usage
 - **Page Components**: Fixed `Layout::PageContent` → `Layout::Page::PageContent` and `Layout::PageHeader` → `Layout::Page::PageHeader`
 - **Helper Access**: Fixed components to use `helpers.current_user` instead of `current_user` directly
 - **Form Components**: Removed problematic `ViewComponent::Form::Helpers` includes
+- **Endless Loops**: Fixed recursive method calls in `Layout::Navigation::HeaderComponent`
+- **Route Helpers**: Fixed incorrect route helper methods in navigation components
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu

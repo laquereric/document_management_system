@@ -42,7 +42,7 @@ class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
     when "tags"
       crumbs << { label: "Tags", path: models_tags_path }
     when "activities"
-      crumbs << { label: "Activity", path: user_activities_path(helpers.current_user) }
+      crumbs << { label: "Activity", path: models_activities_path }
     end
     
     crumbs
@@ -63,7 +63,7 @@ class Layout::Navigation::BreadcrumbComponent < ApplicationComponent
       folders_path: models_folders_path,
       organizations_path: models_organizations_path,
       tags_path: models_tags_path,
-      user_activities_path: method(:user_activities_path),
+      user_activities_path: method(:models_activities_path),
       build_breadcrumbs_from_params: method(:build_breadcrumbs_from_params)
     }
   end

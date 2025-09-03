@@ -24,11 +24,11 @@ class Layout::Navigation::HeaderComponent < ApplicationComponent
   end
 
   def root_path
-    root_path
+    helpers.root_path
   end
 
   def new_user_session_path
-    new_user_session_path
+    helpers.new_user_session_path
   end
 
   # Context methods for the template
