@@ -28,6 +28,20 @@ support_files.each { |f| require f }
 # require 'view_component/test_helpers'
 # require 'capybara/rspec'
 
+# Fix for Primer compatibility issues in test environment
+if defined?(Primer)
+  # Stub any missing Primer classes that might cause issues
+  unless defined?(Primer::FormHelper)
+    module Primer
+      class FormHelper
+        def self.included(base)
+          # Empty stub to prevent errors
+        end
+      end
+    end
+  end
+end
+
 # Database cleaner for test isolation
 require 'database_cleaner/active_record'
 
@@ -67,6 +81,20 @@ RSpec.configure do |config|
     end
     if Rails.application.config.respond_to?(:eager_load_paths)
       Rails.application.config.eager_load_paths = Rails.application.config.eager_load_paths.dup
+    end
+
+    # Fix for Primer compatibility issues
+    if defined?(Primer)
+      # Stub any missing Primer classes that might cause issues
+      unless defined?(Primer::FormHelper)
+        module Primer
+          class FormHelper
+            def self.included(base)
+              # Empty stub to prevent errors
+            end
+          end
+        end
+      end
     end
   end
 
