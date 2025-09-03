@@ -1,15 +1,11 @@
-class Models::Users::CardComponent < ApplicationComponent
+class Models::Users::CardComponent < Layout::Card::CardComponent
 
   def initialize(user:, show_admin_actions: false, context: :general)
     @user = user
     @show_admin_actions = show_admin_actions
     @context = context
-    initialize_card_base(show_actions: true)
+    super(show_actions: true)
   end
-
-  private
-
-  attr_reader :user, :show_admin_actions, :context
 
   def card_classes
     base_card_classes
@@ -54,4 +50,8 @@ class Models::Users::CardComponent < ApplicationComponent
   def show_admin_panel_actions?
     context == :admin && show_admin_actions
   end
+
+  private
+
+  attr_reader :user, :show_admin_actions, :context
 end

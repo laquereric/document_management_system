@@ -11,7 +11,16 @@
   <div class="ActionMenuOverlay">
     <div class="ActionMenuList">
       <% menu_items.each do |item| %>
-        <a href="<%= item[:href] %>" 
+        <% 
+          href = if item[:href]
+            item[:href]
+          elsif item[:path_name] && item[:path_args]
+            send(item[:path_name], *item[:path_args])
+          else
+            "#"
+          end
+        %>
+        <a href="<%= href %>" 
            class="ActionMenuLink <%= item[:classes] %>"
            data="<%= item[:data]&.to_json %>"
            target="<%= item[:target] %>">

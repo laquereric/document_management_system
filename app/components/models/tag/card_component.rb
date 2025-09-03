@@ -3,12 +3,8 @@ class Models::Tag::CardComponent < Layout::Card::CardComponent
   def initialize(tag:, show_actions: true, admin_context: false, **system_arguments)
     @tag = tag
     @admin_context = admin_context
-    initialize_card_base(show_actions: show_actions, **system_arguments)
+    super(show_actions: show_actions, **system_arguments)
   end
-
-  private
-
-  attr_reader :tag, :admin_context
 
   def card_classes
     "#{base_card_classes} mb-4 mb-lg-0 #{system_arguments[:class]}".strip
@@ -51,4 +47,8 @@ class Models::Tag::CardComponent < Layout::Card::CardComponent
   def delete_path
     admin_context ? models_tag_path(tag) : tag_path(tag)
   end
+
+  private
+
+  attr_reader :tag, :admin_context
 end

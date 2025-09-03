@@ -1,16 +1,12 @@
 # Document card component for displaying documents in lists
 
-class Models::Documents::CardComponent < ApplicationComponent
+class Models::Documents::CardComponent < Layout::Card::CardComponent
 
   def initialize(document:, show_actions: true, **system_arguments)
     @document = document
-    @show_actions = show_actions
     @system_arguments = merge_system_arguments(system_arguments)
+    super(show_actions: show_actions)
   end
-
-  private
-
-  attr_reader :document, :show_actions, :system_arguments
 
   def card_classes
     "#{condensed_card_classes} document-card #{system_arguments[:class]}".strip
@@ -102,4 +98,8 @@ class Models::Documents::CardComponent < ApplicationComponent
       render: method(:render)
     }
   end
+
+  private
+
+  attr_reader :document, :system_arguments
 end

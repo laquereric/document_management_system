@@ -7,6 +7,60 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
     @system_arguments = merge_system_arguments(system_arguments)
   end
 
+  def can_edit?
+    # This would integrate with CanCanCan
+    true # Placeholder
+  end
+
+  def can_delete?
+    # This would integrate with CanCanCan
+    true # Placeholder
+  end
+
+  def menu_items
+    case resource_type
+    when 'document'
+      document_menu_items
+    when 'user'
+      user_menu_items
+    when 'organization'
+      organization_menu_items
+    when 'folder'
+      folder_menu_items
+    when 'team'
+      team_menu_items
+    when 'scenario'
+      scenario_menu_items
+    else
+      default_menu_items
+    end
+  end
+
+  # Context methods for the template
+  def template_context
+    {
+      menu_items: menu_items,
+      resource: resource,
+      resource_type: resource_type
+    }
+  end
+
+  # Flush any resources that need cleanup
+  def flush_resources
+    # Flush any cached data
+    Rails.cache.clear if defined?(Rails.cache)
+    
+    # Clear any instance variables that might hold large objects
+    @resource = nil
+    @system_arguments = nil
+    
+    # Force garbage collection if needed
+    GC.start if GC.respond_to?(:start)
+    
+    # Log resource cleanup
+    Rails.logger.info "ActionsMenuComponent resources flushed" if defined?(Rails.logger)
+  end
+
   private
 
   attr_reader :resource, :resource_type, :system_arguments
@@ -40,41 +94,13 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
     end
   end
 
-  def can_edit?
-    # This would integrate with CanCanCan
-    true # Placeholder
-  end
-
-  def can_delete?
-    # This would integrate with CanCanCan
-    true # Placeholder
-  end
-
-  def menu_items
-    case resource_type
-    when 'document'
-      document_menu_items
-    when 'user'
-      user_menu_items
-    when 'organization'
-      organization_menu_items
-    when 'folder'
-      folder_menu_items
-    when 'team'
-      team_menu_items
-    when 'scenario'
-      scenario_menu_items
-    else
-      default_menu_items
-    end
-  end
-
   def document_menu_items
     items = [
       {
         label: "View",
         icon: :eye,
-        href: helpers.document_path(resource)
+        path_name: "models_document_path",
+        path_args: [resource]
       }
     ]
 
@@ -83,7 +109,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
         {
           label: "Edit",
           icon: :pencil,
-          href: helpers.edit_document_path(resource)
+          path_name: "models_edit_document_path",
+        path_args: [resource]
         },
         {
           label: "Move",
@@ -124,7 +151,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: helpers.user_path(resource)
+        path_name: "models_user_path",
+        path_args: [resource]
       }
     ]
 
@@ -132,7 +160,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: helpers.edit_user_path(resource)
+        path_name: "models_edit_user_path",
+        path_args: [resource]
       }
     end
 
@@ -157,7 +186,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: helpers.organization_path(resource)
+        path_name: "models_organization_path",
+        path_args: [resource]
       }
     ]
 
@@ -165,7 +195,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: helpers.edit_organization_path(resource)
+        path_name: "models_edit_organization_path",
+        path_args: [resource]
       }
     end
 
@@ -190,7 +221,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: helpers.folder_path(resource)
+        path_name: "models_folder_path",
+        path_args: [resource]
       }
     ]
 
@@ -198,7 +230,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: helpers.edit_folder_path(resource)
+        path_name: "models_edit_folder_path",
+        path_args: [resource]
       }
     end
 
@@ -223,7 +256,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: helpers.team_path(resource)
+        path_name: "models_team_path",
+        path_args: [resource]
       }
     ]
 
@@ -231,7 +265,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: helpers.edit_team_path(resource)
+        path_name: "models_edit_team_path",
+        path_args: [resource]
       }
     end
 
@@ -256,7 +291,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       {
         label: "View",
         icon: :eye,
-        href: helpers.scenario_path(resource)
+        path_name: "models_scenario_path",
+        path_args: [resource]
       }
     ]
 
@@ -264,7 +300,8 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
       items << {
         label: "Edit",
         icon: :pencil,
-        href: helpers.edit_scenario_path(resource)
+        path_name: "models_edit_scenario_path",
+        path_args: [resource]
       }
     end
 
@@ -292,14 +329,5 @@ class Layout::Card::ActionsMenuComponent < ApplicationComponent
         href: "#"
       }
     ]
-  end
-
-  # Context methods for the template
-  def template_context
-    {
-      menu_items: menu_items,
-      resource: resource,
-      resource_type: resource_type
-    }
   end
 end

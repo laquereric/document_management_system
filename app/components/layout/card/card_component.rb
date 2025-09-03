@@ -1,14 +1,7 @@
 class Layout::Card::CardComponent < ApplicationComponent
+  include CardConcerns
+  
   def initialize(show_actions: true, **system_arguments)
-    @show_actions = show_actions
-    @system_arguments = merge_system_arguments(system_arguments)
-  end
-
-  private
-
-  attr_reader :show_actions, :system_arguments
-
-  def initialize_card_base(show_actions: true, **system_arguments)
     @show_actions = show_actions
     @system_arguments = merge_system_arguments(system_arguments)
   end
@@ -53,5 +46,14 @@ class Layout::Card::CardComponent < ApplicationComponent
 
   def pluralize(count, singular, plural = nil)
     helpers.pluralize(count, singular, plural)
+  end
+
+  private
+
+  attr_reader :show_actions, :system_arguments
+
+  def initialize_card_base(show_actions: true, **system_arguments)
+    @show_actions = show_actions
+    @system_arguments = merge_system_arguments(system_arguments)
   end
 end

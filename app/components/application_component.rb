@@ -49,4 +49,60 @@ class ApplicationComponent < ViewComponent::Base
     else "f4"
     end
   end
+
+  # Comprehensive resource cleanup method
+  def flush_resources
+    # Flush database connection pool if available
+    if defined?(ActiveRecord::Base) && ActiveRecord::Base.connection_pool
+      ActiveRecord::Base.connection_pool.flush!
+    end
+    
+    # Flush any cached data
+    if defined?(Rails.cache)
+      Rails.cache.clear
+    end
+    
+    # Clear any instance variables that might hold large objects
+    instance_variables.each do |var|
+      instance_variable_set(var, nil)
+    end
+    
+    # Force garbage collection if available
+    if GC.respond_to?(:start)
+      GC.start
+    end
+    
+    # Log resource cleanup
+    if defined?(Rails.logger)
+      Rails.logger.info "#{self.class.name} resources flushed"
+    end
+  end
+
+  # Flush assets specifically
+  def flush_assets
+    if defined?(Rails.application)
+      # Clear asset cache (Propshaft doesn't have cache.clear like Sprockets)
+      if defined?(Rails.application.assets)
+        if Rails.application.assets.respond_to?(:cache)
+          Rails.application.assets.cache.clear
+        end
+      end
+      
+      # Clear Sprockets cache if available (for legacy support)
+      if defined?(Sprockets)
+        Sprockets.cache.clear if Sprockets.respond_to?(:cache)
+      end
+      
+      # Log asset cleanup
+      if defined?(Rails.logger)
+        Rails.logger.info "#{self.class.name} assets flushed"
+      end
+    end
+  end
+
+  # Flush all resources including assets
+  def flush_all_resources
+    flush_resources
+    flush_assets
+  end
 end

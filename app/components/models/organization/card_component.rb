@@ -6,10 +6,6 @@ class Models::Organization::CardComponent < Layout::Card::CardComponent
     super(show_actions: show_actions, **system_arguments)
   end
 
-  private
-
-  attr_reader :organization, :admin_context
-
   def card_classes
     "#{condensed_card_classes} h-full #{system_arguments[:class]}".strip
   end
@@ -55,5 +51,9 @@ class Models::Organization::CardComponent < Layout::Card::CardComponent
       link_to: method(:link_to)
     }
   end
+
+  private
+
+  attr_reader :organization, :admin_context
 end
 

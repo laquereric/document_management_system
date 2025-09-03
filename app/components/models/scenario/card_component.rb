@@ -1,14 +1,10 @@
-class Models::Scenario::CardComponent < ApplicationComponent
+class Models::Scenario::CardComponent < Layout::Card::CardComponent
   def initialize(scenario:, show_actions: true, admin_context: false, **system_arguments)
     @scenario = scenario
-    @show_actions = show_actions
     @admin_context = admin_context
     @system_arguments = merge_system_arguments(system_arguments)
+    super(show_actions: show_actions)
   end
-
-  private
-
-  attr_reader :scenario, :show_actions, :admin_context, :system_arguments
 
   def card_classes
     "Box p-3 h-full #{system_arguments[:class]}"
@@ -51,4 +47,8 @@ class Models::Scenario::CardComponent < ApplicationComponent
       time_ago_in_words: method(:time_ago_in_words)
     }
   end
+
+  private
+
+  attr_reader :scenario, :admin_context, :system_arguments
 end
