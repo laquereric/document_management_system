@@ -31,6 +31,14 @@ module DocumentManagementSystem
     # Load ViewComponent configuration
     config.autoload_paths += %W[#{config.root}/app/components]
 
+    # Fix for Rails 8 frozen array issues - ensure paths are mutable
+    if config.autoload_paths.frozen?
+      config.autoload_paths = config.autoload_paths.dup
+    end
+    if config.eager_load_paths.frozen?
+      config.eager_load_paths = config.eager_load_paths.dup
+    end
+
     # Enable autosave functionality
     config.autosave = true
     config.autosave_interval = 30.seconds

@@ -57,4 +57,23 @@ Rails.application.configure do
 
   # Disable frozen string literals for test environment to avoid conflicts
   config.active_support.frozen_string_literal = false
+
+  # Fix for Rails 8 frozen array issues with Zeitwerk and Bootsnap
+  if config.autoload_paths.frozen?
+    config.autoload_paths = config.autoload_paths.dup
+  end
+  if config.eager_load_paths.frozen?
+    config.eager_load_paths = config.eager_load_paths.dup
+  end
+
+  # Disable Bootsnap in test environment to avoid frozen array issues
+  config.after_initialize do
+    if defined?(Bootsnap)
+      Bootsnap.singleton_class.prepend(Module.new do
+        def load_path_cache
+          @load_path_cache ||= super.dup
+        end
+      end)
+    end
+  end
 end

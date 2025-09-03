@@ -79,8 +79,8 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
 
-  # Cucumber for BDD testing
-  gem "cucumber-rails", require: false
+  # Cucumber for BDD testing (removed - not compatible with Rails 8)
+  # gem "cucumber-rails", require: false
   gem "database_cleaner-active_record"
 end
 

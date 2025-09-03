@@ -47,6 +47,24 @@ RSpec.configure do |config|
   config.before(:suite) do
     # Ensure load paths are not frozen
     $LOAD_PATH.dup.each { |path| $LOAD_PATH << path unless $LOAD_PATH.frozen? }
+
+    # Fix Zeitwerk frozen array issues
+    if defined?(Zeitwerk::Loader)
+      Zeitwerk::Loader.class_eval do
+        def push_dir(dir)
+          @dirs = @dirs.dup
+          @dirs << dir
+        end
+      end
+    end
+
+    # Fix autoload paths
+    if Rails.application.config.respond_to?(:autoload_paths)
+      Rails.application.config.autoload_paths = Rails.application.config.autoload_paths.dup
+    end
+    if Rails.application.config.respond_to?(:eager_load_paths)
+      Rails.application.config.eager_load_paths = Rails.application.config.eager_load_paths.dup
+    end
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
