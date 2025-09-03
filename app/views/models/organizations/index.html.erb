@@ -1,8 +1,8 @@
 <% content_for :title, "Manage Organizations" %>
 
-<%= render(Layout::PageContent.new(padding: :none)) do %>
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <%= render(Layout::PageHeader.new(
+  <%= render(Layout::Page::PageHeader.new(
     title: "Manage Organizations",
     description: "Admin organization management and settings",
     icon: "organization",

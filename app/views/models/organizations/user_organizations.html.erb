@@ -1,8 +1,8 @@
 <% content_for :title, "#{@user.name}'s Organizations" %>
 
-<%= render(Layout::PageContent.new(padding: :none)) do %>
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <%= render(Layout::PageHeader.new(
+  <%= render(Layout::Page::PageHeader.new(
     title: "#{@user.name}'s Organizations",
     description: "Organizations that #{@user.name} is part of through teams",
     icon: "organization"

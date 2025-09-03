@@ -308,6 +308,31 @@ Advanced search form with multiple filters.
 <%= render(Layout::Navigation::Search::SearchFormComponent.new(q: @q)) %>
 ```
 
+### Page Layout Components
+
+#### PageContentComponent
+Page content wrapper with configurable padding.
+
+```erb
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
+  <!-- Page content here -->
+<% end %>
+```
+
+#### PageHeaderComponent
+Page header with title, description, and optional action button.
+
+```erb
+<%= render(Layout::Page::PageHeader.new(
+  title: "Page Title",
+  description: "Page description",
+  action: {
+    text: "Action Button",
+    url: action_path
+  }
+)) %>
+```
+
 ### Card List Components
 
 #### SearchAndFiltersComponent
@@ -500,6 +525,7 @@ The components have been reconciled to match the actual file structure and usage
 - **Organization Components**: Fixed `Organization::CardComponent` → `Models::Organization::CardComponent`
 - **User Components**: Fixed `Layout::UserCardComponent` → `Models::Users::CardComponent`
 - **Form Components**: Fixed `Forms::FolderFormComponent` → `Models::Folder::FolderFormComponent`
+- **Page Components**: Fixed `Layout::PageContent` → `Layout::Page::PageContent` and `Layout::PageHeader` → `Layout::Page::PageHeader`
 
 ### 🔧 Components Added to Documentation
 - `Models::Users::UserMenuComponent` - User account menu
@@ -517,6 +543,8 @@ The components have been reconciled to match the actual file structure and usage
 - `Layout::CardList::SearchFilterSort::SearchAndFiltersComponent` - Search and filters
 - `Layout::CardList::Pagination::PaginationComponent` - Pagination controls
 - `Layout::Dashboard::StatisticsGridComponent` - Statistics grid layout
+- `Layout::Page::PageContent` - Page content wrapper
+- `Layout::Page::PageHeader` - Page header component
 
 ### 📁 Current Component Structure
 The components are organized into logical groups:

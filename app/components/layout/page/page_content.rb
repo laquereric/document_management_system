@@ -1,4 +1,4 @@
-class Layout::PageContent < ApplicationComponent
+class Layout::Page::PageContent < ApplicationComponent
 
   def initialize(
     padding: :default,

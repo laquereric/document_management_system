@@ -1,8 +1,8 @@
 <% content_for :title, "Documents" %>
 
-<%= render(Layout::PageContent.new(padding: :none)) do %>
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <%= render(Layout::PageHeader.new(
+  <%= render(Layout::Page::PageHeader.new(
     title: "Documents",
     description: "Manage and organize your documents",
     icon: "file-text",

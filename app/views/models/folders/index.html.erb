@@ -1,8 +1,8 @@
 <% content_for :title, "Folders" %>
 
-<%= render(Layout::PageContent.new(padding: :none)) do %>
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <%= render(Layout::PageHeader.new(
+  <%= render(Layout::Page::PageHeader.new(
     title: "Folders",
     description: "Manage and organize your document folders",
     icon: "file-directory",

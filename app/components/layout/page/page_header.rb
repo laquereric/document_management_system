@@ -1,4 +1,4 @@
-class Layout::PageHeader < ApplicationComponent
+class Layout::Page::PageHeader < ApplicationComponent
 
   def initialize(
     title:,

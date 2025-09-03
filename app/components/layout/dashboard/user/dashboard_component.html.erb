@@ -1,36 +1,80 @@
-<%= render(Layout::PageContent.new(padding: :none)) do %>
+<div class="<%= dashboard_classes %>">
   <!-- Page Header -->
-  <%= render(Layout::Dashboard::HeaderComponent.new(**header_data)) %>
+  <div class="mb-4">
+    <h1 class="h1"><%= header_data[:title] %></h1>
+    <p class="color-fg-muted"><%= header_data[:description] %></p>
+  </div>
 
   <!-- Statistics Cards -->
-  <%= render(Layout::Dashboard::StatisticsGridComponent.new(
-    title: "Overview",
-    statistics: statistics_data
-  )) %>
+  <div class="d-flex flex-wrap gap-3 mb-5">
+    <% statistics_data.each do |stat| %>
+      <div class="Box p-3" style="min-width: 200px;">
+        <div class="d-flex flex-items-center">
+          <div class="mr-3">
+            <span class="Counter Counter--primary"><%= stat[:value] %></span>
+          </div>
+          <div>
+            <div class="f4 text-semibold"><%= stat[:title] %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
   <!-- Content Sections -->
-  <div class="mt-5">
-    <div class="d-lg-flex" style="gap: 24px;">
-      <!-- Recent Documents -->
-      <div class="flex-1 mb-4 mb-lg-0">
-        <%= render(Layout::Dashboard::RecentDocumentsComponent.new(
-          documents: recent_documents,
-          title: "Recent Documents",
-          view_all_path: documents_path,
-          view_all_text: "View All Documents",
-          new_document_path: new_document_path
-        )) %>
+  <div class="d-lg-flex" style="gap: 24px;">
+    <!-- Recent Documents -->
+    <div class="flex-1 mb-4 mb-lg-0">
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">Recent Documents</h3>
+          <a href="<%= documents_path %>" class="btn btn-sm">View All</a>
+        </div>
+        <div class="Box-body">
+          <% if recent_documents.any? %>
+            <% recent_documents.limit(5).each do |document| %>
+              <div class="d-flex flex-items-center py-2 border-bottom">
+                <div class="flex-1">
+                  <div class="f5 text-semibold">
+                    <a href="<%= document_path(document) %>"><%= document.title %></a>
+                  </div>
+                  <div class="f6 color-fg-muted">
+                    <%= document.created_at.strftime("%B %d, %Y") %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="color-fg-muted">No recent documents</p>
+          <% end %>
+        </div>
       </div>
-      
-      <!-- Recent Activity -->
-      <div class="flex-1">
-        <%= render(Layout::Dashboard::RecentActivityComponent.new(
-          activities: recent_activity,
-          title: "Recent Activity",
-          view_all_path: models_activities_path,
-          view_all_text: "View All Activity"
-        )) %>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="flex-1">
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">Recent Activity</h3>
+          <a href="<%= models_activities_path %>" class="btn btn-sm">View All</a>
+        </div>
+        <div class="Box-body">
+          <% if recent_activity.any? %>
+            <% recent_activity.limit(5).each do |activity| %>
+              <div class="d-flex flex-items-center py-2 border-bottom">
+                <div class="flex-1">
+                  <div class="f5 text-semibold"><%= activity.action %></div>
+                  <div class="f6 color-fg-muted">
+                    <%= activity.created_at.strftime("%B %d, %Y") %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="color-fg-muted">No recent activity</p>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-<% end %>
+</div>

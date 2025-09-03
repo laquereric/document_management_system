@@ -1,8 +1,8 @@
 <% content_for :title, "Manage Tags" %>
 
-<%= render(Layout::PageContent.new(padding: :none)) do %>
+<%= render(Layout::Page::PageContent.new(padding: :none)) do %>
   <!-- Page Header -->
-  <%= render(Layout::PageHeader.new(
+  <%= render(Layout::Page::PageHeader.new(
     title: "Manage Tags",
     description: "Manage and organize document tags across the system",
     icon: "tag",
