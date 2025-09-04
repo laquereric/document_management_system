@@ -12,7 +12,7 @@ class Primer::HeaderComponent < ApplicationComponent
     @system_arguments[:tag] = :header
     base_classes = ["Header"]
     base_classes << "Header--full" if @full
-    base_classes += ["border-bottom", "color-bg-default", "px-3 py-2"]
+    base_classes += ["border-bottom", "color-bg-default", "px-3 py-2", "d-flex", "flex-items-center"]
     base_classes << system_arguments[:classes] if system_arguments[:classes].present?
     
     @system_arguments[:classes] = base_classes.compact.join(" ")
@@ -25,7 +25,7 @@ class Primer::HeaderComponent < ApplicationComponent
   def brand_content
     render(Primer::BaseComponent.new(
       tag: :div,
-      classes: "Header-item d-flex flex-items-center"
+      classes: "Header-item"
     )) do
       link_to(
         root_path,
@@ -49,7 +49,7 @@ class Primer::HeaderComponent < ApplicationComponent
 
     render(Primer::BaseComponent.new(
       tag: :div,
-      classes: "Header-item d-none d-lg-flex"
+      classes: "Header-item d-none d-lg-block ml-3"
     )) do
       content_tag(:span, "/ #{title}", class: "color-fg-muted f5")
     end
@@ -58,7 +58,7 @@ class Primer::HeaderComponent < ApplicationComponent
   def search_section
     render(Primer::BaseComponent.new(
       tag: :div,
-      classes: "Header-item flex-auto d-none d-md-flex mx-3"
+      classes: "Header-item d-none d-md-block width-full"
     )) do
       render(Primer::SearchInputComponent.new(
         placeholder: "Search documents...",
@@ -70,7 +70,7 @@ class Primer::HeaderComponent < ApplicationComponent
   def actions_section
     render(Primer::BaseComponent.new(
       tag: :div,
-      classes: "Header-item d-flex flex-items-center"
+      classes: "Header-item"
     )) do
       safe_join([
         mobile_search_button,

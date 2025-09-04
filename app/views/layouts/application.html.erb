@@ -24,7 +24,7 @@
 
   <body>
     <!-- Header Navigation -->
-    <%= render(Primer::HeaderComponent.new(
+    <%= render(Layout::Navigation::HeaderComponent.new(
       current_user: current_user,
       title: content_for(:title)
     )) %>

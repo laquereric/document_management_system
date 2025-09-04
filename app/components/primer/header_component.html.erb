@@ -1,13 +1,20 @@
 <%= render(Primer::BaseComponent.new(**@system_arguments)) do %>
-  <!-- Brand/Logo Section -->
-  <%= brand_content %>
+  <!-- Header Row Container -->
+  <div class="Header-inner d-flex flex-items-center flex-justify-between width-full">
+    <!-- Left Section: Brand and Context -->
+    <div class="Header-section d-flex flex-items-center">
+      <%= brand_content %>
+      <%= context_section %>
+    </div>
 
-  <!-- Context Region -->
-  <%= context_section %>
+    <!-- Center Section: Search -->
+    <div class="Header-section d-flex flex-items-center flex-auto">
+      <%= search_section %>
+    </div>
 
-  <!-- Search Section -->
-  <%= search_section %>
-
-  <!-- Navigation Actions -->
-  <%= actions_section %>
+    <!-- Right Section: Actions -->
+    <div class="Header-section d-flex flex-items-center">
+      <%= actions_section %>
+    </div>
+  </div>
 <% end %>
