@@ -1,4 +1,5 @@
-class Dashboard::DashboardController < ApplicationController
+module Dashboard
+  class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   # Common dashboard functionality
@@ -35,4 +36,5 @@ class Dashboard::DashboardController < ApplicationController
       total_tags: Tag.count
     }
   end
+end
 end
