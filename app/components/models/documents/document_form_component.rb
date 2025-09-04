@@ -31,7 +31,7 @@ class Models::Documents::DocumentFormComponent < ApplicationComponent
   def folder_options
     return [] unless defined?(Folder)
     # Only show folders the user can access
-    folders = current_user.admin? ? Folder.all : Folder.joins(team: :team_memberships).where(team_memberships: { user: current_user })
+    folders = current_user&.admin? ? Folder.all : Folder.joins(team: :team_memberships).where(team_memberships: { user: current_user })
     options_from_collection_for_select(folders, :id, :name, document.folder_id)
   end
 
