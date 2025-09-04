@@ -20,9 +20,14 @@ class Models::DocumentsController < Models::ModelsController
     end
 
     # Filter by user's accessible documents
-    unless current_user.admin?
+    if current_user&.admin?
+      # Admin users can see all documents
+    elsif current_user
       team_ids = current_user.teams.pluck(:id)
       @documents = @documents.joins(folder: :team).where(teams: { id: team_ids })
+    else
+      # No user - show no documents
+      @documents = @documents.none
     end
   end
 
@@ -157,6 +162,12 @@ class Models::DocumentsController < Models::ModelsController
   end
 
   def ensure_user_can_access_document
+    # In authentication-free environment, allow access if no user or if user has permission
+    if current_user.nil?
+      # No user - allow access (authentication-free environment)
+      return
+    end
+    
     unless current_user.admin? || @document.team.members.include?(current_user)
       redirect_to models_documents_path, alert: "You do not have permission to access this document."
     end
