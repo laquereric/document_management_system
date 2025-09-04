@@ -132,11 +132,12 @@ class Primer::HeaderComponent < ApplicationComponent
     if current_user
       render(Models::Users::UserMenuComponent.new(user: current_user))
     else
-      render(Primer::Beta::Button.new(
-        href: new_user_session_path,
-        scheme: :primary
+      # In authentication-free environment, show a simple user indicator
+      render(Primer::BaseComponent.new(
+        tag: :div,
+        classes: "Header-item d-flex flex-items-center"
       )) do
-        "Sign In"
+        content_tag(:span, "Guest User", class: "color-fg-muted f6")
       end
     end
   end

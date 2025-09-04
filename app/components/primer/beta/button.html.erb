@@ -1,0 +1,11 @@
+<% if href %>
+  <%= link_to href, class: button_classes, **@system_arguments.except(:classes) do %>
+    <%= render_icon %>
+    <%= content %>
+  <% end %>
+<% else %>
+  <%= content_tag(:button, class: button_classes, **@system_arguments.except(:classes)) do %>
+    <%= render_icon %>
+    <%= content %>
+  <% end %>
+<% end %>

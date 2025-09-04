@@ -71,6 +71,9 @@ class ApplicationController < ActionController::Base
     true # Always signed in
   end
 
+  # Make current_user available to views
+  helper_method :current_user, :user_signed_in?
+
   def ensure_admin
     redirect_to root_path, alert: "Access denied." unless current_user&.admin?
   end
