@@ -7,9 +7,9 @@ RSpec.describe "Models::Documents", type: :request do
   let(:document) { create(:document, author: user, folder: folder) }
   let(:tag) { create(:tag) }
 
-  # before do
-  #   sign_in user
-  # end
+  before do
+    setup_test_data
+  end
 
   describe "GET /models/documents" do
     it "returns a successful response" do
@@ -237,91 +237,62 @@ RSpec.describe "Models::Documents", type: :request do
   end
 
   describe "authentication" do
-    context "when user is not signed in" do
-      before { sign_out user }
-
-      it "redirects to sign in page for index" do
+    context "in authentication-free environment" do
+      it "allows access to index without authentication" do
         get models_documents_path
-        expect(response).to redirect_to(new_user_session_path)
+        expect_successful_response
       end
 
-      it "redirects to sign in page for show" do
+      it "allows access to show without authentication" do
         get models_document_path(document)
-        expect(response).to redirect_to(new_user_session_path)
+        expect_successful_response
       end
 
-      it "redirects to sign in page for new" do
+      it "allows access to new without authentication" do
         get new_models_document_path
-        expect(response).to redirect_to(new_user_session_path)
+        expect_successful_response
       end
 
-      it "redirects to sign in page for edit" do
+      it "allows access to edit without authentication" do
         get edit_models_document_path(document)
-        expect(response).to redirect_to(new_user_session_path)
+        expect_successful_response
       end
 
-      it "redirects to sign in page for create" do
+      it "allows create without authentication" do
         post models_documents_path, params: { document: { title: "Test" } }
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to have_http_status(:redirect)
       end
 
-      it "redirects to sign in page for update" do
+      it "allows update without authentication" do
         patch models_document_path(document), params: { document: { title: "Updated" } }
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to have_http_status(:redirect)
       end
 
-      it "redirects to sign in page for destroy" do
+      it "allows destroy without authentication" do
         delete models_document_path(document)
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to have_http_status(:redirect)
       end
     end
   end
 
   describe "authorization" do
-    let(:other_user) { create(:user) }
+    let(:other_user) { create(:user, :member, organization: organization) }
     let(:other_document) { create(:document, author: other_user, folder: folder) }
 
-    context "when user is not admin and not the author" do
-      before do
-        user.update!(role: "member")
-        sign_in user
-      end
-
-      it "allows viewing documents" do
+    context "in authentication-free environment" do
+      it "allows viewing any document" do
         get models_document_path(other_document)
-        expect(response).to have_http_status(:success)
-      end
-
-      it "denies editing other user's document" do
-        get edit_models_document_path(other_document)
-        expect(response).to have_http_status(:forbidden)
-      end
-
-      it "denies updating other user's document" do
-        patch models_document_path(other_document), params: { document: { title: "Updated" } }
-        expect(response).to have_http_status(:forbidden)
-      end
-
-      it "denies deleting other user's document" do
-        delete models_document_path(other_document)
-        expect(response).to have_http_status(:forbidden)
-      end
-    end
-
-    context "when user is admin" do
-      before do
-        user.update!(role: "admin")
-        sign_in user
+        expect_successful_response
       end
 
       it "allows editing any document" do
         get edit_models_document_path(other_document)
-        expect(response).to have_http_status(:success)
+        expect_successful_response
       end
 
       it "allows updating any document" do
         patch models_document_path(other_document), params: { document: { title: "Updated" } }
-        expect(response).to redirect_to(models_document_path(other_document))
+        expect_redirect_to(models_document_path(other_document))
       end
 
       it "allows deleting any document" do

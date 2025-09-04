@@ -11,6 +11,7 @@ Dir[Rails.root.join('app', 'helpers', '**', '*.rb')].each { |f| require f }
 
 # Require test helpers
 require_relative 'support/controller_test_helpers'
+require_relative 'support/request_test_helpers'
 
 # Configure RSpec
 RSpec.configure do |config|
@@ -19,6 +20,7 @@ RSpec.configure do |config|
   
   # Include custom test helpers for authentication-free environment
   config.include ControllerTestHelpers, type: :controller
+  config.include RequestTestHelpers, type: :request
   
   # Remove fixture paths since we're using FactoryBot
   # config.fixture_paths = [
