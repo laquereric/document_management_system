@@ -33,6 +33,7 @@ module ControllerTestHelpers
     @team = create(:team, organization: @organization, leader: @team_leader)
     @folder = create(:folder, team: @team)
     @document = create(:document, folder: @folder, author: @member_user)
-    @tag = create(:tag, organization: @organization)
+    @status = create(:status)
+    @scenario = create(:scenario)
   end
 end

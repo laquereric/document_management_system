@@ -82,6 +82,7 @@ group :development, :test do
   gem "rspec-support", "~> 3.12"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
+  gem "rails-controller-testing"
 
   # Cucumber for BDD testing (removed - not compatible with Rails 8)
   # gem "cucumber-rails", require: false
