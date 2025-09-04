@@ -547,3 +547,39 @@
 .SideNav-item .color-fg-muted:hover {
   background: transparent;
 }
+
+/* Page header enhancements */
+.page-header {
+  background-color: var(--color-canvas-default);
+}
+
+.page-header-title-group {
+  gap: var(--base-size-8);
+}
+
+.page-header-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--borderRadius-full);
+  background-color: var(--color-accent-subtle);
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-accent-fg);
+  margin-right: var(--base-size-8);
+}
+
+.page-header-icon {
+  color: var(--color-accent-fg);
+}
+
+/* Sidebar visual tweaks for spacing */
+.SideNav-items {
+  padding: 8px;
+}
+
+.SideNav-item {
+  border-radius: var(--borderRadius-medium);
+  margin: 2px 0;
+}

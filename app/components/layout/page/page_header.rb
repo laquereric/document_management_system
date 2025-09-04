@@ -24,22 +24,22 @@ class Layout::Page::PageHeader < ApplicationComponent
   def container_classes
     case variant
     when :default
-      "d-flex flex-items-center flex-justify-between py-4 border-bottom"
+      "page-header d-flex flex-items-center flex-justify-between py-4 border-bottom mb-4"
     when :large
-      "d-flex flex-column flex-sm-row flex-items-center flex-sm-justify-between mb-6"
+      "page-header d-flex flex-column flex-sm-row flex-items-center flex-sm-justify-between mb-6"
     else
-      "d-flex flex-items-center flex-justify-between py-4 border-bottom"
+      "page-header d-flex flex-items-center flex-justify-between py-4 border-bottom mb-4"
     end
   end
 
   def title_container_classes
     case variant
     when :default
-      "d-flex flex-items-center"
+      "page-header-title-group d-flex flex-items-center"
     when :large
-      "mb-4 mb-sm-0"
+      "page-header-title-group mb-4 mb-sm-0"
     else
-      "d-flex flex-items-center"
+      "page-header-title-group d-flex flex-items-center"
     end
   end
 
@@ -68,11 +68,11 @@ class Layout::Page::PageHeader < ApplicationComponent
   def action_container_classes
     case variant
     when :default
-      "d-flex flex-items-center gap-2"
+      "page-header-actions d-flex flex-items-center gap-2"
     when :large
-      "d-flex flex-items-center gap-3"
+      "page-header-actions d-flex flex-items-center gap-3"
     else
-      "d-flex flex-items-center gap-2"
+      "page-header-actions d-flex flex-items-center gap-2"
     end
   end
 
@@ -88,7 +88,7 @@ class Layout::Page::PageHeader < ApplicationComponent
   end
 
   def icon_classes
-    "octicon octicon-#{icon} mr-2 #{icon_color}"
+    "octicon octicon-#{icon} mr-2 #{icon_color} page-header-icon"
   end
 
   def icon_size
