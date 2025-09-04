@@ -1,6 +1,9 @@
 # Fix for Rails 8 frozen array issues in test environment
 # This initializer handles frozen arrays that cause issues with Zeitwerk and Bootsnap
 
+#TODO - This messes up the test environment. Constants will not load!
+
+=begin
 if Rails.env.test?
   # Fix Zeitwerk frozen array issues
   if defined?(Zeitwerk::Loader)
@@ -35,3 +38,4 @@ if Rails.env.test?
     end
   end
 end
+=end
