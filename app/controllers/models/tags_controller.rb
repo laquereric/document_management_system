@@ -10,13 +10,13 @@ class Models::TagsController < Models::ModelsController
                .per(20)
 
     # Filter tags based on user permissions
-    if current_user.admin?
+    if current_user&.admin?
       # Admin sees all tags
       @tags = @tags
     elsif params[:user_id].present?
       # If viewing specific user's tags, check permissions
       user = User.find(params[:user_id])
-      if current_user == user || current_user.admin?
+      if current_user.nil? || current_user == user || current_user.admin?
         # Get tags that are associated with documents by this user
         user_document_ids = Document.where(author: user).pluck(:id)
         @tags = @tags.joins(:taggings).where(taggings: { taggable_type: "Document", taggable_id: user_document_ids }).distinct
@@ -27,8 +27,13 @@ class Models::TagsController < Models::ModelsController
       end
     else
       # Regular users see only tags on their own documents
-      current_user_document_ids = Document.where(author: current_user).pluck(:id)
-      @tags = @tags.joins(:taggings).where(taggings: { taggable_type: "Document", taggable_id: current_user_document_ids }).distinct
+      if current_user
+        current_user_document_ids = Document.where(author: current_user).pluck(:id)
+        @tags = @tags.joins(:taggings).where(taggings: { taggable_type: "Document", taggable_id: current_user_document_ids }).distinct
+      else
+        # No user - show no tags
+        @tags = @tags.none
+      end
     end
   end
 

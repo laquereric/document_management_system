@@ -39,7 +39,7 @@ class Models::UsersController < Models::ModelsController
   end
 
   def destroy
-    if @user == current_user
+    if current_user && @user == current_user
       redirect_to models_users_path, alert: "You cannot delete your own account."
     elsif @user.destroy
       redirect_to models_users_path, notice: "User was successfully deleted."
