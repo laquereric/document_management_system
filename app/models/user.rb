@@ -14,6 +14,9 @@ class User < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :role, presence: true, inclusion: { in: %w[admin team_leader member] }
+  
+  # Set default role
+  after_initialize :set_default_role, if: :new_record?
 
   # Scopes
   scope :admins, -> { where(role: "admin") }
@@ -47,5 +50,11 @@ class User < ApplicationRecord
 
   def total_tags
     tags.count
+  end
+
+  private
+
+  def set_default_role
+    self.role ||= "member"
   end
 end

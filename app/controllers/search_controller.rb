@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  before_action :authenticate_user!
+  # No authentication required in authentication-free environment
 
   def index
     @q = Document.ransack(params[:q])

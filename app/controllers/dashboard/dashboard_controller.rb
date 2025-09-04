@@ -1,6 +1,6 @@
 module Dashboard
   class DashboardController < ApplicationController
-  before_action :authenticate_user!
+  # No authentication required in authentication-free environment
 
   # Common dashboard functionality
   protected

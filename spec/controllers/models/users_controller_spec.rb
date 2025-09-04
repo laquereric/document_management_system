@@ -67,8 +67,6 @@ RSpec.describe Models::UsersController, type: :controller do
       {
         name: "New User",
         email: "newuser@example.com",
-        password: "password123",
-        password_confirmation: "password123",
         organization_id: organization.id
       }
     end

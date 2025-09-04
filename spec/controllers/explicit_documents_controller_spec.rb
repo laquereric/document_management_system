@@ -1,34 +1,6 @@
-require 'spec_helper'
-
-# Require minimal Rails components
-require 'action_controller/railtie'
-require 'action_view/railtie'
-require 'active_record/railtie'
-require 'rails'
-
-# Require gems used by the application
-# require 'devise' # Removed - using custom authentication
-require 'cancan'
-require 'factory_bot'
-
-# Create the Models module
-module Models; end
-
-# Load models
-Dir[File.expand_path('../../app/models/*.rb', __FILE__)].each { |f| require f }
-
-# Explicitly require the controllers we want to test
-require_relative '../../app/controllers/application_controller'
-require_relative '../../app/controllers/models/models_controller'
-require_relative '../../app/controllers/models/documents_controller'
-
-# Configure FactoryBot
-FactoryBot.definition_file_paths = ['spec/factories']
-FactoryBot.find_definitions
+require 'rails_helper'
 
 RSpec.describe Models::DocumentsController, type: :controller do
-  include FactoryBot::Syntax::Methods
-  
   let(:organization) { create(:organization) }
   let(:team) { create(:team, organization: organization) }
   let(:folder) { create(:folder, team: team) }
@@ -36,6 +8,7 @@ RSpec.describe Models::DocumentsController, type: :controller do
   let(:document) { create(:document, author: user, folder: folder) }
 
   before do
+    setup_test_data
     sign_in user
   end
 

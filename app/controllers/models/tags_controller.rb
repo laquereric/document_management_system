@@ -4,7 +4,7 @@ class Models::TagsController < Models::ModelsController
   def index
     @q = Tag.ransack(params[:q])
     @tags = @q.result(distinct: true)
-               .includes(:taggings, :organization, :team, :folder)
+               .includes(:organization, :team, :folder)
                .order(created_at: :desc)
                .page(params[:page])
                .per(20)
@@ -17,23 +17,30 @@ class Models::TagsController < Models::ModelsController
       # If viewing specific user's tags, check permissions
       user = User.find(params[:user_id])
       if current_user == user || current_user.admin?
-        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: "Document" }, documents: { author: user }).distinct
+        # Get tags that are associated with documents by this user
+        user_document_ids = Document.where(author: user).pluck(:id)
+        @tags = @tags.joins(:taggings).where(taggings: { taggable_type: "Document", taggable_id: user_document_ids }).distinct
       else
         # Regular users can only see tags on their own documents
-        @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: "Document" }, documents: { author: current_user }).distinct
+        current_user_document_ids = Document.where(author: current_user).pluck(:id)
+        @tags = @tags.joins(:taggings).where(taggings: { taggable_type: "Document", taggable_id: current_user_document_ids }).distinct
       end
     else
       # Regular users see only tags on their own documents
-      @tags = @tags.joins(taggings: :taggable).where(taggings: { taggable_type: "Document" }, documents: { author: current_user }).distinct
+      current_user_document_ids = Document.where(author: current_user).pluck(:id)
+      @tags = @tags.joins(:taggings).where(taggings: { taggable_type: "Document", taggable_id: current_user_document_ids }).distinct
     end
   end
 
 
 
   def show
-    @documents = @tag.documents.includes(:author, :folder, :status, :tags)
-                    .page(params[:page])
-                    .per(20)
+    # Get documents with this tag using a proper ActiveRecord query
+    @documents = Document.joins(:taggings)
+                         .where(taggings: { tag_id: @tag.id })
+                         .includes(:author, :folder, :status, :tags)
+                         .page(params[:page])
+                         .per(20)
   end
 
   def new

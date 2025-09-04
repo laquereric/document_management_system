@@ -2,7 +2,7 @@
 require "ostruct"
 
 class Models::ComponentTestController < Models::ModelsController
-  skip_before_action :authenticate_user!, only: [ :index ] if Rails.env.development?
+  # No authentication required in authentication-free environment
 
   def index
     # Sample data for components

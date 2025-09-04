@@ -65,7 +65,8 @@ class Models::UsersController < Models::ModelsController
 
   def user_params
     # Only allow role changes for admins
-    permitted_params = [ :name, :email, :organization_id, :password, :password_confirmation ]
+    # No password attributes in authentication-free environment
+    permitted_params = [ :name, :email, :organization_id ]
     permitted_params << :role if current_user&.admin?
     params.require(:user).permit(permitted_params)
   end
