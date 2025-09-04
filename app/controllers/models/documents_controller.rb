@@ -116,7 +116,7 @@ class Models::DocumentsController < Models::ModelsController
       Activity.create!(
         document: @document,
         user: current_user,
-        action: "tag_added",
+        action: "tagged",
         notes: "Added tag: #{tag.name}"
       )
     end
@@ -129,7 +129,7 @@ class Models::DocumentsController < Models::ModelsController
     Activity.create!(
       document: @document,
       user: current_user,
-      action: "tag_removed",
+      action: "untagged",
       notes: "Removed tag: #{tag.name}"
     )
     redirect_to @document
