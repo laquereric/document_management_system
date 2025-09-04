@@ -13,12 +13,9 @@ class Models::OrganizationsController < Models::ModelsController
   end
 
   def user_organizations
-    @organizations = @user.teams.joins(:organization)
-                          .includes(:users, :teams)
-                          .distinct
-                          .order(created_at: :desc)
-                          .page(params[:page])
-                          .per(20)
+    # Get organizations through user's teams
+    @organizations = @user.teams.includes(:organization).map(&:organization).uniq
+    @organizations = Kaminari.paginate_array(@organizations).page(params[:page]).per(20)
 
     render :user_organizations
   end

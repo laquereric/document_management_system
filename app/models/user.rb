@@ -1,11 +1,9 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  # Basic validations (no authentication required)
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
 
   # Associations
-  belongs_to :organization, optional: true
+  belongs_to :organization
   has_many :team_memberships, dependent: :destroy
   has_many :teams, through: :team_memberships
   has_many :led_teams, class_name: "Team", foreign_key: "leader_id", dependent: :nullify
@@ -16,6 +14,9 @@ class User < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :role, presence: true, inclusion: { in: %w[admin team_leader member] }
+  
+  # Set default role
+  after_initialize :set_default_role, if: :new_record?
 
   # Scopes
   scope :admins, -> { where(role: "admin") }
@@ -49,5 +50,11 @@ class User < ApplicationRecord
 
   def total_tags
     tags.count
+  end
+
+  private
+
+  def set_default_role
+    self.role ||= "member"
   end
 end

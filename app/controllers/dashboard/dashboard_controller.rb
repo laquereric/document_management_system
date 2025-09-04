@@ -1,5 +1,6 @@
-class Dashboard::DashboardController < ApplicationController
-  before_action :authenticate_user!
+module Dashboard
+  class DashboardController < ApplicationController
+  # No authentication required in authentication-free environment
 
   # Common dashboard functionality
   protected
@@ -35,4 +36,5 @@ class Dashboard::DashboardController < ApplicationController
       total_tags: Tag.count
     }
   end
+end
 end

@@ -27,8 +27,10 @@ class Layout::Navigation::HeaderComponent < ApplicationComponent
     helpers.root_path
   end
 
-  def new_user_session_path
-    helpers.new_user_session_path
+
+
+  def components_path
+    helpers.components_path
   end
 
   # Context methods for the template
@@ -38,12 +40,12 @@ class Layout::Navigation::HeaderComponent < ApplicationComponent
       brand_classes: brand_classes,
       nav_classes: nav_classes,
       root_path: root_path,
-      new_user_session_path: new_user_session_path,
+
+      components_path: components_path,
       current_user: current_user,
       title: title,
       Rails: Rails,
-      root_path_helper: method(:root_path),
-      new_user_session_path_helper: method(:new_user_session_path)
+      root_path_helper: method(:root_path)
     }
   end
 end

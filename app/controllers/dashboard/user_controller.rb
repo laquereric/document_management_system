@@ -1,4 +1,5 @@
-class Dashboard::UserController < Dashboard::DashboardController
+module Dashboard
+  class UserController < Dashboard::DashboardController
   before_action :set_user, only: [ :index ]
 
   def index
@@ -20,5 +21,6 @@ class Dashboard::UserController < Dashboard::DashboardController
 
   def set_user
     @user = params[:user_id] ? User.find(params[:user_id]) : current_user
+  end
   end
 end

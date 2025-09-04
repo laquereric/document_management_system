@@ -1,6 +1,6 @@
-<%= render(Primer::Beta::BorderBox.new) do %>
+<%= render(Primer::CardComponent.new) do %>
   <!-- Card Header -->
-  <%= render(Primer::Beta::BorderBox::Header.new) do %>
+  <div class="Box-header">
     <div class="d-flex flex-items-center flex-justify-between">
       <div class="d-flex flex-items-center">
         <div class="mr-3">
@@ -29,10 +29,10 @@
         <%= render(Layout::Card::ActionsMenuComponent.new(resource: user, resource_type: 'user')) %>
       <% end %>
     </div>
-  <% end %>
+  </div>
 
   <!-- Card Body -->
-  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+  <div class="Box-body">
     <div class="d-flex flex-column" style="gap: 16px;">
       <!-- Role Badge -->
       <div class="d-flex flex-items-center flex-justify-between p-3 border rounded-2">
@@ -109,11 +109,11 @@
         </span>
       </div>
     </div>
-  <% end %>
+  </div>
 
   <!-- Card Footer with Actions -->
   <% if can_edit_user? || can_manage_user? %>
-    <%= render(Primer::Beta::BorderBox::Footer.new) do %>
+    <div class="Box-footer">
       <div class="d-flex flex-items-center flex-justify-between">
         <div class="d-flex flex-items-center" style="gap: 12px;">
           <% if context == :admin %>
@@ -145,6 +145,6 @@
           <% end %>
         </div>
       </div>
-    <% end %>
+    </div>
   <% end %>
 <% end %>

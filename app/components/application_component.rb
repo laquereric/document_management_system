@@ -12,6 +12,14 @@ class ApplicationComponent < ViewComponent::Base
   include ActionView::Helpers::DateHelper
   include ActionView::Helpers::TextHelper
 
+  def initialize(**system_arguments)
+    @system_arguments = system_arguments
+  end
+
+  private
+
+  attr_reader :system_arguments
+
   # Define common system arguments
   DEFAULT_SYSTEM_ARGUMENTS = {
     border: false,

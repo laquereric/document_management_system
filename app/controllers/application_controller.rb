@@ -4,11 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_controller_path
 
-  # Devise authentication - skip if CI/CD security is disabled
-  before_action :authenticate_user!, unless: :cicd_security_disabled?
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
-  # Set current user for activity logging
+  # Set current user for activity logging (no authentication required)
   before_action :set_current_user
 
   # Authorization
@@ -18,11 +14,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :organization_id, :role ])
-    devise_parameter_sanitizer.permit(:account_update, keys: [ :name, :organization_id, :role ])
-  end
-
   private
 
   def set_controller_path
@@ -31,38 +22,38 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_user
-    if cicd_security_disabled?
-      # Set admin user for CI/CD environments
-      cicd_user = User.find_by(email: "admin@example.com")
-      if cicd_user
-        Current.user = cicd_user
-        # Set current_user for Devise compatibility
-        @current_user = cicd_user
-        # Also set the instance variable that Devise expects
-        instance_variable_set(:@current_user, cicd_user)
-      else
-        # Create admin user if it doesn't exist
-        cicd_user = create_cicd_admin_user
-        Current.user = cicd_user
-        @current_user = cicd_user
-        instance_variable_set(:@current_user, cicd_user)
-      end
+    # Always set a default admin user for the application
+    admin_user = User.find_by(email: "admin@example.com")
+    if admin_user
+      Current.user = admin_user
+      @current_user = admin_user
     else
-      Current.user = current_user if user_signed_in?
+      # Only create admin user if not in test environment or if explicitly needed
+      unless Rails.env.test?
+        admin_user = create_default_admin_user
+        Current.user = admin_user
+        @current_user = admin_user
+      else
+        # In test environment, just set a nil user to avoid side effects
+        Current.user = nil
+        @current_user = nil
+      end
     end
   end
 
-  def create_cicd_admin_user
+  def create_default_admin_user
     # Create organization first if it doesn't exist
-    organization = Organization.find_or_create_by(name: "CI/CD Organization") do |org|
-      org.description = "Organization for CI/CD testing"
+    organization = Organization.find_by(name: "Default Organization")
+    unless organization
+      organization = Organization.create!(
+        name: "Default Organization",
+        description: "Default organization for the application"
+      )
     end
 
     User.create!(
       email: "admin@example.com",
-      password: "password123",
-      password_confirmation: "password123",
-      name: "CI/CD Admin",
+      name: "Admin User",
       role: "admin",
       organization: organization
     )
@@ -71,19 +62,17 @@ class ApplicationController < ActionController::Base
     User.find_by(email: "admin@example.com")
   end
 
-  def cicd_security_disabled?
-    # Check if the constant is defined and true
-    defined?(CiCdSecurityDisable) && CiCdSecurityDisable == true
-  rescue NameError
-    # If there's an error reading the constant, check the file directly
-    cicd_security_file = Rails.root.join("config", "initializers", "cicd_security.rb")
-    if File.exist?(cicd_security_file)
-      file_content = File.read(cicd_security_file)
-      file_content.include?("CiCdSecurityDisable = true")
-    else
-      false
-    end
+  # Always return the current user (no authentication required)
+  def current_user
+    @current_user
   end
+
+  def user_signed_in?
+    true # Always signed in
+  end
+
+  # Make current_user available to views
+  helper_method :current_user, :user_signed_in?
 
   def ensure_admin
     redirect_to root_path, alert: "Access denied." unless current_user&.admin?

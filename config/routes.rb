@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get "search/index", to: "search#index"
-  devise_for :users
 
   # Root route - point directly to user dashboard
   root "dashboard/user#index"
@@ -48,8 +47,8 @@ Rails.application.routes.draw do
     patch "documents/:id", to: "documents#update"
     delete "documents/:id", to: "documents#destroy"
     patch "documents/:id/change_status", to: "documents#change_status"
-    post "documents/:id/add_tag", to: "documents#add_tag"
-    delete "documents/:id/remove_tag", to: "documents#remove_tag"
+    post "documents/:id/add_tag", to: "documents#add_tag", as: :add_tag
+    delete "documents/:id/remove_tag/:tag_id", to: "documents#remove_tag", as: :remove_tag
     get "documents/search", to: "documents#search"
 
     # Teams routes
@@ -73,6 +72,7 @@ Rails.application.routes.draw do
     post "organizations", to: "organizations#create"
     patch "organizations/:id", to: "organizations#update"
     delete "organizations/:id", to: "organizations#destroy"
+    get "users/:user_id/organizations", to: "organizations#user_organizations", as: :user_organizations
 
     # Scenarios routes
     get "scenarios", to: "scenarios#index"
@@ -93,6 +93,9 @@ Rails.application.routes.draw do
     patch "users/:id/toggle_role", to: "users#toggle_role", as: :toggle_role_user
     delete "users/:id", to: "users#destroy"
   end
+
+  # Components catalog
+  get "components", to: "components#index"
 
   # Main application routes
   resources :organizations do

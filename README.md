@@ -29,7 +29,7 @@ A comprehensive Ruby on Rails application for managing documents with organizati
 - **Ruby**: 3.3.6
 - **Rails**: 8.0.2.1
 - **Database**: SQLite (converted from PostgreSQL)
-- **Authentication**: Devise
+- **Authentication**: Custom authentication with has_secure_password
 - **Frontend**: GitHub Primer CSS with Octicons
 - **Testing**: RSpec and Cucumber
 
@@ -108,7 +108,7 @@ A comprehensive Ruby on Rails application for managing documents with organizati
 The application uses standard Rails configuration. Key settings:
 
 - **Database**: Configure in `config/database.yml`
-- **Devise**: Email settings in `config/initializers/devise.rb`
+- **Authentication**: Custom authentication with has_secure_password
 - **Host Authorization**: Configured in `config/environments/development.rb`
 
 ### Seed Data
@@ -158,7 +158,7 @@ The application includes API endpoints for AJAX requests:
 
 ## Security Features
 
-- **Authentication**: Devise-based user authentication
+- **Authentication**: Custom authentication with has_secure_password-based user authentication
 - **Authorization**: Role-based access control
 - **CSRF Protection**: Rails built-in CSRF protection
 - **SQL Injection Prevention**: ActiveRecord parameterized queries

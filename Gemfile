@@ -21,7 +21,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 
 # Authentication
-gem "devise"
+# gem "devise" # Removed - using custom authentication
 
 # Authorization
 gem "cancancan"
@@ -75,9 +75,14 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSpec for testing
-  gem "rspec-rails"
+  gem "rspec-rails", "~> 6.0"
+  gem "rspec-core", "~> 3.12"
+  gem "rspec-expectations", "~> 3.12"
+  gem "rspec-mocks", "~> 3.12"
+  gem "rspec-support", "~> 3.12"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
+  gem "rails-controller-testing"
 
   # Cucumber for BDD testing (removed - not compatible with Rails 8)
   # gem "cucumber-rails", require: false

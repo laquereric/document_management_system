@@ -1,43 +1,37 @@
-<!-- User menu using Primer components -->
-<%= render Primer::Alpha::ActionMenu.new do |menu| %>
-  <% menu.with_show_button do %>
-    <%= render Primer::Beta::Button.new(
-      scheme: :default,
-      size: :small,
-      "aria-label": "User menu"
-    ) do %>
-      <!-- User Avatar -->
-      <div class="avatar avatar-small mr-2">
-        <div class="avatar-inner">
-          <%= user_initials %>
-        </div>
+<!-- User menu using simple dropdown -->
+<div class="dropdown">
+  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <!-- User Avatar -->
+    <div class="avatar avatar-small mr-2">
+      <div class="avatar-inner">
+        <%= user_initials %>
       </div>
-      
-      <!-- Dropdown Arrow -->
-      <%= render Primer::Beta::Octicon.new(icon: :"chevron-down") %>
-    <% end %>
-  <% end %>
-
-  <!-- User Info Header -->
-  <%= menu.with_item do %>
-    <div class="f6 color-fg-muted">Signed in as</div>
-    <div class="text-bold"><%= user.email %></div>
-  <% end %>
-
-  <!-- Menu Items -->
-  <% menu_items.each do |item| %>
-    <% if item == :divider %>
-      <%= menu.with_divider %>
-    <% else %>
-      <% href = item[:label] == 'Sign Out' ? destroy_user_session_path : item[:href] %>
-      <%= menu.with_item(
-        href: href,
-        data: { method: item[:method] },
-        classes: item[:classes]
-      ) do %>
-        <%= render Primer::Beta::Octicon.new(icon: item[:icon], mr: 2) %>
-        <%= item[:label] %>
+    </div>
+    
+    <!-- Dropdown Arrow -->
+    <%= render Primer::Beta::Octicon.new(icon: :"chevron-down") %>
+  </button>
+  
+  <ul class="dropdown-menu">
+    <!-- User Info Header -->
+    <li class="dropdown-header">
+      <div class="f6 color-fg-muted">Signed in as</div>
+      <div class="text-bold"><%= user.email %></div>
+    </li>
+    
+    <!-- Menu Items -->
+    <% menu_items.each do |item| %>
+      <% if item == :divider %>
+        <li><hr class="dropdown-divider"></li>
+      <% else %>
+        <li>
+          <a class="dropdown-item <%= item[:classes] %>" href="<%= item[:href] %>" 
+             <% if item[:method] %>data-method="<%= item[:method] %>"<% end %>>
+            <%= render Primer::Beta::Octicon.new(icon: item[:icon], mr: 2) %>
+            <%= item[:label] %>
+          </a>
+        </li>
       <% end %>
     <% end %>
-  <% end %>
-<% end %>
+  </ul>
+</div>

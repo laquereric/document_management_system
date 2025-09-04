@@ -1,216 +1,199 @@
 <% content_for :title, @document.title %>
 
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3">
-      <%= render(Layout::Navigation::SidebarComponent.new(controller_name: @controller_name,current_user: current_user)) %>
+<%= render Layout::Page::PageContent.new(padding: :none) do %>
+  <!-- Page Header -->
+  <%= render Layout::Page::PageHeader.new(
+    title: @document.title,
+    description: "Document in #{@document.folder&.name || 'workspace'}",
+    icon: "file-text",
+    breadcrumb_items: [
+      { text: "Documents", url: models_documents_path },
+      { text: @document.folder&.name || "Unknown", url: @document.folder ? models_folder_path(@document.folder) : "#" },
+      { text: @document.title, url: "#" }
+    ]
+  ) do %>
+    <div class="d-flex gap-2">
+      <%= render Ui::StatusBadgeComponent.new(status: @document.status) if @document.status %>
+      <%= render Primer::Beta::Button.new(
+        tag: :a, 
+        href: models_edit_document_path(@document),
+        variant: :primary,
+        size: :small
+      ) do %>
+        <%= render Primer::Beta::Octicon.new(icon: "pencil", size: :small, classes: "mr-1") %>
+        Edit
+      <% end %>
     </div>
-    
-    <!-- Main Content -->
-    <div class="col-md-9">
-      <!-- Header -->
-      <%= render(Layout::Navigation::HeaderComponent.new(current_user: current_user)) %>
-      
-      <!-- Breadcrumbs -->
-      <%= render(Layout::Navigation::BreadcrumbComponent.new(
-        items: [
-          { text: "Home", url: root_path },
-          { text: @document.folder.team.organization.name, url: models_organization_path(@document.folder.team.organization) },
-                      { text: @document.folder.team.name, url: models_team_path(@document.folder.team) },
-                      { text: @document.folder.name, url: models_folder_path(@document.folder) },
-          { text: @document.title, url: "#" }
-        ]
-      )) %>
-      
-      <!-- Document Header -->
-      <div class="row mb-4">
-        <div class="col-12">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h1 class="mb-2"><%= @document.title %></h1>
-              <div class="d-flex align-items-center gap-3 text-muted">
-                <span>
-                  <i class="bi bi-person"></i> <%= @document.author.name %>
-                </span>
-                <span>
-                  <i class="bi bi-folder"></i> <%= @document.folder.name %>
-                </span>
-                <span>
-                  <i class="bi bi-clock"></i> <%= time_ago_in_words(@document.created_at) %> ago
-                </span>
-              </div>
+  <% end %>
+
+  <!-- Main Content -->
+  <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-start">
+    <!-- Main Column -->
+    <div class="Layout-main">
+      <!-- Document Content -->
+      <div class="Box mb-4">
+        <div class="Box-header">
+          <h3 class="Box-title">Content</h3>
+        </div>
+        <div class="Box-body">
+          <% if @document.content.present? %>
+            <div class="markdown-body">
+              <%= simple_format(@document.content, {}, wrapper_tag: "div") %>
             </div>
-            <div class="d-flex gap-2">
-              <%= render(Ui::StatusBadgeComponent.new(status: @document.status)) %>
-              <%= link_to "Edit", models_edit_document_path(@document), class: "btn btn-primary" %>
-            </div>
-          </div>
+          <% else %>
+            <%= render Ui::EmptyStateComponent.new(
+              title: "No content", 
+              description: "This document doesn't have any content yet.",
+              icon: "file"
+            ) %>
+          <% end %>
         </div>
       </div>
-      
-      <!-- Document Content and Metadata -->
-      <div class="row">
-        <!-- Main Content -->
-        <div class="col-md-8">
-          <div class="card mb-4">
-            <div class="card-header">
-              <h5 class="mb-0">Content</h5>
-            </div>
-            <div class="card-body">
-              <div class="document-content">
-                <%= simple_format(@document.content) %>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Tags -->
-          <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">Tags</h5>
-              <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTagModal">
-                <i class="bi bi-plus"></i> Add Tag
-              </button>
-            </div>
-            <div class="card-body">
-              <% if @document.tags.any? %>
-                <% @document.tags.each do |tag| %>
-                  <%= render(Models::Tags::TagItemComponent.new(
-                    tag: tag,
-                    removable: true,
-                    document: @document
-                  )) %>
-                <% end %>
-              <% else %>
-                <p class="text-muted mb-0">No tags added yet.</p>
-              <% end %>
-            </div>
-          </div>
-          
-          <!-- Activity Log -->
-          <div class="card">
-            <div class="card-header">
-              <h5 class="mb-0">Activity</h5>
-            </div>
-            <div class="card-body">
-                      <% if @activities.any? %>
-          <% @activities.each do |activity| %>
-                                      <%= render(Models::Activities::ActivityItemComponent.new(activity: activity)) %>
-                <% end %>
-              <% else %>
-                <%= render(Ui::EmptyStateComponent.new(
-                  title: "No Activity",
-                  description: "No activity has been recorded for this document yet.",
-                  icon: "activity"
-                )) %>
-              <% end %>
-            </div>
-          </div>
+
+      <!-- Tags Section -->
+      <div class="Box mb-4">
+        <div class="Box-header d-flex flex-items-center flex-justify-between">
+          <h3 class="Box-title">Tags</h3>
+          <%= render Primer::Beta::Button.new(
+            size: :small,
+            scheme: :secondary,
+            "data-action": "click->modal#show",
+            "data-target": "add-tag-modal"
+          ) do %>
+            <%= render Primer::Beta::Octicon.new(icon: "plus", size: :small, classes: "mr-1") %>
+            Add Tag
+          <% end %>
         </div>
-        
-        <!-- Sidebar -->
-        <div class="col-md-4">
-          <!-- Document Actions -->
-          <div class="card mb-4">
-            <div class="card-header">
-              <h5 class="mb-0">Actions</h5>
+        <div class="Box-body">
+          <% if @document.tags.any? %>
+            <div class="d-flex flex-wrap gap-2">
+              <% @document.tags.each do |tag| %>
+                <%= render Models::Tags::TagItemComponent.new(tag: tag, removable: true, document: @document) %>
+              <% end %>
             </div>
-            <div class="card-body">
-              <%= render(Layout::Card::ActionsMenuComponent.new(resource: @document, resource_type: 'document')) %>
-            </div>
-          </div>
-          
-          <!-- Document Metadata -->
-          <div class="card mb-4">
-            <div class="card-header">
-              <h5 class="mb-0">Details</h5>
-            </div>
-            <div class="card-body">
-              <dl class="row mb-0">
-                <dt class="col-sm-4">Status</dt>
-                <dd class="col-sm-8">
-                  <%= render(Ui::StatusBadgeComponent.new(status: @document.status)) %>
-                </dd>
-                
-                <dt class="col-sm-4">Scenario</dt>
-                <dd class="col-sm-8"><%= @document.scenario.name %></dd>
-                
-                <dt class="col-sm-4">Created</dt>
-                <dd class="col-sm-8"><%= @document.created_at.strftime("%B %d, %Y") %></dd>
-                
-                <dt class="col-sm-4">Updated</dt>
-                <dd class="col-sm-8"><%= @document.updated_at.strftime("%B %d, %Y") %></dd>
-                
-                <% if @document.file.attached? %>
-                  <dt class="col-sm-4">File</dt>
-                  <dd class="col-sm-8">
-                    <%= link_to @document.file.filename, rails_blob_path(@document.file, disposition: "attachment"), class: "text-decoration-none" %>
-                    <br>
-                    <small class="text-muted">
-                      <%= number_to_human_size(@document.file.byte_size) %> • 
-                      <%= @document.file.content_type %>
-                    </small>
-                  </dd>
-                <% end %>
-              </dl>
-            </div>
-          </div>
-          
-          <!-- Related Documents -->
-          <div class="card">
-            <div class="card-header">
-              <h5 class="mb-0">Related Documents</h5>
-            </div>
-            <div class="card-body">
-              <% related_docs = @document.folder.documents.where.not(id: @document.id).limit(5) %>
-              <% if related_docs.any? %>
+          <% else %>
+            <%= render Ui::EmptyStateComponent.new(
+              title: "No tags",
+              description: "Add tags to help organize and categorize this document.",
+              icon: "tag"
+            ) %>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Activity Timeline -->
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">Activity Timeline</h3>
+        </div>
+        <div class="Box-body">
+          <% if @activities.any? %>
+            <%= render Models::Activities::TimelineComponent.new(activities: @activities) %>
+          <% else %>
+            <%= render Ui::EmptyStateComponent.new(
+              title: "No activity",
+              description: "No activity has been recorded for this document yet.",
+              icon: "clock"
+            ) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="Layout-sidebar">
+      <!-- Document Actions -->
+      <div class="Box mb-4">
+        <div class="Box-header">
+          <h3 class="Box-title">Actions</h3>
+        </div>
+        <div class="Box-body">
+          <%= render Layout::Card::ActionsMenuComponent.new(resource: @document, resource_type: 'document') %>
+        </div>
+      </div>
+
+      <!-- Document Details -->
+      <div class="Box mb-4">
+        <div class="Box-header">
+          <h3 class="Box-title">Details</h3>
+        </div>
+        <div class="Box-body">
+          <%= render Models::Documents::MetadataComponent.new(document: @document, layout: :vertical) %>
+        </div>
+      </div>
+
+      <!-- Related Documents -->
+      <div class="Box">
+        <div class="Box-header">
+          <h3 class="Box-title">Related Documents</h3>
+        </div>
+        <div class="Box-body">
+          <% if @document.folder.present? %>
+            <% related_docs = @document.folder.documents.where.not(id: @document.id).limit(5) %>
+            <% if related_docs.any? %>
+              <div class="d-flex flex-column" style="gap: 12px;">
                 <% related_docs.each do |doc| %>
-                  <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                    <div>
-                      <h6 class="mb-1">
-                        <%= link_to doc.title, doc, class: "text-decoration-none" %>
-                      </h6>
-                      <small class="text-muted">
-                        <%= render(Ui::StatusBadgeComponent.new(status: doc.status)) %>
-                      </small>
+                  <div class="d-flex flex-items-center flex-justify-between">
+                    <div class="flex-1 mr-2">
+                      <h4 class="f5 mb-1">
+                        <%= link_to doc.title, models_document_path(doc), class: "Link--primary" %>
+                      </h4>
+                      <div class="d-flex flex-items-center gap-2">
+                        <%= render Ui::StatusBadgeComponent.new(status: doc.status) if doc.status %>
+                        <span class="f6 color-fg-muted">
+                          <%= time_ago_in_words(doc.updated_at) %> ago
+                        </span>
+                      </div>
                     </div>
-                    <small class="text-muted">
-                      <%= time_ago_in_words(doc.updated_at) %> ago
-                    </small>
                   </div>
                 <% end %>
-              <% else %>
-                <p class="text-muted mb-0">No other documents in this folder.</p>
-              <% end %>
-            </div>
-          </div>
+              </div>
+            <% else %>
+              <p class="f6 color-fg-muted mb-0">No other documents in this folder.</p>
+            <% end %>
+          <% else %>
+            <p class="f6 color-fg-muted mb-0">Document is not in a folder.</p>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <!-- Add Tag Modal -->
-<div class="modal fade" id="addTagModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add Tag</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="Overlay Overlay--hidden" id="add-tag-modal">
+  <div class="Overlay-backdrop"></div>
+  <div class="Overlay-body Overlay-body--small">
+    <div class="Box">
+      <div class="Box-header">
+        <h3 class="Box-title">Add Tag</h3>
+        <%= render Primer::Beta::Button.new(
+          size: :small,
+          scheme: :invisible,
+          "data-action": "click->modal#hide",
+          classes: "position-absolute top-0 right-0 mt-2 mr-2"
+        ) do %>
+          <%= render Primer::Beta::Octicon.new(icon: "x") %>
+        <% end %>
       </div>
-              <%= form_with url: add_tag_models_document_path(@document), method: :post, local: true do |form| %>
-        <div class="modal-body">
-          <div class="mb-3">
-            <%= form.label :tag_id, "Select Tag", class: "form-label" %>
-            <%= form.select :tag_id,
-                options_from_collection_for_select(Tag.all, :id, :name),
-                { prompt: "Choose a tag" },
-                { class: "form-select", required: true } %>
-          </div>
+      <%= form_with url: models_add_tag_path(@document), method: :post, local: true do |form| %>
+        <div class="Box-body">
+          <%= render Primer::Alpha::FormControl.new(label: "Select Tag") do |fc| %>
+            <%= fc.select(
+              :tag_id,
+              options_from_collection_for_select(Tag.all, :id, :name),
+              include_blank: "Choose a tag",
+              required: true
+            ) %>
+          <% end %>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <%= form.submit "Add Tag", class: "btn btn-primary" %>
+        <div class="Box-footer d-flex gap-2">
+          <%= render Primer::Beta::Button.new(type: :submit, scheme: :primary) do %>
+            Add Tag
+          <% end %>
+          <%= render Primer::Beta::Button.new("data-action": "click->modal#hide") do %>
+            Cancel
+          <% end %>
         </div>
       <% end %>
     </div>

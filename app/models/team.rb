@@ -4,6 +4,7 @@ class Team < ApplicationRecord
   belongs_to :leader, class_name: "User"
   has_many :team_memberships, dependent: :destroy
   has_many :users, through: :team_memberships
+  has_many :members, through: :team_memberships, source: :user
   has_many :folders, dependent: :destroy
   include Taggable
 

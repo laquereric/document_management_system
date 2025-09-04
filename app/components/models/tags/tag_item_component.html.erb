@@ -1,7 +1,7 @@
 <span class="<%= badge_classes %>">
   <%= tag.name %>
   <% if can_remove_tag? %>
-    <%= link_to remove_tag_document_path(document, tag_id: tag.id), 
+    <%= link_to models_remove_tag_path(document, tag), 
         method: :delete,
         class: remove_button_classes,
         data: { confirm: "Remove tag '#{tag.name}'?" },

@@ -1,0 +1,13 @@
+<%= render(Primer::BaseComponent.new(**@system_arguments)) do %>
+  <!-- Brand/Logo Section -->
+  <%= brand_content %>
+
+  <!-- Context Region -->
+  <%= context_section %>
+
+  <!-- Search Section -->
+  <%= search_section %>
+
+  <!-- Navigation Actions -->
+  <%= actions_section %>
+<% end %>

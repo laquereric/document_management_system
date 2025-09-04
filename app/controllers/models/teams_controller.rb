@@ -1,5 +1,5 @@
 class Models::TeamsController < Models::ModelsController
-  before_action :set_team, only: [ :show, :edit, :update, :destroy, :add_member, :remove_member ]
+  before_action :set_team, only: [ :show, :edit, :update, :destroy, :add_member, :remove_member, :join, :leave ]
 
   def index
     @q = Team.ransack(params[:q])

@@ -1,5 +1,5 @@
 class Models::ModelsController < ApplicationController
-  before_action :authenticate_user!
+  # No authentication required in authentication-free environment
 
   # Common functionality for all models controllers
   protected

@@ -1,0 +1,5 @@
+<%= render(Primer::BaseComponent.new(**@system_arguments)) do %>
+  <% render_statistics.each do |stat_component| %>
+    <%= stat_component %>
+  <% end %>
+<% end %>

@@ -1,0 +1,58 @@
+<div class="container-lg px-3 py-4">
+  <div class="d-flex flex-column flex-sm-row flex-items-start flex-sm-items-center flex-sm-justify-between mb-4">
+    <div class="mr-3">
+      <h1 class="h1">Components Catalog</h1>
+      <p class="color-fg-muted mb-0">Browse all ViewComponents grouped by category</p>
+    </div>
+  </div>
+
+  <div class="Box mb-4">
+    <div class="Box-header">
+      <h3 class="Box-title">Search</h3>
+    </div>
+    <div class="Box-body">
+      <form action="<%= components_path %>" method="get" class="d-flex flex-items-center gap-2">
+        <input type="text" name="q" value="<%= @query %>" class="form-control input-block" placeholder="Search by name, group, or file path" />
+        <button type="submit" class="btn btn-primary">Search</button>
+        <% if @query.present? %>
+          <a href="<%= components_path %>" class="btn">Clear</a>
+        <% end %>
+      </form>
+    </div>
+  </div>
+
+  <% if @groups.blank? %>
+    <%= render(Ui::EmptyStateComponent.new(
+      title: "No components found",
+      description: "Try adjusting your search query.",
+      icon: "search"
+    )) %>
+  <% else %>
+    <% @groups.each do |group_name, items| %>
+      <div class="Box mb-4">
+        <div class="Box-header d-flex flex-justify-between flex-items-center">
+          <h3 class="Box-title"><%= group_name %> (<%= items.size %>)</h3>
+        </div>
+        <div class="Box-body">
+          <ul class="list-style-none m-0 p-0">
+            <% items.sort_by { |c| c[:name] }.each do |c| %>
+              <li class="py-2 border-bottom d-flex flex-justify-between flex-items-center">
+                <div class="d-flex flex-column">
+                  <span class="text-bold"><%= c[:name] %></span>
+                  <span class="color-fg-muted text-mono text-small"><%= c[:file] %></span>
+                </div>
+                <div class="d-flex flex-items-center gap-2">
+                  <% if c[:template] %>
+                    <span class="Label Label--success">template</span>
+                  <% else %>
+                    <span class="Label">ruby-only</span>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

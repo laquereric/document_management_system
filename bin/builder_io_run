@@ -1,1 +1,1 @@
-npx builder.io@latest launch
+npx builder.io@latest launch --workspace ./builder-workspace/workspace.json
