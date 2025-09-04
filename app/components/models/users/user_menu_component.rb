@@ -58,10 +58,7 @@ class Models::Users::UserMenuComponent < ApplicationComponent
     {
       menu_items: menu_items,
       user_initials: user_initials,
-      user: user,
-      destroy_user_session_path: helpers.destroy_user_session_path,
-      user_path: helpers.user_path,
-      edit_user_path: helpers.edit_user_path
+      user: user
     }
   end
 end
