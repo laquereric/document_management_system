@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     post "organizations", to: "organizations#create"
     patch "organizations/:id", to: "organizations#update"
     delete "organizations/:id", to: "organizations#destroy"
+    get "users/:user_id/organizations", to: "organizations#user_organizations", as: :user_organizations
 
     # Scenarios routes
     get "scenarios", to: "scenarios#index"

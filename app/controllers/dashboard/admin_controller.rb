@@ -5,7 +5,7 @@ module Dashboard
   def index
     @stats = set_system_stats
     @recent_users = User.order(created_at: :desc).limit(5)
-    @recent_documents = Document.includes(:author, :team).order(created_at: :desc).limit(5)
+    @recent_documents = Document.includes(:author, :folder).order(created_at: :desc).limit(5)
     @recent_activity = set_recent_activity
 
     @users_by_role = User.group(:role).count
