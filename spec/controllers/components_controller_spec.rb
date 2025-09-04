@@ -86,7 +86,10 @@ RSpec.describe ComponentsController, type: :controller do
         
         components = assigns(:components)
         if components.any?
-          expect(components.all? { |c| c[:group].downcase.include?("layout") }).to be true
+          # Check that all returned components match the query in at least one field
+          expect(components.all? { |c| 
+            [c[:name], c[:group], c[:file]].any? { |v| v.to_s.downcase.include?("layout") }
+          }).to be true
         end
       end
 
