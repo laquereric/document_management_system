@@ -7,7 +7,7 @@
       <% end %>
     </div>
   <% end %>
-  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+  <%= render(Local::Beta::BorderBox::Body.new) do %>
     <% if has_activity? %>
       <div class="list-style-none">
         <% recent_activity.each do |activity| %>

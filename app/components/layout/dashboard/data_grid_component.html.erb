@@ -14,11 +14,11 @@
     </div>
   <% end %>
   
-  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+  <%= render(Local::Beta::BorderBox::Body.new) do %>
     <% if has_data? %>
       <div class="d-flex flex-column" style="gap: 12px;">
         <% data.each do |key, count| %>
-          <%= render(Primer::Beta::BorderBox::Row.new) do %>
+          <%= render(Local::Beta::BorderBox::Row.new) do %>
             <div class="d-flex flex-items-center flex-justify-between p-2 border rounded-2">
               <div class="d-flex flex-items-center">
                 <div class="mr-3">

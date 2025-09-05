@@ -43,7 +43,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
   end
 
   def render_navigation_section(title, items)
-    render(Local::BaseComponent.new(
+    render(Primer::BaseComponent.new(
       tag: :div, 
       classes: "d-flex flex-column width-full",
       style: "flex-direction: column !important;"
@@ -56,7 +56,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
   end
 
   def render_section_header(title)
-    render(Local::BaseComponent.new(
+    render(Primer::BaseComponent.new(
       tag: :div,
       classes: "px-3 py-2 border-0 width-full"
     )) do
@@ -67,7 +67,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
   end
 
   def render_navigation_item(item)
-    render(Local::BaseComponent.new(
+    render(Primer::BaseComponent.new(
       tag: :a,
       href: item[:path],
       classes: class_names(

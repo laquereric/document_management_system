@@ -16,7 +16,7 @@
     </div>
   <% end %>
   
-  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+  <%= render(Local::Beta::BorderBox::Body.new) do %>
     <% if has_activities? %>
       <div class="Timeline">
         <% activities.each do |activity| %>

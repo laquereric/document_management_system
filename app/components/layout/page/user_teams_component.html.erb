@@ -2,7 +2,7 @@
   <%= render(Primer::Beta::BorderBox::Header.new) do %>
     <h3 class="Box-title">Teams</h3>
   <% end %>
-  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+  <%= render(Local::Beta::BorderBox::Body.new) do %>
     <% if has_teams? %>
       <div class="list-style-none">
         <% user.teams.each do |team| %>
