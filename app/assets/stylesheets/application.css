@@ -609,7 +609,7 @@
   margin: 0 4px !important;
 }
 
-/* Override any mobile responsive rules for ActionBar */
+/* Override any mobile responsive rules for ActionBar and Header */
 @media (max-width: 767.98px) {
   .ActionBar {
     flex-direction: row !important;
@@ -618,6 +618,30 @@
   .ActionBar-item-container {
     flex-direction: row !important;
   }
+  
+  /* Ensure header stays horizontal on mobile */
+  header {
+    flex-direction: row !important;
+  }
+  
+  header > div {
+    flex-direction: row !important;
+  }
+}
+
+/* Ensure header displays horizontally */
+header {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+/* Ensure header sections display horizontally */
+header > div {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
 }
 
 /* Debug: Add visible borders to see ActionBar structure */
