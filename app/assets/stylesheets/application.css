@@ -577,6 +577,8 @@
 /* Sidebar visual tweaks for spacing */
 .SideNav-items {
   padding: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
 .SideNav-item {

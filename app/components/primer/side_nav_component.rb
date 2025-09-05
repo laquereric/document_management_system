@@ -8,7 +8,7 @@ class Primer::SideNavComponent < ApplicationComponent
     @current_user = current_user
     @system_arguments = system_arguments.dup
     @system_arguments[:tag] = :nav
-    base_classes = ["SideNav", "border-right", "color-bg-default", "height-full"]
+    base_classes = ["border-right", "color-bg-default", "height-full", "width-full", "d-flex", "flex-column"]
     base_classes << system_arguments[:classes] if system_arguments[:classes].present?
     
     @system_arguments[:classes] = base_classes.compact.join(" ")
@@ -30,11 +30,24 @@ class Primer::SideNavComponent < ApplicationComponent
       sections << render_navigation_section("Administration", admin_navigation_items)
     end
     
-    safe_join(sections)
+    # Add proper spacing between sections
+    sections_with_spacing = sections.map.with_index do |section, index|
+      if index > 0
+        content_tag(:div, section, class: "mt-3")
+      else
+        section
+      end
+    end
+    
+    safe_join(sections_with_spacing)
   end
 
   def render_navigation_section(title, items)
-    render(Primer::BaseComponent.new(tag: :div, classes: "SideNav-items")) do
+    render(Primer::BaseComponent.new(
+      tag: :div, 
+      classes: "d-flex flex-column width-full",
+      style: "flex-direction: column !important;"
+    )) do
       safe_join([
         render_section_header(title),
         *items.map { |item| render_navigation_item(item) }
@@ -45,7 +58,7 @@ class Primer::SideNavComponent < ApplicationComponent
   def render_section_header(title)
     render(Primer::BaseComponent.new(
       tag: :div,
-      classes: "SideNav-item px-3 py-2 border-0"
+      classes: "px-3 py-2 border-0 width-full"
     )) do
       content_tag(:h6, title, 
         class: "color-fg-muted f6 text-semibold text-uppercase mb-0"
@@ -58,10 +71,11 @@ class Primer::SideNavComponent < ApplicationComponent
       tag: :a,
       href: item[:path],
       classes: class_names(
-        "SideNav-item py-2",
+        "py-2 px-3 d-flex flex-items-center width-full border-0 color-fg-default no-underline",
         "aria-current": item[:active]
       ),
-      "aria-current": item[:active] ? "page" : nil
+      "aria-current": item[:active] ? "page" : nil,
+      style: "display: block !important; width: 100% !important;"
     )) do
       safe_join([
         render(Primer::Beta::Octicon.new(
