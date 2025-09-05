@@ -1,4 +1,4 @@
-class Primer::TextInputComponent < ApplicationComponent
+class Local::TextInputComponent < ApplicationComponent
   def initialize(
     name:,
     value: nil,

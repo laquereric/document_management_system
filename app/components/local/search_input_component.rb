@@ -1,4 +1,4 @@
-class Primer::SearchInputComponent < ApplicationComponent
+class Local::SearchInputComponent < ApplicationComponent
   def initialize(
     placeholder: "Search...",
     value: nil,

@@ -1,4 +1,4 @@
-class Primer::Beta::BorderBox < ApplicationComponent
+class Local::Beta::BorderBox < ApplicationComponent
   def initialize(padding: :normal, **system_arguments)
     @padding = padding
     @system_arguments = merge_system_arguments(system_arguments)

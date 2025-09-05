@@ -1,5 +1,4 @@
-class Primer::FlashComponent < ApplicationComponent
-  include Primer::ViewComponents::Concerns::TestSelectorArgument
+class Local::FlashComponent < ApplicationComponent
 
   SCHEME_MAPPINGS = {
     success: {

@@ -1,4 +1,4 @@
-class Primer::Beta::Button < ApplicationComponent
+class Local::Beta::Button < ApplicationComponent
   def initialize(
     scheme: :default,
     size: :medium,

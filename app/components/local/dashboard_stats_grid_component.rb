@@ -1,4 +1,4 @@
-class Primer::DashboardStatsGridComponent < ApplicationComponent
+class Local::DashboardStatsGridComponent < ApplicationComponent
   def initialize(
     statistics: [],
     columns: 4,

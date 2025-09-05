@@ -1,4 +1,4 @@
-class Primer::SelectComponent < ApplicationComponent
+class Local::SelectComponent < ApplicationComponent
   def initialize(
     name:,
     options: [],

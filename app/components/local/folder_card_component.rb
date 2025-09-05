@@ -1,4 +1,4 @@
-class Primer::FolderCardComponent < ApplicationComponent
+class Local::FolderCardComponent < ApplicationComponent
   def initialize(
     folder:,
     show_actions: true,

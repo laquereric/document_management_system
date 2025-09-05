@@ -1,4 +1,4 @@
-class Primer::DocumentCardComponent < ApplicationComponent
+class Local::DocumentCardComponent < ApplicationComponent
   def initialize(
     document:,
     show_actions: true,

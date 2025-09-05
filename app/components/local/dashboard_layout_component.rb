@@ -1,4 +1,4 @@
-class Primer::DashboardLayoutComponent < ApplicationComponent
+class Local::DashboardLayoutComponent < ApplicationComponent
   def initialize(
     title:,
     subtitle: nil,

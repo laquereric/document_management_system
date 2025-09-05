@@ -1,4 +1,4 @@
-class Primer::DashboardStatsCardComponent < ApplicationComponent
+class Local::DashboardStatsCardComponent < ApplicationComponent
   def initialize(
     title:,
     value:,

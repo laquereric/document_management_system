@@ -1,4 +1,4 @@
-class Primer::OrganizationCardComponent < ApplicationComponent
+class Local::OrganizationCardComponent < ApplicationComponent
   def initialize(
     organization:,
     show_actions: true,

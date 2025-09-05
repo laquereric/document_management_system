@@ -1,4 +1,4 @@
-class Primer::ButtonComponent < ApplicationComponent
+class Local::ButtonComponent < ApplicationComponent
 
   SCHEME_MAPPINGS = {
     default: "",

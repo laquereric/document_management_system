@@ -1,4 +1,4 @@
-class Primer::FilterPanelComponent < ApplicationComponent
+class Local::FilterPanelComponent < ApplicationComponent
   def initialize(
     title: "Filters",
     collapsible: true,

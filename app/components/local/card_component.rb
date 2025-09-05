@@ -1,4 +1,4 @@
-class Primer::CardComponent < ApplicationComponent
+class Local::CardComponent < ApplicationComponent
 
 
   def initialize(

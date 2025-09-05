@@ -1,4 +1,4 @@
-class Primer::Beta::Octicon < ApplicationComponent
+class Local::Beta::Octicon < ApplicationComponent
   def initialize(icon:, size: :medium, color: nil, **system_arguments)
     @icon = icon
     @size = size

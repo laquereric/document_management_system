@@ -1,4 +1,4 @@
-class Primer::FormFieldComponent < ApplicationComponent
+class Local::FormFieldComponent < ApplicationComponent
   def initialize(
     label:,
     required: false,

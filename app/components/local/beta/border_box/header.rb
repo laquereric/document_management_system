@@ -1,4 +1,4 @@
-class Primer::Beta::BorderBox::Header < ApplicationComponent
+class Local::Beta::BorderBox::Header < ApplicationComponent
   def initialize(**system_arguments)
     @system_arguments = merge_system_arguments(system_arguments)
   end
