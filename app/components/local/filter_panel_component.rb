@@ -21,7 +21,7 @@ class Local::FilterPanelComponent < ApplicationComponent
   attr_reader :title, :collapsible, :collapsed
 
   def render_panel
-    render(Primer::CardComponent.new) do
+    render(Local::CardComponent.new) do
       safe_join([
         render_header,
         render_body

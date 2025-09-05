@@ -1,4 +1,4 @@
-module Primer
+module Local
   module Beta
   end
 end

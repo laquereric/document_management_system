@@ -24,7 +24,7 @@ class Local::DashboardStatsCardComponent < ApplicationComponent
   attr_reader :title, :value, :subtitle, :icon, :color, :trend, :trend_direction
 
   def render_content
-    render(Primer::CardComponent.new(padding: :normal)) do
+    render(Local::CardComponent.new(padding: :normal)) do
       content_tag(:div, class: "d-flex flex-items-center") do
         safe_join([
           render_icon_section,

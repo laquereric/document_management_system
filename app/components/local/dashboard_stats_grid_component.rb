@@ -38,7 +38,7 @@ class Local::DashboardStatsGridComponent < ApplicationComponent
   end
 
   def render_empty_state
-    render(Primer::CardComponent.new) do
+    render(Local::CardComponent.new) do
       content_tag(:div, class: "text-center py-4") do
         safe_join([
           render(Primer::Beta::Octicon.new(

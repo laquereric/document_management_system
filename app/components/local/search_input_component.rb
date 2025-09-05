@@ -70,7 +70,7 @@ class Local::SearchInputComponent < ApplicationComponent
       scheme: :outline,
       size: button_size,
       icon: :search,
-      type: "submit",
+      type: :submit,
       classes: "input-group-button"
     ))
   end
@@ -81,7 +81,7 @@ class Local::SearchInputComponent < ApplicationComponent
       classes: "position-absolute top-100 left-0 right-0 mt-1 d-none z-1",
       data: { search_target: "results" }
     )) do
-      render(Primer::CardComponent.new(classes: "Box-overlay")) do
+      render(Local::CardComponent.new(classes: "Box-overlay")) do
         safe_join([
           render_results_header,
           render_results_body,
@@ -92,7 +92,7 @@ class Local::SearchInputComponent < ApplicationComponent
   end
 
   def render_results_header
-    render(Primer::CardComponent.new(classes: "Box-header")) do
+    render(Local::CardComponent.new(classes: "Box-header")) do
       content_tag(:h3, "Quick Results", class: "f5 text-semibold")
     end
   end
@@ -118,7 +118,7 @@ class Local::SearchInputComponent < ApplicationComponent
   end
 
   def render_results_footer
-    render(Primer::CardComponent.new(classes: "Box-footer")) do
+    render(Local::CardComponent.new(classes: "Box-footer")) do
       render(Primer::ButtonComponent.new(
         href: url,
         size: :small,
