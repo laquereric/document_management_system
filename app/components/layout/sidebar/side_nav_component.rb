@@ -1,4 +1,4 @@
-class Primer::SideNavComponent < ApplicationComponent
+class Layout::Sidebar::SideNavComponent < ApplicationComponent
   def initialize(
     controller_name: nil,
     current_user: nil,
