@@ -585,3 +585,53 @@
   border-radius: var(--borderRadius-medium);
   margin: 2px 0;
 }
+
+/* Ensure ActionBar displays horizontally */
+.ActionBar {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.ActionBar-item-container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.ActionBar-item {
+  float: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 4px !important;
+}
+
+/* Override any mobile responsive rules for ActionBar */
+@media (max-width: 767.98px) {
+  .ActionBar {
+    flex-direction: row !important;
+  }
+  
+  .ActionBar-item-container {
+    flex-direction: row !important;
+  }
+}
+
+/* Debug: Add visible borders to see ActionBar structure */
+.ActionBar {
+  border: 2px solid red !important;
+  background-color: rgba(255, 0, 0, 0.1) !important;
+}
+
+.ActionBar-item-container {
+  border: 2px solid blue !important;
+  background-color: rgba(0, 0, 255, 0.1) !important;
+}
+
+.ActionBar-item {
+  border: 2px solid green !important;
+  background-color: rgba(0, 255, 0, 0.1) !important;
+}
