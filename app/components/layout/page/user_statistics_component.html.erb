@@ -2,7 +2,7 @@
   <%= render(Primer::Beta::BorderBox::Header.new) do %>
     <h3 class="Box-title">Statistics</h3>
   <% end %>
-  <%= render(Primer::Beta::BorderBox::Body.new) do %>
+  <%= render(Local::Beta::BorderBox::Body.new) do %>
     <div class="d-flex flex-wrap" style="gap: 16px;">
       <% statistics_data.each do |stat| %>
         <div class="flex-1" style="min-width: 120px;">

@@ -24,7 +24,7 @@
 
   <body>
     <!-- Header Navigation -->
-    <%= render(Primer::HeaderComponent.new(
+    <%= render(Layout::Navigation::HeaderComponent.new(
       current_user: current_user,
       title: content_for(:title)
     )) %>
@@ -34,7 +34,7 @@
       <!-- Sidebar Navigation (Left Pane Region) -->
       <% if user_signed_in? %>
         <div class="Layout-sidebar">
-          <%= render(Primer::SideNavComponent.new(
+          <%= render(Layout::Sidebar::SideNavComponent.new(
             controller_name: controller_name,
             current_user: current_user
           )) %>
