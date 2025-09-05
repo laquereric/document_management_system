@@ -57,7 +57,7 @@ class Layout::Header::HeaderComponent < ApplicationComponent
           tag: :span,
           classes: "f4 text-semibold"
         )) do
-          "DocuFlow"
+          "MagenticMarket.ai"
         end
       ])
     end
