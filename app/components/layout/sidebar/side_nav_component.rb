@@ -43,7 +43,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
   end
 
   def render_navigation_section(title, items)
-    render(Primer::BaseComponent.new(
+    render(Local::BaseComponent.new(
       tag: :div, 
       classes: "d-flex flex-column width-full",
       style: "flex-direction: column !important;"
@@ -56,7 +56,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
   end
 
   def render_section_header(title)
-    render(Primer::BaseComponent.new(
+    render(Local::BaseComponent.new(
       tag: :div,
       classes: "px-3 py-2 border-0 width-full"
     )) do
@@ -67,7 +67,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
   end
 
   def render_navigation_item(item)
-    render(Primer::BaseComponent.new(
+    render(Local::BaseComponent.new(
       tag: :a,
       href: item[:path],
       classes: class_names(
@@ -78,7 +78,7 @@ class Layout::Sidebar::SideNavComponent < ApplicationComponent
       style: "display: block !important; width: 100% !important;"
     )) do
       safe_join([
-        render(Primer::Beta::Octicon.new(
+        render(Local::Beta::Octicon.new(
           icon: item[:icon].to_sym,
           mr: 2,
           "aria-hidden": true
